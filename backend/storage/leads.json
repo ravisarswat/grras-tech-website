@@ -1,0 +1,21 @@
+[
+  {
+    "name": "Test Student",
+    "email": "test@example.com",
+    "phone": "9876543210",
+    "course_slug": null,
+    "message": "Interested in courses",
+    "consent": true,
+    "id": "4b2ec599-0f94-48c7-ae89-97f612d57fc8",
+    "timestamp": "2025-08-27 19:08:23.276978+00:00"
+  },
+  {
+    "name": "Test User",
+    "email": "user@test.com",
+    "phone": "9988776655",
+    "course_slug": "devops-training",
+    "consent": true,
+    "id": "32a4bc07-a138-4baf-8d15-669d2d2dad0d",
+    "timestamp": "2025-08-27 19:08:23.435301+00:00"
+  }
+]

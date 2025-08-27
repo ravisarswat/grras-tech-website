@@ -17,5 +17,68 @@
     "consent": true,
     "id": "32a4bc07-a138-4baf-8d15-669d2d2dad0d",
     "timestamp": "2025-08-27 19:08:23.435301+00:00"
+  },
+  {
+    "name": "Test User bca-degree",
+    "email": "test-bca-degree@example.com",
+    "phone": "9876543210",
+    "course_slug": "bca-degree",
+    "consent": true,
+    "id": "5e7b635f-bc9b-407d-87bf-bf184f1b41cb",
+    "timestamp": "2025-08-27 19:08:57.332675+00:00"
+  },
+  {
+    "name": "Test User devops-training",
+    "email": "test-devops-training@example.com",
+    "phone": "9876543210",
+    "course_slug": "devops-training",
+    "consent": true,
+    "id": "10f46e9c-f451-4f8c-8d61-84be977d29b8",
+    "timestamp": "2025-08-27 19:08:57.393264+00:00"
+  },
+  {
+    "name": "Test User redhat-certifications",
+    "email": "test-redhat-certifications@example.com",
+    "phone": "9876543210",
+    "course_slug": "redhat-certifications",
+    "consent": true,
+    "id": "6e82c3c1-2c6f-45e6-9f57-cd9531c41d18",
+    "timestamp": "2025-08-27 19:08:57.455212+00:00"
+  },
+  {
+    "name": "Test User data-science-machine-learning",
+    "email": "test-data-science-machine-learning@example.com",
+    "phone": "9876543210",
+    "course_slug": "data-science-machine-learning",
+    "consent": true,
+    "id": "e95ead7c-57f5-433f-a85d-76f7e188d6cd",
+    "timestamp": "2025-08-27 19:08:57.512270+00:00"
+  },
+  {
+    "name": "Test User java-salesforce",
+    "email": "test-java-salesforce@example.com",
+    "phone": "9876543210",
+    "course_slug": "java-salesforce",
+    "consent": true,
+    "id": "d28dd623-e160-49ff-be35-c267fd4de2e8",
+    "timestamp": "2025-08-27 19:08:57.572645+00:00"
+  },
+  {
+    "name": "Test User python",
+    "email": "test-python@example.com",
+    "phone": "9876543210",
+    "course_slug": "python",
+    "consent": true,
+    "id": "49802ab1-8c20-478f-824f-ee2a3b1e7ad1",
+    "timestamp": "2025-08-27 19:08:57.634501+00:00"
+  },
+  {
+    "name": "Test User c-cpp-dsa",
+    "email": "test-c-cpp-dsa@example.com",
+    "phone": "9876543210",
+    "course_slug": "c-cpp-dsa",
+    "consent": true,
+    "id": "3c05c933-7297-4605-b00a-5ad82eea4af2",
+    "timestamp": "2025-08-27 19:08:57.693528+00:00"
   }
 ]

@@ -602,9 +602,15 @@ class ContentManager:
         else:
             return await self._get_content_json()
     
-    async def save_content(self, content: Dict[str, Any], user: str = "admin") -> Dict[str, Any]:
-        """Save content to storage and create audit log"""
-        # Update lastUpdated timestamp
+    async def save_content(self, content: Dict[str, Any], user: str = "admin", is_draft: bool = False) -> Dict[str, Any]:
+        """Save content to storage with version history and audit log"""
+        # Create version backup before saving
+        await self._create_version_backup(content, user)
+        
+        # Update metadata
+        content["meta"]["lastModified"] = datetime.now(timezone.utc).isoformat()
+        content["meta"]["modifiedBy"] = user
+        content["meta"]["isDraft"] = is_draft
         content["settings"]["lastUpdated"] = datetime.now(timezone.utc).isoformat()
         
         # Get current content for audit
@@ -617,9 +623,237 @@ class ContentManager:
             result = await self._save_content_json(content)
         
         # Create audit log
-        await self._create_audit_log(user, current_content, content)
+        await self._create_audit_log(user, current_content, content, is_draft)
         
         return result
+    
+    async def publish_content(self, user: str = "admin") -> Dict[str, Any]:
+        """Publish draft content"""
+        content = await self.get_content()
+        if content["meta"].get("isDraft", False):
+            content["meta"]["isDraft"] = False
+            content["meta"]["publishedAt"] = datetime.now(timezone.utc).isoformat()
+            content["meta"]["publishedBy"] = user
+            return await self.save_content(content, user, is_draft=False)
+        return content
+    
+    async def get_version_history(self, limit: int = 20) -> List[Dict[str, Any]]:
+        """Get version history"""
+        try:
+            versions = []
+            if os.path.exists(self.versions_dir):
+                version_files = [f for f in os.listdir(self.versions_dir) if f.endswith('.json')]
+                version_files.sort(reverse=True)  # Most recent first
+                
+                for file in version_files[:limit]:
+                    file_path = os.path.join(self.versions_dir, file)
+                    async with aiofiles.open(file_path, 'r') as f:
+                        version_data = json.loads(await f.read())
+                        versions.append({
+                            "id": file.replace('.json', ''),
+                            "timestamp": version_data.get("timestamp"),
+                            "user": version_data.get("user"),
+                            "summary": version_data.get("summary", "Content update"),
+                            "isDraft": version_data.get("content", {}).get("meta", {}).get("isDraft", False)
+                        })
+            
+            return versions
+        except Exception as e:
+            logging.error(f"Error getting version history: {e}")
+            return []
+    
+    async def restore_version(self, version_id: str, user: str = "admin") -> Dict[str, Any]:
+        """Restore content from a specific version"""
+        try:
+            version_file = os.path.join(self.versions_dir, f"{version_id}.json")
+            if os.path.exists(version_file):
+                async with aiofiles.open(version_file, 'r') as f:
+                    version_data = json.loads(await f.read())
+                    content = version_data["content"]
+                    
+                    # Update metadata for restoration
+                    content["meta"]["lastModified"] = datetime.now(timezone.utc).isoformat()
+                    content["meta"]["modifiedBy"] = user
+                    content["meta"]["restoredFrom"] = version_id
+                    
+                    return await self.save_content(content, user)
+            else:
+                raise Exception("Version not found")
+        except Exception as e:
+            logging.error(f"Error restoring version: {e}")
+            raise e
+    
+    async def create_backup(self, user: str = "admin") -> str:
+        """Create a manual backup"""
+        try:
+            content = await self.get_content()
+            timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+            backup_filename = f"backup_{timestamp}_{user}.json"
+            backup_path = os.path.join(self.backups_dir, backup_filename)
+            
+            backup_data = {
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "user": user,
+                "type": "manual",
+                "content": content
+            }
+            
+            async with aiofiles.open(backup_path, 'w') as f:
+                await f.write(json.dumps(backup_data, indent=2, default=str))
+            
+            return backup_filename
+        except Exception as e:
+            logging.error(f"Error creating backup: {e}")
+            raise e
+    
+    async def get_backups(self) -> List[Dict[str, Any]]:
+        """Get list of available backups"""
+        try:
+            backups = []
+            if os.path.exists(self.backups_dir):
+                backup_files = [f for f in os.listdir(self.backups_dir) if f.endswith('.json')]
+                backup_files.sort(reverse=True)
+                
+                for file in backup_files:
+                    file_path = os.path.join(self.backups_dir, file)
+                    try:
+                        async with aiofiles.open(file_path, 'r') as f:
+                            backup_data = json.loads(await f.read())
+                            backups.append({
+                                "filename": file,
+                                "timestamp": backup_data.get("timestamp"),
+                                "user": backup_data.get("user"),
+                                "type": backup_data.get("type", "manual"),
+                                "size": os.path.getsize(file_path)
+                            })
+                    except Exception as e:
+                        logging.error(f"Error reading backup file {file}: {e}")
+                        continue
+            
+            return backups
+        except Exception as e:
+            logging.error(f"Error getting backups: {e}")
+            return []
+    
+    async def restore_backup(self, filename: str, user: str = "admin") -> Dict[str, Any]:
+        """Restore content from backup"""
+        try:
+            backup_path = os.path.join(self.backups_dir, filename)
+            if os.path.exists(backup_path):
+                async with aiofiles.open(backup_path, 'r') as f:
+                    backup_data = json.loads(await f.read())
+                    content = backup_data["content"]
+                    
+                    # Update metadata for restoration
+                    content["meta"]["lastModified"] = datetime.now(timezone.utc).isoformat()
+                    content["meta"]["modifiedBy"] = user
+                    content["meta"]["restoredFromBackup"] = filename
+                    
+                    return await self.save_content(content, user)
+            else:
+                raise Exception("Backup not found")
+        except Exception as e:
+            logging.error(f"Error restoring backup: {e}")
+            raise e
+    
+    async def cleanup_old_backups(self, retain_count: int = 30):
+        """Clean up old backup files"""
+        try:
+            if os.path.exists(self.backups_dir):
+                backup_files = [f for f in os.listdir(self.backups_dir) if f.endswith('.json')]
+                backup_files.sort(reverse=True)
+                
+                if len(backup_files) > retain_count:
+                    for file in backup_files[retain_count:]:
+                        file_path = os.path.join(self.backups_dir, file)
+                        os.remove(file_path)
+                        logging.info(f"Removed old backup: {file}")
+        except Exception as e:
+            logging.error(f"Error cleaning up backups: {e}")
+    
+    async def _create_version_backup(self, content: Dict[str, Any], user: str):
+        """Create a version backup before saving"""
+        try:
+            current_content = await self.get_content()
+            timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S_%f")[:-3]  # Include microseconds
+            version_id = f"v_{timestamp}_{user}"
+            version_file = os.path.join(self.versions_dir, f"{version_id}.json")
+            
+            version_data = {
+                "id": version_id,
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "user": user,
+                "summary": self._get_diff_summary(current_content, content),
+                "content": current_content
+            }
+            
+            async with aiofiles.open(version_file, 'w') as f:
+                await f.write(json.dumps(version_data, indent=2, default=str))
+            
+            # Clean up old versions (keep last 50)
+            await self._cleanup_old_versions(50)
+            
+        except Exception as e:
+            logging.error(f"Error creating version backup: {e}")
+    
+    async def _cleanup_old_versions(self, retain_count: int = 50):
+        """Clean up old version files"""
+        try:
+            if os.path.exists(self.versions_dir):
+                version_files = [f for f in os.listdir(self.versions_dir) if f.endswith('.json')]
+                version_files.sort(reverse=True)
+                
+                if len(version_files) > retain_count:
+                    for file in version_files[retain_count:]:
+                        file_path = os.path.join(self.versions_dir, file)
+                        os.remove(file_path)
+        except Exception as e:
+            logging.error(f"Error cleaning up versions: {e}")
+    
+    async def get_media_files(self) -> List[Dict[str, Any]]:
+        """Get list of uploaded media files"""
+        try:
+            media_files = []
+            if os.path.exists(self.media_dir):
+                for file in os.listdir(self.media_dir):
+                    file_path = os.path.join(self.media_dir, file)
+                    if os.path.isfile(file_path):
+                        stat = os.stat(file_path)
+                        media_files.append({
+                            "filename": file,
+                            "size": stat.st_size,
+                            "modified": datetime.fromtimestamp(stat.st_mtime).isoformat(),
+                            "url": f"/media/{file}"
+                        })
+            
+            return sorted(media_files, key=lambda x: x["modified"], reverse=True)
+        except Exception as e:
+            logging.error(f"Error getting media files: {e}")
+            return []
+    
+    async def save_media_file(self, filename: str, file_content: bytes) -> str:
+        """Save uploaded media file"""
+        try:
+            file_path = os.path.join(self.media_dir, filename)
+            async with aiofiles.open(file_path, 'wb') as f:
+                await f.write(file_content)
+            
+            return f"/media/{filename}"
+        except Exception as e:
+            logging.error(f"Error saving media file: {e}")
+            raise e
+    
+    async def delete_media_file(self, filename: str) -> bool:
+        """Delete media file"""
+        try:
+            file_path = os.path.join(self.media_dir, filename)
+            if os.path.exists(file_path):
+                os.remove(file_path)
+                return True
+            return False
+        except Exception as e:
+            logging.error(f"Error deleting media file: {e}")
+            raise e
     
     async def get_audit_logs(self, limit: int = 50) -> List[Dict[str, Any]]:
         """Get audit logs"""

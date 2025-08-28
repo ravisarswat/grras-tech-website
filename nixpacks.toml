@@ -1,12 +1,18 @@
 # Nixpacks configuration for Railway deployment
+[providers]
+python = "3.11"
+
+[phases.install]
+cmds = [
+  "cd backend",
+  "pip install -r requirements.txt"
+]
+
+[phases.build]
+cmds = ["echo 'Build complete'"]
 
 [start]
 cmd = "cd backend && python -m uvicorn server:app --host 0.0.0.0 --port $PORT"
 
 [variables]
 PYTHONPATH = "/app/backend"
-
-[phases.build]
-cmds = [
-  "cd backend && pip install -r requirements.txt"
-]

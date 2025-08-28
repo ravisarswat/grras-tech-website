@@ -55,6 +55,7 @@ const Header = () => {
                     className="relative"
                     onMouseEnter={() => setIsCoursesOpen(true)}
                     onMouseLeave={() => setIsCoursesOpen(false)}
+                    onClick={() => setIsCoursesOpen(!isCoursesOpen)}
                   >
                     <Link
                       to={item.path}
@@ -70,10 +71,11 @@ const Header = () => {
                     
                     {/* Dropdown */}
                     {isCoursesOpen && (
-                      <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 py-2">
+                      <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 py-2 z-50">
                         <Link
                           to="/courses"
                           className="block px-4 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors"
+                          onClick={() => setIsCoursesOpen(false)}
                         >
                           All Courses
                         </Link>
@@ -83,6 +85,7 @@ const Header = () => {
                             key={course.slug}
                             to={`/courses/${course.slug}`}
                             className="block px-4 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors"
+                            onClick={() => setIsCoursesOpen(false)}
                           >
                             {course.name}
                           </Link>

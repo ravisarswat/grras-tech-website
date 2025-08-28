@@ -424,6 +424,134 @@
         "description": "Complete Data Science and ML training with Python, statistics, and real projects at GRRAS Solutions.",
         "keywords": "Data Science course Jaipur, Machine Learning training, Python data analytics"
       }
+    },
+    {
+      "slug": "java-salesforce",
+      "title": "Java & Salesforce",
+      "oneLiner": "Enterprise Development Mastery",
+      "description": "Master Java programming and Salesforce development for enterprise applications with hands-on projects and industry certification preparation.",
+      "duration": "6 Months",
+      "fees": "₹40,000 (EMI Available)",
+      "tools": [
+        "Core Java",
+        "Advanced Java",
+        "Salesforce Admin",
+        "Salesforce Developer"
+      ],
+      "visible": true,
+      "featured": true,
+      "order": 5,
+      "thumbnailUrl": "",
+      "category": "programming",
+      "level": "Intermediate",
+      "mode": [
+        "Classroom",
+        "Online"
+      ],
+      "highlights": [
+        "Core & Advanced Java",
+        "Salesforce Admin & Dev",
+        "Project Work",
+        "Certification Prep"
+      ],
+      "outcomes": [
+        "Master Java programming fundamentals and advanced concepts",
+        "Develop Salesforce applications and customizations",
+        "Build enterprise-grade applications with best practices"
+      ],
+      "eligibility": "Graduate + Basic Programming Knowledge",
+      "intake": "Monthly Batches",
+      "seo": {
+        "title": "Java & Salesforce Training in Jaipur - GRRAS Solutions",
+        "description": "Master Java programming and Salesforce development at GRRAS Solutions with hands-on projects and certification.",
+        "keywords": "Java training Jaipur, Salesforce developer course, enterprise programming"
+      }
+    },
+    {
+      "slug": "python",
+      "title": "Python",
+      "oneLiner": "Versatile Programming Language",
+      "description": "Complete Python programming from basics to advanced with web development, automation, and data handling capabilities.",
+      "duration": "4 Months",
+      "fees": "₹25,000 (EMI Available)",
+      "tools": [
+        "Python Core",
+        "OOP in Python",
+        "NumPy",
+        "Pandas",
+        "Flask/Django Basics"
+      ],
+      "visible": true,
+      "featured": true,
+      "order": 6,
+      "thumbnailUrl": "",
+      "category": "programming",
+      "level": "Beginner to Intermediate",
+      "mode": [
+        "Classroom",
+        "Online"
+      ],
+      "highlights": [
+        "Core Python",
+        "Web Development",
+        "Automation",
+        "Career Guidance"
+      ],
+      "outcomes": [
+        "Master Python programming from basics to advanced",
+        "Build web applications using Flask/Django",
+        "Automate tasks and work with data libraries"
+      ],
+      "eligibility": "12th Pass + Basic Computer Knowledge",
+      "intake": "Monthly Batches",
+      "seo": {
+        "title": "Python Programming Course in Jaipur - GRRAS Solutions",
+        "description": "Learn Python programming from basics to advanced at GRRAS Solutions with web development and automation.",
+        "keywords": "Python course Jaipur, Python programming training, web development"
+      }
+    },
+    {
+      "slug": "c-cpp-dsa",
+      "title": "C/C++ & DSA",
+      "oneLiner": "Foundation Programming Excellence",
+      "description": "Master C/C++ programming with data structures and algorithms, building strong programming foundations for competitive coding and software development.",
+      "duration": "5 Months",
+      "fees": "₹20,000 (EMI Available)",
+      "tools": [
+        "C",
+        "C++ (OOP)",
+        "Data Structures",
+        "Algorithms",
+        "Problem Solving"
+      ],
+      "visible": true,
+      "featured": true,
+      "order": 7,
+      "thumbnailUrl": "",
+      "category": "programming",
+      "level": "Beginner",
+      "mode": [
+        "Classroom",
+        "Online"
+      ],
+      "highlights": [
+        "C/C++ Mastery",
+        "DSA Concepts",
+        "Problem Solving",
+        "Coding Practice"
+      ],
+      "outcomes": [
+        "Master C and C++ programming languages",
+        "Understand data structures and algorithm implementation",
+        "Develop strong problem-solving and competitive coding skills"
+      ],
+      "eligibility": "12th Pass + Mathematics Background",
+      "intake": "Monthly Batches",
+      "seo": {
+        "title": "C/C++ & DSA Course in Jaipur - GRRAS Solutions",
+        "description": "Learn C/C++ programming with data structures and algorithms at GRRAS Solutions for strong coding foundations.",
+        "keywords": "C++ course Jaipur, data structures algorithms, programming fundamentals"
+      }
     }
   ],
   "menus": {

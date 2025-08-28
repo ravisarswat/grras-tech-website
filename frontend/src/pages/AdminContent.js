@@ -49,9 +49,21 @@ const AdminContent = () => {
 
   const checkAuthentication = async () => {
     try {
-      await axios.get(`${API}/admin/verify`);
+      // Check for stored token
+      const token = localStorage.getItem('admin_token');
+      if (!token) {
+        setIsAuthenticated(false);
+        return;
+      }
+      
+      // Verify token with backend
+      await axios.get(`${API}/admin/verify`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       setIsAuthenticated(true);
     } catch (error) {
+      // Remove invalid token
+      localStorage.removeItem('admin_token');
       setIsAuthenticated(false);
     }
   };
@@ -61,7 +73,13 @@ const AdminContent = () => {
     setAuthError('');
     
     try {
-      await axios.post(`${API}/admin/login`, { password });
+      const response = await axios.post(`${API}/admin/login`, { password });
+      
+      // Store token in localStorage
+      if (response.data.token) {
+        localStorage.setItem('admin_token', response.data.token);
+      }
+      
       setIsAuthenticated(true);
       toast.success('Login successful');
     } catch (error) {
@@ -72,10 +90,18 @@ const AdminContent = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(`${API}/admin/logout`);
+      const token = localStorage.getItem('admin_token');
+      if (token) {
+        await axios.post(`${API}/admin/logout`, {}, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+      }
+      
+      localStorage.removeItem('admin_token');
       setIsAuthenticated(false);
       toast.success('Logged out successfully');
     } catch (error) {
+      localStorage.removeItem('admin_token');
       setIsAuthenticated(false);
     }
   };

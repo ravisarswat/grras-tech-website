@@ -11,12 +11,14 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import SEO from '../components/SEO';
+import { useContent } from '../contexts/ContentContext';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const Contact = () => {
+  const { content } = useContent();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -25,6 +27,15 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
+
+  // Get institute data from CMS
+  const institute = content?.institute || {};
+  const instituteName = institute.name || 'GRRAS Solutions Training Institute';
+  const address = institute.address || 'A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012';
+  const phone = institute.phone || '090019 91227';
+  const email = institute.email || 'info@grrassolutions.com';
+  const whatsappUrl = institute.social?.whatsapp || 'https://wa.me/919001991227';
+  const googleMapUrl = institute.googleMapUrl || '';
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

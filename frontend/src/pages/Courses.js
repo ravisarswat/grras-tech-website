@@ -30,15 +30,30 @@ const Courses = () => {
   const fetchCourses = async () => {
     try {
       const response = await axios.get(`${API}/courses`);
-      const coursesWithDetails = response.data.courses.map(course => ({
+      const coursesData = response.data.courses || [];
+      
+      // Use CMS data with fallback details only for missing fields
+      const coursesWithDetails = coursesData.map(course => ({
         ...course,
-        ...getCourseDetails(course.slug)
+        // Only add static details if fields are missing from CMS
+        ...(course.duration ? {} : { duration: getCourseDetails(course.slug).duration }),
+        ...(course.category ? {} : { category: getCourseDetails(course.slug).category }),
+        ...(course.tagline ? {} : { tagline: getCourseDetails(course.slug).tagline }),
+        ...(course.description ? {} : { description: getCourseDetails(course.slug).description }),
+        level: course.level || getCourseDetails(course.slug).level,
+        icon: course.icon || getCourseDetails(course.slug).icon,
+        color: course.color || getCourseDetails(course.slug).color,
+        features: course.features || getCourseDetails(course.slug).features
       }));
-      setCourses(coursesWithDetails);
-      setFilteredCourses(coursesWithDetails);
+      
+      // Filter only visible courses
+      const visibleCourses = coursesWithDetails.filter(course => course.visible !== false);
+      
+      setCourses(visibleCourses);
+      setFilteredCourses(visibleCourses);
     } catch (error) {
       console.error('Error fetching courses:', error);
-      // Fallback to static data
+      // Fallback to static data only if API fails
       const staticCourses = getStaticCourses();
       setCourses(staticCourses);
       setFilteredCourses(staticCourses);

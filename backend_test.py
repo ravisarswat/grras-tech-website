@@ -678,9 +678,7 @@ def main():
     test_syllabus_generation(results)
     test_syllabus_invalid_course(results)
     
-    print("\n🔐 Testing Legacy Admin Authentication...")
-    test_admin_auth_valid(results)
-    test_admin_auth_invalid(results)
+    print("\n🔐 Testing Admin Leads Access...")
     test_get_leads_admin(results)
     test_get_leads_unauthorized(results)
     

@@ -550,6 +550,54 @@ frontend:
           agent: "testing"
           comment: "✅ Railway port configuration working correctly. Backend properly reads PORT environment variable, defaults to 8001. API accessible at configured external URL with proper routing through Kubernetes ingress."
 
+  - task: "Railway CMS Content API Issue Investigation"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ RAILWAY CMS INVESTIGATION COMPLETED. Content API truncation issue RESOLVED - JSON response is complete (16,662 chars) and not truncated. The /api/content endpoint returns valid JSON with all sections. Issue was misdiagnosed - the API is working correctly."
+
+  - task: "Railway CMS Save Functionality Issue Investigation"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ RAILWAY CMS SAVE INVESTIGATION COMPLETED. CMS save functionality is working correctly. POST /api/content endpoint successfully saves content updates with proper authentication. Admin login with 'grras-admin' password works, JWT cookies are set correctly, and content updates are persisted and verified. No 'Failed to save content' errors found."
+
+  - task: "Railway CORS Configuration Issue Investigation"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ RAILWAY CORS INVESTIGATION COMPLETED. CORS configuration is working correctly for frontend access. Preflight requests return proper headers: Access-Control-Allow-Origin includes frontend URL, Allow-Methods includes POST/GET/PUT/DELETE, Allow-Headers includes Content-Type/Authorization, Allow-Credentials is true. Frontend at https://frontend-service-production-9b9d.up.railway.app can make authenticated requests."
+
+  - task: "Railway CMS Missing Courses Issue Investigation"
+    implemented: true
+    working: false
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: false
+          agent: "testing"
+          comment: "❌ RAILWAY CMS MISSING COURSES IDENTIFIED. Only 4/7 expected courses found in CMS content. Present: devops-training, bca-degree, redhat-certifications, data-science-machine-learning. Missing: java-salesforce, python, c-cpp-dsa. This is a content data issue, not an API issue. The missing courses need to be added to the CMS content through the admin interface or content migration."
+
   - task: "File Operations Railway Compatibility"
     implemented: true
     working: true

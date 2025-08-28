@@ -254,7 +254,7 @@
       "oneLiner": "Master Modern DevOps Practices & Cloud Technologies",
       "description": "Comprehensive DevOps training covering the complete DevOps lifecycle, cloud platforms, containerization, orchestration, and automation tools used in modern software development.",
       "duration": "6 Months",
-      "fees": "\u20b945,000 (EMI Available)",
+      "fees": "\u20b920,000 (EMI Available)",
       "tools": [
         "Linux (RHCSA)",
         "Linux Server Administration",
@@ -671,13 +671,13 @@
       "backupFrequency": "daily",
       "retainBackups": 30
     },
-    "lastUpdated": "2025-08-28T06:17:17.908164+00:00",
+    "lastUpdated": "2025-08-28T06:58:42.711928+00:00",
     "version": "2.0"
   },
   "meta": {
     "contentVersion": "2.0",
-    "lastModified": "2025-08-28T06:17:17.908176+00:00",
-    "modifiedBy": "system",
+    "lastModified": "2025-08-28T06:58:42.711914+00:00",
+    "modifiedBy": "admin",
     "isDraft": false
   }
 }

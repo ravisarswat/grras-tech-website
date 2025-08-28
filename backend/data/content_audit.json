@@ -1,6 +1,19 @@
 [
   {
     "user": "admin",
+    "timestamp": "2025-08-28T06:58:42.713827+00:00",
+    "changedKeys": [
+      "modified:settings.lastUpdated",
+      "modified:meta.lastModified",
+      "modified:meta.modifiedBy",
+      "modified:courses"
+    ],
+    "diffSummary": "Modified: 4 items",
+    "isDraft": false,
+    "action": "publish"
+  },
+  {
+    "user": "admin",
     "timestamp": "2025-08-28T06:00:09.772296+00:00",
     "changedKeys": [
       "modified:courses",

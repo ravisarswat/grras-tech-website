@@ -297,6 +297,360 @@ def test_get_leads_unauthorized(results):
     except Exception as e:
         results.add_result("Get Leads Unauthorized", "FAIL", "Request failed", str(e))
 
+# ============================================================================
+# NEW CMS CONTENT MANAGEMENT TESTS
+# ============================================================================
+
+def test_get_content_public(results):
+    """Test GET /api/content - Get current site content (public endpoint)"""
+    try:
+        response = requests.get(f"{API_BASE}/content", timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            if "content" in data:
+                content = data["content"]
+                # Verify required content structure
+                required_sections = ["branding", "institute", "home", "about", "courses", "faqs", "testimonials", "settings"]
+                missing_sections = [section for section in required_sections if section not in content]
+                
+                if not missing_sections:
+                    # Verify courses structure
+                    courses = content.get("courses", [])
+                    if isinstance(courses, list) and len(courses) > 0:
+                        # Check first course has required fields
+                        first_course = courses[0]
+                        required_course_fields = ["slug", "title", "oneLiner", "duration", "fees", "tools", "visible"]
+                        missing_course_fields = [field for field in required_course_fields if field not in first_course]
+                        
+                        if not missing_course_fields:
+                            results.add_result("Get Content Public", "PASS", f"Retrieved content with {len(courses)} courses and all required sections")
+                        else:
+                            results.add_result("Get Content Public", "FAIL", f"Course missing fields: {missing_course_fields}")
+                    else:
+                        results.add_result("Get Content Public", "FAIL", "No courses found in content")
+                else:
+                    results.add_result("Get Content Public", "FAIL", f"Missing content sections: {missing_sections}")
+            else:
+                results.add_result("Get Content Public", "FAIL", "Response missing 'content' field", str(data))
+        else:
+            results.add_result("Get Content Public", "FAIL", f"HTTP {response.status_code}", response.text)
+    except Exception as e:
+        results.add_result("Get Content Public", "FAIL", "Request failed", str(e))
+
+def test_admin_login_valid(results):
+    """Test POST /api/admin/login - Valid admin login"""
+    try:
+        login_data = {"password": ADMIN_PASSWORD}
+        response = requests.post(f"{API_BASE}/admin/login", json=login_data, timeout=10)
+        
+        if response.status_code == 200:
+            data = response.json()
+            if "success" in data and data["success"]:
+                # Check if cookie is set
+                cookies = response.cookies
+                if "admin_token" in cookies:
+                    results.add_result("Admin Login Valid", "PASS", "Login successful with cookie set")
+                    return cookies  # Return cookies for subsequent tests
+                else:
+                    results.add_result("Admin Login Valid", "FAIL", "Login successful but no cookie set")
+            else:
+                results.add_result("Admin Login Valid", "FAIL", "Invalid response format", str(data))
+        else:
+            results.add_result("Admin Login Valid", "FAIL", f"HTTP {response.status_code}", response.text)
+    except Exception as e:
+        results.add_result("Admin Login Valid", "FAIL", "Request failed", str(e))
+    return None
+
+def test_admin_login_invalid(results):
+    """Test POST /api/admin/login - Invalid admin login"""
+    try:
+        login_data = {"password": "wrong-password"}
+        response = requests.post(f"{API_BASE}/admin/login", json=login_data, timeout=10)
+        
+        if response.status_code == 401:
+            results.add_result("Admin Login Invalid", "PASS", "Correctly rejected invalid password")
+        else:
+            results.add_result("Admin Login Invalid", "FAIL", f"Expected 401, got {response.status_code}")
+    except Exception as e:
+        results.add_result("Admin Login Invalid", "FAIL", "Request failed", str(e))
+
+def test_admin_verify_without_auth(results):
+    """Test GET /api/admin/verify - Should require authentication"""
+    try:
+        response = requests.get(f"{API_BASE}/admin/verify", timeout=10)
+        if response.status_code == 401:
+            results.add_result("Admin Verify No Auth", "PASS", "Correctly requires authentication")
+        else:
+            results.add_result("Admin Verify No Auth", "FAIL", f"Expected 401, got {response.status_code}")
+    except Exception as e:
+        results.add_result("Admin Verify No Auth", "FAIL", "Request failed", str(e))
+
+def test_admin_verify_with_auth(results, admin_cookies):
+    """Test GET /api/admin/verify - With valid authentication"""
+    if not admin_cookies:
+        results.add_result("Admin Verify With Auth", "FAIL", "No admin cookies available")
+        return
+    
+    try:
+        response = requests.get(f"{API_BASE}/admin/verify", cookies=admin_cookies, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            if "authenticated" in data and data["authenticated"]:
+                results.add_result("Admin Verify With Auth", "PASS", f"Authentication verified for user: {data.get('username', 'unknown')}")
+            else:
+                results.add_result("Admin Verify With Auth", "FAIL", "Invalid response format", str(data))
+        else:
+            results.add_result("Admin Verify With Auth", "FAIL", f"HTTP {response.status_code}", response.text)
+    except Exception as e:
+        results.add_result("Admin Verify With Auth", "FAIL", "Request failed", str(e))
+
+def test_update_content_without_auth(results):
+    """Test POST /api/content - Should require authentication"""
+    try:
+        test_content = {
+            "content": {
+                "home": {
+                    "heroHeadline": "Test Update Without Auth"
+                }
+            }
+        }
+        response = requests.post(f"{API_BASE}/content", json=test_content, timeout=10)
+        if response.status_code == 401:
+            results.add_result("Update Content No Auth", "PASS", "Correctly requires authentication")
+        else:
+            results.add_result("Update Content No Auth", "FAIL", f"Expected 401, got {response.status_code}")
+    except Exception as e:
+        results.add_result("Update Content No Auth", "FAIL", "Request failed", str(e))
+
+def test_update_content_with_auth(results, admin_cookies):
+    """Test POST /api/content - Update content with authentication"""
+    if not admin_cookies:
+        results.add_result("Update Content With Auth", "FAIL", "No admin cookies available")
+        return
+    
+    try:
+        # Test content update
+        test_content = {
+            "content": {
+                "home": {
+                    "heroHeadline": "Test Updated Headline",
+                    "heroSubtext": "Test Updated Subtext",
+                    "ctaPrimaryLabel": "Explore Courses",
+                    "ctaPrimaryHref": "/courses",
+                    "ctaSecondaryLabel": "Apply Now", 
+                    "ctaSecondaryHref": "/admissions"
+                },
+                "courses": [
+                    {
+                        "slug": "test-course",
+                        "title": "Test Course",
+                        "oneLiner": "Test description",
+                        "duration": "3 months",
+                        "fees": "Test fees",
+                        "tools": ["Tool1", "Tool2"],
+                        "visible": True,
+                        "order": 1,
+                        "thumbnailUrl": "",
+                        "category": "test",
+                        "level": "Beginner"
+                    }
+                ],
+                "branding": {
+                    "logoUrl": "https://example.com/logo.png",
+                    "colors": {
+                        "primary": "#DC2626",
+                        "secondary": "#EA580C"
+                    }
+                },
+                "institute": {
+                    "name": "Test Institute",
+                    "address": "Test Address",
+                    "phone": "1234567890",
+                    "email": "test@example.com"
+                },
+                "about": {
+                    "headline": "Test About",
+                    "mission": "Test Mission",
+                    "vision": "Test Vision",
+                    "body": "Test Body"
+                },
+                "faqs": [],
+                "testimonials": [],
+                "settings": {
+                    "seoTitle": "Test Title",
+                    "seoDescription": "Test Description",
+                    "seoKeywords": "test, keywords"
+                }
+            }
+        }
+        
+        response = requests.post(f"{API_BASE}/content", json=test_content, cookies=admin_cookies, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            if "success" in data and data["success"]:
+                # Verify the content was actually updated
+                verify_response = requests.get(f"{API_BASE}/content", timeout=10)
+                if verify_response.status_code == 200:
+                    verify_data = verify_response.json()
+                    updated_content = verify_data.get("content", {})
+                    if updated_content.get("home", {}).get("heroHeadline") == "Test Updated Headline":
+                        results.add_result("Update Content With Auth", "PASS", "Content updated successfully and verified")
+                    else:
+                        results.add_result("Update Content With Auth", "FAIL", "Content update not reflected in GET request")
+                else:
+                    results.add_result("Update Content With Auth", "FAIL", "Could not verify content update")
+            else:
+                results.add_result("Update Content With Auth", "FAIL", "Invalid response format", str(data))
+        else:
+            results.add_result("Update Content With Auth", "FAIL", f"HTTP {response.status_code}", response.text)
+    except Exception as e:
+        results.add_result("Update Content With Auth", "FAIL", "Request failed", str(e))
+
+def test_content_audit_without_auth(results):
+    """Test GET /api/content/audit - Should require authentication"""
+    try:
+        response = requests.get(f"{API_BASE}/content/audit", timeout=10)
+        if response.status_code == 401:
+            results.add_result("Content Audit No Auth", "PASS", "Correctly requires authentication")
+        else:
+            results.add_result("Content Audit No Auth", "FAIL", f"Expected 401, got {response.status_code}")
+    except Exception as e:
+        results.add_result("Content Audit No Auth", "FAIL", "Request failed", str(e))
+
+def test_content_audit_with_auth(results, admin_cookies):
+    """Test GET /api/content/audit - Get audit logs with authentication"""
+    if not admin_cookies:
+        results.add_result("Content Audit With Auth", "FAIL", "No admin cookies available")
+        return
+    
+    try:
+        response = requests.get(f"{API_BASE}/content/audit", cookies=admin_cookies, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            if "audit_logs" in data:
+                audit_logs = data["audit_logs"]
+                if isinstance(audit_logs, list):
+                    # Check if we have audit logs (should have at least one from the content update test)
+                    if len(audit_logs) > 0:
+                        # Verify audit log structure
+                        first_log = audit_logs[0]
+                        required_fields = ["user", "timestamp", "changedKeys", "diffSummary"]
+                        missing_fields = [field for field in required_fields if field not in first_log]
+                        
+                        if not missing_fields:
+                            results.add_result("Content Audit With Auth", "PASS", f"Retrieved {len(audit_logs)} audit logs with proper structure")
+                        else:
+                            results.add_result("Content Audit With Auth", "FAIL", f"Audit log missing fields: {missing_fields}")
+                    else:
+                        results.add_result("Content Audit With Auth", "PASS", "Retrieved empty audit logs (no changes yet)")
+                else:
+                    results.add_result("Content Audit With Auth", "FAIL", "audit_logs is not a list")
+            else:
+                results.add_result("Content Audit With Auth", "FAIL", "Response missing 'audit_logs' field", str(data))
+        else:
+            results.add_result("Content Audit With Auth", "FAIL", f"HTTP {response.status_code}", response.text)
+    except Exception as e:
+        results.add_result("Content Audit With Auth", "FAIL", "Request failed", str(e))
+
+def test_admin_logout(results, admin_cookies):
+    """Test POST /api/admin/logout - Admin logout"""
+    if not admin_cookies:
+        results.add_result("Admin Logout", "FAIL", "No admin cookies available")
+        return
+    
+    try:
+        response = requests.post(f"{API_BASE}/admin/logout", cookies=admin_cookies, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            if "success" in data and data["success"]:
+                # Verify that the session is actually invalidated
+                verify_response = requests.get(f"{API_BASE}/admin/verify", cookies=admin_cookies, timeout=10)
+                if verify_response.status_code == 401:
+                    results.add_result("Admin Logout", "PASS", "Logout successful and session invalidated")
+                else:
+                    results.add_result("Admin Logout", "FAIL", "Logout successful but session still valid")
+            else:
+                results.add_result("Admin Logout", "FAIL", "Invalid response format", str(data))
+        else:
+            results.add_result("Admin Logout", "FAIL", f"HTTP {response.status_code}", response.text)
+    except Exception as e:
+        results.add_result("Admin Logout", "FAIL", "Request failed", str(e))
+
+def test_courses_api_integration(results):
+    """Test GET /api/courses - Verify it uses dynamic content from CMS"""
+    try:
+        # First get content to see what courses should be available
+        content_response = requests.get(f"{API_BASE}/content", timeout=10)
+        if content_response.status_code != 200:
+            results.add_result("Courses API Integration", "FAIL", "Could not get content for comparison")
+            return
+        
+        content_data = content_response.json()
+        content_courses = content_data.get("content", {}).get("courses", [])
+        visible_courses = [c for c in content_courses if c.get("visible", True)]
+        
+        # Now get courses from API
+        courses_response = requests.get(f"{API_BASE}/courses", timeout=10)
+        if courses_response.status_code == 200:
+            courses_data = courses_response.json()
+            api_courses = courses_data.get("courses", [])
+            
+            # Compare counts
+            if len(api_courses) == len(visible_courses):
+                # Check if course slugs match
+                content_slugs = set(c["slug"] for c in visible_courses)
+                api_slugs = set(c["slug"] for c in api_courses)
+                
+                if content_slugs == api_slugs:
+                    results.add_result("Courses API Integration", "PASS", f"Courses API correctly uses dynamic content ({len(api_courses)} courses)")
+                else:
+                    results.add_result("Courses API Integration", "FAIL", f"Course slugs don't match. Content: {content_slugs}, API: {api_slugs}")
+            else:
+                results.add_result("Courses API Integration", "FAIL", f"Course count mismatch. Content: {len(visible_courses)}, API: {len(api_courses)}")
+        else:
+            results.add_result("Courses API Integration", "FAIL", f"Courses API failed: HTTP {courses_response.status_code}")
+    except Exception as e:
+        results.add_result("Courses API Integration", "FAIL", "Request failed", str(e))
+
+def test_syllabus_dynamic_content(results):
+    """Test POST /api/syllabus - Verify PDF generation uses dynamic course content"""
+    try:
+        # Get current content to find a valid course
+        content_response = requests.get(f"{API_BASE}/content", timeout=10)
+        if content_response.status_code != 200:
+            results.add_result("Syllabus Dynamic Content", "FAIL", "Could not get content for test")
+            return
+        
+        content_data = content_response.json()
+        courses = content_data.get("content", {}).get("courses", [])
+        visible_courses = [c for c in courses if c.get("visible", True)]
+        
+        if not visible_courses:
+            results.add_result("Syllabus Dynamic Content", "FAIL", "No visible courses found in content")
+            return
+        
+        # Use first visible course
+        test_course = visible_courses[0]
+        syllabus_request = {
+            "name": "Test Student",
+            "email": "test@example.com",
+            "phone": "9876543210",
+            "course_slug": test_course["slug"],
+            "consent": True
+        }
+        
+        response = requests.post(f"{API_BASE}/syllabus", json=syllabus_request, timeout=30)
+        if response.status_code == 200:
+            content_type = response.headers.get('content-type', '')
+            if 'application/pdf' in content_type and response.content.startswith(b'%PDF'):
+                results.add_result("Syllabus Dynamic Content", "PASS", f"PDF generated successfully for dynamic course: {test_course['title']}")
+            else:
+                results.add_result("Syllabus Dynamic Content", "FAIL", "Response is not a valid PDF")
+        else:
+            results.add_result("Syllabus Dynamic Content", "FAIL", f"HTTP {response.status_code}", response.text)
+    except Exception as e:
+        results.add_result("Syllabus Dynamic Content", "FAIL", "Request failed", str(e))
+
 def main():
     print("GRRAS Solutions Backend API Test Suite")
     print("="*60)

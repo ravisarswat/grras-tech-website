@@ -232,10 +232,22 @@ class AdminLogin(BaseModel):
 
 # PDF Generation
 async def generate_syllabus_pdf(course_slug: str, student_name: str) -> str:
-    """Generate a professional syllabus PDF"""
+    """Generate a professional syllabus PDF using dynamic content"""
     try:
-        course_name = COURSE_NAMES.get(course_slug, "Course")
-        tools = TOOLS_CONFIG.get(course_slug, [])
+        # Get current content
+        content = await content_manager.get_content()
+        courses = content.get("courses", [])
+        institute = content.get("institute", {})
+        
+        # Find the course
+        course = next((c for c in courses if c["slug"] == course_slug), None)
+        if not course:
+            raise HTTPException(status_code=404, detail="Course not found")
+        
+        course_name = course.get("title", "Course")
+        tools = course.get("tools", [])
+        duration = course.get("duration", "Contact for details")
+        fees = course.get("fees", "Contact for details")
         
         # Create temporary file
         temp_file = f"/app/backend/temp/syllabus_{course_slug}_{uuid.uuid4().hex[:8]}.pdf"
@@ -272,61 +284,72 @@ async def generate_syllabus_pdf(course_slug: str, student_name: str) -> str:
         )
         
         # Content
-        content = []
+        content_elements = []
         
-        # Header with logo placeholder
-        content.append(Paragraph("GRRAS Solutions Training Institute", title_style))
-        content.append(Spacer(1, 20))
+        # Header with institute info
+        institute_name = institute.get("name", "GRRAS Solutions Training Institute")
+        content_elements.append(Paragraph(institute_name, title_style))
+        content_elements.append(Spacer(1, 20))
         
         # Course title
-        content.append(Paragraph(f"{course_name} - Detailed Syllabus", heading_style))
-        content.append(Spacer(1, 10))
+        content_elements.append(Paragraph(f"{course_name} - Detailed Syllabus", heading_style))
+        content_elements.append(Spacer(1, 10))
         
         # Student name
-        content.append(Paragraph(f"Prepared for: {student_name}", normal_style))
-        content.append(Paragraph(f"Date: {datetime.now().strftime('%B %d, %Y')}", normal_style))
-        content.append(Paragraph(f"Document ID: SYL-{course_slug.upper()}-{datetime.now().strftime('%Y%m%d')}", normal_style))
-        content.append(Spacer(1, 30))
+        content_elements.append(Paragraph(f"Prepared for: {student_name}", normal_style))
+        content_elements.append(Paragraph(f"Date: {datetime.now().strftime('%B %d, %Y')}", normal_style))
+        content_elements.append(Paragraph(f"Document ID: SYL-{course_slug.upper()}-{datetime.now().strftime('%Y%m%d')}", normal_style))
+        content_elements.append(Spacer(1, 30))
+        
+        # Course Details
+        content_elements.append(Paragraph("Course Information", heading_style))
+        content_elements.append(Paragraph(f"<b>Duration:</b> {duration}", normal_style))
+        content_elements.append(Paragraph(f"<b>Fees:</b> {fees}", normal_style))
+        content_elements.append(Spacer(1, 20))
         
         # Tools/Technologies section
-        content.append(Paragraph("Tools & Technologies Covered", heading_style))
-        for tool in tools:
-            content.append(Paragraph(f"• {tool}", normal_style))
-        content.append(Spacer(1, 20))
+        if tools:
+            content_elements.append(Paragraph("Tools & Technologies Covered", heading_style))
+            for tool in tools:
+                content_elements.append(Paragraph(f"• {tool}", normal_style))
+            content_elements.append(Spacer(1, 20))
         
         # Curriculum outline
-        content.append(Paragraph("Curriculum Outline", heading_style))
-        content.append(Paragraph("Detailed curriculum will be shared during counseling session. Our comprehensive program covers:", normal_style))
-        content.append(Paragraph("• Fundamentals and core concepts", normal_style))
-        content.append(Paragraph("• Hands-on practical sessions", normal_style))
-        content.append(Paragraph("• Industry best practices", normal_style))
-        content.append(Paragraph("• Real-world projects", normal_style))
-        content.append(Paragraph("• Certification preparation", normal_style))
-        content.append(Spacer(1, 20))
+        content_elements.append(Paragraph("Curriculum Outline", heading_style))
+        content_elements.append(Paragraph("Detailed curriculum will be shared during counseling session. Our comprehensive program covers:", normal_style))
+        content_elements.append(Paragraph("• Fundamentals and core concepts", normal_style))
+        content_elements.append(Paragraph("• Hands-on practical sessions", normal_style))
+        content_elements.append(Paragraph("• Industry best practices", normal_style))
+        content_elements.append(Paragraph("• Real-world projects", normal_style))
+        content_elements.append(Paragraph("• Certification preparation", normal_style))
+        content_elements.append(Spacer(1, 20))
         
         # Learning outcomes
-        content.append(Paragraph("Learning Outcomes", heading_style))
-        content.append(Paragraph("Upon successful completion of this program, students will:", normal_style))
-        content.append(Paragraph("• Master industry-relevant skills and technologies", normal_style))
-        content.append(Paragraph("• Gain practical experience through projects", normal_style))
-        content.append(Paragraph("• Be prepared for industry certifications", normal_style))
-        content.append(Paragraph("• Develop problem-solving capabilities", normal_style))
-        content.append(Spacer(1, 20))
+        content_elements.append(Paragraph("Learning Outcomes", heading_style))
+        content_elements.append(Paragraph("Upon successful completion of this program, students will:", normal_style))
+        content_elements.append(Paragraph("• Master industry-relevant skills and technologies", normal_style))
+        content_elements.append(Paragraph("• Gain practical experience through projects", normal_style))
+        content_elements.append(Paragraph("• Be prepared for industry certifications", normal_style))
+        content_elements.append(Paragraph("• Develop problem-solving capabilities", normal_style))
+        content_elements.append(Spacer(1, 20))
         
         # Schedule and fees
-        content.append(Paragraph("Schedule & Fees", heading_style))
-        content.append(Paragraph("For detailed schedule, duration, and fee structure, please contact our admissions team.", normal_style))
-        content.append(Spacer(1, 30))
+        content_elements.append(Paragraph("Schedule & Fees", heading_style))
+        content_elements.append(Paragraph("For detailed schedule, duration, and fee structure, please contact our admissions team.", normal_style))
+        content_elements.append(Spacer(1, 30))
         
-        # Footer
-        content.append(Paragraph("Contact Information", heading_style))
-        content.append(Paragraph("GRRAS Solutions Training Institute", normal_style))
-        content.append(Paragraph("A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital", normal_style))
-        content.append(Paragraph("Jaipur, Rajasthan 302012", normal_style))
-        content.append(Paragraph("Phone: 090019 91227", normal_style))
+        # Footer with institute info
+        content_elements.append(Paragraph("Contact Information", heading_style))
+        content_elements.append(Paragraph(institute_name, normal_style))
+        
+        address = institute.get("address", "A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012")
+        content_elements.append(Paragraph(address, normal_style))
+        
+        phone = institute.get("phone", "090019 91227")
+        content_elements.append(Paragraph(f"Phone: {phone}", normal_style))
         
         # Build PDF
-        doc.build(content)
+        doc.build(content_elements)
         return temp_file
         
     except Exception as e:

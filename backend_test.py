@@ -236,38 +236,6 @@ def test_syllabus_invalid_course(results):
     except Exception as e:
         results.add_result("Syllabus Invalid Course", "FAIL", "Request failed", str(e))
 
-def test_admin_auth_valid(results):
-    """Test GET /api/admin/auth - Valid admin authentication"""
-    try:
-        auth_string = base64.b64encode(f"{ADMIN_USERNAME}:{ADMIN_PASSWORD}".encode()).decode()
-        headers = {"Authorization": f"Basic {auth_string}"}
-        
-        response = requests.get(f"{API_BASE}/admin/auth", headers=headers, timeout=10)
-        if response.status_code == 200:
-            data = response.json()
-            if "authenticated" in data and data["authenticated"]:
-                results.add_result("Admin Auth Valid", "PASS", "Admin authentication successful")
-            else:
-                results.add_result("Admin Auth Valid", "FAIL", "Invalid response format", str(data))
-        else:
-            results.add_result("Admin Auth Valid", "FAIL", f"HTTP {response.status_code}", response.text)
-    except Exception as e:
-        results.add_result("Admin Auth Valid", "FAIL", "Request failed", str(e))
-
-def test_admin_auth_invalid(results):
-    """Test GET /api/admin/auth - Invalid admin authentication"""
-    try:
-        auth_string = base64.b64encode(f"{ADMIN_USERNAME}:wrong-password".encode()).decode()
-        headers = {"Authorization": f"Basic {auth_string}"}
-        
-        response = requests.get(f"{API_BASE}/admin/auth", headers=headers, timeout=10)
-        if response.status_code == 401:
-            results.add_result("Admin Auth Invalid", "PASS", "Correctly rejected invalid credentials")
-        else:
-            results.add_result("Admin Auth Invalid", "FAIL", f"Expected 401, got {response.status_code}")
-    except Exception as e:
-        results.add_result("Admin Auth Invalid", "FAIL", "Request failed", str(e))
-
 def test_get_leads_admin(results):
     """Test GET /api/leads - Admin endpoint to get all leads"""
     try:

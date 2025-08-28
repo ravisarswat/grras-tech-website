@@ -924,13 +924,15 @@ class ContentManager:
             logging.error(f"Error saving content to MongoDB: {e}")
             raise e
     
-    async def _create_audit_log(self, user: str, old_content: Dict[str, Any], new_content: Dict[str, Any]):
+    async def _create_audit_log(self, user: str, old_content: Dict[str, Any], new_content: Dict[str, Any], is_draft: bool = False):
         """Create audit log entry"""
         audit_entry = {
             "user": user,
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "changedKeys": self._get_changed_keys(old_content, new_content),
-            "diffSummary": self._get_diff_summary(old_content, new_content)
+            "diffSummary": self._get_diff_summary(old_content, new_content),
+            "isDraft": is_draft,
+            "action": "draft" if is_draft else "publish"
         }
         
         if self.storage_type == "mongo" and self.mongo_client:

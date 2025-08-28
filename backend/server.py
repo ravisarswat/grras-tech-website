@@ -667,7 +667,7 @@ async def admin_login(login_data: AdminLogin, response: Response):
         samesite="none"  # Allow cross-site cookies for Railway domains
     )
     
-    return {"success": True, "message": "Login successful"}
+    return {"success": True, "message": "Login successful", "token": token}
 
 @api_router.post("/admin/logout") 
 async def admin_logout(response: Response):

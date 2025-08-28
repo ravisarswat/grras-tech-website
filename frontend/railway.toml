@@ -2,10 +2,7 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "yarn start"
+startCommand = "serve -s build -l $PORT"
 healthcheckPath = "/"
 healthcheckTimeout = 100
 restartPolicyType = "on_failure"
-
-[build.nixpacksConfig]
-buildCommand = "yarn install && yarn build"

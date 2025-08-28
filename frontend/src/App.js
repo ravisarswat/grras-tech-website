@@ -17,7 +17,7 @@ import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
-import AdminLeads from './pages/AdminLeads';
+import AdminContent from './pages/AdminContent';
 import NotFound from './pages/NotFound';
 
 function AppContent() {

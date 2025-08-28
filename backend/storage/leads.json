@@ -80,5 +80,14 @@
     "consent": true,
     "id": "3c05c933-7297-4605-b00a-5ad82eea4af2",
     "timestamp": "2025-08-27 19:08:57.693528+00:00"
+  },
+  {
+    "name": "Rajesh Kumar",
+    "email": "rajesh.kumar@example.com",
+    "phone": "9876543210",
+    "course_slug": "devops-training",
+    "consent": true,
+    "id": "349dfa29-48ac-4e6f-9d56-9f3b724373d2",
+    "timestamp": "2025-08-28 02:53:56.901333+00:00"
   }
 ]

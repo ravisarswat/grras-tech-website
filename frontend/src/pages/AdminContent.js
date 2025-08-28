@@ -990,10 +990,6 @@ const AdminContent = () => {
               getContentValue={getContentValue}
             />
           )}
-                </div>
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Audit Modal */}

@@ -744,15 +744,15 @@ frontend:
 
 metadata:
   created_by: "testing_agent"
-  version: "4.0"
-  test_sequence: 4
+  version: "5.0"
+  test_sequence: 5
   run_ui: true
 
 test_plan:
   current_focus: []
   stuck_tasks: []
   test_all: true
-  test_priority: "completed"
+  test_priority: "railway_compatibility_completed"
 
 agent_communication:
     - agent: "testing"

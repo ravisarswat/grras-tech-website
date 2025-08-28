@@ -385,39 +385,60 @@ const Contact = () => {
                     Find Us Here
                   </h3>
                   
-                  <div className="rounded-lg overflow-hidden">
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.3847264635616!2d75.78534517468277!3d26.91244487667423!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db18bb4c88ac3%3A0x8a3a3c6f32d8c8a0!2sA-81%2C%20Singh%20Bhoomi%20Khatipura%20Rd%2C%20behind%20Marudhar%20Hospital%2C%20Jaipur%2C%20Rajasthan%20302012!5e0!3m2!1sen!2sin!4v1635789123456!5m2!1sen!2sin"
-                      width="100%"
-                      height="300"
-                      style={{ border: 0 }}
-                      allowFullScreen=""
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      className="rounded-lg"
-                      title="GRRAS Solutions Location"
-                    ></iframe>
-                  </div>
+                  {googleMapUrl ? (
+                    <div className="rounded-lg overflow-hidden">
+                      <iframe
+                        src={googleMapUrl}
+                        width="100%"
+                        height="300"
+                        style={{ border: 0 }}
+                        allowFullScreen=""
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        className="rounded-lg"
+                        title={`${instituteName} Location`}
+                      ></iframe>
+                    </div>
+                  ) : (
+                    <div className="bg-gray-100 rounded-lg h-64 flex items-center justify-center">
+                      <div className="text-center">
+                        <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-2" />
+                        <p className="text-gray-600 mb-2">Interactive Map</p>
+                        <p className="text-sm text-gray-500">
+                          Map will be displayed when configured in admin settings
+                        </p>
+                      </div>
+                    </div>
+                  )}
                   
                   <div className="mt-4 p-4 bg-gray-50 rounded-lg">
                     <div className="flex items-start space-x-3">
                       <MapPin className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
                       <div>
                         <p className="text-sm text-gray-600 font-medium">Address:</p>
-                        <p className="text-sm text-gray-800">
-                          A-81, Singh Bhoomi Khatipura Rd,<br />
-                          behind Marudhar Hospital,<br />
-                          Jaipur, Rajasthan 302012
-                        </p>
-                        <a
-                          href="https://share.google/q16YJnnreTUSwDiAE"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center text-red-600 hover:text-red-700 font-medium text-sm mt-2 transition-colors"
-                        >
-                          Open in Google Maps
-                        </a>
+                        <address className="text-sm text-gray-800 not-italic">
+                          {address.split(',').map((line, index) => (
+                            <span key={index}>
+                              {line.trim()}
+                              {index < address.split(',').length - 1 && <br />}
+                            </span>
+                          ))}
+                        </address>
+                        {googleMapUrl && (
+                          <a
+                            href={googleMapUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center text-red-600 hover:text-red-700 font-medium text-sm mt-2 transition-colors"
+                            aria-label={`Open ${instituteName} location in Google Maps`}
+                          >
+                            Open in Google Maps
+                          </a>
+                        )}
                       </div>
+                    </div>
+                  </div>
+                </div>
                     </div>
                   </div>
                 </div>

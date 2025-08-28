@@ -696,7 +696,7 @@ railway_cors_origins.extend(existing_origins)
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=railway_cors_origins if railway_cors_origins != ['*'] else ["*"],
+    allow_origins=["*"],  # Temporarily allow all for debugging
     allow_methods=["*"],
     allow_headers=["*"],
 )

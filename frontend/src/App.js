@@ -53,7 +53,9 @@ function App() {
   return (
     <div className="App min-h-screen bg-gray-50">
       <Router>
-        <AppContent />
+        <ContentProvider>
+          <AppContent />
+        </ContentProvider>
       </Router>
       <Toaster position="top-right" richColors />
     </div>

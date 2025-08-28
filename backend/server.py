@@ -647,14 +647,14 @@ async def admin_login(login_data: AdminLogin, response: Response):
     # Create JWT token
     token = create_admin_token()
     
-    # Set httpOnly cookie
+    # Set httpOnly cookie (secure=True for Railway HTTPS, but allow cross-site)
     response.set_cookie(
         key="admin_token",
         value=token,
         httponly=True,
         max_age=86400,  # 24 hours
-        secure=True,  # Set to True for Railway HTTPS
-        samesite="lax"
+        secure=True,  # HTTPS required for Railway
+        samesite="none"  # Allow cross-site cookies for Railway domains
     )
     
     return {"success": True, "message": "Login successful"}

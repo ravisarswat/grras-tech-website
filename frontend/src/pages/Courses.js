@@ -282,11 +282,16 @@ const Courses = () => {
                     </p>
                     
                     {/* Course Details */}
-                    <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                    <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
                       <div className="flex items-center gap-1">
                         <Clock className="h-4 w-4" />
-                        <span>{course.duration}</span>
+                        <span>{course.duration || 'Contact for details'}</span>
                       </div>
+                      {course.fees && (
+                        <div className="text-red-600 font-semibold">
+                          {course.fees}
+                        </div>
+                      )}
                     </div>
                     
                     {/* Features */}

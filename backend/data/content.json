@@ -17,11 +17,11 @@
     "social": {
       "whatsapp": "https://wa.me/919001991227",
       "instagram": "#",
-      "youtube": "#"
+      "youtube": "https://wa.me/919001991227"
     }
   },
   "home": {
-    "heroHeadline": "CMS Integration Test - Dynamic Content Working",
+    "heroHeadline": "Persistence Test - Should Remain After Refresh",
     "heroSubtext": "From Degree Programs to Cutting-Edge Certifications",
     "ctaPrimaryLabel": "Explore Courses",
     "ctaPrimaryHref": "/courses",
@@ -35,6 +35,27 @@
     "body": "GRRAS Solutions Training Institute has been empowering students with world-class IT education since 2014. We offer industry-relevant courses, recognized degrees, and guaranteed placement assistance."
   },
   "courses": [
+    {
+      "slug": "bca-degree",
+      "title": "BCA Degree Program",
+      "oneLiner": "",
+      "duration": "3 Years",
+      "fees": "Contact for Details",
+      "tools": [
+        "Programming in C",
+        "Java",
+        "DBMS",
+        "Web Technologies",
+        "Cloud & DevOps Basics",
+        "AI/ML Basics",
+        "Testing Tool"
+      ],
+      "visible": true,
+      "order": 1,
+      "thumbnailUrl": "",
+      "category": "degree",
+      "level": "Beginner to Advanced"
+    },
     {
       "slug": "devops-training",
       "title": "DevOps Training",
@@ -52,31 +73,11 @@
         "Jenkins",
         "GitHub"
       ],
-      "visible": true,
-      "order": 1,
+      "visible": false,
+      "order": 2,
       "thumbnailUrl": "",
       "category": "cloud",
       "level": "Intermediate"
-    },
-    {
-      "slug": "bca-degree",
-      "title": "BCA Degree Program",
-      "oneLiner": "Industry-Integrated Bachelor Degree Program",
-      "duration": "3 Years",
-      "fees": "Contact for Details",
-      "tools": [
-        "Programming in C",
-        "Java",
-        "DBMS",
-        "Web Technologies",
-        "Cloud & DevOps Basics",
-        "AI/ML Basics"
-      ],
-      "visible": true,
-      "order": 2,
-      "thumbnailUrl": "",
-      "category": "degree",
-      "level": "Beginner to Advanced"
     },
     {
       "slug": "redhat-certifications",
@@ -183,7 +184,7 @@
         "CMS"
       ],
       "visible": true,
-      "order": 999,
+      "order": 8,
       "thumbnailUrl": "",
       "category": "test",
       "level": "Beginner"
@@ -199,7 +200,7 @@
         "CMS"
       ],
       "visible": true,
-      "order": 999,
+      "order": 9,
       "thumbnailUrl": "",
       "category": "test",
       "level": "Beginner"
@@ -215,7 +216,7 @@
         "CMS"
       ],
       "visible": true,
-      "order": 999,
+      "order": 10,
       "thumbnailUrl": "",
       "category": "test",
       "level": "Beginner"
@@ -239,7 +240,7 @@
       "id": "faq1",
       "question": "Do you provide placement assistance?",
       "answer": "Yes, we provide 100% placement assistance with our network of 100+ hiring partners including top IT companies.",
-      "category": "placement",
+      "category": "admissions",
       "order": 1
     },
     {
@@ -271,9 +272,9 @@
       "role": "DevOps Engineer at TCS",
       "course": "DevOps Training",
       "text": "GRRAS transformed my career! The DevOps training was comprehensive and the placement support was excellent.",
-      "rating": 5,
+      "rating": 10,
       "order": 1,
-      "featured": true
+      "featured": false
     },
     {
       "id": "test2",
@@ -307,9 +308,9 @@
     }
   ],
   "settings": {
-    "seoTitle": "GRRAS Solutions Training Institute - IT & Cloud Education in Jaipur",
+    "seoTitle": "https://instagram.com/grrassolutions",
     "seoDescription": "Premier IT training institute in Jaipur offering BCA degree, DevOps, Red Hat certifications, Data Science, Python, Java & Salesforce courses with placement assistance.",
-    "seoKeywords": "IT training Jaipur, BCA degree, DevOps training, Red Hat certification, Data Science course, Python training, Java Salesforce",
-    "lastUpdated": "2025-08-28T05:38:26.626771+00:00"
+    "seoKeywords": "GRRAS Solutions - Best IT Training Institute in Jaipur",
+    "lastUpdated": "2025-08-28T05:40:12.126796+00:00"
   }
 }

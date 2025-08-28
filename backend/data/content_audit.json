@@ -1,6 +1,39 @@
 [
   {
     "user": "admin",
+    "timestamp": "2025-08-28T05:40:12.129761+00:00",
+    "changedKeys": [
+      "modified:settings.lastUpdated",
+      "modified:home.heroHeadline"
+    ],
+    "diffSummary": "Modified: 2 items"
+  },
+  {
+    "user": "admin",
+    "timestamp": "2025-08-28T05:40:08.444884+00:00",
+    "changedKeys": [
+      "modified:courses",
+      "modified:settings.lastUpdated"
+    ],
+    "diffSummary": "Modified: 2 items"
+  },
+  {
+    "user": "admin",
+    "timestamp": "2025-08-28T05:40:03.694378+00:00",
+    "changedKeys": [
+      "modified:institute.social.youtube",
+      "modified:testimonials",
+      "modified:faqs",
+      "modified:courses",
+      "modified:settings.seoKeywords",
+      "modified:settings.lastUpdated",
+      "modified:settings.seoTitle",
+      "modified:home.heroHeadline"
+    ],
+    "diffSummary": "Modified: 8 items"
+  },
+  {
+    "user": "admin",
     "timestamp": "2025-08-28T05:38:26.629185+00:00",
     "changedKeys": [
       "modified:settings.lastUpdated",

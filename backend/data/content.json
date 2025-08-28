@@ -21,7 +21,7 @@
     }
   },
   "home": {
-    "heroHeadline": "Test Hero Headline - Updated by Testing Agent",
+    "heroHeadline": "CMS Integration Test - Dynamic Content Working",
     "heroSubtext": "From Degree Programs to Cutting-Edge Certifications",
     "ctaPrimaryLabel": "Explore Courses",
     "ctaPrimaryHref": "/courses",
@@ -310,6 +310,6 @@
     "seoTitle": "GRRAS Solutions Training Institute - IT & Cloud Education in Jaipur",
     "seoDescription": "Premier IT training institute in Jaipur offering BCA degree, DevOps, Red Hat certifications, Data Science, Python, Java & Salesforce courses with placement assistance.",
     "seoKeywords": "IT training Jaipur, BCA degree, DevOps training, Red Hat certification, Data Science course, Python training, Java Salesforce",
-    "lastUpdated": "2025-08-28T05:37:29.719494+00:00"
+    "lastUpdated": "2025-08-28T05:38:26.626771+00:00"
   }
 }

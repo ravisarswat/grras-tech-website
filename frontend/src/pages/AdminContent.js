@@ -986,7 +986,9 @@ const AdminContent = () => {
             <div className="space-y-6">
               <h2 className="text-xl font-semibold text-gray-900">Institute Settings</h2>
               
+              {/* Basic Institute Information */}
               <div className="bg-white rounded-lg p-6 shadow-sm">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Institute Information</h3>
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -994,9 +996,36 @@ const AdminContent = () => {
                     </label>
                     <input
                       type="text"
-                      value={getContentValue('institute.name')}
+                      value={getContentValue('institute.name') || ''}
                       onChange={(e) => updateContent('institute.name', e.target.value)}
                       className="form-input"
+                      placeholder="GRRAS Solutions Training Institute"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Short Name
+                    </label>
+                    <input
+                      type="text"
+                      value={getContentValue('institute.shortName') || ''}
+                      onChange={(e) => updateContent('institute.shortName', e.target.value)}
+                      className="form-input"
+                      placeholder="GRRAS Solutions"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Tagline
+                    </label>
+                    <input
+                      type="text"
+                      value={getContentValue('institute.tagline') || ''}
+                      onChange={(e) => updateContent('institute.tagline', e.target.value)}
+                      className="form-input"
+                      placeholder="Empowering Futures Through Technology"
                     />
                   </div>
                   
@@ -1005,10 +1034,11 @@ const AdminContent = () => {
                       Address
                     </label>
                     <textarea
-                      value={getContentValue('institute.address')}
+                      value={getContentValue('institute.address') || ''}
                       onChange={(e) => updateContent('institute.address', e.target.value)}
                       className="form-textarea"
                       rows={3}
+                      placeholder="A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012"
                     />
                   </div>
                   
@@ -1019,9 +1049,10 @@ const AdminContent = () => {
                       </label>
                       <input
                         type="text"
-                        value={getContentValue('institute.phone')}
+                        value={getContentValue('institute.phone') || ''}
                         onChange={(e) => updateContent('institute.phone', e.target.value)}
                         className="form-input"
+                        placeholder="090019 91227"
                       />
                     </div>
                     
@@ -1031,93 +1062,283 @@ const AdminContent = () => {
                       </label>
                       <input
                         type="email"
-                        value={getContentValue('institute.email')}
+                        value={getContentValue('institute.email') || ''}
                         onChange={(e) => updateContent('institute.email', e.target.value)}
                         className="form-input"
+                        placeholder="info@grrassolutions.com"
                       />
                     </div>
                   </div>
                   
-                  <h3 className="text-lg font-medium text-gray-900 mt-6">Social Media Links</h3>
-                  
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        WhatsApp URL
-                      </label>
-                      <input
-                        type="text"
-                        value={getContentValue('institute.social.whatsapp')}
-                        onChange={(e) => updateContent('institute.social.whatsapp', e.target.value)}
-                        className="form-input"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Instagram URL
-                      </label>
-                      <input
-                        type="text"
-                        value={getContentValue('institute.social.instagram')}
-                        onChange={(e) => updateContent('institute.social.instagram', e.target.value)}
-                        className="form-input"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        YouTube URL
-                      </label>
-                      <input
-                        type="text"
-                        value={getContentValue('institute.social.youtube')}
-                        onChange={(e) => updateContent('institute.social.youtube', e.target.value)}
-                        className="form-input"
-                      />
-                    </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Website URL
+                    </label>
+                    <input
+                      type="url"
+                      value={getContentValue('institute.website') || ''}
+                      onChange={(e) => updateContent('institute.website', e.target.value)}
+                      className="form-input"
+                      placeholder="https://grrassolutions.com"
+                    />
                   </div>
                   
-                  <h3 className="text-lg font-medium text-gray-900 mt-6">SEO Settings</h3>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Google Map Embed URL
+                    </label>
+                    <input
+                      type="url"
+                      value={getContentValue('institute.googleMapUrl') || ''}
+                      onChange={(e) => updateContent('institute.googleMapUrl', e.target.value)}
+                      className="form-input"
+                      placeholder="https://www.google.com/maps/embed?pb=..."
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Go to Google Maps → Share → Embed → Copy HTML src URL
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Social Media Links */}
+              <div className="bg-white rounded-lg p-6 shadow-sm">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Social Media Links</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      WhatsApp URL
+                    </label>
+                    <input
+                      type="url"
+                      value={getContentValue('institute.social.whatsapp') || ''}
+                      onChange={(e) => updateContent('institute.social.whatsapp', e.target.value)}
+                      className="form-input"
+                      placeholder="https://wa.me/919001991227"
+                    />
+                  </div>
                   
-                  <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Instagram URL
+                    </label>
+                    <input
+                      type="url"
+                      value={getContentValue('institute.social.instagram') || ''}
+                      onChange={(e) => updateContent('institute.social.instagram', e.target.value)}
+                      className="form-input"
+                      placeholder="https://instagram.com/grrassolutions"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      YouTube URL
+                    </label>
+                    <input
+                      type="url"
+                      value={getContentValue('institute.social.youtube') || ''}
+                      onChange={(e) => updateContent('institute.social.youtube', e.target.value)}
+                      className="form-input"
+                      placeholder="https://youtube.com/@grrassolutions"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      LinkedIn URL
+                    </label>
+                    <input
+                      type="url"
+                      value={getContentValue('institute.social.linkedin') || ''}
+                      onChange={(e) => updateContent('institute.social.linkedin', e.target.value)}
+                      className="form-input"
+                      placeholder="https://linkedin.com/company/grrassolutions"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Facebook URL
+                    </label>
+                    <input
+                      type="url"
+                      value={getContentValue('institute.social.facebook') || ''}
+                      onChange={(e) => updateContent('institute.social.facebook', e.target.value)}
+                      className="form-input"
+                      placeholder="https://facebook.com/grrassolutions"
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              {/* Institute Statistics */}
+              <div className="bg-white rounded-lg p-6 shadow-sm">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Institute Statistics</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Years of Excellence
+                    </label>
+                    <input
+                      type="text"
+                      value={getContentValue('institute.stats.yearsOfExcellence') || ''}
+                      onChange={(e) => updateContent('institute.stats.yearsOfExcellence', e.target.value)}
+                      className="form-input"
+                      placeholder="10+"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Students Trained
+                    </label>
+                    <input
+                      type="text"
+                      value={getContentValue('institute.stats.studentsTrained') || ''}
+                      onChange={(e) => updateContent('institute.stats.studentsTrained', e.target.value)}
+                      className="form-input"
+                      placeholder="5000+"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Placement Rate
+                    </label>
+                    <input
+                      type="text"
+                      value={getContentValue('institute.stats.placementRate') || ''}
+                      onChange={(e) => updateContent('institute.stats.placementRate', e.target.value)}
+                      className="form-input"
+                      placeholder="95%"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Hiring Partners
+                    </label>
+                    <input
+                      type="text"
+                      value={getContentValue('institute.stats.hiringPartners') || ''}
+                      onChange={(e) => updateContent('institute.stats.hiringPartners', e.target.value)}
+                      className="form-input"
+                      placeholder="100+"
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              {/* Branding Settings */}
+              <div className="bg-white rounded-lg p-6 shadow-sm">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Branding</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Logo URL
+                    </label>
+                    <input
+                      type="url"
+                      value={getContentValue('branding.logoUrl') || ''}
+                      onChange={(e) => updateContent('branding.logoUrl', e.target.value)}
+                      className="form-input"
+                      placeholder="https://example.com/logo.png"
+                    />
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        SEO Title
+                        Primary Color
                       </label>
-                      <input
-                        type="text"
-                        value={getContentValue('settings.seoTitle')}
-                        onChange={(e) => updateContent('settings.seoTitle', e.target.value)}
-                        className="form-input"
-                      />
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="color"
+                          value={getContentValue('branding.colors.primary') || '#DC2626'}
+                          onChange={(e) => updateContent('branding.colors.primary', e.target.value)}
+                          className="w-12 h-10 rounded border border-gray-300"
+                        />
+                        <input
+                          type="text"
+                          value={getContentValue('branding.colors.primary') || ''}
+                          onChange={(e) => updateContent('branding.colors.primary', e.target.value)}
+                          className="form-input flex-1"
+                          placeholder="#DC2626"
+                        />
+                      </div>
                     </div>
                     
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        SEO Description
+                        Secondary Color
                       </label>
-                      <textarea
-                        value={getContentValue('settings.seoDescription')}
-                        onChange={(e) => updateContent('settings.seoDescription', e.target.value)}
-                        className="form-textarea"
-                        rows={3}
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        SEO Keywords
-                      </label>
-                      <input
-                        type="text"
-                        value={getContentValue('settings.seoKeywords')}
-                        onChange={(e) => updateContent('settings.seoKeywords', e.target.value)}
-                        className="form-input"
-                        placeholder="keyword1, keyword2, keyword3"
-                      />
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="color"
+                          value={getContentValue('branding.colors.secondary') || '#EA580C'}
+                          onChange={(e) => updateContent('branding.colors.secondary', e.target.value)}
+                          className="w-12 h-10 rounded border border-gray-300"
+                        />
+                        <input
+                          type="text"
+                          value={getContentValue('branding.colors.secondary') || ''}
+                          onChange={(e) => updateContent('branding.colors.secondary', e.target.value)}
+                          className="form-input flex-1"
+                          placeholder="#EA580C"
+                        />
+                      </div>
                     </div>
                   </div>
+                </div>
+              </div>
+              
+              {/* SEO Settings */}
+              <div className="bg-white rounded-lg p-6 shadow-sm">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">SEO Settings</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      SEO Title
+                    </label>
+                    <input
+                      type="text"
+                      value={getContentValue('pages.home.seo.title') || ''}
+                      onChange={(e) => updateContent('pages.home.seo.title', e.target.value)}
+                      className="form-input"
+                      placeholder="GRRAS Solutions Training Institute - IT & Cloud Education in Jaipur"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      SEO Description
+                    </label>
+                    <textarea
+                      value={getContentValue('pages.home.seo.description') || ''}
+                      onChange={(e) => updateContent('pages.home.seo.description', e.target.value)}
+                      className="form-textarea"
+                      rows={3}
+                      placeholder="Premier IT training institute in Jaipur offering BCA degree, DevOps, Red Hat certifications with placement assistance."
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      SEO Keywords
+                    </label>
+                    <input
+                      type="text"
+                      value={getContentValue('pages.home.seo.keywords') || ''}
+                      onChange={(e) => updateContent('pages.home.seo.keywords', e.target.value)}
+                      className="form-input"
+                      placeholder="IT training Jaipur, BCA degree, DevOps training, Red Hat certification"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
                 </div>
               </div>
             </div>

@@ -1,0 +1,31 @@
+[
+  {
+    "user": "admin",
+    "timestamp": "2025-08-28T05:16:21.555233+00:00",
+    "changedKeys": [
+      "modified:institute.name",
+      "modified:institute.email",
+      "removed:institute.social",
+      "modified:institute.address",
+      "modified:institute.phone",
+      "modified:testimonials",
+      "modified:faqs",
+      "removed:branding.colors.light",
+      "removed:branding.colors.dark",
+      "removed:branding.colors.accent",
+      "modified:branding.logoUrl",
+      "modified:courses",
+      "modified:settings.seoKeywords",
+      "modified:settings.lastUpdated",
+      "modified:settings.seoTitle",
+      "modified:settings.seoDescription",
+      "modified:home.heroHeadline",
+      "modified:home.heroSubtext",
+      "modified:about.mission",
+      "modified:about.vision",
+      "modified:about.body",
+      "modified:about.headline"
+    ],
+    "diffSummary": "Removed: 4 items; Modified: 18 items"
+  }
+]

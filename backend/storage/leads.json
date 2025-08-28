@@ -108,5 +108,33 @@
     "consent": true,
     "id": "de975306-ef4d-4e51-9575-cedcf05687c7",
     "timestamp": "2025-08-28 02:55:19.339308+00:00"
+  },
+  {
+    "name": "Test Student",
+    "email": "test@example.com",
+    "phone": "9876543210",
+    "course_slug": null,
+    "message": "Interested in courses",
+    "consent": true,
+    "id": "0550fb28-7200-458b-af4c-e89b3a159de6",
+    "timestamp": "2025-08-28 05:16:20.620730+00:00"
+  },
+  {
+    "name": "Test User",
+    "email": "user@test.com",
+    "phone": "9988776655",
+    "course_slug": "devops-training",
+    "consent": true,
+    "id": "4ad24d24-99f0-4627-9db9-5c1e71b2dafd",
+    "timestamp": "2025-08-28 05:16:20.785577+00:00"
+  },
+  {
+    "name": "Test Student",
+    "email": "test@example.com",
+    "phone": "9876543210",
+    "course_slug": "test-course",
+    "consent": true,
+    "id": "674bdef3-a5bd-4bc4-96ef-4a3ed70d9462",
+    "timestamp": "2025-08-28 05:16:21.920613+00:00"
   }
 ]

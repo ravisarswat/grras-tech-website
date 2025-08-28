@@ -1,6 +1,7 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Form, Depends, Response, Request
+from fastapi import FastAPI, APIRouter, HTTPException, Form, Depends, Response, Request, UploadFile, File
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -26,6 +27,8 @@ from urllib.parse import urlparse
 import hashlib
 import jwt
 from content_manager import ContentManager
+import mimetypes
+import shutil
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')

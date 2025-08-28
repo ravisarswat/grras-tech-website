@@ -1,7 +1,15 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+// Railway-compatible backend URL resolution
+const getBackendUrl = () => {
+  // Try different environment variable patterns
+  return process.env.REACT_APP_BACKEND_URL || 
+         window.env?.REACT_APP_BACKEND_URL ||
+         (process.env.NODE_ENV === 'development' ? 'http://localhost:8001' : '');
+};
+
+const BACKEND_URL = getBackendUrl();
 const API = `${BACKEND_URL}/api`;
 
 const ContentContext = createContext();

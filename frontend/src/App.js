@@ -39,6 +39,7 @@ function AppContent() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/admin/leads" element={<AdminLeads />} />
+          <Route path="/admin/content" element={<AdminContent />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

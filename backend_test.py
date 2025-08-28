@@ -397,60 +397,37 @@ def test_update_content_with_auth(results, admin_cookies):
         return
     
     try:
-        # Test content update
-        test_content = {
-            "content": {
-                "home": {
-                    "heroHeadline": "Test Updated Headline",
-                    "heroSubtext": "Test Updated Subtext",
-                    "ctaPrimaryLabel": "Explore Courses",
-                    "ctaPrimaryHref": "/courses",
-                    "ctaSecondaryLabel": "Apply Now", 
-                    "ctaSecondaryHref": "/admissions"
-                },
-                "courses": [
-                    {
-                        "slug": "test-course",
-                        "title": "Test Course",
-                        "oneLiner": "Test description",
-                        "duration": "3 months",
-                        "fees": "Test fees",
-                        "tools": ["Tool1", "Tool2"],
-                        "visible": True,
-                        "order": 1,
-                        "thumbnailUrl": "",
-                        "category": "test",
-                        "level": "Beginner"
-                    }
-                ],
-                "branding": {
-                    "logoUrl": "https://example.com/logo.png",
-                    "colors": {
-                        "primary": "#DC2626",
-                        "secondary": "#EA580C"
-                    }
-                },
-                "institute": {
-                    "name": "Test Institute",
-                    "address": "Test Address",
-                    "phone": "1234567890",
-                    "email": "test@example.com"
-                },
-                "about": {
-                    "headline": "Test About",
-                    "mission": "Test Mission",
-                    "vision": "Test Vision",
-                    "body": "Test Body"
-                },
-                "faqs": [],
-                "testimonials": [],
-                "settings": {
-                    "seoTitle": "Test Title",
-                    "seoDescription": "Test Description",
-                    "seoKeywords": "test, keywords"
-                }
-            }
+        # First get current content to preserve it
+        current_response = requests.get(f"{API_BASE}/content", timeout=10)
+        if current_response.status_code != 200:
+            results.add_result("Update Content With Auth", "FAIL", "Could not get current content")
+            return
+        
+        current_content = current_response.json()["content"]
+        
+        # Make a small update to test the functionality
+        updated_content = current_content.copy()
+        updated_content["home"]["heroHeadline"] = "Test Updated Headline - CMS Working"
+        
+        # Add a test course to the existing courses
+        test_course = {
+            "slug": "test-cms-course",
+            "title": "Test CMS Course",
+            "oneLiner": "Test CMS functionality",
+            "duration": "1 month",
+            "fees": "Free",
+            "tools": ["Testing", "CMS"],
+            "visible": True,
+            "order": 999,
+            "thumbnailUrl": "",
+            "category": "test",
+            "level": "Beginner"
         }
+        
+        # Add test course to existing courses
+        updated_content["courses"].append(test_course)
+        
+        test_content = {"content": updated_content}
         
         response = requests.post(f"{API_BASE}/content", json=test_content, cookies=admin_cookies, timeout=10)
         if response.status_code == 200:
@@ -460,8 +437,8 @@ def test_update_content_with_auth(results, admin_cookies):
                 verify_response = requests.get(f"{API_BASE}/content", timeout=10)
                 if verify_response.status_code == 200:
                     verify_data = verify_response.json()
-                    updated_content = verify_data.get("content", {})
-                    if updated_content.get("home", {}).get("heroHeadline") == "Test Updated Headline":
+                    updated_content_check = verify_data.get("content", {})
+                    if updated_content_check.get("home", {}).get("heroHeadline") == "Test Updated Headline - CMS Working":
                         results.add_result("Update Content With Auth", "PASS", "Content updated successfully and verified")
                     else:
                         results.add_result("Update Content With Auth", "FAIL", "Content update not reflected in GET request")

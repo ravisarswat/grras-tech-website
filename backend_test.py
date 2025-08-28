@@ -136,9 +136,9 @@ def test_get_course_details(results):
             response = requests.get(f"{API_BASE}/courses/{slug}", timeout=10)
             if response.status_code == 200:
                 data = response.json()
-                if "slug" in data and "name" in data and "tools" in data:
+                if "slug" in data and "title" in data and "tools" in data:  # Changed from "name" to "title"
                     if data["slug"] == slug:
-                        results.add_result(f"Get Course Details - {slug}", "PASS", f"Retrieved details for {data['name']}")
+                        results.add_result(f"Get Course Details - {slug}", "PASS", f"Retrieved details for {data['title']}")
                     else:
                         results.add_result(f"Get Course Details - {slug}", "FAIL", "Slug mismatch in response")
                 else:

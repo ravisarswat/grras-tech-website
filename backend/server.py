@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Form, Depends, Response
+from fastapi import FastAPI, APIRouter, HTTPException, Form, Depends, Response, Request
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from dotenv import load_dotenv
@@ -23,6 +23,9 @@ from reportlab.lib.units import inch
 import asyncio
 import tempfile
 from urllib.parse import urlparse
+import hashlib
+import jwt
+from content_manager import ContentManager
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')

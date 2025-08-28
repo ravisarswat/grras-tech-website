@@ -32,10 +32,11 @@ const Contact = () => {
   const institute = content?.institute || {};
   const instituteName = institute.name || 'GRRAS Solutions Training Institute';
   const address = institute.address || 'A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012';
-  const phone = institute.phone || '090019 91227';
-  const email = institute.email || 'info@grrassolutions.com';
+  const phones = institute.phones || ['090019 91227'];
+  const emails = institute.emails || ['info@grrassolutions.com'];
   const whatsappUrl = institute.social?.whatsapp || 'https://wa.me/919001991227';
   const googleMapUrl = institute.googleMapUrl || '';
+  const social = institute.social || {};
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

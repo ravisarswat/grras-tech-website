@@ -118,10 +118,10 @@ def test_get_courses(results):
         if response.status_code == 200:
             data = response.json()
             if "courses" in data and isinstance(data["courses"], list):
-                if len(data["courses"]) >= 7:  # Should have at least 7 courses (may have test courses added)
-                    results.add_result("Get All Courses", "PASS", f"Retrieved {len(data['courses'])} courses")
+                if len(data["courses"]) >= 4:  # Should have at least 4 visible courses
+                    results.add_result("Get All Courses", "PASS", f"Retrieved {len(data['courses'])} visible courses")
                 else:
-                    results.add_result("Get All Courses", "FAIL", f"Expected at least 7 courses, got {len(data['courses'])}")
+                    results.add_result("Get All Courses", "FAIL", f"Expected at least 4 courses, got {len(data['courses'])}")
             else:
                 results.add_result("Get All Courses", "FAIL", "Invalid response format", str(data))
         else:

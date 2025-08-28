@@ -177,58 +177,34 @@ const Home = () => {
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Hero Content */}
-            <div className="text-white animate-fade-in-up">
-              <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-                Empowering Students with{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-400">
-                  World-Class
-                </span>{' '}
-                IT & Cloud Education
-              </h1>
-              
-              <p className="text-xl md:text-2xl text-gray-100 mb-8 leading-relaxed">
-                Premier training institute in Jaipur offering industry-oriented courses, 
-                recognized degrees, and guaranteed placement assistance.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  to="/courses"
-                  className="btn-primary text-center animate-pulse-hover"
-                >
-                  Explore Courses
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-                
-                <Link
-                  to="/admissions"
-                  className="btn-outline bg-white bg-opacity-10 backdrop-blur-sm border-white text-white hover:bg-white hover:text-gray-900 text-center"
-                >
-                  Apply Now
-                </Link>
-              </div>
-            </div>
+          <div className="text-center animate-fade-in-up">
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 text-white max-w-5xl mx-auto">
+              Empowering Students with{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-400">
+                World-Class
+              </span>{' '}
+              IT & Cloud Education
+            </h1>
             
-            {/* Hero Image/Video Placeholder */}
-            <div className="animate-fade-in-right">
-              <div className="relative bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-8 border border-white border-opacity-20">
-                <div className="text-center">
-                  <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-orange-400 to-red-500 rounded-full flex items-center justify-center">
-                    <Play className="h-12 w-12 text-white ml-1" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">
-                    Watch Our Success Stories
-                  </h3>
-                  <p className="text-gray-200 mb-4">
-                    See how GRRAS alumni are excelling in top IT companies
-                  </p>
-                  <button className="text-white hover:text-orange-300 transition-colors">
-                    Play Video →
-                  </button>
-                </div>
-              </div>
+            <p className="text-xl md:text-2xl text-gray-100 mb-8 leading-relaxed max-w-4xl mx-auto">
+              From Degree Programs to Cutting-Edge Certifications
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link
+                to="/courses"
+                className="btn-primary text-center animate-pulse-hover"
+              >
+                Explore Courses
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+              
+              <Link
+                to="/admissions"
+                className="btn-outline bg-white bg-opacity-10 backdrop-blur-sm border-white text-white hover:bg-white hover:text-gray-900 text-center"
+              >
+                Apply Now
+              </Link>
             </div>
           </div>
         </div>

@@ -676,11 +676,26 @@ app.include_router(api_router)
 # Mount static files for media
 app.mount("/media", StaticFiles(directory="/app/backend/data/media"), name="media")
 
-# CORS
+# CORS with Railway support
+railway_cors_origins = [
+    "http://localhost:3000",  # Local development
+    "https://*.railway.app",  # Railway frontend domains
+    "https://*.up.railway.app",  # Railway preview domains
+]
+
+# Add custom domain if specified
+custom_domain = os.environ.get('FRONTEND_URL')
+if custom_domain:
+    railway_cors_origins.append(custom_domain)
+
+# Add existing CORS_ORIGINS for backward compatibility
+existing_origins = os.environ.get('CORS_ORIGINS', '*').split(',')
+railway_cors_origins.extend(existing_origins)
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_origins=railway_cors_origins if railway_cors_origins != ['*'] else ["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )

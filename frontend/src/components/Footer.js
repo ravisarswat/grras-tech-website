@@ -51,50 +51,114 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
               <img
-                src="https://customer-assets.emergentagent.com/job_training-hub-29/artifacts/gl3ldkmg_white%20logo.png"
-                alt="GRRAS Solutions"
+                src={instituteLogo}
+                alt={instituteName}
                 className="h-10 w-auto"
               />
               <div>
-                <h3 className="text-lg font-bold">GRRAS Solutions</h3>
+                <h3 className="text-lg font-bold">{institute.shortName || instituteName}</h3>
                 <p className="text-sm text-gray-300">Training Institute</p>
               </div>
             </div>
             
-            <p className="text-gray-300 text-sm leading-relaxed">
-              Empowering students with world-class IT & Cloud education. 
-              Industry-oriented training with placement assistance.
+            <p className="text-sm text-gray-300 leading-relaxed">
+              {institute.tagline || 'Empowering Futures Through Technology'}
             </p>
             
+            <div className="space-y-2 text-sm">
+              <div className="flex items-start space-x-2">
+                <MapPin className="h-4 w-4 text-gray-400 mt-1 flex-shrink-0" />
+                <address className="text-gray-300 not-italic">
+                  {address.split(',').map((line, index) => (
+                    <span key={index} className="block">
+                      {line.trim()}
+                    </span>
+                  ))}
+                </address>
+              </div>
+              
+              {phones.length > 0 && (
+                <div className="space-y-1">
+                  {phones.map((phone, index) => (
+                    <div key={index} className="flex items-center space-x-2">
+                      <Phone className="h-4 w-4 text-gray-400 flex-shrink-0" />
+                      <a
+                        href={`tel:${phone.replace(/\s+/g, '')}`}
+                        className="text-gray-300 hover:text-red-400 transition-colors"
+                      >
+                        {phone}
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {emails.length > 0 && (
+                <div className="space-y-1">
+                  {emails.map((email, index) => (
+                    <div key={index} className="flex items-center space-x-2">
+                      <Mail className="h-4 w-4 text-gray-400 flex-shrink-0" />
+                      <a
+                        href={`mailto:${email}`}
+                        className="text-gray-300 hover:text-red-400 transition-colors"
+                      >
+                        {email}
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {website && (
+                <div className="flex items-center space-x-2">
+                  <ExternalLink className="h-4 w-4 text-gray-400 flex-shrink-0" />
+                  <a
+                    href={website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-300 hover:text-red-400 transition-colors"
+                  >
+                    {website.replace(/^https?:\/\//, '')}
+                  </a>
+                </div>
+              )}
+            </div>
+
             {/* Social Links */}
             <div className="flex space-x-4">
-              <a
-                href="https://wa.me/919001991227"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-green-400 transition-colors"
-                aria-label="WhatsApp"
-              >
-                <MessageCircle className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-pink-400 transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-red-400 transition-colors"
-                aria-label="YouTube"
-              >
-                <Youtube className="h-5 w-5" />
-              </a>
+              {social.whatsapp && social.whatsapp !== '#' && (
+                <a
+                  href={social.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-green-400 transition-colors"
+                  aria-label="WhatsApp"
+                >
+                  <MessageCircle className="h-5 w-5" />
+                </a>
+              )}
+              {social.instagram && social.instagram !== '#' && (
+                <a
+                  href={social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-pink-400 transition-colors"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="h-5 w-5" />
+                </a>
+              )}
+              {social.youtube && social.youtube !== '#' && (
+                <a
+                  href={social.youtube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-red-400 transition-colors"
+                  aria-label="YouTube"
+                >
+                  <Youtube className="h-5 w-5" />
+                </a>
+              )}
             </div>
           </div>
 

@@ -118,35 +118,44 @@ const Contact = () => {
     }
   };
 
+  // Dynamic contact info from CMS
   const contactInfo = [
     {
       icon: <MapPin className="h-6 w-6" />,
       title: 'Visit Our Campus',
-      details: [
-        'A-81, Singh Bhoomi Khatipura Rd,',
-        'behind Marudhar Hospital,',
-        'Jaipur, Rajasthan 302012'
-      ],
-      action: { text: 'Get Directions', href: 'https://maps.google.com/?q=26.9124,75.7873' }
+      details: address.split(',').map(line => line.trim()),
+      action: { 
+        text: 'Get Directions', 
+        href: googleMapUrl || `https://maps.google.com/?q=${encodeURIComponent(address)}` 
+      }
     },
     {
       icon: <Phone className="h-6 w-6" />,
       title: 'Call Us',
-      details: ['090019 91227'],
-      action: { text: 'Call Now', href: 'tel:+919001991227' }
+      details: phones.filter(phone => phone.trim()),
+      action: { 
+        text: 'Call Now', 
+        href: `tel:${phones[0]?.replace(/\s+/g, '')}` 
+      }
     },
     {
       icon: <Mail className="h-6 w-6" />,
       title: 'Email Us',
-      details: ['info@grrassolutions.com'],
-      action: { text: 'Send Email', href: 'mailto:info@grrassolutions.com' }
+      details: emails.filter(email => email.trim()),
+      action: { 
+        text: 'Send Email', 
+        href: `mailto:${emails[0]}` 
+      }
     },
-    {
+    ...(whatsappUrl && whatsappUrl !== '#' ? [{
       icon: <MessageCircle className="h-6 w-6" />,
       title: 'WhatsApp',
       details: ['Quick responses on WhatsApp'],
-      action: { text: 'Chat Now', href: 'https://wa.me/919001991227?text=Hello! I need information about GRRAS courses.' }
-    }
+      action: { 
+        text: 'Chat Now', 
+        href: `${whatsappUrl}?text=Hello! I need information about ${instituteName} courses.`
+      }
+    }] : [])
   ];
 
   const officeHours = [

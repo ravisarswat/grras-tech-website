@@ -33,14 +33,24 @@ const CourseDetail = () => {
   const fetchCourseDetails = async () => {
     try {
       const response = await axios.get(`${API}/courses/${slug}`);
-      const courseData = {
-        ...response.data,
+      const courseData = response.data;
+      
+      // Use CMS data with fallback only for missing fields
+      const courseWithDetails = {
+        ...courseData,
+        // Only add static details if fields are missing from CMS
+        ...(courseData.highlights ? {} : { highlights: getCourseExtendedDetails(slug).highlights }),
+        ...(courseData.outcomes ? {} : { outcomes: getCourseExtendedDetails(slug).outcomes }),
+        ...(courseData.eligibility ? {} : { eligibility: getCourseExtendedDetails(slug).eligibility }),
+        ...(courseData.projects ? {} : { projects: getCourseExtendedDetails(slug).projects }),
+        ...(courseData.testimonials ? {} : { testimonials: getCourseExtendedDetails(slug).testimonials }),
+        // Use extended details as fallback for UI fields
         ...getCourseExtendedDetails(slug)
       };
-      setCourse(courseData);
+      setCourse(courseWithDetails);
     } catch (error) {
       console.error('Error fetching course:', error);
-      // Fallback to static data
+      // Fallback to static data only if API fails completely
       const staticCourse = getStaticCourseData(slug);
       if (staticCourse) {
         setCourse(staticCourse);

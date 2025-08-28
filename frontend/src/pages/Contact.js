@@ -439,12 +439,6 @@ const Contact = () => {
                     </div>
                   </div>
                 </div>
-                    </div>
-                  </div>
-                </div>
-                    </div>
-                  </div>
-                </div>
 
                 {/* FAQs */}
                 <div className="bg-white rounded-2xl p-8 shadow-lg animate-fade-in-up">

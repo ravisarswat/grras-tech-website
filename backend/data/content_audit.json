@@ -1,6 +1,20 @@
 [
   {
     "user": "admin",
+    "timestamp": "2025-08-28T05:37:29.729624+00:00",
+    "changedKeys": [
+      "modified:institute.name",
+      "modified:testimonials",
+      "modified:faqs",
+      "modified:courses",
+      "modified:settings.lastUpdated",
+      "modified:home.heroHeadline",
+      "modified:about.headline"
+    ],
+    "diffSummary": "Modified: 7 items"
+  },
+  {
+    "user": "admin",
     "timestamp": "2025-08-28T05:19:43.542734+00:00",
     "changedKeys": [
       "modified:courses",

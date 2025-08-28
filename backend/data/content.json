@@ -10,7 +10,7 @@
     }
   },
   "institute": {
-    "name": "GRRAS Solutions Training Institute",
+    "name": "GRRAS Solutions - Updated by Testing Agent",
     "address": "A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012",
     "phone": "090019 91227",
     "email": "info@grrassolutions.com",
@@ -21,7 +21,7 @@
     }
   },
   "home": {
-    "heroHeadline": "Test Updated Headline - CMS Working",
+    "heroHeadline": "Test Hero Headline - Updated by Testing Agent",
     "heroSubtext": "From Degree Programs to Cutting-Edge Certifications",
     "ctaPrimaryLabel": "Explore Courses",
     "ctaPrimaryHref": "/courses",
@@ -29,7 +29,7 @@
     "ctaSecondaryHref": "/admissions"
   },
   "about": {
-    "headline": "About GRRAS Solutions",
+    "headline": "Test About Headline - Updated by Testing Agent",
     "mission": "To provide world-class IT education and training that bridges the gap between academic learning and industry requirements.",
     "vision": "To be the leading IT training institute in India, recognized for excellence in education, innovation in teaching methodologies, and success in producing industry-ready professionals.",
     "body": "GRRAS Solutions Training Institute has been empowering students with world-class IT education since 2014. We offer industry-relevant courses, recognized degrees, and guaranteed placement assistance."
@@ -219,6 +219,19 @@
       "thumbnailUrl": "",
       "category": "test",
       "level": "Beginner"
+    },
+    {
+      "slug": "new-course-1756359443228",
+      "title": "New Course",
+      "oneLiner": "Course description",
+      "duration": "3 months",
+      "fees": "Contact for fees",
+      "tools": [],
+      "visible": true,
+      "order": 11,
+      "thumbnailUrl": "",
+      "category": "other",
+      "level": "Beginner"
     }
   ],
   "faqs": [
@@ -242,6 +255,13 @@
       "answer": "Yes, we provide flexible EMI options for all our courses. Contact our admission team for details.",
       "category": "fees",
       "order": 3
+    },
+    {
+      "id": "faq-1756359445406",
+      "question": "New FAQ Question",
+      "answer": "New FAQ Answer",
+      "category": "general",
+      "order": 4
     }
   ],
   "testimonials": [
@@ -274,12 +294,22 @@
       "rating": 5,
       "order": 3,
       "featured": true
+    },
+    {
+      "id": "testimonial-1756359447541",
+      "name": "Student Name",
+      "role": "Role at Company",
+      "course": "Course Name",
+      "text": "Testimonial text",
+      "rating": 5,
+      "order": 4,
+      "featured": false
     }
   ],
   "settings": {
     "seoTitle": "GRRAS Solutions Training Institute - IT & Cloud Education in Jaipur",
     "seoDescription": "Premier IT training institute in Jaipur offering BCA degree, DevOps, Red Hat certifications, Data Science, Python, Java & Salesforce courses with placement assistance.",
     "seoKeywords": "IT training Jaipur, BCA degree, DevOps training, Red Hat certification, Data Science course, Python training, Java Salesforce",
-    "lastUpdated": "2025-08-28T05:19:43.541011+00:00"
+    "lastUpdated": "2025-08-28T05:37:29.719494+00:00"
   }
 }

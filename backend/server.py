@@ -411,10 +411,72 @@ async def generate_syllabus(request: SyllabusRequest):
         headers={"Content-Disposition": f"attachment; filename={filename}"}
     )
 
-@api_router.get("/admin/auth")
-async def check_admin_auth(credentials: HTTPBasicCredentials = Depends(verify_admin)):
-    """Check admin authentication"""
-    return {"authenticated": True}
+@api_router.get("/content")
+async def get_content():
+    """Get current site content"""
+    content = await content_manager.get_content()
+    return {"content": content}
+
+@api_router.post("/content")
+async def update_content(
+    content_update: ContentUpdate,
+    username: str = Depends(verify_admin_token)
+):
+    """Update site content (admin only)"""
+    try:
+        updated_content = await content_manager.save_content(
+            content_update.content, 
+            user=username
+        )
+        return {"success": True, "content": updated_content}
+    except Exception as e:
+        logging.error(f"Error updating content: {e}")
+        raise HTTPException(status_code=500, detail="Failed to update content")
+
+@api_router.get("/content/audit")
+async def get_content_audit(
+    limit: int = 50,
+    username: str = Depends(verify_admin_token)
+):
+    """Get content audit logs (admin only)"""
+    try:
+        audit_logs = await content_manager.get_audit_logs(limit)
+        return {"audit_logs": audit_logs}
+    except Exception as e:
+        logging.error(f"Error getting audit logs: {e}")
+        raise HTTPException(status_code=500, detail="Failed to get audit logs")
+
+@api_router.post("/admin/login")
+async def admin_login(login_data: AdminLogin, response: Response):
+    """Admin login endpoint"""
+    if not secrets.compare_digest(login_data.password, ADMIN_PASSWORD):
+        raise HTTPException(status_code=401, detail="Invalid password")
+    
+    # Create JWT token
+    token = create_admin_token()
+    
+    # Set httpOnly cookie
+    response.set_cookie(
+        key="admin_token",
+        value=token,
+        httponly=True,
+        max_age=86400,  # 24 hours
+        secure=False,  # Set to True in production with HTTPS
+        samesite="lax"
+    )
+    
+    return {"success": True, "message": "Login successful"}
+
+@api_router.post("/admin/logout") 
+async def admin_logout(response: Response):
+    """Admin logout endpoint"""
+    response.delete_cookie("admin_token")
+    return {"success": True, "message": "Logout successful"}
+
+@api_router.get("/admin/verify")
+async def verify_admin_session(username: str = Depends(verify_admin_token)):
+    """Verify admin session"""
+    return {"authenticated": True, "username": username}
 
 # Include router
 app.include_router(api_router)

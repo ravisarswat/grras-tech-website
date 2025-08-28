@@ -18,16 +18,22 @@
     "shortName": "GRRAS Solutions",
     "tagline": "Empowering Futures Through Technology",
     "address": "A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012",
-    "phone": "090019 91227",
-    "email": "info@grrassolutions.com",
+    "phones": [
+      "090019 91227",
+      "0141 2345678"
+    ],
+    "emails": [
+      "info@grrassolutions.com",
+      "admissions@grrassolutions.com"
+    ],
     "website": "https://grrassolutions.com",
     "googleMapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.3847264635616!2d75.78534517468277!3d26.91244487667423!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db18bb4c88ac3%3A0x8a3a3c6f32d8c8a0!2sA-81%2C%20Singh%20Bhoomi%20Khatipura%20Rd%2C%20behind%20Marudhar%20Hospital%2C%20Jaipur%2C%20Rajasthan%20302012!5e0!3m2!1sen!2sin!4v1635789123456!5m2!1sen!2sin",
     "social": {
       "whatsapp": "https://wa.me/919001991227",
-      "instagram": "#",
-      "youtube": "#",
-      "linkedin": "#",
-      "facebook": "#"
+      "instagram": "https://instagram.com/grrassolutions",
+      "youtube": "https://youtube.com/@grrassolutions",
+      "linkedin": "https://linkedin.com/company/grrassolutions",
+      "facebook": "https://facebook.com/grrassolutions"
     },
     "stats": {
       "yearsOfExcellence": "10+",

@@ -229,9 +229,20 @@ class SyllabusRequest(BaseModel):
 
 class ContentUpdate(BaseModel):
     content: Dict[str, Any]
+    isDraft: Optional[bool] = False
 
 class AdminLogin(BaseModel):
     password: str
+
+class VersionRestore(BaseModel):
+    versionId: str
+
+class BackupRestore(BaseModel):
+    filename: str
+
+class MediaUpload(BaseModel):
+    filename: str
+    fileData: bytes
 
 # PDF Generation
 async def generate_syllabus_pdf(course_slug: str, student_name: str) -> str:

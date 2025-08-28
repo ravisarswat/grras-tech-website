@@ -239,5 +239,24 @@
     "consent": true,
     "id": "e7ca65d3-5aed-4936-8d71-6d34ab743923",
     "timestamp": "2025-08-28 05:19:43.916013+00:00"
+  },
+  {
+    "name": "Test Student",
+    "email": "test@example.com",
+    "phone": "9876543210",
+    "course_slug": null,
+    "message": "Interested in courses",
+    "consent": true,
+    "id": "139644d0-7727-483f-a6cf-86fd8d7e3f1f",
+    "timestamp": "2025-08-28 06:16:35.158819+00:00"
+  },
+  {
+    "name": "Test Student",
+    "email": "test@example.com",
+    "phone": "9876543210",
+    "course_slug": "bca-degree",
+    "consent": true,
+    "id": "94c16d6c-7978-4601-a17b-4dda012a5aed",
+    "timestamp": "2025-08-28 06:16:37.323522+00:00"
   }
 ]

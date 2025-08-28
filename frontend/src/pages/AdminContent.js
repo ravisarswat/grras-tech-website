@@ -151,7 +151,14 @@ const AdminContent = () => {
 
   const loadAuditLogs = async () => {
     try {
-      const response = await axios.get(`${API}/content/audit`);
+      const token = localStorage.getItem('admin_token');
+      if (!token) {
+        throw new Error('No authentication token');
+      }
+      
+      const response = await axios.get(`${API}/content/audit`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       setAuditLogs(response.data.audit_logs);
       setShowAudit(true);
     } catch (error) {

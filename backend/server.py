@@ -224,6 +224,12 @@ class SyllabusRequest(BaseModel):
     course_slug: str
     consent: bool = True
 
+class ContentUpdate(BaseModel):
+    content: Dict[str, Any]
+
+class AdminLogin(BaseModel):
+    password: str
+
 # PDF Generation
 async def generate_syllabus_pdf(course_slug: str, student_name: str) -> str:
     """Generate a professional syllabus PDF"""

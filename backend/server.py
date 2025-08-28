@@ -98,12 +98,35 @@ api_router = APIRouter(prefix="/api")
 # Security
 security = HTTPBasic()
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'grras-admin')
+JWT_SECRET = os.environ.get('JWT_SECRET', 'grras-jwt-secret-key-change-in-production')
 
 def verify_admin(credentials: HTTPBasicCredentials = Depends(security)):
     correct_password = secrets.compare_digest(credentials.password, ADMIN_PASSWORD)
     if not correct_password:
         raise HTTPException(status_code=401, detail="Invalid credentials")
     return credentials
+
+def create_admin_token(username: str = "admin") -> str:
+    """Create JWT token for admin session"""
+    payload = {
+        "username": username,
+        "exp": datetime.now(timezone.utc).timestamp() + 86400  # 24 hours
+    }
+    return jwt.encode(payload, JWT_SECRET, algorithm="HS256")
+
+def verify_admin_token(request: Request):
+    """Verify admin JWT token from cookie"""
+    token = request.cookies.get("admin_token")
+    if not token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    
+    try:
+        payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+        if payload.get("exp", 0) < datetime.now(timezone.utc).timestamp():
+            raise HTTPException(status_code=401, detail="Token expired")
+        return payload["username"]
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
 
 # Storage abstraction
 class StorageService:

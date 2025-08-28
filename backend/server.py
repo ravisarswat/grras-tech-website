@@ -35,6 +35,14 @@ mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ.get('DB_NAME', 'grras_database')]
 
+# Initialize Content Manager
+content_storage_type = os.environ.get('CONTENT_STORAGE', 'json')
+content_manager = ContentManager(
+    storage_type=content_storage_type,
+    mongo_client=client if content_storage_type == 'mongo' else None,
+    db_name=os.environ.get('DB_NAME', 'grras_database')
+)
+
 # Create directories
 os.makedirs('/app/backend/storage', exist_ok=True)
 os.makedirs('/app/backend/temp', exist_ok=True)

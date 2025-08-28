@@ -1,0 +1,5 @@
+# Root requirements file for Railway Python detection
+# This helps Railway detect this as a Python project
+# Actual requirements are in backend/requirements.txt
+
+-r backend/requirements.txt

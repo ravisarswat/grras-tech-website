@@ -596,16 +596,539 @@ def test_syllabus_dynamic_content(results):
     except Exception as e:
         results.add_result("Syllabus Dynamic Content", "FAIL", "Request failed", str(e))
 
+# ============================================================================
+# ENHANCED CMS TESTS - VERSION HISTORY & ROLLBACK
+# ============================================================================
+
+def test_content_versions_without_auth(results):
+    """Test GET /api/content/versions - Should require authentication"""
+    try:
+        response = requests.get(f"{API_BASE}/content/versions", timeout=10)
+        if response.status_code == 401:
+            results.add_result("Content Versions No Auth", "PASS", "Correctly requires authentication")
+        else:
+            results.add_result("Content Versions No Auth", "FAIL", f"Expected 401, got {response.status_code}")
+    except Exception as e:
+        results.add_result("Content Versions No Auth", "FAIL", "Request failed", str(e))
+
+def test_content_versions_with_auth(results, admin_cookies):
+    """Test GET /api/content/versions - Get version history with authentication"""
+    if not admin_cookies:
+        results.add_result("Content Versions With Auth", "FAIL", "No admin cookies available")
+        return
+    
+    try:
+        response = requests.get(f"{API_BASE}/content/versions", cookies=admin_cookies, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            if "versions" in data:
+                versions = data["versions"]
+                if isinstance(versions, list):
+                    results.add_result("Content Versions With Auth", "PASS", f"Retrieved {len(versions)} version entries")
+                    return versions
+                else:
+                    results.add_result("Content Versions With Auth", "FAIL", "versions is not a list")
+            else:
+                results.add_result("Content Versions With Auth", "FAIL", "Response missing 'versions' field", str(data))
+        else:
+            results.add_result("Content Versions With Auth", "FAIL", f"HTTP {response.status_code}", response.text)
+    except Exception as e:
+        results.add_result("Content Versions With Auth", "FAIL", "Request failed", str(e))
+    return []
+
+def test_content_restore_without_auth(results):
+    """Test POST /api/content/restore - Should require authentication"""
+    try:
+        restore_data = {"versionId": "test_version"}
+        response = requests.post(f"{API_BASE}/content/restore", json=restore_data, timeout=10)
+        if response.status_code == 401:
+            results.add_result("Content Restore No Auth", "PASS", "Correctly requires authentication")
+        else:
+            results.add_result("Content Restore No Auth", "FAIL", f"Expected 401, got {response.status_code}")
+    except Exception as e:
+        results.add_result("Content Restore No Auth", "FAIL", "Request failed", str(e))
+
+def test_content_restore_invalid_version(results, admin_cookies):
+    """Test POST /api/content/restore - Invalid version ID"""
+    if not admin_cookies:
+        results.add_result("Content Restore Invalid Version", "FAIL", "No admin cookies available")
+        return
+    
+    try:
+        restore_data = {"versionId": "invalid_version_id"}
+        response = requests.post(f"{API_BASE}/content/restore", json=restore_data, cookies=admin_cookies, timeout=10)
+        if response.status_code in [404, 500]:  # Should fail for invalid version
+            results.add_result("Content Restore Invalid Version", "PASS", "Correctly rejected invalid version ID")
+        else:
+            results.add_result("Content Restore Invalid Version", "FAIL", f"Expected 404/500, got {response.status_code}")
+    except Exception as e:
+        results.add_result("Content Restore Invalid Version", "FAIL", "Request failed", str(e))
+
+# ============================================================================
+# ENHANCED CMS TESTS - BACKUP & RESTORE SYSTEM
+# ============================================================================
+
+def test_content_backups_without_auth(results):
+    """Test GET /api/content/backups - Should require authentication"""
+    try:
+        response = requests.get(f"{API_BASE}/content/backups", timeout=10)
+        if response.status_code == 401:
+            results.add_result("Content Backups No Auth", "PASS", "Correctly requires authentication")
+        else:
+            results.add_result("Content Backups No Auth", "FAIL", f"Expected 401, got {response.status_code}")
+    except Exception as e:
+        results.add_result("Content Backups No Auth", "FAIL", "Request failed", str(e))
+
+def test_content_backups_with_auth(results, admin_cookies):
+    """Test GET /api/content/backups - Get available backups"""
+    if not admin_cookies:
+        results.add_result("Content Backups With Auth", "FAIL", "No admin cookies available")
+        return
+    
+    try:
+        response = requests.get(f"{API_BASE}/content/backups", cookies=admin_cookies, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            if "backups" in data:
+                backups = data["backups"]
+                if isinstance(backups, list):
+                    results.add_result("Content Backups With Auth", "PASS", f"Retrieved {len(backups)} backup entries")
+                    return backups
+                else:
+                    results.add_result("Content Backups With Auth", "FAIL", "backups is not a list")
+            else:
+                results.add_result("Content Backups With Auth", "FAIL", "Response missing 'backups' field", str(data))
+        else:
+            results.add_result("Content Backups With Auth", "FAIL", f"HTTP {response.status_code}", response.text)
+    except Exception as e:
+        results.add_result("Content Backups With Auth", "FAIL", "Request failed", str(e))
+    return []
+
+def test_create_backup_without_auth(results):
+    """Test POST /api/content/backup - Should require authentication"""
+    try:
+        response = requests.post(f"{API_BASE}/content/backup", timeout=10)
+        if response.status_code == 401:
+            results.add_result("Create Backup No Auth", "PASS", "Correctly requires authentication")
+        else:
+            results.add_result("Create Backup No Auth", "FAIL", f"Expected 401, got {response.status_code}")
+    except Exception as e:
+        results.add_result("Create Backup No Auth", "FAIL", "Request failed", str(e))
+
+def test_create_backup_with_auth(results, admin_cookies):
+    """Test POST /api/content/backup - Create manual backup"""
+    if not admin_cookies:
+        results.add_result("Create Backup With Auth", "FAIL", "No admin cookies available")
+        return None
+    
+    try:
+        response = requests.post(f"{API_BASE}/content/backup", cookies=admin_cookies, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            if "success" in data and data["success"] and "filename" in data:
+                filename = data["filename"]
+                results.add_result("Create Backup With Auth", "PASS", f"Backup created successfully: {filename}")
+                return filename
+            else:
+                results.add_result("Create Backup With Auth", "FAIL", "Invalid response format", str(data))
+        else:
+            results.add_result("Create Backup With Auth", "FAIL", f"HTTP {response.status_code}", response.text)
+    except Exception as e:
+        results.add_result("Create Backup With Auth", "FAIL", "Request failed", str(e))
+    return None
+
+def test_restore_backup_without_auth(results):
+    """Test POST /api/content/backup/restore - Should require authentication"""
+    try:
+        restore_data = {"filename": "test_backup.json"}
+        response = requests.post(f"{API_BASE}/content/backup/restore", json=restore_data, timeout=10)
+        if response.status_code == 401:
+            results.add_result("Restore Backup No Auth", "PASS", "Correctly requires authentication")
+        else:
+            results.add_result("Restore Backup No Auth", "FAIL", f"Expected 401, got {response.status_code}")
+    except Exception as e:
+        results.add_result("Restore Backup No Auth", "FAIL", "Request failed", str(e))
+
+def test_restore_backup_invalid_file(results, admin_cookies):
+    """Test POST /api/content/backup/restore - Invalid backup filename"""
+    if not admin_cookies:
+        results.add_result("Restore Backup Invalid File", "FAIL", "No admin cookies available")
+        return
+    
+    try:
+        restore_data = {"filename": "nonexistent_backup.json"}
+        response = requests.post(f"{API_BASE}/content/backup/restore", json=restore_data, cookies=admin_cookies, timeout=10)
+        if response.status_code in [404, 500]:  # Should fail for invalid filename
+            results.add_result("Restore Backup Invalid File", "PASS", "Correctly rejected invalid backup filename")
+        else:
+            results.add_result("Restore Backup Invalid File", "FAIL", f"Expected 404/500, got {response.status_code}")
+    except Exception as e:
+        results.add_result("Restore Backup Invalid File", "FAIL", "Request failed", str(e))
+
+# ============================================================================
+# ENHANCED CMS TESTS - MEDIA LIBRARY
+# ============================================================================
+
+def test_media_files_without_auth(results):
+    """Test GET /api/media - Should require authentication"""
+    try:
+        response = requests.get(f"{API_BASE}/media", timeout=10)
+        if response.status_code == 401:
+            results.add_result("Media Files No Auth", "PASS", "Correctly requires authentication")
+        else:
+            results.add_result("Media Files No Auth", "FAIL", f"Expected 401, got {response.status_code}")
+    except Exception as e:
+        results.add_result("Media Files No Auth", "FAIL", "Request failed", str(e))
+
+def test_media_files_with_auth(results, admin_cookies):
+    """Test GET /api/media - Get media files list"""
+    if not admin_cookies:
+        results.add_result("Media Files With Auth", "FAIL", "No admin cookies available")
+        return
+    
+    try:
+        response = requests.get(f"{API_BASE}/media", cookies=admin_cookies, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            if "media" in data:
+                media_files = data["media"]
+                if isinstance(media_files, list):
+                    results.add_result("Media Files With Auth", "PASS", f"Retrieved {len(media_files)} media files")
+                    return media_files
+                else:
+                    results.add_result("Media Files With Auth", "FAIL", "media is not a list")
+            else:
+                results.add_result("Media Files With Auth", "FAIL", "Response missing 'media' field", str(data))
+        else:
+            results.add_result("Media Files With Auth", "FAIL", f"HTTP {response.status_code}", response.text)
+    except Exception as e:
+        results.add_result("Media Files With Auth", "FAIL", "Request failed", str(e))
+    return []
+
+def test_media_upload_without_auth(results):
+    """Test POST /api/media/upload - Should require authentication"""
+    try:
+        # Create a simple test file
+        files = {'file': ('test.txt', 'test content', 'text/plain')}
+        response = requests.post(f"{API_BASE}/media/upload", files=files, timeout=10)
+        if response.status_code == 401:
+            results.add_result("Media Upload No Auth", "PASS", "Correctly requires authentication")
+        else:
+            results.add_result("Media Upload No Auth", "FAIL", f"Expected 401, got {response.status_code}")
+    except Exception as e:
+        results.add_result("Media Upload No Auth", "FAIL", "Request failed", str(e))
+
+def test_media_upload_invalid_type(results, admin_cookies):
+    """Test POST /api/media/upload - Invalid file type"""
+    if not admin_cookies:
+        results.add_result("Media Upload Invalid Type", "FAIL", "No admin cookies available")
+        return
+    
+    try:
+        # Try to upload an invalid file type
+        files = {'file': ('test.exe', b'fake executable content', 'application/x-executable')}
+        response = requests.post(f"{API_BASE}/media/upload", files=files, cookies=admin_cookies, timeout=10)
+        if response.status_code == 400:
+            results.add_result("Media Upload Invalid Type", "PASS", "Correctly rejected invalid file type")
+        else:
+            results.add_result("Media Upload Invalid Type", "FAIL", f"Expected 400, got {response.status_code}")
+    except Exception as e:
+        results.add_result("Media Upload Invalid Type", "FAIL", "Request failed", str(e))
+
+def test_media_upload_valid_image(results, admin_cookies):
+    """Test POST /api/media/upload - Valid image upload"""
+    if not admin_cookies:
+        results.add_result("Media Upload Valid Image", "FAIL", "No admin cookies available")
+        return None
+    
+    try:
+        # Create a minimal PNG image (1x1 pixel)
+        png_data = b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x02\x00\x00\x00\x90wS\xde\x00\x00\x00\tpHYs\x00\x00\x0b\x13\x00\x00\x0b\x13\x01\x00\x9a\x9c\x18\x00\x00\x00\nIDATx\x9cc```\x00\x00\x00\x04\x00\x01\xdd\x8d\xb4\x1c\x00\x00\x00\x00IEND\xaeB`\x82'
+        
+        files = {'file': ('test_image.png', png_data, 'image/png')}
+        response = requests.post(f"{API_BASE}/media/upload", files=files, cookies=admin_cookies, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            if "success" in data and data["success"] and "filename" in data:
+                filename = data["filename"]
+                results.add_result("Media Upload Valid Image", "PASS", f"Image uploaded successfully: {filename}")
+                return filename
+            else:
+                results.add_result("Media Upload Valid Image", "FAIL", "Invalid response format", str(data))
+        else:
+            results.add_result("Media Upload Valid Image", "FAIL", f"HTTP {response.status_code}", response.text)
+    except Exception as e:
+        results.add_result("Media Upload Valid Image", "FAIL", "Request failed", str(e))
+    return None
+
+def test_media_delete_without_auth(results):
+    """Test DELETE /api/media/{filename} - Should require authentication"""
+    try:
+        response = requests.delete(f"{API_BASE}/media/test_file.png", timeout=10)
+        if response.status_code == 401:
+            results.add_result("Media Delete No Auth", "PASS", "Correctly requires authentication")
+        else:
+            results.add_result("Media Delete No Auth", "FAIL", f"Expected 401, got {response.status_code}")
+    except Exception as e:
+        results.add_result("Media Delete No Auth", "FAIL", "Request failed", str(e))
+
+def test_media_delete_nonexistent(results, admin_cookies):
+    """Test DELETE /api/media/{filename} - Nonexistent file"""
+    if not admin_cookies:
+        results.add_result("Media Delete Nonexistent", "FAIL", "No admin cookies available")
+        return
+    
+    try:
+        response = requests.delete(f"{API_BASE}/media/nonexistent_file.png", cookies=admin_cookies, timeout=10)
+        if response.status_code == 404:
+            results.add_result("Media Delete Nonexistent", "PASS", "Correctly returned 404 for nonexistent file")
+        else:
+            results.add_result("Media Delete Nonexistent", "FAIL", f"Expected 404, got {response.status_code}")
+    except Exception as e:
+        results.add_result("Media Delete Nonexistent", "FAIL", "Request failed", str(e))
+
+def test_media_delete_valid(results, admin_cookies, filename):
+    """Test DELETE /api/media/{filename} - Delete uploaded file"""
+    if not admin_cookies:
+        results.add_result("Media Delete Valid", "FAIL", "No admin cookies available")
+        return
+    
+    if not filename:
+        results.add_result("Media Delete Valid", "FAIL", "No filename to delete")
+        return
+    
+    try:
+        response = requests.delete(f"{API_BASE}/media/{filename}", cookies=admin_cookies, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            if "success" in data and data["success"]:
+                results.add_result("Media Delete Valid", "PASS", f"File deleted successfully: {filename}")
+            else:
+                results.add_result("Media Delete Valid", "FAIL", "Invalid response format", str(data))
+        else:
+            results.add_result("Media Delete Valid", "FAIL", f"HTTP {response.status_code}", response.text)
+    except Exception as e:
+        results.add_result("Media Delete Valid", "FAIL", "Request failed", str(e))
+
+# ============================================================================
+# ENHANCED CMS TESTS - CONTENT STRUCTURE VALIDATION
+# ============================================================================
+
+def test_enhanced_content_structure(results):
+    """Test comprehensive content structure with enhanced features"""
+    try:
+        response = requests.get(f"{API_BASE}/content", timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            content = data.get("content", {})
+            
+            # Test enhanced structure sections
+            enhanced_sections = {
+                "pages": ["home", "about", "admissions", "contact"],
+                "courses": "enhanced course structure",
+                "menus": ["header", "footer"],
+                "banners": "announcement system",
+                "blog": "blog posts with rich content",
+                "settings": "comprehensive site settings",
+                "institute": "institute stats"
+            }
+            
+            missing_sections = []
+            structure_details = []
+            
+            # Check pages with SEO and hero sections
+            pages = content.get("pages", {})
+            for page_name in enhanced_sections["pages"]:
+                if page_name not in pages:
+                    missing_sections.append(f"pages.{page_name}")
+                else:
+                    page = pages[page_name]
+                    if "seo" not in page:
+                        missing_sections.append(f"pages.{page_name}.seo")
+                    if "hero" not in page:
+                        missing_sections.append(f"pages.{page_name}.hero")
+            
+            # Check enhanced courses
+            courses = content.get("courses", [])
+            if courses:
+                first_course = courses[0]
+                enhanced_course_fields = ["description", "highlights", "outcomes", "eligibility", "seo"]
+                for field in enhanced_course_fields:
+                    if field not in first_course:
+                        missing_sections.append(f"courses.{field}")
+                structure_details.append(f"Courses: {len(courses)} with enhanced fields")
+            else:
+                missing_sections.append("courses")
+            
+            # Check menus
+            menus = content.get("menus", {})
+            for menu_type in enhanced_sections["menus"]:
+                if menu_type not in menus:
+                    missing_sections.append(f"menus.{menu_type}")
+            
+            # Check banners
+            banners = content.get("banners", [])
+            if banners:
+                first_banner = banners[0]
+                banner_fields = ["startDate", "endDate", "dismissible"]
+                for field in banner_fields:
+                    if field not in first_banner:
+                        missing_sections.append(f"banners.{field}")
+                structure_details.append(f"Banners: {len(banners)} with date management")
+            else:
+                missing_sections.append("banners")
+            
+            # Check blog
+            blog = content.get("blog", {})
+            if "posts" not in blog:
+                missing_sections.append("blog.posts")
+            else:
+                posts = blog["posts"]
+                if posts:
+                    first_post = posts[0]
+                    post_fields = ["tags", "seo", "status"]
+                    for field in post_fields:
+                        if field not in first_post:
+                            missing_sections.append(f"blog.posts.{field}")
+                    structure_details.append(f"Blog: {len(posts)} posts with rich content")
+            
+            # Check institute stats
+            institute = content.get("institute", {})
+            if "stats" not in institute:
+                missing_sections.append("institute.stats")
+            else:
+                stats = institute["stats"]
+                expected_stats = ["yearsOfExcellence", "studentsTrained", "placementRate"]
+                for stat in expected_stats:
+                    if stat not in stats:
+                        missing_sections.append(f"institute.stats.{stat}")
+                structure_details.append(f"Institute stats: {len(stats)} metrics")
+            
+            # Check settings
+            settings = content.get("settings", {})
+            setting_sections = ["site", "seo", "features", "backup"]
+            for section in setting_sections:
+                if section not in settings:
+                    missing_sections.append(f"settings.{section}")
+            
+            if not missing_sections:
+                details_str = "; ".join(structure_details)
+                results.add_result("Enhanced Content Structure", "PASS", f"All enhanced sections present. {details_str}")
+            else:
+                results.add_result("Enhanced Content Structure", "FAIL", f"Missing sections: {missing_sections}")
+        else:
+            results.add_result("Enhanced Content Structure", "FAIL", f"HTTP {response.status_code}", response.text)
+    except Exception as e:
+        results.add_result("Enhanced Content Structure", "FAIL", "Request failed", str(e))
+
+def test_content_validation_with_sample_data(results, admin_cookies):
+    """Test content validation with comprehensive sample data"""
+    if not admin_cookies:
+        results.add_result("Content Validation Sample Data", "FAIL", "No admin cookies available")
+        return
+    
+    try:
+        # Sample data as specified in the review request
+        sample_content = {
+            "content": {
+                "institute": {
+                    "stats": {
+                        "yearsOfExcellence": "12+",
+                        "studentsTrained": "6000+",
+                        "placementRate": "98%"
+                    }
+                },
+                "courses": [
+                    {
+                        "slug": "test-course",
+                        "title": "Test Course Updated",
+                        "fees": "₹20,000",
+                        "tools": ["Tool1", "Tool2", "Tool3"],
+                        "visible": True,
+                        "order": 999
+                    }
+                ],
+                "pages": {
+                    "home": {
+                        "hero": {
+                            "headline": "Test Updated Headline",
+                            "subtext": "Test Updated Subtext"
+                        }
+                    }
+                }
+            },
+            "isDraft": True
+        }
+        
+        response = requests.post(f"{API_BASE}/content", json=sample_content, cookies=admin_cookies, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            if "success" in data and data["success"] and "isDraft" in data and data["isDraft"]:
+                # Verify the content was saved as draft
+                verify_response = requests.get(f"{API_BASE}/content", timeout=10)
+                if verify_response.status_code == 200:
+                    verify_data = verify_response.json()
+                    content = verify_data.get("content", {})
+                    
+                    # Check if our test data is present
+                    institute_stats = content.get("institute", {}).get("stats", {})
+                    home_hero = content.get("pages", {}).get("home", {}).get("hero", {})
+                    
+                    if (institute_stats.get("yearsOfExcellence") == "12+" and 
+                        home_hero.get("headline") == "Test Updated Headline"):
+                        results.add_result("Content Validation Sample Data", "PASS", "Sample data validated and saved as draft successfully")
+                    else:
+                        results.add_result("Content Validation Sample Data", "FAIL", "Sample data not reflected in content")
+                else:
+                    results.add_result("Content Validation Sample Data", "FAIL", "Could not verify saved content")
+            else:
+                results.add_result("Content Validation Sample Data", "FAIL", "Invalid response format", str(data))
+        else:
+            results.add_result("Content Validation Sample Data", "FAIL", f"HTTP {response.status_code}", response.text)
+    except Exception as e:
+        results.add_result("Content Validation Sample Data", "FAIL", "Request failed", str(e))
+
+def test_content_publish_functionality(results, admin_cookies):
+    """Test POST /api/content/publish - Publish draft content"""
+    if not admin_cookies:
+        results.add_result("Content Publish Functionality", "FAIL", "No admin cookies available")
+        return
+    
+    try:
+        response = requests.post(f"{API_BASE}/content/publish", cookies=admin_cookies, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            if "success" in data and data["success"]:
+                # Verify content is no longer draft
+                verify_response = requests.get(f"{API_BASE}/content", timeout=10)
+                if verify_response.status_code == 200:
+                    verify_data = verify_response.json()
+                    content = verify_data.get("content", {})
+                    is_draft = content.get("meta", {}).get("isDraft", False)
+                    
+                    if not is_draft:
+                        results.add_result("Content Publish Functionality", "PASS", "Content published successfully, no longer in draft mode")
+                    else:
+                        results.add_result("Content Publish Functionality", "FAIL", "Content still in draft mode after publish")
+                else:
+                    results.add_result("Content Publish Functionality", "FAIL", "Could not verify published content")
+            else:
+                results.add_result("Content Publish Functionality", "FAIL", "Invalid response format", str(data))
+        else:
+            results.add_result("Content Publish Functionality", "FAIL", f"HTTP {response.status_code}", response.text)
+    except Exception as e:
+        results.add_result("Content Publish Functionality", "FAIL", "Request failed", str(e))
+
 def main():
-    print("GRRAS Solutions Backend API Test Suite")
-    print("="*60)
+    print("GRRAS Solutions Enhanced CMS Backend API Test Suite")
+    print("="*70)
     print(f"Testing API at: {API_BASE}")
     print(f"Timestamp: {datetime.now().isoformat()}")
-    print("="*60)
+    print("="*70)
     
     results = TestResults()
     
-    # Run all tests
+    # Run basic API tests first
     print("\n🔍 Testing API Health...")
     test_health_check(results)
     
@@ -627,10 +1150,13 @@ def main():
     test_get_leads_admin(results)
     test_get_leads_unauthorized(results)
     
-    print("\n🎨 Testing CMS Content Management...")
+    print("\n🎨 Testing Basic CMS Content Management...")
     test_get_content_public(results)
     
-    print("\n🔑 Testing New Admin Authentication & Session Management...")
+    print("\n🔍 Testing Enhanced Content Structure...")
+    test_enhanced_content_structure(results)
+    
+    print("\n🔑 Testing Admin Authentication & Session Management...")
     test_admin_login_invalid(results)
     test_admin_verify_without_auth(results)
     
@@ -644,6 +1170,35 @@ def main():
         test_update_content_with_auth(results, admin_cookies)
         test_content_audit_without_auth(results)
         test_content_audit_with_auth(results, admin_cookies)
+        
+        print("\n📝 Testing Enhanced Content Management...")
+        test_content_validation_with_sample_data(results, admin_cookies)
+        test_content_publish_functionality(results, admin_cookies)
+        
+        print("\n📚 Testing Version History & Rollback...")
+        test_content_versions_without_auth(results)
+        versions = test_content_versions_with_auth(results, admin_cookies)
+        test_content_restore_without_auth(results)
+        test_content_restore_invalid_version(results, admin_cookies)
+        
+        print("\n💾 Testing Backup & Restore System...")
+        test_content_backups_without_auth(results)
+        backups = test_content_backups_with_auth(results, admin_cookies)
+        test_create_backup_without_auth(results)
+        backup_filename = test_create_backup_with_auth(results, admin_cookies)
+        test_restore_backup_without_auth(results)
+        test_restore_backup_invalid_file(results, admin_cookies)
+        
+        print("\n🖼️ Testing Media Library...")
+        test_media_files_without_auth(results)
+        media_files = test_media_files_with_auth(results, admin_cookies)
+        test_media_upload_without_auth(results)
+        test_media_upload_invalid_type(results, admin_cookies)
+        uploaded_filename = test_media_upload_valid_image(results, admin_cookies)
+        test_media_delete_without_auth(results)
+        test_media_delete_nonexistent(results, admin_cookies)
+        if uploaded_filename:
+            test_media_delete_valid(results, admin_cookies, uploaded_filename)
         
         print("\n🔗 Testing CMS Integration...")
         test_courses_api_integration(results)

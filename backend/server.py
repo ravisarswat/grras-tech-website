@@ -681,6 +681,7 @@ railway_cors_origins = [
     "http://localhost:3000",  # Local development
     "https://*.railway.app",  # Railway frontend domains
     "https://*.up.railway.app",  # Railway preview domains
+    "https://frontend-service-production-9b9d.up.railway.app",  # Your specific frontend URL
 ]
 
 # Add custom domain if specified

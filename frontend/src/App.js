@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import './App.css';
 import useScrollToTop from './hooks/useScrollToTop';
+import { ContentProvider } from './contexts/ContentContext';
 
 // Components
 import Header from './components/Header';

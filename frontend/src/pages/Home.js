@@ -8,7 +8,6 @@ import {
   CheckCircle, 
   Star,
   ArrowRight,
-  Play,
   Target,
   Briefcase,
   GraduationCap

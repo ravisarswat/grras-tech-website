@@ -1,6 +1,16 @@
 [
   {
     "user": "admin",
+    "timestamp": "2025-08-28T05:18:52.182019+00:00",
+    "changedKeys": [
+      "modified:courses",
+      "modified:settings.lastUpdated",
+      "modified:home.heroHeadline"
+    ],
+    "diffSummary": "Modified: 3 items"
+  },
+  {
+    "user": "admin",
     "timestamp": "2025-08-28T05:17:48.493618+00:00",
     "changedKeys": [
       "modified:settings.lastUpdated"

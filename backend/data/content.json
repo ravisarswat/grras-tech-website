@@ -21,7 +21,7 @@
     }
   },
   "home": {
-    "heroHeadline": "Empowering Students with World-Class IT & Cloud Education",
+    "heroHeadline": "Test Updated Headline - CMS Working",
     "heroSubtext": "From Degree Programs to Cutting-Edge Certifications",
     "ctaPrimaryLabel": "Explore Courses",
     "ctaPrimaryHref": "/courses",
@@ -171,6 +171,22 @@
       "thumbnailUrl": "",
       "category": "programming",
       "level": "Beginner"
+    },
+    {
+      "slug": "test-cms-course",
+      "title": "Test CMS Course",
+      "oneLiner": "Test CMS functionality",
+      "duration": "1 month",
+      "fees": "Free",
+      "tools": [
+        "Testing",
+        "CMS"
+      ],
+      "visible": true,
+      "order": 999,
+      "thumbnailUrl": "",
+      "category": "test",
+      "level": "Beginner"
     }
   ],
   "faqs": [
@@ -232,6 +248,6 @@
     "seoTitle": "GRRAS Solutions Training Institute - IT & Cloud Education in Jaipur",
     "seoDescription": "Premier IT training institute in Jaipur offering BCA degree, DevOps, Red Hat certifications, Data Science, Python, Java & Salesforce courses with placement assistance.",
     "seoKeywords": "IT training Jaipur, BCA degree, DevOps training, Red Hat certification, Data Science course, Python training, Java Salesforce",
-    "lastUpdated": "2025-08-28T05:18:44.606137+00:00"
+    "lastUpdated": "2025-08-28T05:18:52.180148+00:00"
   }
 }

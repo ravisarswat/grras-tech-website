@@ -6,3 +6,6 @@ startCommand = "serve -s build -l $PORT"
 healthcheckPath = "/"
 healthcheckTimeout = 100
 restartPolicyType = "on_failure"
+
+[variables]
+NIXPACKS_NODE_VERSION = "20"

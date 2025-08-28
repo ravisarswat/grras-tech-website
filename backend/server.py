@@ -49,6 +49,9 @@ content_manager = ContentManager(
 # Create directories
 os.makedirs('/app/backend/storage', exist_ok=True)
 os.makedirs('/app/backend/temp', exist_ok=True)
+os.makedirs('/app/backend/data/media', exist_ok=True)
+os.makedirs('/app/backend/data/versions', exist_ok=True) 
+os.makedirs('/app/backend/data/backups', exist_ok=True)
 
 # Tools configuration
 TOOLS_CONFIG = {

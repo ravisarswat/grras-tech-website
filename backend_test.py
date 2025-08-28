@@ -678,11 +678,39 @@ def main():
     test_syllabus_generation(results)
     test_syllabus_invalid_course(results)
     
-    print("\n🔐 Testing Admin Authentication...")
+    print("\n🔐 Testing Legacy Admin Authentication...")
     test_admin_auth_valid(results)
     test_admin_auth_invalid(results)
     test_get_leads_admin(results)
     test_get_leads_unauthorized(results)
+    
+    print("\n🎨 Testing CMS Content Management...")
+    test_get_content_public(results)
+    
+    print("\n🔑 Testing New Admin Authentication & Session Management...")
+    test_admin_login_invalid(results)
+    test_admin_verify_without_auth(results)
+    
+    # Get admin cookies for authenticated tests
+    admin_cookies = test_admin_login_valid(results)
+    
+    if admin_cookies:
+        print("\n🔒 Testing Authenticated CMS Operations...")
+        test_admin_verify_with_auth(results, admin_cookies)
+        test_update_content_without_auth(results)
+        test_update_content_with_auth(results, admin_cookies)
+        test_content_audit_without_auth(results)
+        test_content_audit_with_auth(results, admin_cookies)
+        
+        print("\n🔗 Testing CMS Integration...")
+        test_courses_api_integration(results)
+        test_syllabus_dynamic_content(results)
+        
+        print("\n🚪 Testing Admin Logout...")
+        test_admin_logout(results, admin_cookies)
+    else:
+        print("\n❌ Skipping authenticated tests - admin login failed")
+        results.add_result("Authenticated Tests", "FAIL", "Could not obtain admin session")
     
     # Print summary
     results.print_summary()

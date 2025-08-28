@@ -89,5 +89,24 @@
     "consent": true,
     "id": "349dfa29-48ac-4e6f-9d56-9f3b724373d2",
     "timestamp": "2025-08-28 02:53:56.901333+00:00"
+  },
+  {
+    "name": "Amit Singh",
+    "email": "amit.singh@example.com",
+    "phone": "9876543210",
+    "course_slug": "python",
+    "consent": true,
+    "id": "ad396ccc-1b76-4ec0-a95c-d71ef8be0f42",
+    "timestamp": "2025-08-28 02:55:14.196382+00:00"
+  },
+  {
+    "name": "Neha Gupta",
+    "email": "neha.gupta@example.com",
+    "phone": "9123456789",
+    "course_slug": null,
+    "message": "I am interested in Data Science course. Please provide more information about the curriculum and placement assistance.",
+    "consent": true,
+    "id": "de975306-ef4d-4e51-9575-cedcf05687c7",
+    "timestamp": "2025-08-28 02:55:19.339308+00:00"
   }
 ]

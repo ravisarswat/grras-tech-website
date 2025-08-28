@@ -486,12 +486,141 @@ async def update_content(
     try:
         updated_content = await content_manager.save_content(
             content_update.content, 
-            user=username
+            user=username,
+            is_draft=content_update.isDraft
         )
-        return {"success": True, "content": updated_content}
+        return {"success": True, "content": updated_content, "isDraft": content_update.isDraft}
     except Exception as e:
         logging.error(f"Error updating content: {e}")
         raise HTTPException(status_code=500, detail="Failed to update content")
+
+@api_router.post("/content/publish")
+async def publish_content(username: str = Depends(verify_admin_token)):
+    """Publish draft content"""
+    try:
+        published_content = await content_manager.publish_content(user=username)
+        return {"success": True, "content": published_content}
+    except Exception as e:
+        logging.error(f"Error publishing content: {e}")
+        raise HTTPException(status_code=500, detail="Failed to publish content")
+
+@api_router.get("/content/versions")
+async def get_content_versions(
+    limit: int = 20,
+    username: str = Depends(verify_admin_token)
+):
+    """Get content version history"""
+    try:
+        versions = await content_manager.get_version_history(limit)
+        return {"versions": versions}
+    except Exception as e:
+        logging.error(f"Error getting versions: {e}")
+        raise HTTPException(status_code=500, detail="Failed to get versions")
+
+@api_router.post("/content/restore")
+async def restore_content_version(
+    restore_data: VersionRestore,
+    username: str = Depends(verify_admin_token)
+):
+    """Restore content from version"""
+    try:
+        restored_content = await content_manager.restore_version(restore_data.versionId, username)
+        return {"success": True, "content": restored_content}
+    except Exception as e:
+        logging.error(f"Error restoring version: {e}")
+        raise HTTPException(status_code=500, detail="Failed to restore version")
+
+@api_router.get("/content/backups")
+async def get_backups(username: str = Depends(verify_admin_token)):
+    """Get available backups"""
+    try:
+        backups = await content_manager.get_backups()
+        return {"backups": backups}
+    except Exception as e:
+        logging.error(f"Error getting backups: {e}")
+        raise HTTPException(status_code=500, detail="Failed to get backups")
+
+@api_router.post("/content/backup")
+async def create_backup(username: str = Depends(verify_admin_token)):
+    """Create manual backup"""
+    try:
+        backup_filename = await content_manager.create_backup(username)
+        return {"success": True, "filename": backup_filename}
+    except Exception as e:
+        logging.error(f"Error creating backup: {e}")
+        raise HTTPException(status_code=500, detail="Failed to create backup")
+
+@api_router.post("/content/backup/restore")
+async def restore_backup(
+    restore_data: BackupRestore,
+    username: str = Depends(verify_admin_token)
+):
+    """Restore content from backup"""
+    try:
+        restored_content = await content_manager.restore_backup(restore_data.filename, username)
+        return {"success": True, "content": restored_content}
+    except Exception as e:
+        logging.error(f"Error restoring backup: {e}")
+        raise HTTPException(status_code=500, detail="Failed to restore backup")
+
+@api_router.get("/media")
+async def get_media_files(username: str = Depends(verify_admin_token)):
+    """Get media files"""
+    try:
+        media_files = await content_manager.get_media_files()
+        return {"media": media_files}
+    except Exception as e:
+        logging.error(f"Error getting media files: {e}")
+        raise HTTPException(status_code=500, detail="Failed to get media files")
+
+@api_router.post("/media/upload")
+async def upload_media_file(
+    file: UploadFile = File(...),
+    username: str = Depends(verify_admin_token)
+):
+    """Upload media file"""
+    try:
+        # Validate file type
+        allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'application/pdf']
+        if file.content_type not in allowed_types:
+            raise HTTPException(status_code=400, detail="File type not allowed")
+        
+        # Read file content
+        file_content = await file.read()
+        
+        # Generate unique filename
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"{timestamp}_{file.filename}"
+        
+        # Save file
+        file_url = await content_manager.save_media_file(filename, file_content)
+        
+        return {
+            "success": True,
+            "filename": filename,
+            "url": file_url,
+            "size": len(file_content),
+            "type": file.content_type
+        }
+    except Exception as e:
+        logging.error(f"Error uploading media file: {e}")
+        raise HTTPException(status_code=500, detail="Failed to upload file")
+
+@api_router.delete("/media/{filename}")
+async def delete_media_file(
+    filename: str,
+    username: str = Depends(verify_admin_token)
+):
+    """Delete media file"""
+    try:
+        success = await content_manager.delete_media_file(filename)
+        if success:
+            return {"success": True, "message": "File deleted"}
+        else:
+            raise HTTPException(status_code=404, detail="File not found")
+    except Exception as e:
+        logging.error(f"Error deleting media file: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete file")
 
 @api_router.get("/content/audit")
 async def get_content_audit(

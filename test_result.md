@@ -800,7 +800,7 @@ test_plan:
   current_focus: []
   stuck_tasks: []
   test_all: true
-  test_priority: "railway_compatibility_completed"
+  test_priority: "railway_cms_investigation_completed"
 
 agent_communication:
     - agent: "testing"

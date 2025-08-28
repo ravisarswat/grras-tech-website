@@ -121,8 +121,18 @@ def create_admin_token(username: str = "admin") -> str:
     return jwt.encode(payload, JWT_SECRET, algorithm="HS256")
 
 def verify_admin_token(request: Request):
-    """Verify admin JWT token from cookie"""
-    token = request.cookies.get("admin_token")
+    """Verify admin JWT token from cookie or Authorization header"""
+    token = None
+    
+    # Check Authorization header first (Bearer token)
+    auth_header = request.headers.get("authorization")
+    if auth_header and auth_header.startswith("Bearer "):
+        token = auth_header.split(" ")[1]
+    
+    # Fallback to cookie
+    if not token:
+        token = request.cookies.get("admin_token")
+    
     if not token:
         raise HTTPException(status_code=401, detail="Not authenticated")
     

@@ -6,29 +6,41 @@ import {
   Mail, 
   Instagram, 
   Youtube,
-  MessageCircle
+  MessageCircle,
+  ExternalLink
 } from 'lucide-react';
+import { useContent } from '../contexts/ContentContext';
 
 const Footer = () => {
+  const { content } = useContent();
   const currentYear = new Date().getFullYear();
+
+  // Get institute data from CMS
+  const institute = content?.institute || {};
+  const branding = content?.branding || {};
+  const instituteName = institute.name || 'GRRAS Solutions Training Institute';
+  const instituteLogo = branding.logoUrl || 'https://customer-assets.emergentagent.com/job_training-hub-29/artifacts/gl3ldkmg_white%20logo.png';
+  const address = institute.address || 'A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012';
+  const phones = institute.phones || ['090019 91227'];
+  const emails = institute.emails || ['info@grrassolutions.com'];
+  const social = institute.social || {};
+  const website = institute.website || '';
 
   const quickLinks = [
     { name: 'About Us', path: '/about' },
     { name: 'Courses', path: '/courses' },
     { name: 'Admissions', path: '/admissions' },
-    { name: 'Testimonials', path: '/testimonials' },
-    { name: 'Blog', path: '/blog' },
     { name: 'Contact', path: '/contact' }
   ];
 
-  const courses = [
-    { name: 'BCA Degree Program', path: '/courses/bca-degree' },
-    { name: 'DevOps Training', path: '/courses/devops-training' },
-    { name: 'Red Hat Certifications', path: '/courses/redhat-certifications' },
-    { name: 'Data Science & ML', path: '/courses/data-science-machine-learning' },
-    { name: 'Java & Salesforce', path: '/courses/java-salesforce' },
-    { name: 'Python', path: '/courses/python' }
-  ];
+  // Get featured courses from CMS
+  const courses = (content?.courses || [])
+    .filter(course => course.visible !== false && course.featured)
+    .slice(0, 6)
+    .map(course => ({
+      name: course.title,
+      path: `/courses/${course.slug}`
+    }));
 
   return (
     <footer className="bg-gray-900 text-white">

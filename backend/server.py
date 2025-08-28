@@ -673,6 +673,9 @@ async def verify_admin_session(username: str = Depends(verify_admin_token)):
 # Include router
 app.include_router(api_router)
 
+# Mount static files for media
+app.mount("/media", StaticFiles(directory="/app/backend/data/media"), name="media")
+
 # CORS
 app.add_middleware(
     CORSMiddleware,

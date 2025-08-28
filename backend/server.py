@@ -424,8 +424,13 @@ async def get_leads(credentials: HTTPBasicCredentials = Depends(verify_admin)):
 @api_router.post("/syllabus")
 async def generate_syllabus(request: SyllabusRequest):
     """Generate and download syllabus PDF"""
-    # Validate course
-    if request.course_slug not in COURSE_NAMES:
+    # Get current content to validate course
+    content = await content_manager.get_content()
+    courses = content.get("courses", [])
+    
+    # Validate course exists and is visible
+    course = next((c for c in courses if c["slug"] == request.course_slug), None)
+    if not course or not course.get("visible", True):
         raise HTTPException(status_code=404, detail="Course not found")
     
     # Validate phone
@@ -442,7 +447,7 @@ async def generate_syllabus(request: SyllabusRequest):
     pdf_path = await generate_syllabus_pdf(request.course_slug, request.name)
     
     # Return PDF file
-    course_name = COURSE_NAMES[request.course_slug]
+    course_name = course.get("title", "Course")
     filename = f"GRRAS_{course_name.replace(' ', '_')}_Syllabus.pdf"
     
     return FileResponse(

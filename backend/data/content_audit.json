@@ -1,6 +1,14 @@
 [
   {
     "user": "admin",
+    "timestamp": "2025-08-28T05:17:48.493618+00:00",
+    "changedKeys": [
+      "modified:settings.lastUpdated"
+    ],
+    "diffSummary": "Modified: 1 items"
+  },
+  {
+    "user": "admin",
     "timestamp": "2025-08-28T05:16:21.555233+00:00",
     "changedKeys": [
       "modified:institute.name",

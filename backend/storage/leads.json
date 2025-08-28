@@ -136,5 +136,24 @@
     "consent": true,
     "id": "674bdef3-a5bd-4bc4-96ef-4a3ed70d9462",
     "timestamp": "2025-08-28 05:16:21.920613+00:00"
+  },
+  {
+    "name": "Test Student",
+    "email": "test@example.com",
+    "phone": "9876543210",
+    "course_slug": null,
+    "message": "Interested in courses",
+    "consent": true,
+    "id": "c9a4714d-3f6e-4669-8242-789de8437946",
+    "timestamp": "2025-08-28 05:17:47.787611+00:00"
+  },
+  {
+    "name": "Test Student",
+    "email": "test@example.com",
+    "phone": "9876543210",
+    "course_slug": "test-course",
+    "consent": true,
+    "id": "14e44827-657e-449c-92cd-7b031fa55076",
+    "timestamp": "2025-08-28 05:17:48.861336+00:00"
   }
 ]

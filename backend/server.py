@@ -707,6 +707,18 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Health check endpoint for Railway
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for Railway"""
+    return {"status": "healthy", "timestamp": datetime.now(timezone.utc).isoformat()}
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
+
+# Railway-specific startup
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get('PORT', 8001))
+    uvicorn.run(app, host="0.0.0.0", port=port)

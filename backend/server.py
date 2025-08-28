@@ -340,25 +340,43 @@ async def root():
 
 @api_router.get("/courses")
 async def get_courses():
-    """Get all available courses"""
-    return {
-        "courses": [
-            {"slug": slug, "name": name, "tools": TOOLS_CONFIG.get(slug, [])}
-            for slug, name in COURSE_NAMES.items()
+    """Get all available courses from content"""
+    try:
+        content = await content_manager.get_content()
+        courses = content.get("courses", [])
+        
+        # Filter visible courses and sort by order
+        visible_courses = [
+            course for course in courses 
+            if course.get("visible", True)
         ]
-    }
+        visible_courses.sort(key=lambda x: x.get("order", 999))
+        
+        return {"courses": visible_courses}
+    except Exception as e:
+        logging.error(f"Error getting courses: {e}")
+        raise HTTPException(status_code=500, detail="Failed to get courses")
 
 @api_router.get("/courses/{course_slug}")
 async def get_course(course_slug: str):
-    """Get specific course details"""
-    if course_slug not in COURSE_NAMES:
-        raise HTTPException(status_code=404, detail="Course not found")
-    
-    return {
-        "slug": course_slug,
-        "name": COURSE_NAMES[course_slug],
-        "tools": TOOLS_CONFIG.get(course_slug, [])
-    }
+    """Get specific course details from content"""
+    try:
+        content = await content_manager.get_content()
+        courses = content.get("courses", [])
+        
+        course = next((c for c in courses if c["slug"] == course_slug), None)
+        if not course:
+            raise HTTPException(status_code=404, detail="Course not found")
+        
+        if not course.get("visible", True):
+            raise HTTPException(status_code=404, detail="Course not found")
+        
+        return course
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error getting course {course_slug}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to get course")
 
 @api_router.post("/leads")
 async def create_lead(lead: LeadCreate):

@@ -108,7 +108,10 @@ const AdminContent = () => {
 
   const loadContent = async () => {
     try {
-      const response = await axios.get(`${API}/content`);
+      const token = localStorage.getItem('admin_token');
+      const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+      
+      const response = await axios.get(`${API}/content`, { headers });
       setContent(response.data.content);
       setOriginalContent(JSON.parse(JSON.stringify(response.data.content)));
     } catch (error) {
@@ -122,7 +125,15 @@ const AdminContent = () => {
   const saveContent = async () => {
     setSaving(true);
     try {
-      await axios.post(`${API}/content`, { content });
+      const token = localStorage.getItem('admin_token');
+      if (!token) {
+        throw new Error('No authentication token');
+      }
+      
+      await axios.post(`${API}/content`, { content }, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      
       setOriginalContent(JSON.parse(JSON.stringify(content)));
       toast.success('Content saved successfully');
     } catch (error) {

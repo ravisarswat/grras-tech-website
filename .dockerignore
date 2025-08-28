@@ -1,0 +1,30 @@
+# Railway deployment optimization
+node_modules/
+.git/
+.emergent/
+*.log
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Backend temporary files
+backend/temp/
+backend/storage/
+backend/data/media/
+backend/data/versions/
+backend/data/backups/
+
+# Frontend build artifacts
+frontend/build/
+frontend/.next/
+frontend/out/

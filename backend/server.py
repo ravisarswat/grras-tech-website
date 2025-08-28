@@ -653,7 +653,7 @@ async def admin_login(login_data: AdminLogin, response: Response):
         value=token,
         httponly=True,
         max_age=86400,  # 24 hours
-        secure=False,  # Set to True in production with HTTPS
+        secure=True,  # Set to True for Railway HTTPS
         samesite="lax"
     )
     

@@ -30,5 +30,5 @@ PyJWT==2.10.1
 dnspython>=2.6.1
 motor>=3.6.0
 pymongo[srv]>=4.8.0
-
+jq>=1.6.0
 

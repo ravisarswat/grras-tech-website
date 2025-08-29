@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the complete GRRAS Solutions backend API with comprehensive endpoint testing including health checks, courses API, lead creation, syllabus PDF generation, and admin authentication"
+user_problem_statement: "CRITICAL: Ensure MongoDB is the SINGLE SOURCE OF TRUTH. All CMS data must be pulled from MongoDB using MONGO_URI from GitHub environment variables. No JSON seed files should be used during GitHub deploys. Frontend must use CMS API exclusively."
 
 backend:
   - task: "API Health Check Endpoint"

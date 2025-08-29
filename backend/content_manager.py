@@ -640,9 +640,9 @@ class ContentManager:
         return self.get_default_content()
     
     async def save_content(self, content: Dict[str, Any], user: str = "admin", is_draft: bool = False) -> Dict[str, Any]:
-        """Save content to MongoDB (Railway-proof) with JSON backup"""
+        """Save content to MongoDB ONLY - Single Source of Truth"""
         try:
-            # Create version backup before saving
+            # Create version backup before saving (local backup only)
             await self._create_version_backup(content, user)
             
             # Update metadata
@@ -654,34 +654,20 @@ class ContentManager:
             # Get current content for audit
             current_content = await self.get_content()
             
-            if self.storage_type == "mongo" and self.mongo_client:
-                # PRIMARY: Save to MongoDB (survives Railway deploys)
-                result = await self._save_content_mongo(content)
-                logging.info("✅ Content saved to MongoDB (persistent)")
-                
-                # BACKUP: Also save to JSON as backup
-                try:
-                    await self._save_content_json(content)
-                    logging.info("📄 Content backed up to JSON")
-                except:
-                    logging.warning("⚠️ JSON backup failed (not critical)")
-                
-                # Create audit log
-                await self._create_audit_log(user, current_content, content, is_draft)
-                
-                return result
-            else:
-                # FALLBACK: JSON only (will be lost on deploy)
-                logging.warning("⚠️ Saving to JSON only - changes will be lost on deploy!")
-                result = await self._save_content_json(content)
-                
-                # Create audit log
-                await self._create_audit_log(user, current_content, content, is_draft)
-                
-                return result
+            # MONGODB ONLY - No JSON fallbacks
+            result = await self._save_content_mongo(content)
+            logging.info("✅ Content saved to MongoDB (Single Source of Truth)")
+            
+            # Create audit log (MongoDB only)
+            await self._create_audit_log(user, current_content, content, is_draft)
+            
+            return result
         except Exception as e:
-            logging.error(f"❌ Error saving content: {e}")
-            raise
+            logging.error(f"❌ CRITICAL: Failed to save content to MongoDB: {e}")
+            raise HTTPException(
+                status_code=503,
+                detail="Failed to save content. Please check database connection."
+            )
     
     async def publish_content(self, user: str = "admin") -> Dict[str, Any]:
         """Publish draft content"""

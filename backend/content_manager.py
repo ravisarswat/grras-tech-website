@@ -603,28 +603,27 @@ class ContentManager:
         }
     
     async def get_content(self) -> Dict[str, Any]:
-        """Get content from MongoDB (Railway-proof) with JSON fallback"""
+        """Get content from MongoDB ONLY - Single Source of Truth"""
         try:
-            if self.storage_type == "mongo" and self.mongo_client:
-                # PRIMARY: Try MongoDB first (survives all Railway deploys)
-                content = await self._get_content_mongo()
-                if content and content.get('courses'):
-                    logging.info("✅ Content loaded from MongoDB (persistent)")
-                    return content
-                else:
-                    # MongoDB empty - seed from template
-                    logging.info("🔄 MongoDB empty, seeding from template")
-                    template_content = await self._load_template_content()
-                    await self._save_content_mongo(template_content)
-                    return template_content
+            # MONGODB ONLY - No fallbacks during GitHub deployments
+            content = await self._get_content_mongo()
+            if content and content.get('courses'):
+                logging.info("✅ Content loaded from MongoDB (Single Source of Truth)")
+                return content
             else:
-                # FALLBACK: JSON storage (will be lost on deploy)
-                logging.warning("⚠️ Using JSON storage - changes will be lost on deploy!")
-                return await self._get_content_json()
+                # MongoDB empty - ONE-TIME seeding from template (only for fresh installations)
+                logging.info("🔄 MongoDB empty - ONE-TIME seeding from template")
+                template_content = await self._load_template_content()
+                await self._save_content_mongo(template_content)
+                logging.info("✅ Template content seeded to MongoDB - will not happen again")
+                return template_content
         except Exception as e:
-            logging.error(f"❌ Error in get_content: {e}")
-            # Emergency fallback
-            return await self._load_template_content()
+            logging.error(f"❌ CRITICAL: MongoDB connection failed: {e}")
+            # NO JSON FALLBACKS - MongoDB must be working for the system to function
+            raise HTTPException(
+                status_code=503, 
+                detail="Database connection required. Please check MONGO_URI configuration."
+            )
     
     async def _load_template_content(self) -> Dict[str, Any]:
         """Load content from template file"""

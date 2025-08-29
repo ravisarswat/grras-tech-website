@@ -182,7 +182,8 @@ const Courses = () => {
     { id: 'degree', name: 'Degree Programs', count: courses.filter(c => c.category === 'degree').length },
     { id: 'programming', name: 'Programming', count: courses.filter(c => c.category === 'programming').length },
     { id: 'cloud', name: 'Cloud & DevOps', count: courses.filter(c => c.category === 'cloud').length },
-    { id: 'certification', name: 'Certifications', count: courses.filter(c => c.category === 'certification').length }
+    { id: 'certification', name: 'Certifications', count: courses.filter(c => c.category === 'certification').length },
+    { id: 'security', name: 'Security', count: courses.filter(c => c.category === 'security').length }
   ];
 
   if (loading) {

@@ -32,14 +32,30 @@ class ContentManager:
         self.storage_type = storage_type
         self.mongo_client = mongo_client
         self.db_name = db_name
-        self.json_file = '/app/backend/data/content.json'
-        self.audit_file = '/app/backend/data/content_audit.json'
-        self.versions_dir = '/app/backend/data/versions'
-        self.media_dir = '/app/backend/data/media'
-        self.backups_dir = '/app/backend/data/backups'
+        
+        # Use different paths for different environments
+        if os.environ.get('RAILWAY_ENVIRONMENT'):
+            # Railway: Use persistent volume or temp directory 
+            self.data_dir = '/app/runtime_data'
+            self.json_file = '/app/runtime_data/content.json'
+            self.audit_file = '/app/runtime_data/content_audit.json'
+            self.versions_dir = '/app/runtime_data/versions'
+            self.media_dir = '/app/runtime_data/media'
+            self.backups_dir = '/app/runtime_data/backups'
+        else:
+            # Local development: Use backend/data
+            self.data_dir = '/app/backend/data'
+            self.json_file = '/app/backend/data/content.json'
+            self.audit_file = '/app/backend/data/content_audit.json'
+            self.versions_dir = '/app/backend/data/versions'
+            self.media_dir = '/app/backend/data/media'
+            self.backups_dir = '/app/backend/data/backups'
+        
+        # Template file (never modified, used for seeding)
+        self.template_file = '/app/backend/data/content.json'
         
         # Ensure data directories exist
-        for dir_path in ['/app/backend/data', self.versions_dir, self.media_dir, self.backups_dir]:
+        for dir_path in [self.data_dir, self.versions_dir, self.media_dir, self.backups_dir]:
             os.makedirs(dir_path, exist_ok=True)
     
     def get_default_content(self) -> Dict[str, Any]:

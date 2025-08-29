@@ -38,11 +38,11 @@ const Header = () => {
             <img
               src="https://customer-assets.emergentagent.com/job_training-hub-29/artifacts/gl3ldkmg_white%20logo.png"
               alt="GRRAS Solutions"
-              className="h-16 w-auto bg-gray-900 rounded-lg p-2 hover:scale-105 transition-transform"
+              className="h-12 sm:h-16 w-auto bg-gray-900 rounded-lg p-2 hover:scale-105 transition-transform"
             />
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-gray-900">GRRAS Solutions</h1>
-              <p className="text-sm text-gray-600">Training Institute</p>
+              <h1 className="text-lg sm:text-xl font-bold text-gray-900">GRRAS Solutions</h1>
+              <p className="text-xs sm:text-sm text-gray-600">Training Institute</p>
             </div>
           </Link>
 

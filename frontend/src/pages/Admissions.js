@@ -14,10 +14,27 @@ import {
   Award
 } from 'lucide-react';
 import SEO from '../components/SEO';
+import { useContent } from '../contexts/ContentContext';
 
 const Admissions = () => {
+  const { content } = useContent();
   const [selectedCourse, setSelectedCourse] = useState('');
   const [eligibilityResult, setEligibilityResult] = useState(null);
+
+  // Get courses from CMS instead of hardcoded data
+  const cmsCoursesData = content?.courses || [];
+  const featuredCourses = cmsCoursesData
+    .filter(course => course.visible !== false && course.featured)
+    .slice(0, 4)
+    .map(course => ({
+      name: course.title,
+      slug: course.slug,
+      eligibility: course.eligibility || 'Contact for details',
+      duration: course.duration,
+      fees: course.fees, // Dynamic from CMS
+      intake: course.intake || 'Monthly Batches',
+      highlights: course.highlights ? course.highlights.slice(0, 3) : ['Quality Training', 'Expert Faculty', 'Placement Support']
+    }));
 
   const admissionProcess = [
     {

@@ -8,19 +8,17 @@ import {
   MessageSquare,
   Save,
   RotateCcw,
-  Eye,
-  EyeOff,
   Plus,
   Trash2,
-  Edit,
-  GripVertical,
   History,
   LogOut,
-  Shield
+  Shield,
+  AlertCircle
 } from 'lucide-react';
 import { toast } from 'sonner';
 import SEO from '../components/SEO';
 import SettingsTab from '../components/SettingsTab';
+import CourseEditor from '../components/CourseEditor';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;

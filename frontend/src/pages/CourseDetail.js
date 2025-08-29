@@ -580,17 +580,55 @@ const CourseDetail = () => {
               {/* Sidebar */}
               <div className="space-y-6">
                 {/* Course Highlights */}
+                {course.highlights && course.highlights.length > 0 && (
+                  <div className="bg-white rounded-xl p-6 shadow-lg animate-fade-in-up">
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">
+                      Course Highlights
+                    </h3>
+                    <div className="space-y-3">
+                      {course.highlights.map((highlight, index) => (
+                        <div key={index} className="flex items-center gap-2">
+                          <Star className="h-4 w-4 text-yellow-500" />
+                          <span className="text-gray-700 text-sm">{highlight}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Course Details */}
                 <div className="bg-white rounded-xl p-6 shadow-lg animate-fade-in-up">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">
-                    Course Highlights
+                    Course Details
                   </h3>
                   <div className="space-y-3">
-                    {course.highlights.map((highlight, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        <Star className="h-4 w-4 text-yellow-500" />
-                        <span className="text-gray-700 text-sm">{highlight}</span>
+                    {course.level && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Level:</span>
+                        <span className="font-medium text-gray-900">{course.level}</span>
                       </div>
-                    ))}
+                    )}
+                    
+                    {course.mode && course.mode.length > 0 && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Mode:</span>
+                        <span className="font-medium text-gray-900">{course.mode.join(', ')}</span>
+                      </div>
+                    )}
+                    
+                    {course.eligibility && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Eligibility:</span>
+                        <span className="font-medium text-gray-900">{course.eligibility}</span>
+                      </div>
+                    )}
+                    
+                    {course.category && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Category:</span>
+                        <span className="font-medium text-gray-900 capitalize">{course.category}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
 

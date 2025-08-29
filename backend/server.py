@@ -413,6 +413,12 @@ async def generate_syllabus_pdf(course_slug: str, student_name: str) -> str:
         
         # Build PDF
         doc.build(content_elements)
+        
+        # Verify file was created
+        if not os.path.exists(temp_file):
+            raise HTTPException(status_code=500, detail="PDF file creation failed")
+            
+        logging.info(f"PDF generated successfully: {temp_file}")
         return temp_file
         
     except Exception as e:

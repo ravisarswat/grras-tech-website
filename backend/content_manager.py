@@ -865,41 +865,44 @@ class ContentManager:
     async def _get_content_json(self) -> Dict[str, Any]:
         """Get content from JSON file with persistent storage"""
         try:
-            # First try to load from runtime storage (persistent)
+            # FIRST: Check if runtime content exists (this is user's saved data)
             if os.path.exists(self.json_file):
                 async with aiofiles.open(self.json_file, 'r') as f:
                     content = json.loads(await f.read())
+                logging.info(f"✅ Loaded CMS content from persistent storage: {self.json_file}")
                 return content
-            else:
-                # Runtime file doesn't exist, seed from template or default
-                logging.info("Runtime content not found, initializing from template...")
-                
-                # Try to load from template file (git-tracked initial content)
-                template_content = None
-                if os.path.exists(self.template_file) and self.template_file != self.json_file:
-                    try:
-                        async with aiofiles.open(self.template_file, 'r') as f:
-                            template_content = json.loads(await f.read())
-                        logging.info("Loaded content from template file")
-                    except Exception as e:
-                        logging.warning(f"Could not load template file: {e}")
-                
-                # Use template or default content
-                initial_content = template_content or self.get_default_content()
-                
-                # Save to runtime location
-                await self._save_content_json(initial_content)
-                logging.info("Initial content saved to runtime storage")
-                
-                return initial_content
+            
+            # SECOND: Runtime file doesn't exist - this is first run after deploy
+            logging.warning(f"🔄 Runtime content not found at {self.json_file}, initializing...")
+            
+            # Try to load from template file (git-tracked initial content)
+            template_content = None
+            if os.path.exists(self.template_file):
+                try:
+                    async with aiofiles.open(self.template_file, 'r') as f:
+                        template_content = json.loads(await f.read())
+                    logging.info(f"📋 Loaded template from {self.template_file}")
+                except Exception as e:
+                    logging.error(f"❌ Could not load template file: {e}")
+            
+            # Use template or default content for initial setup
+            initial_content = template_content or self.get_default_content()
+            
+            # Save to persistent location immediately
+            await self._save_content_json(initial_content)
+            logging.info(f"💾 Initial content saved to persistent storage: {self.json_file}")
+            
+            return initial_content
+            
         except Exception as e:
-            logging.error(f"Error reading content JSON: {e}")
-            # Return default and save it
+            logging.error(f"❌ CRITICAL ERROR in _get_content_json: {e}")
+            # Emergency fallback
             default_content = self.get_default_content()
             try:
                 await self._save_content_json(default_content)
+                logging.info("🚨 Emergency fallback content saved")
             except:
-                pass  # Ignore save errors in fallback
+                logging.error("🚨 COULD NOT SAVE EMERGENCY FALLBACK")
             return default_content
     
     async def _save_content_json(self, content: Dict[str, Any]) -> Dict[str, Any]:

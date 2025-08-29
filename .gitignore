@@ -78,3 +78,11 @@ agenthub/agents/youtube/db
 
 # Mobile development
 android-sdk/ 
+
+# Runtime CMS data (persistent across deploys)
+runtime_data/
+/runtime_data/
+backend/data/content_audit.json
+backend/data/versions/
+backend/data/backups/
+backend/data/media/

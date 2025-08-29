@@ -879,20 +879,44 @@ class ContentManager:
             return await self._get_audit_json(limit)
     
     async def _get_content_json(self) -> Dict[str, Any]:
-        """Get content from JSON file"""
+        """Get content from JSON file with persistent storage"""
         try:
+            # First try to load from runtime storage (persistent)
             if os.path.exists(self.json_file):
                 async with aiofiles.open(self.json_file, 'r') as f:
                     content = json.loads(await f.read())
                 return content
             else:
-                # Return default content and save it
-                default_content = self.get_default_content()
-                await self._save_content_json(default_content)
-                return default_content
+                # Runtime file doesn't exist, seed from template or default
+                logging.info("Runtime content not found, initializing from template...")
+                
+                # Try to load from template file (git-tracked initial content)
+                template_content = None
+                if os.path.exists(self.template_file) and self.template_file != self.json_file:
+                    try:
+                        async with aiofiles.open(self.template_file, 'r') as f:
+                            template_content = json.loads(await f.read())
+                        logging.info("Loaded content from template file")
+                    except Exception as e:
+                        logging.warning(f"Could not load template file: {e}")
+                
+                # Use template or default content
+                initial_content = template_content or self.get_default_content()
+                
+                # Save to runtime location
+                await self._save_content_json(initial_content)
+                logging.info("Initial content saved to runtime storage")
+                
+                return initial_content
         except Exception as e:
             logging.error(f"Error reading content JSON: {e}")
-            return self.get_default_content()
+            # Return default and save it
+            default_content = self.get_default_content()
+            try:
+                await self._save_content_json(default_content)
+            except:
+                pass  # Ignore save errors in fallback
+            return default_content
     
     async def _save_content_json(self, content: Dict[str, Any]) -> Dict[str, Any]:
         """Save content to JSON file"""

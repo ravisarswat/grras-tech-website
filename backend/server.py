@@ -38,11 +38,11 @@ mongo_url = os.environ.get('DATABASE_URL') or os.environ.get('MONGO_URL', 'mongo
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ.get('DB_NAME', 'grras_database')]
 
-# Initialize Content Manager
-content_storage_type = os.environ.get('CONTENT_STORAGE', 'json')
+# Initialize Content Manager with FORCED MongoDB storage (Railway-proof)
+content_storage_type = "mongo"  # Force MongoDB for persistence
 content_manager = ContentManager(
-    storage_type=content_storage_type,
-    mongo_client=client if content_storage_type == 'mongo' else None,
+    storage_type="mongo",  # Always use MongoDB
+    mongo_client=client,   # Always provide MongoDB client
     db_name=os.environ.get('DB_NAME', 'grras_database')
 )
 

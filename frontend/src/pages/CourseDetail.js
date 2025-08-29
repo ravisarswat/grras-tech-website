@@ -35,28 +35,30 @@ const CourseDetail = () => {
       const response = await axios.get(`${API}/courses/${slug}`);
       const courseData = response.data;
       
-      // Use CMS data with fallback only for missing fields
-      const staticDetails = getCourseExtendedDetails(slug);
-      const courseWithDetails = {
-        ...staticDetails, // Put static details first as base
-        ...courseData,    // Then override with CMS data (this preserves CMS fees, duration, tools, etc.)
-        // Only add static details if fields are missing from CMS
-        highlights: courseData.highlights && courseData.highlights.length > 0 ? courseData.highlights : (staticDetails.highlights || []),
-        outcomes: courseData.outcomes && courseData.outcomes.length > 0 ? courseData.outcomes : (staticDetails.outcomes || []),
-        eligibility: courseData.eligibility || staticDetails.eligibility || 'Contact for details',
-        projects: courseData.projects && courseData.projects.length > 0 ? courseData.projects : (staticDetails.projects || []),
-        testimonials: courseData.testimonials && courseData.testimonials.length > 0 ? courseData.testimonials : (staticDetails.testimonials || [])
+      // Use ONLY CMS data - no static fallbacks
+      const courseWithDefaults = {
+        ...courseData,
+        // Ensure arrays exist but don't override with static data
+        highlights: courseData.highlights || [],
+        learningOutcomes: courseData.learningOutcomes || courseData.outcomes || [],
+        careerRoles: courseData.careerRoles || [],
+        tools: courseData.tools || [],
+        mode: courseData.mode || [],
+        // Ensure seo object exists
+        seo: courseData.seo || {},
+        // Set defaults for missing optional fields
+        overview: courseData.overview || courseData.description || '',
+        certificateInfo: courseData.certificateInfo || '',
+        batchesInfo: courseData.batchesInfo || '',
+        eligibility: courseData.eligibility || 'Contact for details',
+        level: courseData.level || 'All Levels',
+        category: courseData.category || 'Training'
       };
-      setCourse(courseWithDetails);
+      
+      setCourse(courseWithDefaults);
     } catch (error) {
       console.error('Error fetching course:', error);
-      // Fallback to static data only if API fails completely
-      const staticCourse = getStaticCourseData(slug);
-      if (staticCourse) {
-        setCourse(staticCourse);
-      } else {
-        setError('Course not found');
-      }
+      setError('Course not found');
     } finally {
       setLoading(false);
     }

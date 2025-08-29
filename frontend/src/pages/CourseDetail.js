@@ -64,6 +64,33 @@ const CourseDetail = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="spinner mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading course details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !course) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <BookOpen className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Course Not Found</h1>
+          <p className="text-gray-600 mb-6">The course you're looking for doesn't exist or has been removed.</p>
+          <Link to="/courses" className="btn-primary">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Courses
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <CoursePageSEO course={course} tools={course.tools || []} />

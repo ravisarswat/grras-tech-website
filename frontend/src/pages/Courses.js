@@ -125,14 +125,24 @@ const Courses = () => {
         features: ['Core Python', 'Web Development', 'Automation', 'Career Guidance']
       },
       'c-cpp-dsa': {
-        tagline: 'Foundation Programming',
-        description: 'Master C/C++ programming with data structures and algorithms.',
+        tagline: 'Foundation Programming Excellence',
+        description: 'Master C/C++ with data structures and algorithms for strong programming foundations.',
         duration: '5 Months',
         level: 'Beginner',
         category: 'programming',
         icon: '💻',
         color: 'from-gray-500 to-gray-700',
         features: ['C/C++ Mastery', 'DSA Concepts', 'Problem Solving', 'Coding Practice']
+      },
+      'cyber-security': {
+        tagline: 'Cyber Security & Ethical Hacking',
+        description: 'Learn essential cyber security and ethical hacking with hands-on lab experience.',
+        duration: '6 Months',
+        level: 'Intermediate',
+        category: 'security',
+        icon: '🔒',
+        color: 'from-red-600 to-red-800',
+        features: ['Ethical Hacking', 'Penetration Testing', 'Security Assessment', 'Certification Prep']
       }
     };
 

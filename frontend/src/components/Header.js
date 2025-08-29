@@ -58,17 +58,18 @@ const Header = () => {
                     onMouseLeave={() => setIsCoursesOpen(false)}
                     onClick={() => setIsCoursesOpen(!isCoursesOpen)}
                   >
-                    <Link
-                      to={item.path}
+                    <button
+                      type="button"
                       className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
                         isActivePath(item.path) || location.pathname.startsWith('/courses')
                           ? 'text-red-600 bg-red-50'
                           : 'text-gray-700 hover:text-red-600 hover:bg-red-50'
                       }`}
+                      onClick={() => setIsCoursesOpen(!isCoursesOpen)}
                     >
                       <span>{item.name}</span>
-                      <ChevronDown className="h-4 w-4" />
-                    </Link>
+                      <ChevronDown className={`h-4 w-4 transition-transform ${isCoursesOpen ? 'rotate-180' : ''}`} />
+                    </button>
                     
                     {/* Dropdown */}
                     {isCoursesOpen && (

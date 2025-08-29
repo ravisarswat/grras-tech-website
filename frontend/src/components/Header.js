@@ -97,7 +97,7 @@ const Header = () => {
                               setIsCoursesOpen(false);
                             }}
                           >
-                            {course.name}
+                            {course.title || course.name}
                           </Link>
                         ))}
                       </div>

@@ -23,12 +23,15 @@ import shutil
 
 class ContentManager:
     def __init__(self, storage_type: str = "mongo", mongo_client=None, db_name: str = "grras_database"):
-        # FORCE MONGODB STORAGE - Railway-proof persistent storage
-        self.storage_type = "mongo"  # Always use MongoDB for persistence
+        # ENFORCE MONGODB STORAGE - Single source of truth for GitHub deployments
+        if not mongo_client:
+            raise ValueError("MongoDB client is required. No JSON fallbacks allowed for production.")
+        
+        self.storage_type = "mongo"  # FORCED MongoDB only
         self.mongo_client = mongo_client
         self.db_name = db_name
         
-        # Fallback JSON paths (only used if MongoDB fails)
+        # JSON paths used ONLY for local backup/versioning (not primary storage)
         self.runtime_dir = '/app/persistent_cms_data'
         self.json_file = '/app/persistent_cms_data/content.json'
         self.audit_file = '/app/persistent_cms_data/content_audit.json'
@@ -36,12 +39,14 @@ class ContentManager:
         self.media_dir = '/app/persistent_cms_data/media'
         self.backups_dir = '/app/persistent_cms_data/backups'
         
-        # Template file (git-tracked, READ ONLY)
+        # Template file (git-tracked, READ ONLY for initial seeding if MongoDB is empty)
         self.template_file = '/app/backend/data/content.json'
         
-        # Create directories as backup
+        # Create directories for local operations only
         for dir_path in [self.runtime_dir, self.versions_dir, self.media_dir, self.backups_dir]:
             os.makedirs(dir_path, exist_ok=True)
+        
+        logging.info("✅ ContentManager initialized - MongoDB ONLY mode (Single Source of Truth)")
     
     def get_default_content(self) -> Dict[str, Any]:
         """Return the comprehensive default content structure"""

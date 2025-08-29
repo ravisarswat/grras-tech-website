@@ -191,7 +191,7 @@ const Courses = () => {
                     
                     {/* Course Title */}
                     <h3 className="text-xl font-bold text-gray-900 mb-2">
-                      {course.name}
+                      {course.title || course.name}
                     </h3>
                     
                     <p className="text-red-600 font-medium mb-3 text-sm">

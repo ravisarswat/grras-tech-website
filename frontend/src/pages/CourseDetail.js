@@ -195,7 +195,6 @@ const CourseDetail = () => {
           'Research Scientist',
           'AI/ML Consultant'
         ],
-        fees: '₹55,000 (EMI Available)',
         batch: 'Weekend & Evening Batches'
       },
       'java-salesforce': {

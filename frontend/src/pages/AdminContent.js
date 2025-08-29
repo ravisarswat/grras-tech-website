@@ -221,22 +221,39 @@ const AdminContent = () => {
   };
 
   const addCourse = () => {
+    const timestamp = Date.now();
     const newCourse = {
-      slug: `new-course-${Date.now()}`,
+      slug: `new-course-${timestamp}`,
       title: 'New Course',
       oneLiner: 'Course description',
-      duration: '3 months',
-      fees: 'Contact for fees',
+      duration: '',
+      fees: '',
       tools: [],
-      visible: true,
-      order: (content?.courses?.length || 0) + 1,
+      highlights: [],
+      learningOutcomes: [],
+      careerRoles: [],
+      overview: '',
+      level: 'Beginner',
+      certificateInfo: '',
+      batchesInfo: '',
+      category: '',
       thumbnailUrl: '',
-      category: 'other',
-      level: 'Beginner'
+      mode: [],
+      eligibility: '',
+      seo: {
+        title: '',
+        description: '',
+        keywords: '',
+        ogImage: ''
+      },
+      visible: true,
+      featured: false,
+      order: (content?.courses?.length || 0) + 1
     };
     
     const newCourses = [...(content?.courses || []), newCourse];
     updateContent('courses', newCourses);
+    toast.success('New course added. Please update the details and save.');
   };
 
   const updateCourse = (index, field, value) => {

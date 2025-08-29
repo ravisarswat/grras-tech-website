@@ -72,9 +72,9 @@ const SEO = ({
         "@graph": [
           {
             "@type": "Organization",
-            "@id": "https://grrassolutions.com/#organization",
+            "@id": "https://www.grras.tech/#organization",
             "name": "GRRAS Solutions Training Institute",
-            "url": "https://grrassolutions.com",
+            "url": "https://www.grras.tech",
             "logo": {
               "@type": "ImageObject",
               "url": image

@@ -27,26 +27,20 @@ class ContentManager:
         self.mongo_client = mongo_client
         self.db_name = db_name
         
-        # Always use separate runtime storage to prevent GitHub overwrites
-        self.runtime_dir = '/tmp/grras_cms_data'  # Use system temp directory
-        self.json_file = '/tmp/grras_cms_data/content.json'
-        self.audit_file = '/tmp/grras_cms_data/content_audit.json'
-        self.versions_dir = '/tmp/grras_cms_data/versions'
-        self.media_dir = '/tmp/grras_cms_data/media'
-        self.backups_dir = '/tmp/grras_cms_data/backups'
+        # Use Railway persistent storage - this survives deploys
+        self.runtime_dir = '/app/persistent_cms_data'
+        self.json_file = '/app/persistent_cms_data/content.json'
+        self.audit_file = '/app/persistent_cms_data/content_audit.json'
+        self.versions_dir = '/app/persistent_cms_data/versions'
+        self.media_dir = '/app/persistent_cms_data/media'
+        self.backups_dir = '/app/persistent_cms_data/backups'
         
-        # Template file (in git, never modified, used only for initial seeding)
+        # Template file (git-tracked, READ ONLY, never overwritten)
         self.template_file = '/app/backend/data/content.json'
         
-        # Ensure runtime directories exist
+        # Create runtime directories
         for dir_path in [self.runtime_dir, self.versions_dir, self.media_dir, self.backups_dir]:
             os.makedirs(dir_path, exist_ok=True)
-            
-        # Create a .gitkeep file to ensure directories persist but ignore content
-        gitkeep_file = os.path.join(self.runtime_dir, '.gitkeep')
-        if not os.path.exists(gitkeep_file):
-            with open(gitkeep_file, 'w') as f:
-                f.write('# This file ensures the directory structure persists\n')
     
     def get_default_content(self) -> Dict[str, Any]:
         """Return the comprehensive default content structure"""

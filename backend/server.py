@@ -313,10 +313,36 @@ async def generate_syllabus_pdf(course_slug: str, student_name: str) -> str:
         # Content
         content_elements = []
         
-        # Header with institute info
-        institute_name = institute.get("name", "GRRAS Solutions Training Institute")
-        content_elements.append(Paragraph(institute_name, title_style))
-        content_elements.append(Spacer(1, 20))
+        # Try to add logo if available
+        branding = content.get("branding", {})
+        logo_url = branding.get("logoUrl", "")
+        
+        if logo_url:
+            try:
+                # For now, add institute name with enhanced styling (logo implementation would require image handling)
+                enhanced_title_style = ParagraphStyle(
+                    'EnhancedTitle',
+                    parent=styles['Title'],
+                    fontSize=28,
+                    textColor=colors.HexColor('#DC2626'),
+                    spaceAfter=30,
+                    alignment=1,  # Center
+                    leading=32
+                )
+                institute_name = institute.get("name", "GRRAS Solutions Training Institute")
+                content_elements.append(Paragraph(f"<b>{institute_name}</b>", enhanced_title_style))
+                content_elements.append(Paragraph("📚 Professional IT Training Institute", normal_style))
+                content_elements.append(Spacer(1, 20))
+            except:
+                # Fallback to standard header
+                institute_name = institute.get("name", "GRRAS Solutions Training Institute")
+                content_elements.append(Paragraph(institute_name, title_style))
+                content_elements.append(Spacer(1, 20))
+        else:
+            # Standard header without logo
+            institute_name = institute.get("name", "GRRAS Solutions Training Institute")
+            content_elements.append(Paragraph(institute_name, title_style))
+            content_elements.append(Spacer(1, 20))
         
         # Course title
         content_elements.append(Paragraph(f"{course_name} - Detailed Syllabus", heading_style))

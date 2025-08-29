@@ -207,7 +207,7 @@ const Courses = () => {
                     <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
                       <div className="flex items-center gap-1">
                         <Clock className="h-4 w-4" />
-                        <span>{course.duration || 'Contact for details'}</span>
+                        <span>{course.duration || 'Flexible'}</span>
                       </div>
                       {course.fees && (
                         <div className="text-red-600 font-semibold">

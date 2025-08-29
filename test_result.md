@@ -790,6 +790,18 @@ frontend:
           agent: "testing"
           comment: "✅ Form validation and UX working well. Keyboard navigation tested and functional. Form field focus states working. Loading states and spinners working during save operations. Success/error toast notifications working. Proper error messaging for authentication. All interactive elements responsive and accessible."
 
+  - task: "Cyber Security Course Integration & Dropdown Navigation"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/pages/CourseDetail.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: false
+          agent: "testing"
+          comment: "✅ MAJOR FUNCTIONALITY WORKING: Cyber Security course visible in courses list (8 total courses), Security filter working (shows 1 course), dropdown navigation fully functional on desktop and mobile, course links in dropdown work correctly, backend API fully supports cyber-security with all expected tools (Kali Linux, Wireshark, Metasploit, Nmap, Burp Suite), CMS integration working. ❌ CRITICAL ISSUE: Course detail page shows 'Course Not Found' due to JavaScript error 'Cannot read properties of null (reading 'projects')' in CourseDetail component. The component expects optional fields like 'projects' that don't exist in cyber-security course data. Needs code fix to handle missing optional fields gracefully."
+
 metadata:
   created_by: "testing_agent"
   version: "5.0"

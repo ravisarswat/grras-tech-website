@@ -861,10 +861,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Course Fees Single Source of Truth & Dropdown Navigation Testing"
+    - "URGENT DEBUG - Tools & Technologies Admin Panel Issue"
+    - "URGENT DEBUG - PDF Generation Error for Red Hat Certifications" 
+    - "URGENT DEBUG - CMS Save and Retrieve Tools Functionality"
   stuck_tasks: []
   test_all: false
-  test_priority: "course_fees_dropdown_testing_completed"
+  test_priority: "urgent_debug_completed"
 
 agent_communication:
     - agent: "testing"

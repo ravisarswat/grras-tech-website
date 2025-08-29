@@ -693,13 +693,31 @@ const AdminContent = () => {
             </div>
           )}
 
-          {/* Courses Tab - This will be a complex interface, I'll implement the basic structure */}
+          {/* Courses Tab - Enhanced with CourseEditor */}
           {activeTab === 'courses' && (
             <div className="space-y-6">
               <div className="flex justify-between items-center">
-                <h2 className="text-xl font-semibold text-gray-900">Courses Management</h2>
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-900">Courses Management</h2>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Add, edit, and manage course content. Changes will be reflected everywhere automatically.
+                  </p>
+                </div>
                 <div className="text-sm text-gray-500">
                   {content?.courses ? `${content.courses.length} courses` : 'Loading courses...'}
+                </div>
+              </div>
+              
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5" />
+                  <div>
+                    <h4 className="text-blue-900 font-medium">Single Source of Truth</h4>
+                    <p className="text-blue-800 text-sm mt-1">
+                      Courses added here will automatically appear in the courses list, dropdown navigation, 
+                      detail pages, and PDF downloads. No code changes required.
+                    </p>
+                  </div>
                 </div>
               </div>
               
@@ -709,7 +727,7 @@ const AdminContent = () => {
                   className="btn-primary flex items-center gap-2"
                 >
                   <Plus className="h-4 w-4" />
-                  Add Course
+                  Add New Course
                 </button>
               </div>
               
@@ -718,172 +736,43 @@ const AdminContent = () => {
                   <p className="text-yellow-800">Loading courses data...</p>
                 </div>
               ) : content.courses.length === 0 ? (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <p className="text-red-800">No courses found in CMS data</p>
+                <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center">
+                  <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">No Courses Yet</h3>
+                  <p className="text-gray-600 mb-4">
+                    Get started by adding your first course. It will appear automatically across your website.
+                  </p>
+                  <button
+                    onClick={addCourse}
+                    className="btn-primary flex items-center gap-2 mx-auto"
+                  >
+                    <Plus className="h-4 w-4" />
+                    Add Your First Course
+                  </button>
                 </div>
               ) : (
                 <div className="space-y-4">
                   {content.courses.map((course, index) => (
-                  <div key={course.slug} className="bg-white rounded-lg p-6 shadow-sm">
-                    <div className="flex justify-between items-start mb-4">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm text-gray-500">#{course.order}</span>
-                        <h3 className="text-lg font-medium">{course.title}</h3>
-                        {course.visible ? (
-                          <Eye className="h-4 w-4 text-green-500" />
-                        ) : (
-                          <EyeOff className="h-4 w-4 text-gray-400" />
-                        )}
-                      </div>
-                      
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => moveCourse(index, 'up')}
-                          disabled={index === 0}
-                          className="p-1 text-gray-400 hover:text-gray-600 disabled:opacity-50"
-                        >
-                          ↑
-                        </button>
-                        <button
-                          onClick={() => moveCourse(index, 'down')}
-                          disabled={index === content.courses.length - 1}
-                          className="p-1 text-gray-400 hover:text-gray-600 disabled:opacity-50"
-                        >
-                          ↓
-                        </button>
-                        <button
-                          onClick={() => deleteCourse(index)}
-                          className="p-1 text-red-400 hover:text-red-600"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
-                      </div>
-                    </div>
-                    
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Course Title
-                        </label>
-                        <input
-                          type="text"
-                          value={course.title}
-                          onChange={(e) => updateCourse(index, 'title', e.target.value)}
-                          className="form-input"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Slug (URL)
-                        </label>
-                        <input
-                          type="text"
-                          value={course.slug}
-                          onChange={(e) => updateCourse(index, 'slug', e.target.value)}
-                          className="form-input"
-                          placeholder="course-url-slug"
-                        />
-                      </div>
-                      
-                      <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          One-liner Description
-                        </label>
-                        <input
-                          type="text"
-                          value={course.oneLiner}
-                          onChange={(e) => updateCourse(index, 'oneLiner', e.target.value)}
-                          className="form-input"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Duration
-                        </label>
-                        <input
-                          type="text"
-                          value={course.duration}
-                          onChange={(e) => updateCourse(index, 'duration', e.target.value)}
-                          className="form-input"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Fees
-                        </label>
-                        <input
-                          type="text"
-                          value={course.fees}
-                          onChange={(e) => updateCourse(index, 'fees', e.target.value)}
-                          className="form-input"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label className="flex items-center gap-2">
-                          <input
-                            type="checkbox"
-                            checked={course.visible}
-                            onChange={(e) => updateCourse(index, 'visible', e.target.checked)}
-                            className="rounded"
-                          />
-                          <span className="text-sm font-medium text-gray-700">Visible on website</span>
-                        </label>
-                      </div>
-                    </div>
-                    
-                    <div className="mt-4">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Tools & Technologies
-                      </label>
-                      <div className="flex flex-wrap gap-2 mb-2">
-                        {course.tools?.map((tool, toolIndex) => (
-                          <span
-                            key={toolIndex}
-                            className="inline-flex items-center gap-1 bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm"
-                          >
-                            {tool}
-                            <button
-                              onClick={() => removeTool(index, toolIndex)}
-                              className="text-blue-600 hover:text-blue-800"
-                            >
-                              ×
-                            </button>
-                          </span>
-                        ))}
-                      </div>
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          id={`tool-input-${index}`}
-                          placeholder="Add a tool or technology"
-                          className="form-input flex-1"
-                          onKeyPress={(e) => {
-                            if (e.key === 'Enter') {
-                              addTool(index, e.target.value);
-                              e.target.value = '';
-                            }
-                          }}
-                        />
-                        <button
-                          onClick={() => {
-                            const input = document.getElementById(`tool-input-${index}`);
-                            if (input && input.value.trim()) {
-                              addTool(index, input.value.trim());
-                              input.value = '';
-                            }
-                          }}
-                          className="btn-outline"
-                        >
-                          Add
-                        </button>
-                      </div>
-                    </div>
+                    <CourseEditor
+                      key={course.slug || index}
+                      course={course}
+                      index={index}
+                      courses={content.courses}
+                      onUpdate={updateCourse}
+                      onDelete={deleteCourse}
+                      onMove={moveCourse}
+                    />
+                  ))}
+                  
+                  <div className="text-center py-8">
+                    <button
+                      onClick={addCourse}
+                      className="btn-outline flex items-center gap-2 mx-auto"
+                    >
+                      <Plus className="h-4 w-4" />
+                      Add Another Course
+                    </button>
                   </div>
-                ))}
                 </div>
               )}
             </div>

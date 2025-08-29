@@ -33,15 +33,20 @@ import shutil
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection with Railway support
-mongo_url = os.environ.get('DATABASE_URL') or os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
+# MongoDB connection - SINGLE SOURCE OF TRUTH (GitHub ENV priority)
+mongo_url = (
+    os.environ.get('MONGO_URI') or           # GitHub ENV (primary)
+    os.environ.get('DATABASE_URL') or        # Railway fallback
+    os.environ.get('MONGO_URL', 'mongodb://localhost:27017')  # Local fallback
+)
+
+logging.info(f"🔗 Connecting to MongoDB: {mongo_url[:50]}{'...' if len(mongo_url) > 50 else ''}")
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ.get('DB_NAME', 'grras_database')]
 
-# Initialize Content Manager with FORCED MongoDB storage (Railway-proof)
-content_storage_type = "mongo"  # Force MongoDB for persistence
+# Initialize Content Manager - MONGODB ONLY (No JSON fallbacks during normal operation)
 content_manager = ContentManager(
-    storage_type="mongo",  # Always use MongoDB
+    storage_type="mongo",  # FORCED MongoDB - single source of truth
     mongo_client=client,   # Always provide MongoDB client
     db_name=os.environ.get('DB_NAME', 'grras_database')
 )

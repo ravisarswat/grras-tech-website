@@ -327,7 +327,6 @@ const CourseDetail = () => {
           'Information Security Officer',
           'Incident Response Specialist'
         ],
-        fees: 'Contact for latest fee',
         batch: 'Monthly Batches'
       }
     };

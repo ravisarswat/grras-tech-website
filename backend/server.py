@@ -381,7 +381,22 @@ async def generate_syllabus_pdf(course_slug: str, student_name: str) -> str:
         content_elements.append(Paragraph("Course Information", heading_style))
         content_elements.append(Paragraph(f"<b>Duration:</b> {duration}", normal_style))
         content_elements.append(Paragraph(f"<b>Fees:</b> {fees}", normal_style))
+        content_elements.append(Paragraph(f"<b>Level:</b> {level}", normal_style))
+        content_elements.append(Paragraph(f"<b>Eligibility:</b> {eligibility}", normal_style))
         content_elements.append(Spacer(1, 20))
+        
+        # Course Overview
+        if course_description:
+            content_elements.append(Paragraph("Course Overview", heading_style))
+            content_elements.append(Paragraph(course_description, normal_style))
+            content_elements.append(Spacer(1, 20))
+        
+        # Course Highlights
+        if highlights:
+            content_elements.append(Paragraph("Course Highlights", heading_style))
+            for highlight in highlights[:8]:  # Limit to 8 highlights for space
+                content_elements.append(Paragraph(f"✓ {highlight}", normal_style))
+            content_elements.append(Spacer(1, 20))
         
         # Tools/Technologies section
         if tools:
@@ -390,23 +405,32 @@ async def generate_syllabus_pdf(course_slug: str, student_name: str) -> str:
                 content_elements.append(Paragraph(f"• {tool}", normal_style))
             content_elements.append(Spacer(1, 20))
         
-        # Curriculum outline
-        content_elements.append(Paragraph("Curriculum Outline", heading_style))
-        content_elements.append(Paragraph("Detailed curriculum will be shared during counseling session. Our comprehensive program covers:", normal_style))
-        content_elements.append(Paragraph("• Fundamentals and core concepts", normal_style))
-        content_elements.append(Paragraph("• Hands-on practical sessions", normal_style))
-        content_elements.append(Paragraph("• Industry best practices", normal_style))
-        content_elements.append(Paragraph("• Real-world projects", normal_style))
-        content_elements.append(Paragraph("• Certification preparation", normal_style))
-        content_elements.append(Spacer(1, 20))
+        # Learning Outcomes
+        if learning_outcomes:
+            content_elements.append(Paragraph("What You'll Learn", heading_style))
+            for outcome in learning_outcomes[:6]:  # Limit to 6 outcomes for space
+                content_elements.append(Paragraph(f"🎯 {outcome}", normal_style))
+            content_elements.append(Spacer(1, 20))
+        else:
+            # Default learning outcomes if none specified
+            content_elements.append(Paragraph("Learning Outcomes", heading_style))
+            content_elements.append(Paragraph("Upon successful completion of this program, students will:", normal_style))
+            content_elements.append(Paragraph("• Master industry-relevant skills and technologies", normal_style))
+            content_elements.append(Paragraph("• Gain practical experience through projects", normal_style))
+            content_elements.append(Paragraph("• Be prepared for industry certifications", normal_style))
+            content_elements.append(Paragraph("• Develop problem-solving capabilities", normal_style))
+            content_elements.append(Spacer(1, 20))
         
-        # Learning outcomes
-        content_elements.append(Paragraph("Learning Outcomes", heading_style))
-        content_elements.append(Paragraph("Upon successful completion of this program, students will:", normal_style))
-        content_elements.append(Paragraph("• Master industry-relevant skills and technologies", normal_style))
-        content_elements.append(Paragraph("• Gain practical experience through projects", normal_style))
-        content_elements.append(Paragraph("• Be prepared for industry certifications", normal_style))
-        content_elements.append(Paragraph("• Develop problem-solving capabilities", normal_style))
+        # Career Opportunities
+        if career_roles:
+            content_elements.append(Paragraph("Career Opportunities", heading_style))
+            for role in career_roles[:6]:  # Limit to 6 roles for space
+                content_elements.append(Paragraph(f"💼 {role}", normal_style))
+            content_elements.append(Spacer(1, 20))
+        
+        # Certificate Information
+        content_elements.append(Paragraph("Certificate Information", heading_style))
+        content_elements.append(Paragraph(certificate_info, normal_style))
         content_elements.append(Spacer(1, 20))
         
         # Schedule and fees

@@ -185,7 +185,7 @@ const Courses = () => {
                     <div className="flex items-start justify-between mb-4">
                       <div className="text-4xl">{course.icon}</div>
                       <span className="text-xs font-medium text-white bg-gradient-to-r from-gray-600 to-gray-700 px-2 py-1 rounded-full">
-                        {course.level}
+                        {course.level || 'All Levels'}
                       </span>
                     </div>
                     

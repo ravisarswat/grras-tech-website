@@ -217,16 +217,18 @@ const Courses = () => {
                     </div>
                     
                     {/* Features */}
-                    <div className="mb-6">
-                      <div className="grid grid-cols-2 gap-2">
-                        {course.features.slice(0, 4).map((feature, i) => (
-                          <div key={i} className="flex items-center gap-1 text-xs text-gray-600">
-                            <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                            <span>{feature}</span>
-                          </div>
-                        ))}
+                    {course.highlights && course.highlights.length > 0 && (
+                      <div className="mb-6">
+                        <div className="grid grid-cols-2 gap-2">
+                          {course.highlights.slice(0, 4).map((feature, i) => (
+                            <div key={i} className="flex items-center gap-1 text-xs text-gray-600">
+                              <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                              <span>{feature}</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
                     
                     {/* Tools Preview */}
                     {course.tools && course.tools.length > 0 && (

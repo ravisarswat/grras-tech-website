@@ -1461,6 +1461,9 @@ def main():
     
     results = TestResults()
     
+    # PRIORITY TEST: User Admin Changes Persistence (as requested in review)
+    test_user_admin_changes_persistence(results)
+    
     # Test Railway-specific features first
     print("\n🚀 Testing Railway Compatibility Features...")
     test_railway_health_endpoint(results)

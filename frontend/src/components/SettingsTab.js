@@ -106,7 +106,7 @@ const SettingsTab = ({ content, updateContent, getContentValue }) => {
               value={getContentValue('institute.website') || ''}
               onChange={(e) => updateContent('institute.website', e.target.value)}
               className="form-input"
-              placeholder="https://grrassolutions.com"
+              placeholder="https://www.grras.tech"
             />
           </div>
         </div>

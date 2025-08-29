@@ -1278,6 +1278,180 @@ def test_environment_variable_handling(results):
     except Exception as e:
         results.add_result("Environment Variable Handling", "FAIL", "Environment variable test failed", str(e))
 
+def test_user_admin_changes_persistence(results):
+    """
+    SPECIAL TEST: Check user's admin changes and persistence
+    This test verifies the specific review request about admin panel changes
+    """
+    print("\n🎯 USER ADMIN CHANGES PERSISTENCE TEST")
+    print("="*60)
+    
+    try:
+        # TEST 1: CHECK CURRENT CMS CONTENT
+        print("TEST 1: Checking current CMS content...")
+        response = requests.get(f"{API_BASE}/content", timeout=10)
+        
+        if response.status_code != 200:
+            results.add_result("Admin Changes - Get Content", "FAIL", f"HTTP {response.status_code}", response.text)
+            return
+        
+        data = response.json()
+        content = data.get("content", {})
+        courses = content.get("courses", [])
+        
+        print(f"📊 TOTAL COURSES FOUND: {len(courses)}")
+        
+        # Check if we have 8 courses as expected
+        if len(courses) == 8:
+            results.add_result("Admin Changes - Course Count", "PASS", f"Found expected 8 courses")
+        else:
+            results.add_result("Admin Changes - Course Count", "FAIL", f"Expected 8 courses, found {len(courses)}")
+        
+        # Display all courses and their details
+        print("\n📋 ALL COURSES AND THEIR CURRENT DATA:")
+        print("-" * 80)
+        
+        target_courses = {
+            "devops-training": "DevOps Training",
+            "redhat-certifications": "Red Hat Certifications", 
+            "cyber-security": "Cyber Security"
+        }
+        
+        found_target_courses = {}
+        
+        for i, course in enumerate(courses, 1):
+            slug = course.get("slug", "unknown")
+            title = course.get("title", "Unknown")
+            duration = course.get("duration", "Not specified")
+            fees = course.get("fees", "Not specified")
+            tools = course.get("tools", [])
+            
+            print(f"{i}. {title} (slug: {slug})")
+            print(f"   Duration: {duration}")
+            print(f"   Fees: {fees}")
+            print(f"   Tools ({len(tools)}): {', '.join(tools) if tools else 'None'}")
+            print()
+            
+            # Check if this is one of our target courses
+            if slug in target_courses:
+                found_target_courses[slug] = {
+                    "title": title,
+                    "duration": duration,
+                    "fees": fees,
+                    "tools": tools,
+                    "tools_count": len(tools)
+                }
+        
+        # TEST 2: CHECK PERSISTENCE STORAGE
+        print("TEST 2: Checking persistence storage...")
+        
+        # Check if persistent storage file exists
+        persistent_file_paths = [
+            "/app/persistent_cms_data/content.json",
+            "/app/backend/data/content.json",
+            "/app/backend/storage/content.json"
+        ]
+        
+        persistent_file_found = None
+        for path in persistent_file_paths:
+            if os.path.exists(path):
+                persistent_file_found = path
+                break
+        
+        if persistent_file_found:
+            try:
+                # Get file modification time
+                mod_time = os.path.getmtime(persistent_file_found)
+                mod_datetime = datetime.fromtimestamp(mod_time)
+                
+                print(f"✅ Persistent storage file found: {persistent_file_found}")
+                print(f"📅 Last modified: {mod_datetime}")
+                
+                # Read and compare content
+                with open(persistent_file_found, 'r') as f:
+                    persistent_content = json.load(f)
+                
+                persistent_courses = persistent_content.get("courses", [])
+                
+                if len(persistent_courses) == len(courses):
+                    results.add_result("Admin Changes - Persistence File", "PASS", f"Persistent file exists with {len(persistent_courses)} courses, modified: {mod_datetime}")
+                else:
+                    results.add_result("Admin Changes - Persistence File", "FAIL", f"Course count mismatch - API: {len(courses)}, File: {len(persistent_courses)}")
+                
+            except Exception as e:
+                results.add_result("Admin Changes - Persistence File", "FAIL", f"Error reading persistent file: {str(e)}")
+        else:
+            results.add_result("Admin Changes - Persistence File", "FAIL", "No persistent storage file found in expected locations")
+            print("❌ No persistent storage file found in:")
+            for path in persistent_file_paths:
+                print(f"   - {path}")
+        
+        # TEST 3: VERIFY SPECIFIC CHANGES FOR TARGET COURSES
+        print("TEST 3: Verifying specific changes for target courses...")
+        print("-" * 60)
+        
+        for slug, expected_name in target_courses.items():
+            if slug in found_target_courses:
+                course_data = found_target_courses[slug]
+                print(f"🎯 {expected_name} (slug: {slug})")
+                print(f"   ✅ Found in CMS")
+                print(f"   📝 Title: {course_data['title']}")
+                print(f"   ⏱️  Duration: {course_data['duration']}")
+                print(f"   💰 Fees: {course_data['fees']}")
+                print(f"   🛠️  Tools ({course_data['tools_count']}): {', '.join(course_data['tools'])}")
+                
+                # Check if tools array has content (indicates user modifications)
+                if course_data['tools_count'] > 0:
+                    results.add_result(f"Admin Changes - {expected_name} Tools", "PASS", f"Has {course_data['tools_count']} tools configured")
+                else:
+                    results.add_result(f"Admin Changes - {expected_name} Tools", "FAIL", "No tools configured")
+                
+                print()
+            else:
+                print(f"❌ {expected_name} (slug: {slug}) - NOT FOUND")
+                results.add_result(f"Admin Changes - {expected_name} Missing", "FAIL", f"Course {slug} not found in CMS")
+        
+        # SUMMARY OF FINDINGS
+        print("🔍 PERSISTENCE ANALYSIS SUMMARY:")
+        print("-" * 60)
+        
+        if len(courses) == 8:
+            print("✅ Course count matches expected (8 courses)")
+        else:
+            print(f"⚠️  Course count: Expected 8, Found {len(courses)}")
+        
+        if persistent_file_found:
+            print(f"✅ Persistent storage working: {persistent_file_found}")
+        else:
+            print("❌ No persistent storage file found")
+        
+        total_tools = sum(len(course.get("tools", [])) for course in courses)
+        print(f"🛠️  Total tools across all courses: {total_tools}")
+        
+        if total_tools > 20:  # Reasonable threshold for configured tools
+            print("✅ Courses appear to have user-configured tools")
+            results.add_result("Admin Changes - Overall Tools Configuration", "PASS", f"Total {total_tools} tools configured across courses")
+        else:
+            print("⚠️  Limited tools configuration detected")
+            results.add_result("Admin Changes - Overall Tools Configuration", "FAIL", f"Only {total_tools} tools total - may indicate template data")
+        
+        # Check for signs of user modifications vs template data
+        unique_fees = set(course.get("fees", "") for course in courses)
+        unique_durations = set(course.get("duration", "") for course in courses)
+        
+        print(f"💰 Unique fee structures: {len(unique_fees)}")
+        print(f"⏱️  Unique durations: {len(unique_durations)}")
+        
+        if len(unique_fees) > 3 and len(unique_durations) > 3:
+            print("✅ Diverse fee/duration data suggests user customization")
+            results.add_result("Admin Changes - Data Diversity", "PASS", "Diverse course data indicates user modifications")
+        else:
+            print("⚠️  Limited diversity in course data")
+            results.add_result("Admin Changes - Data Diversity", "FAIL", "Limited data diversity - may be template data")
+        
+    except Exception as e:
+        results.add_result("Admin Changes - Persistence Test", "FAIL", f"Test failed: {str(e)}")
+
 def main():
     print("GRRAS Solutions Railway-Compatible Backend API Test Suite")
     print("="*70)

@@ -166,7 +166,8 @@ const Courses = () => {
       { slug: 'data-science-machine-learning', name: 'Data Science & Machine Learning' },
       { slug: 'java-salesforce', name: 'Java & Salesforce' },
       { slug: 'python', name: 'Python' },
-      { slug: 'c-cpp-dsa', name: 'C/C++ & DSA' }
+      { slug: 'c-cpp-dsa', name: 'C/C++ & DSA' },
+      { slug: 'cyber-security', name: 'Cyber Security' }
     ];
 
     return coursesList.map(course => ({

@@ -637,6 +637,12 @@ const AdminContent = () => {
             <div className="space-y-6">
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-semibold text-gray-900">Courses Management</h2>
+                <div className="text-sm text-gray-500">
+                  {content?.courses ? `${content.courses.length} courses` : 'Loading courses...'}
+                </div>
+              </div>
+              
+              <div className="flex justify-end mb-4">
                 <button
                   onClick={addCourse}
                   className="btn-primary flex items-center gap-2"
@@ -646,8 +652,17 @@ const AdminContent = () => {
                 </button>
               </div>
               
-              <div className="space-y-4">
-                {content?.courses?.map((course, index) => (
+              {!content?.courses ? (
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                  <p className="text-yellow-800">Loading courses data...</p>
+                </div>
+              ) : content.courses.length === 0 ? (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                  <p className="text-red-800">No courses found in CMS data</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {content.courses.map((course, index) => (
                   <div key={course.slug} className="bg-white rounded-lg p-6 shadow-sm">
                     <div className="flex justify-between items-start mb-4">
                       <div className="flex items-center gap-2">

@@ -597,11 +597,42 @@ class ContentManager:
         }
     
     async def get_content(self) -> Dict[str, Any]:
-        """Get content from storage"""
-        if self.storage_type == "mongo" and self.mongo_client:
-            return await self._get_content_mongo()
-        else:
-            return await self._get_content_json()
+        """Get content from MongoDB (Railway-proof) with JSON fallback"""
+        try:
+            if self.storage_type == "mongo" and self.mongo_client:
+                # PRIMARY: Try MongoDB first (survives all Railway deploys)
+                content = await self._get_content_mongo()
+                if content and content.get('courses'):
+                    logging.info("✅ Content loaded from MongoDB (persistent)")
+                    return content
+                else:
+                    # MongoDB empty - seed from template
+                    logging.info("🔄 MongoDB empty, seeding from template")
+                    template_content = await self._load_template_content()
+                    await self._save_content_mongo(template_content)
+                    return template_content
+            else:
+                # FALLBACK: JSON storage (will be lost on deploy)
+                logging.warning("⚠️ Using JSON storage - changes will be lost on deploy!")
+                return await self._get_content_json()
+        except Exception as e:
+            logging.error(f"❌ Error in get_content: {e}")
+            # Emergency fallback
+            return await self._load_template_content()
+    
+    async def _load_template_content(self) -> Dict[str, Any]:
+        """Load content from template file"""
+        try:
+            if os.path.exists(self.template_file):
+                async with aiofiles.open(self.template_file, 'r') as f:
+                    content = json.loads(await f.read())
+                logging.info("📋 Loaded content from template file")
+                return content
+        except Exception as e:
+            logging.error(f"❌ Error loading template: {e}")
+        
+        # Ultimate fallback
+        return self.get_default_content()
     
     async def save_content(self, content: Dict[str, Any], user: str = "admin", is_draft: bool = False) -> Dict[str, Any]:
         """Save content to storage with version history and audit log"""

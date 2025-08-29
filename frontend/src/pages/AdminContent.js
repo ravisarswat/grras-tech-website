@@ -129,14 +129,50 @@ const AdminContent = () => {
         throw new Error('No authentication token');
       }
       
-      // Ensure all courses have required arrays
+      // Validate all courses before saving
+      const courseErrors = [];
+      content.courses?.forEach((course, index) => {
+        if (!course.title?.trim()) {
+          courseErrors.push(`Course ${index + 1}: Title is required`);
+        }
+        if (!course.slug?.trim()) {
+          courseErrors.push(`Course ${index + 1}: Slug is required`);
+        }
+        if (!course.oneLiner?.trim()) {
+          courseErrors.push(`Course ${index + 1}: One-liner description is required`);
+        }
+        
+        // Check for duplicate slugs
+        const duplicateSlug = content.courses.find((c, i) => 
+          i !== index && c.slug === course.slug
+        );
+        if (duplicateSlug) {
+          courseErrors.push(`Course ${index + 1}: Slug "${course.slug}" is already used`);
+        }
+      });
+      
+      if (courseErrors.length > 0) {
+        toast.error(`Please fix the following errors:\n${courseErrors.join('\n')}`);
+        setSaving(false);
+        return;
+      }
+      
+      // Ensure all courses have required arrays and proper structure
       const cleanedContent = {
         ...content,
         courses: content.courses?.map(course => ({
           ...course,
           tools: course.tools || [],
           highlights: course.highlights || [],
-          outcomes: course.outcomes || []
+          learningOutcomes: course.learningOutcomes || [],
+          careerRoles: course.careerRoles || [],
+          mode: course.mode || [],
+          seo: {
+            title: course.seo?.title || '',
+            description: course.seo?.description || '',
+            keywords: course.seo?.keywords || '',
+            ogImage: course.seo?.ogImage || ''
+          }
         })) || []
       };
       
@@ -154,7 +190,8 @@ const AdminContent = () => {
       
       toast.success('Content saved successfully! Changes are now live.');
     } catch (error) {
-      toast.error('Failed to save content. Please try again.');
+      const errorMessage = error.response?.data?.detail || 'Failed to save content. Please try again.';
+      toast.error(errorMessage);
       console.error('Error saving content:', error);
     } finally {
       setSaving(false);

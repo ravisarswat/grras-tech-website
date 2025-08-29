@@ -162,7 +162,6 @@ const CourseDetail = () => {
           'Enterprise Infrastructure Specialist',
           'DevOps Platform Engineer'
         ],
-        fees: '₹35,000 - ₹65,000 (Per Certification)',
         batch: 'Monthly Batches'
       },
       'data-science-machine-learning': {

@@ -991,7 +991,7 @@ class ContentManager:
             raise e
     
     async def _create_audit_log(self, user: str, old_content: Dict[str, Any], new_content: Dict[str, Any], is_draft: bool = False):
-        """Create audit log entry"""
+        """Create audit log entry in MongoDB ONLY"""
         audit_entry = {
             "user": user,
             "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -1001,10 +1001,8 @@ class ContentManager:
             "action": "draft" if is_draft else "publish"
         }
         
-        if self.storage_type == "mongo" and self.mongo_client:
-            await self._save_audit_mongo(audit_entry)
-        else:
-            await self._save_audit_json(audit_entry)
+        # MONGODB ONLY - No JSON fallbacks
+        await self._save_audit_mongo(audit_entry)
     
     def _get_changed_keys(self, old_content: Dict[str, Any], new_content: Dict[str, Any]) -> List[str]:
         """Get list of changed keys"""

@@ -278,6 +278,9 @@ const AdminContent = () => {
       }
       newCourses[courseIndex].tools = [...newCourses[courseIndex].tools, tool.trim()];
       updateContent('courses', newCourses);
+      
+      // Show immediate feedback
+      toast.success(`Added "${tool.trim()}" to ${newCourses[courseIndex].title}`);
     }
   };
 

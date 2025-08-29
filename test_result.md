@@ -864,9 +864,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "URGENT DEBUG - Tools & Technologies Admin Panel Issue"
-    - "URGENT DEBUG - PDF Generation Error for Red Hat Certifications" 
-    - "URGENT DEBUG - CMS Save and Retrieve Tools Functionality"
+    - "CRITICAL PDF Generation Debug - All Scenarios Tested"
+    - "Content Persistence Verification"
+    - "Runtime Storage Path Validation"
   stuck_tasks: []
   test_all: false
   test_priority: "critical_pdf_debug_completed"

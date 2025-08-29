@@ -56,7 +56,6 @@ const Header = () => {
                     className="relative"
                     onMouseEnter={() => setIsCoursesOpen(true)}
                     onMouseLeave={() => setIsCoursesOpen(false)}
-                    onClick={() => setIsCoursesOpen(!isCoursesOpen)}
                   >
                     <button
                       type="button"

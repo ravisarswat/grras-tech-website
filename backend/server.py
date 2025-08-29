@@ -269,15 +269,26 @@ async def generate_syllabus_pdf(course_slug: str, student_name: str) -> str:
         # Find the course
         course = next((c for c in courses if c["slug"] == course_slug), None)
         if not course:
-            raise HTTPException(status_code=404, detail="Course not found")
+            logging.error(f"Course not found: {course_slug}")
+            raise HTTPException(status_code=404, detail=f"Course '{course_slug}' not found in CMS")
         
+        # Ensure required fields exist
         course_name = course.get("title", "Course")
         tools = course.get("tools", [])
         duration = course.get("duration", "Contact for details")
         fees = course.get("fees", "Contact for details")
         
+        # Validate student name
+        if not student_name or not student_name.strip():
+            student_name = "Student"
+        
         # Create temporary file
         temp_file = f"/app/backend/temp/syllabus_{course_slug}_{uuid.uuid4().hex[:8]}.pdf"
+        
+        # Ensure temp directory exists
+        os.makedirs('/app/backend/temp', exist_ok=True)
+        
+        logging.info(f"Generating PDF for course: {course_name}, student: {student_name}")
         
         # Create PDF
         doc = SimpleDocTemplate(temp_file, pagesize=A4, topMargin=1*inch)

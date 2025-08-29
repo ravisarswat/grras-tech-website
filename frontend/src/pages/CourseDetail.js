@@ -228,7 +228,6 @@ const CourseDetail = () => {
           'Technical Consultant',
           'Full Stack Developer'
         ],
-        fees: '₹40,000 (EMI Available)',
         batch: 'Weekday & Weekend Options'
       },
       'python': {

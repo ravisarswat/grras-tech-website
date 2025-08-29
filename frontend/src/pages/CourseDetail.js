@@ -36,16 +36,16 @@ const CourseDetail = () => {
       const courseData = response.data;
       
       // Use CMS data with fallback only for missing fields
+      const staticDetails = getCourseExtendedDetails(slug);
       const courseWithDetails = {
-        ...courseData,
+        ...staticDetails, // Put static details first as base
+        ...courseData,    // Then override with CMS data (this preserves CMS fees, duration, tools, etc.)
         // Only add static details if fields are missing from CMS
-        ...(courseData.highlights && courseData.highlights.length > 0 ? {} : { highlights: getCourseExtendedDetails(slug).highlights || [] }),
-        ...(courseData.outcomes && courseData.outcomes.length > 0 ? {} : { outcomes: getCourseExtendedDetails(slug).outcomes || [] }),
-        ...(courseData.eligibility ? {} : { eligibility: getCourseExtendedDetails(slug).eligibility || 'Contact for details' }),
-        ...(courseData.projects && courseData.projects.length > 0 ? {} : { projects: getCourseExtendedDetails(slug).projects || [] }),
-        ...(courseData.testimonials && courseData.testimonials.length > 0 ? {} : { testimonials: getCourseExtendedDetails(slug).testimonials || [] }),
-        // Use extended details as fallback for UI fields
-        ...getCourseExtendedDetails(slug)
+        highlights: courseData.highlights && courseData.highlights.length > 0 ? courseData.highlights : (staticDetails.highlights || []),
+        outcomes: courseData.outcomes && courseData.outcomes.length > 0 ? courseData.outcomes : (staticDetails.outcomes || []),
+        eligibility: courseData.eligibility || staticDetails.eligibility || 'Contact for details',
+        projects: courseData.projects && courseData.projects.length > 0 ? courseData.projects : (staticDetails.projects || []),
+        testimonials: courseData.testimonials && courseData.testimonials.length > 0 ? courseData.testimonials : (staticDetails.testimonials || [])
       };
       setCourse(courseWithDetails);
     } catch (error) {

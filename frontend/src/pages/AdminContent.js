@@ -797,6 +797,7 @@ const AdminContent = () => {
                       <div className="flex gap-2">
                         <input
                           type="text"
+                          id={`tool-input-${index}`}
                           placeholder="Add a tool or technology"
                           className="form-input flex-1"
                           onKeyPress={(e) => {
@@ -808,9 +809,11 @@ const AdminContent = () => {
                         />
                         <button
                           onClick={() => {
-                            const input = document.querySelector('input[placeholder="Add a tool or technology"]');
-                            addTool(index, input.value);
-                            input.value = '';
+                            const input = document.getElementById(`tool-input-${index}`);
+                            if (input && input.value.trim()) {
+                              addTool(index, input.value.trim());
+                              input.value = '';
+                            }
                           }}
                           className="btn-outline"
                         >

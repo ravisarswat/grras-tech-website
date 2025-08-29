@@ -869,7 +869,7 @@ test_plan:
     - "URGENT DEBUG - CMS Save and Retrieve Tools Functionality"
   stuck_tasks: []
   test_all: false
-  test_priority: "urgent_debug_completed"
+  test_priority: "critical_pdf_debug_completed"
 
 agent_communication:
     - agent: "testing"

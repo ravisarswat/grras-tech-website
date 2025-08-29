@@ -32,34 +32,59 @@ const Courses = () => {
       const response = await axios.get(`${API}/courses`);
       const coursesData = response.data.courses || [];
       
-      // Use CMS data with fallback details only for missing fields
-      const coursesWithDetails = coursesData.map(course => ({
+      // Use ONLY CMS data - no static fallbacks
+      const coursesWithDefaults = coursesData.map(course => ({
         ...course,
-        // Only add static details if fields are missing from CMS
-        ...(course.duration ? {} : { duration: getCourseDetails(course.slug).duration }),
-        ...(course.category ? {} : { category: getCourseDetails(course.slug).category }),
-        ...(course.tagline ? {} : { tagline: getCourseDetails(course.slug).tagline }),
-        ...(course.description ? {} : { description: getCourseDetails(course.slug).description }),
-        level: course.level || getCourseDetails(course.slug).level,
-        icon: course.icon || getCourseDetails(course.slug).icon,
-        color: course.color || getCourseDetails(course.slug).color,
-        features: course.features || getCourseDetails(course.slug).features
+        // Ensure required display fields have defaults
+        oneLiner: course.oneLiner || course.tagline || 'Professional Training Course',
+        overview: course.overview || course.description || '',
+        icon: course.icon || getCategoryIcon(course.category),
+        color: course.color || getCategoryColor(course.category),
+        highlights: course.highlights || [],
+        level: course.level || 'All Levels',
+        category: course.category || 'other'
       }));
       
-      // Filter only visible courses
-      const visibleCourses = coursesWithDetails.filter(course => course.visible !== false);
+      // Filter only visible courses and sort by order
+      const visibleCourses = coursesWithDefaults
+        .filter(course => course.visible !== false)
+        .sort((a, b) => (a.order || 999) - (b.order || 999));
       
       setCourses(visibleCourses);
       setFilteredCourses(visibleCourses);
     } catch (error) {
       console.error('Error fetching courses:', error);
-      // Fallback to static data only if API fails
-      const staticCourses = getStaticCourses();
-      setCourses(staticCourses);
-      setFilteredCourses(staticCourses);
+      setCourses([]);
+      setFilteredCourses([]);
     } finally {
       setLoading(false);
     }
+  };
+
+  // Simple icon mapping based on category
+  const getCategoryIcon = (category) => {
+    const icons = {
+      'degree': '🎓',
+      'programming': '💻',
+      'cloud': '☁️',
+      'certification': '🏆',
+      'security': '🔒',
+      'other': '📚'
+    };
+    return icons[category] || '📚';
+  };
+
+  // Simple color mapping based on category  
+  const getCategoryColor = (category) => {
+    const colors = {
+      'degree': 'from-blue-500 to-indigo-600',
+      'programming': 'from-green-500 to-teal-600',
+      'cloud': 'from-purple-500 to-violet-600',
+      'certification': 'from-red-500 to-pink-600',
+      'security': 'from-red-600 to-red-800',
+      'other': 'from-gray-500 to-gray-600'
+    };
+    return colors[category] || 'from-gray-500 to-gray-600';
   };
 
   const getCourseDetails = (slug) => {

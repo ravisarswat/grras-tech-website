@@ -898,11 +898,8 @@ class ContentManager:
             raise e
     
     async def get_audit_logs(self, limit: int = 50) -> List[Dict[str, Any]]:
-        """Get audit logs"""
-        if self.storage_type == "mongo" and self.mongo_client:
-            return await self._get_audit_mongo(limit)
-        else:
-            return await self._get_audit_json(limit)
+        """Get audit logs from MongoDB ONLY"""
+        return await self._get_audit_mongo(limit)
     
     async def _get_content_json(self) -> Dict[str, Any]:
         """Get content from JSON file with persistent storage"""

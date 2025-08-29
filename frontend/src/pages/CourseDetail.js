@@ -129,8 +129,7 @@ const CourseDetail = () => {
           'Build & Release Engineer',
           'Platform Engineer'
         ],
-        fees: '₹45,000 (EMI Available)',
-        batch: 'Weekend & Weekday Batches'
+        batch: 'Monthly Batches'
       },
       'redhat-certifications': {
         tagline: 'Official Red Hat Training & Certification Programs',

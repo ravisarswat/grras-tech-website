@@ -4,19 +4,6 @@ import aiofiles
 from datetime import datetime, timezone
 from typing import Dict, Any, List, Optional
 from motor.motor_asyncio import AsyncIOMotorClient
-import logging
-
-class ContentManager:
-    def __init__(self, storage_type: str = "json", mongo_client=None, db_name: str = "grras_database"):
-        self.storage_type = storage_type
-        self.mongo_client = mongo_client
-        self.db_name = db_name
-import os
-import json
-import aiofiles
-from datetime import datetime, timezone
-from typing import Dict, Any, List, Optional
-from motor.motor_asyncio import AsyncIOMotorClient
 from fastapi import HTTPException
 import logging
 import uuid

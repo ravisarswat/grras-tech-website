@@ -282,11 +282,10 @@ async def generate_syllabus_pdf(course_slug: str, student_name: str) -> str:
         if not student_name or not student_name.strip():
             student_name = "Student"
         
-        # Create temporary file
-        temp_file = f"/app/backend/temp/syllabus_{course_slug}_{uuid.uuid4().hex[:8]}.pdf"
-        
-        # Ensure temp directory exists
-        os.makedirs('/app/backend/temp', exist_ok=True)
+        # Create temporary file with absolute path
+        temp_dir = '/app/backend/temp'
+        os.makedirs(temp_dir, exist_ok=True)
+        temp_file = os.path.join(temp_dir, f"syllabus_{course_slug}_{uuid.uuid4().hex[:8]}.pdf")
         
         logging.info(f"Generating PDF for course: {course_name}, student: {student_name}")
         

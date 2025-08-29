@@ -483,15 +483,17 @@ const CourseDetail = () => {
             <div className="grid lg:grid-cols-3 gap-12">
               {/* Main Content */}
               <div className="lg:col-span-2">
-                {/* Description */}
-                <div className="bg-white rounded-xl p-8 shadow-lg mb-8 animate-fade-in-up">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                    Course Overview
-                  </h2>
-                  <p className="text-gray-700 leading-relaxed text-lg">
-                    {course.description}
-                  </p>
-                </div>
+                {/* Description/Overview */}
+                {course.overview && (
+                  <div className="bg-white rounded-xl p-8 shadow-lg mb-8 animate-fade-in-up">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                      Course Overview
+                    </h2>
+                    <div className="text-gray-700 leading-relaxed text-lg whitespace-pre-line">
+                      {course.overview}
+                    </div>
+                  </div>
+                )}
 
                 {/* Tools & Technologies */}
                 {course.tools && course.tools.length > 0 && (
@@ -514,13 +516,13 @@ const CourseDetail = () => {
                 )}
 
                 {/* Learning Outcomes */}
-                {course.outcomes && (
+                {course.learningOutcomes && course.learningOutcomes.length > 0 && (
                   <div className="bg-white rounded-xl p-8 shadow-lg mb-8 animate-fade-in-up">
                     <h2 className="text-2xl font-bold text-gray-900 mb-6">
                       What You'll Learn
                     </h2>
                     <div className="space-y-3">
-                      {course.outcomes.map((outcome, index) => (
+                      {course.learningOutcomes.map((outcome, index) => (
                         <div key={index} className="flex items-start gap-3">
                           <Target className="h-5 w-5 text-blue-500 mt-0.5 flex-shrink-0" />
                           <p className="text-gray-700">{outcome}</p>
@@ -530,14 +532,14 @@ const CourseDetail = () => {
                   </div>
                 )}
 
-                {/* Career Paths */}
-                {course.careerPaths && (
-                  <div className="bg-white rounded-xl p-8 shadow-lg animate-fade-in-up">
+                {/* Career Opportunities */}
+                {course.careerRoles && course.careerRoles.length > 0 && (
+                  <div className="bg-white rounded-xl p-8 shadow-lg mb-8 animate-fade-in-up">
                     <h2 className="text-2xl font-bold text-gray-900 mb-6">
                       Career Opportunities
                     </h2>
                     <div className="grid md:grid-cols-2 gap-4">
-                      {course.careerPaths.map((career, index) => (
+                      {course.careerRoles.map((career, index) => (
                         <div 
                           key={index}
                           className="flex items-center gap-3 p-3 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg"
@@ -546,6 +548,30 @@ const CourseDetail = () => {
                           <span className="text-gray-700 font-medium">{career}</span>
                         </div>
                       ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Certificate Information */}
+                {course.certificateInfo && (
+                  <div className="bg-white rounded-xl p-8 shadow-lg mb-8 animate-fade-in-up">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                      Certificate Information
+                    </h2>
+                    <div className="text-gray-700 leading-relaxed whitespace-pre-line">
+                      {course.certificateInfo}
+                    </div>
+                  </div>
+                )}
+
+                {/* Batch Information */}
+                {course.batchesInfo && (
+                  <div className="bg-white rounded-xl p-8 shadow-lg animate-fade-in-up">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                      Batch Information
+                    </h2>
+                    <div className="text-gray-700 leading-relaxed whitespace-pre-line">
+                      {course.batchesInfo}
                     </div>
                   </div>
                 )}

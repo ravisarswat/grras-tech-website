@@ -148,6 +148,12 @@ const AdminContent = () => {
       
       setOriginalContent(JSON.parse(JSON.stringify(cleanedContent)));
       setContent(cleanedContent);
+      
+      // Force reload content from server to ensure sync
+      setTimeout(() => {
+        loadContent();
+      }, 1000);
+      
       toast.success('Content saved successfully! Changes are now live.');
     } catch (error) {
       toast.error('Failed to save content. Please try again.');

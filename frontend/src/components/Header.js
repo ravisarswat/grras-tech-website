@@ -14,7 +14,8 @@ const Header = () => {
     { slug: 'data-science-machine-learning', name: 'Data Science & ML' },
     { slug: 'java-salesforce', name: 'Java & Salesforce' },
     { slug: 'python', name: 'Python' },
-    { slug: 'c-cpp-dsa', name: 'C/C++ & DSA' }
+    { slug: 'c-cpp-dsa', name: 'C/C++ & DSA' },
+    { slug: 'cyber-security', name: 'Cyber Security' }
   ];
 
   const navigationItems = [

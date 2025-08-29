@@ -278,11 +278,18 @@ async def generate_syllabus_pdf(course_slug: str, student_name: str) -> str:
             logging.error(f"Course not found: {course_slug}")
             raise HTTPException(status_code=404, detail=f"Course '{course_slug}' not found in CMS")
         
-        # Ensure required fields exist
+        # Ensure required fields exist with comprehensive defaults
         course_name = course.get("title", "Course")
+        course_description = course.get("overview", course.get("oneLiner", "Professional training course"))
         tools = course.get("tools", [])
+        highlights = course.get("highlights", [])
+        learning_outcomes = course.get("learningOutcomes", [])
+        career_roles = course.get("careerRoles", [])
         duration = course.get("duration", "Contact for details")
         fees = course.get("fees", "Contact for details")
+        level = course.get("level", "All Levels")
+        certificate_info = course.get("certificateInfo", "Certificate provided on successful completion")
+        eligibility = course.get("eligibility", "Contact for eligibility criteria")
         
         # Validate student name
         if not student_name or not student_name.strip():

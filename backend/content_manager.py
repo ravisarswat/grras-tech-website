@@ -33,30 +33,26 @@ class ContentManager:
         self.mongo_client = mongo_client
         self.db_name = db_name
         
-        # Use different paths for different environments
-        if os.environ.get('RAILWAY_ENVIRONMENT'):
-            # Railway: Use persistent volume or temp directory 
-            self.data_dir = '/app/runtime_data'
-            self.json_file = '/app/runtime_data/content.json'
-            self.audit_file = '/app/runtime_data/content_audit.json'
-            self.versions_dir = '/app/runtime_data/versions'
-            self.media_dir = '/app/runtime_data/media'
-            self.backups_dir = '/app/runtime_data/backups'
-        else:
-            # Local development: Use backend/data
-            self.data_dir = '/app/backend/data'
-            self.json_file = '/app/backend/data/content.json'
-            self.audit_file = '/app/backend/data/content_audit.json'
-            self.versions_dir = '/app/backend/data/versions'
-            self.media_dir = '/app/backend/data/media'
-            self.backups_dir = '/app/backend/data/backups'
+        # Always use separate runtime storage to prevent GitHub overwrites
+        self.runtime_dir = '/tmp/grras_cms_data'  # Use system temp directory
+        self.json_file = '/tmp/grras_cms_data/content.json'
+        self.audit_file = '/tmp/grras_cms_data/content_audit.json'
+        self.versions_dir = '/tmp/grras_cms_data/versions'
+        self.media_dir = '/tmp/grras_cms_data/media'
+        self.backups_dir = '/tmp/grras_cms_data/backups'
         
-        # Template file (never modified, used for seeding)
+        # Template file (in git, never modified, used only for initial seeding)
         self.template_file = '/app/backend/data/content.json'
         
-        # Ensure data directories exist
-        for dir_path in [self.data_dir, self.versions_dir, self.media_dir, self.backups_dir]:
+        # Ensure runtime directories exist
+        for dir_path in [self.runtime_dir, self.versions_dir, self.media_dir, self.backups_dir]:
             os.makedirs(dir_path, exist_ok=True)
+            
+        # Create a .gitkeep file to ensure directories persist but ignore content
+        gitkeep_file = os.path.join(self.runtime_dir, '.gitkeep')
+        if not os.path.exists(gitkeep_file):
+            with open(gitkeep_file, 'w') as f:
+                f.write('# This file ensures the directory structure persists\n')
     
     def get_default_content(self) -> Dict[str, Any]:
         """Return the comprehensive default content structure"""

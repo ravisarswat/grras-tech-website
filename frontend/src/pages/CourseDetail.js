@@ -349,7 +349,8 @@ const CourseDetail = () => {
       'data-science-machine-learning': 'Data Science & Machine Learning',
       'java-salesforce': 'Java & Salesforce',
       'python': 'Python',
-      'c-cpp-dsa': 'C/C++ & DSA'
+      'c-cpp-dsa': 'C/C++ & DSA',
+      'cyber-security': 'Cyber Security'
     };
 
     if (!courseNames[slug]) return null;

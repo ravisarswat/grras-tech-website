@@ -11,12 +11,6 @@ class ContentManager:
         self.storage_type = storage_type
         self.mongo_client = mongo_client
         self.db_name = db_name
-        self.json_file = '/app/backend/data/content.json'
-        self.audit_file = '/app/backend/data/content_audit.json'
-        
-        # Ensure data directory exists
-        os.makedirs('/app/backend/data', exist_ok=True)
-    
 import os
 import json
 import aiofiles

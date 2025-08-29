@@ -301,6 +301,40 @@ const CourseDetail = () => {
         ],
         fees: '₹20,000 (EMI Available)',
         batch: 'Regular Batches'
+      },
+      'cyber-security': {
+        tagline: 'Master Cyber Security & Ethical Hacking',
+        description: 'Comprehensive cyber security training covering ethical hacking, penetration testing, network security, and digital forensics with hands-on lab experience.',
+        duration: '6 Months (Advanced)',
+        level: 'Intermediate to Advanced',
+        category: 'Security Training',
+        icon: '🔒',
+        color: 'from-red-600 to-red-800',
+        highlights: [
+          'Ethical Hacking Techniques',
+          'Penetration Testing Tools',
+          'Network Security Assessment',
+          'Digital Forensics Basics',
+          'Security Incident Response',
+          'Certification Preparation'
+        ],
+        outcomes: [
+          'Master cyber security fundamentals and best practices',
+          'Perform comprehensive security assessments',
+          'Use industry-standard penetration testing tools',
+          'Implement security measures and incident response',
+          'Understand legal and ethical aspects of security testing'
+        ],
+        careerPaths: [
+          'Cyber Security Analyst',
+          'Ethical Hacker',
+          'Penetration Tester',
+          'Security Consultant',
+          'Information Security Officer',
+          'Incident Response Specialist'
+        ],
+        fees: 'Contact for latest fee',
+        batch: 'Monthly Batches'
       }
     };
 

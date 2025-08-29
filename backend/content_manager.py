@@ -17,6 +17,7 @@ import aiofiles
 from datetime import datetime, timezone
 from typing import Dict, Any, List, Optional
 from motor.motor_asyncio import AsyncIOMotorClient
+from fastapi import HTTPException
 import logging
 import uuid
 import shutil

@@ -559,6 +559,49 @@
         "description": "Learn C/C++ programming with data structures and algorithms at GRRAS Solutions for strong coding foundations.",
         "keywords": "C++ course Jaipur, data structures algorithms, programming fundamentals"
       }
+    },
+    {
+      "slug": "cyber-security",
+      "title": "Cyber Security",
+      "oneLiner": "Learn the essentials of Cyber Security and Ethical Hacking",
+      "description": "Comprehensive cyber security training covering ethical hacking, penetration testing, network security, and digital forensics with hands-on lab experience.",
+      "duration": "6 Months",
+      "fees": "Contact for latest fee",
+      "tools": [
+        "Kali Linux",
+        "Wireshark", 
+        "Metasploit",
+        "Nmap",
+        "Burp Suite"
+      ],
+      "visible": true,
+      "featured": true,
+      "order": 8,
+      "thumbnailUrl": "",
+      "category": "security",
+      "level": "Intermediate",
+      "mode": [
+        "Classroom",
+        "Online"
+      ],
+      "highlights": [
+        "Ethical Hacking",
+        "Penetration Testing",
+        "Security Assessment",
+        "Certification Prep"
+      ],
+      "outcomes": [
+        "Master cyber security fundamentals and ethical hacking techniques",
+        "Perform vulnerability assessments and penetration testing",
+        "Implement security measures and incident response procedures"
+      ],
+      "eligibility": "Graduate + Basic IT Knowledge",
+      "intake": "Monthly Batches",
+      "seo": {
+        "title": "Cyber Security & Ethical Hacking Course in Jaipur - GRRAS Solutions",
+        "description": "Learn cyber security and ethical hacking at GRRAS Solutions with hands-on training in Kali Linux, penetration testing, and security tools.",
+        "keywords": "cyber security course Jaipur, ethical hacking training, penetration testing course"
+      }
     }
   ],
   "menus": {

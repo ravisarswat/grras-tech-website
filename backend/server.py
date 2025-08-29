@@ -147,7 +147,8 @@ def verify_admin_token(request: Request):
 # Storage abstraction
 class StorageService:
     def __init__(self):
-        self.storage_type = os.environ.get('CONTACT_STORAGE', 'json')
+        # FORCE MongoDB storage for leads (Railway-proof)
+        self.storage_type = 'mongo'  # Always use MongoDB
         self.json_file = '/app/backend/storage/leads.json'
     
     async def save_lead(self, lead_data: dict):

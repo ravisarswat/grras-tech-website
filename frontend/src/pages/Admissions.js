@@ -67,7 +67,8 @@ const Admissions = () => {
     }
   ];
 
-  const courses = [
+  // Use CMS courses if available, otherwise fallback to hardcoded data
+  const fallbackCourses = [
     {
       name: 'BCA Degree Program',
       slug: 'bca-degree',
@@ -105,6 +106,9 @@ const Admissions = () => {
       highlights: ['Official Training', 'Exam Voucher', 'Lab Access']
     }
   ];
+
+  // Use CMS courses if available, otherwise use fallback
+  const courses = featuredCourses.length > 0 ? featuredCourses : fallbackCourses;
 
   const faqs = [
     {

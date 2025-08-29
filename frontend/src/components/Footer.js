@@ -53,7 +53,7 @@ const Footer = () => {
               <img
                 src={instituteLogo}
                 alt={instituteName}
-                className="h-10 w-auto"
+                className="h-14 w-auto hover:scale-105 transition-transform"
               />
               <div>
                 <h3 className="text-lg font-bold">{institute.shortName || instituteName}</h3>

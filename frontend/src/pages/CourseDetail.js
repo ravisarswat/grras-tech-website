@@ -70,7 +70,7 @@ const CourseDetail = () => {
       
       <div className="min-h-screen bg-gray-50">
         {/* Hero Section */}
-        <section className={`py-20 bg-gradient-to-br ${course.color} text-white relative overflow-hidden`}>
+        <section className={`py-20 bg-gradient-to-br ${course.color || 'from-red-500 to-pink-600'} text-white relative overflow-hidden`}>
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
           
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -86,29 +86,35 @@ const CourseDetail = () => {
                 </Link>
                 
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="text-6xl">{course.icon}</div>
+                  <div className="text-6xl">{course.icon || '📚'}</div>
                   <div>
-                    <span className="text-lg font-medium opacity-90">{course.category}</span>
+                    <span className="text-lg font-medium opacity-90">{course.category || 'Training'}</span>
                   </div>
                 </div>
                 
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                  {course.name}
+                  {course.title || course.name}
                 </h1>
                 
                 <p className="text-xl text-gray-100 mb-6">
-                  {course.tagline}
+                  {course.oneLiner || course.tagline}
                 </p>
                 
                 <div className="flex flex-wrap gap-4 text-sm mb-8">
-                  <div className="flex items-center gap-2 bg-white bg-opacity-20 px-3 py-2 rounded-lg">
-                    <Clock className="h-4 w-4" />
-                    <span>{course.duration}</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-white bg-opacity-20 px-3 py-2 rounded-lg">
-                    <Users className="h-4 w-4" />
-                    <span>{course.level}</span>
-                  </div>
+                  {course.duration && (
+                    <div className="flex items-center gap-2 bg-white bg-opacity-20 px-3 py-2 rounded-lg">
+                      <Clock className="h-4 w-4" />
+                      <span>{course.duration}</span>
+                    </div>
+                  )}
+                  
+                  {course.level && (
+                    <div className="flex items-center gap-2 bg-white bg-opacity-20 px-3 py-2 rounded-lg">
+                      <Users className="h-4 w-4" />
+                      <span>{course.level}</span>
+                    </div>
+                  )}
+                  
                   <div className="flex items-center gap-2 bg-white bg-opacity-20 px-3 py-2 rounded-lg">
                     <Award className="h-4 w-4" />
                     <span>Certificate Included</span>
@@ -143,12 +149,19 @@ const CourseDetail = () => {
                   <div className="border-t pt-4">
                     <div className="flex justify-between items-center text-sm">
                       <span className="text-gray-600">Course Fee:</span>
-                      <span className="font-semibold text-gray-900">{course.fees}</span>
+                      <span className="font-semibold text-gray-900">
+                        {course.fees || 'Contact for Details'}
+                      </span>
                     </div>
-                    <div className="flex justify-between items-center text-sm mt-2">
-                      <span className="text-gray-600">Batches:</span>
-                      <span className="font-semibold text-gray-900">{course.batch}</span>
-                    </div>
+                    
+                    {course.batchesInfo && (
+                      <div className="flex justify-between items-center text-sm mt-2">
+                        <span className="text-gray-600">Batches:</span>
+                        <span className="font-semibold text-gray-900">
+                          {course.batchesInfo.split('\n')[0]}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

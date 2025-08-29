@@ -195,7 +195,7 @@ const Courses = () => {
                     </h3>
                     
                     <p className="text-red-600 font-medium mb-3 text-sm">
-                      {course.tagline}
+                      {course.oneLiner || course.tagline}
                     </p>
                     
                     {/* Description */}

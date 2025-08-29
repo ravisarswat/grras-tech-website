@@ -900,12 +900,13 @@ metadata:
 
 test_plan:
   current_focus:
-    - "User Admin Changes Persistence Verification - COMPLETED"
-    - "Content Persistence Storage Validation - COMPLETED"
-    - "CMS Tools Configuration Verification - COMPLETED"
+    - "MongoDB Atlas Connection String Verification - COMPLETED"
+    - "CMS Content MongoDB Storage Validation - COMPLETED" 
+    - "Leads MongoDB Storage Testing - COMPLETED"
+    - "Persistence Verification Testing - COMPLETED"
   stuck_tasks: []
   test_all: false
-  test_priority: "user_admin_persistence_completed"
+  test_priority: "mongodb_atlas_persistence_completed"
 
 agent_communication:
     - agent: "testing"

@@ -820,7 +820,8 @@ const AdminContent = () => {
                     </div>
                   </div>
                 ))}
-              </div>
+                </div>
+              )}
             </div>
           )}
 

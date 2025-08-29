@@ -22,12 +22,13 @@ import uuid
 import shutil
 
 class ContentManager:
-    def __init__(self, storage_type: str = "json", mongo_client=None, db_name: str = "grras_database"):
-        self.storage_type = storage_type
+    def __init__(self, storage_type: str = "mongo", mongo_client=None, db_name: str = "grras_database"):
+        # FORCE MONGODB STORAGE - Railway-proof persistent storage
+        self.storage_type = "mongo"  # Always use MongoDB for persistence
         self.mongo_client = mongo_client
         self.db_name = db_name
         
-        # Use Railway persistent storage - this survives deploys
+        # Fallback JSON paths (only used if MongoDB fails)
         self.runtime_dir = '/app/persistent_cms_data'
         self.json_file = '/app/persistent_cms_data/content.json'
         self.audit_file = '/app/persistent_cms_data/content_audit.json'
@@ -35,10 +36,10 @@ class ContentManager:
         self.media_dir = '/app/persistent_cms_data/media'
         self.backups_dir = '/app/persistent_cms_data/backups'
         
-        # Template file (git-tracked, READ ONLY, never overwritten)
+        # Template file (git-tracked, READ ONLY)
         self.template_file = '/app/backend/data/content.json'
         
-        # Create runtime directories
+        # Create directories as backup
         for dir_path in [self.runtime_dir, self.versions_dir, self.media_dir, self.backups_dir]:
             os.makedirs(dir_path, exist_ok=True)
     

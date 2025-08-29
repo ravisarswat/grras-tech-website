@@ -261,7 +261,6 @@ const CourseDetail = () => {
           'Data Analyst',
           'DevOps Engineer'
         ],
-        fees: '₹25,000 (EMI Available)',
         batch: 'Flexible Timings'
       },
       'c-cpp-dsa': {

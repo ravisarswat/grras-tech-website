@@ -72,11 +72,19 @@ const Header = () => {
                     
                     {/* Dropdown */}
                     {isCoursesOpen && (
-                      <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 py-2 z-50">
+                      <div 
+                        className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 py-2 z-[9999]"
+                        onMouseLeave={() => setIsCoursesOpen(false)}
+                      >
                         <Link
                           to="/courses"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors"
-                          onClick={() => setIsCoursesOpen(false)}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setIsCoursesOpen(false);
+                            window.location.href = '/courses';
+                          }}
                         >
                           All Courses
                         </Link>
@@ -85,8 +93,13 @@ const Header = () => {
                           <Link
                             key={course.slug}
                             to={`/courses/${course.slug}`}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors"
-                            onClick={() => setIsCoursesOpen(false)}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setIsCoursesOpen(false);
+                              window.location.href = `/courses/${course.slug}`;
+                            }}
                           >
                             {course.name}
                           </Link>

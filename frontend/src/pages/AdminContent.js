@@ -255,6 +255,9 @@ const AdminContent = () => {
   const addTool = (courseIndex, tool) => {
     if (tool.trim()) {
       const newCourses = [...content.courses];
+      if (!newCourses[courseIndex].tools) {
+        newCourses[courseIndex].tools = [];
+      }
       newCourses[courseIndex].tools = [...newCourses[courseIndex].tools, tool.trim()];
       updateContent('courses', newCourses);
     }
@@ -262,8 +265,10 @@ const AdminContent = () => {
 
   const removeTool = (courseIndex, toolIndex) => {
     const newCourses = [...content.courses];
-    newCourses[courseIndex].tools = newCourses[courseIndex].tools.filter((_, i) => i !== toolIndex);
-    updateContent('courses', newCourses);
+    if (newCourses[courseIndex].tools) {
+      newCourses[courseIndex].tools = newCourses[courseIndex].tools.filter((_, i) => i !== toolIndex);
+      updateContent('courses', newCourses);
+    }
   };
 
   const addFAQ = () => {

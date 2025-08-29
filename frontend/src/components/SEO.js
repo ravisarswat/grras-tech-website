@@ -99,7 +99,7 @@ const SEO = ({
           },
           {
             "@type": "EducationalOrganization",
-            "@id": "https://grrassolutions.com/#educational-organization",
+            "@id": "https://www.grras.tech/#educational-organization",
             "name": "GRRAS Solutions Training Institute",
             "description": description,
             "url": url,

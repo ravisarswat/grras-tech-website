@@ -131,14 +131,26 @@ const AdminContent = () => {
         throw new Error('No authentication token');
       }
       
-      await axios.post(`${API}/content`, { content }, {
+      // Ensure all courses have required arrays
+      const cleanedContent = {
+        ...content,
+        courses: content.courses?.map(course => ({
+          ...course,
+          tools: course.tools || [],
+          highlights: course.highlights || [],
+          outcomes: course.outcomes || []
+        })) || []
+      };
+      
+      await axios.post(`${API}/content`, { content: cleanedContent }, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       
-      setOriginalContent(JSON.parse(JSON.stringify(content)));
-      toast.success('Content saved successfully');
+      setOriginalContent(JSON.parse(JSON.stringify(cleanedContent)));
+      setContent(cleanedContent);
+      toast.success('Content saved successfully! Changes are now live.');
     } catch (error) {
-      toast.error('Failed to save content');
+      toast.error('Failed to save content. Please try again.');
       console.error('Error saving content:', error);
     } finally {
       setSaving(false);

@@ -294,7 +294,6 @@ const CourseDetail = () => {
           'Competitive Programmer',
           'Technical Trainer'
         ],
-        fees: '₹20,000 (EMI Available)',
         batch: 'Regular Batches'
       },
       'cyber-security': {

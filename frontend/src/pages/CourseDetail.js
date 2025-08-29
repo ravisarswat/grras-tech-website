@@ -39,11 +39,11 @@ const CourseDetail = () => {
       const courseWithDetails = {
         ...courseData,
         // Only add static details if fields are missing from CMS
-        ...(courseData.highlights ? {} : { highlights: getCourseExtendedDetails(slug).highlights || [] }),
-        ...(courseData.outcomes ? {} : { outcomes: getCourseExtendedDetails(slug).outcomes || [] }),
+        ...(courseData.highlights && courseData.highlights.length > 0 ? {} : { highlights: getCourseExtendedDetails(slug).highlights || [] }),
+        ...(courseData.outcomes && courseData.outcomes.length > 0 ? {} : { outcomes: getCourseExtendedDetails(slug).outcomes || [] }),
         ...(courseData.eligibility ? {} : { eligibility: getCourseExtendedDetails(slug).eligibility || 'Contact for details' }),
-        ...(courseData.projects ? {} : { projects: getCourseExtendedDetails(slug).projects || [] }),
-        ...(courseData.testimonials ? {} : { testimonials: getCourseExtendedDetails(slug).testimonials || [] }),
+        ...(courseData.projects && courseData.projects.length > 0 ? {} : { projects: getCourseExtendedDetails(slug).projects || [] }),
+        ...(courseData.testimonials && courseData.testimonials.length > 0 ? {} : { testimonials: getCourseExtendedDetails(slug).testimonials || [] }),
         // Use extended details as fallback for UI fields
         ...getCourseExtendedDetails(slug)
       };

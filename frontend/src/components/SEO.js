@@ -160,7 +160,7 @@ export const CoursePageSEO = ({ course, tools = [] }) => {
     "provider": {
       "@type": "Organization",
       "name": "GRRAS Solutions Training Institute",
-      "url": "https://grrassolutions.com"
+      "url": "https://www.grras.tech"
     },
     "courseMode": ["Classroom", "Online"],
     "availableLanguage": ["English", "Hindi"],

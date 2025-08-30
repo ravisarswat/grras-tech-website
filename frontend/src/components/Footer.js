@@ -77,44 +77,74 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Company Info */}
             <div className="lg:col-span-1">
-              <div className="flex items-center mb-4">
-                <img 
-                  src={instituteLogo} 
-                  alt={instituteName}
-                  className="h-12 w-auto"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                  }}
-                />
-              </div>
-              <h3 className="text-lg font-bold text-white mb-2">{instituteName}</h3>
-              {footerBranding.tagline && (
-                <p className="text-gray-300 text-sm mb-4">{footerBranding.tagline}</p>
-              )}
-              
-              <div className="space-y-3">
-                <div className="flex items-start gap-2 text-sm text-gray-300">
-                  <MapPin className="h-4 w-4 mt-0.5 text-red-400 flex-shrink-0" />
-                  <span>{address}</span>
+              {/* Logo and Company Name */}
+              <div className="mb-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <img 
+                    src={instituteLogo} 
+                    alt={instituteName}
+                    className="h-16 w-16 object-contain bg-white p-2 rounded-lg"
+                    onError={(e) => {
+                      // If logo fails to load, show a placeholder
+                      e.target.outerHTML = `<div class="h-16 w-16 bg-red-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">G</div>`;
+                    }}
+                  />
+                  <div>
+                    <h3 className="text-xl font-bold text-white leading-tight">{instituteName}</h3>
+                    <p className="text-gray-300 text-sm">Training Institute</p>
+                  </div>
                 </div>
                 
-                {phones.map((phone, index) => (
-                  <div key={index} className="flex items-center gap-2 text-sm text-gray-300">
-                    <Phone className="h-4 w-4 text-red-400" />
-                    <a href={`tel:${phone.replace(/\s/g, '')}`} className="hover:text-white transition-colors">
-                      {phone}
-                    </a>
+                {footerBranding.tagline && (
+                  <p className="text-gray-300 text-sm leading-relaxed mb-6">
+                    {footerBranding.tagline}
+                  </p>
+                )}
+              </div>
+              
+              {/* Contact Information */}
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <MapPin className="h-5 w-5 text-red-400 mt-1 flex-shrink-0" />
+                  <div className="text-gray-300 text-sm leading-relaxed">
+                    <p className="font-medium text-white mb-1">Address:</p>
+                    <address className="not-italic">
+                      {address.split(',').map((line, index) => (
+                        <span key={index} className="block">
+                          {line.trim()}
+                        </span>
+                      ))}
+                    </address>
                   </div>
-                ))}
+                </div>
                 
-                {emails.map((email, index) => (
-                  <div key={index} className="flex items-center gap-2 text-sm text-gray-300">
-                    <Mail className="h-4 w-4 text-red-400" />
-                    <a href={`mailto:${email}`} className="hover:text-white transition-colors">
-                      {email}
-                    </a>
-                  </div>
-                ))}
+                <div className="space-y-2">
+                  {phones.map((phone, index) => (
+                    <div key={index} className="flex items-center gap-3">
+                      <Phone className="h-5 w-5 text-red-400 flex-shrink-0" />
+                      <div>
+                        <p className="text-white font-medium text-sm">Phone:</p>
+                        <a href={`tel:${phone.replace(/\s/g, '')}`} className="text-gray-300 hover:text-white transition-colors text-sm">
+                          {phone}
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="space-y-2">
+                  {emails.map((email, index) => (
+                    <div key={index} className="flex items-center gap-3">
+                      <Mail className="h-5 w-5 text-red-400 flex-shrink-0" />
+                      <div>
+                        <p className="text-white font-medium text-sm">Email:</p>
+                        <a href={`mailto:${email}`} className="text-gray-300 hover:text-white transition-colors text-sm">
+                          {email}
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 

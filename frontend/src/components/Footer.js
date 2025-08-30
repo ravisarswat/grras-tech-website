@@ -202,21 +202,21 @@ const Footer = () => {
 
         {/* Bottom Footer */}
         <div className="border-t border-gray-800">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="md:flex md:items-center md:justify-between">
               <div className="text-center md:text-left">
-                <p className="text-gray-400 text-sm">
+                <p className="text-gray-400 text-sm mb-2 md:mb-0">
                   {legalConfig.copyright}
                 </p>
               </div>
               
-              <div className="mt-4 md:mt-0 flex flex-col md:flex-row items-center gap-4 text-sm">
+              <div className="mt-4 md:mt-0 flex flex-col md:flex-row items-center gap-6">
                 {/* Legal Links */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-6">
                   {legalConfig.privacyPolicy && (
                     <Link
                       to={legalConfig.privacyPolicy}
-                      className="text-gray-400 hover:text-white transition-colors"
+                      className="text-gray-400 hover:text-white transition-colors text-sm font-medium"
                     >
                       Privacy Policy
                     </Link>
@@ -224,7 +224,7 @@ const Footer = () => {
                   {legalConfig.terms && (
                     <Link
                       to={legalConfig.terms}
-                      className="text-gray-400 hover:text-white transition-colors"
+                      className="text-gray-400 hover:text-white transition-colors text-sm font-medium"
                     >
                       Terms of Service
                     </Link>
@@ -232,13 +232,14 @@ const Footer = () => {
                 </div>
                 
                 {/* Social Links */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
                   {social.whatsapp && (
                     <a
                       href={social.whatsapp}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-green-400 transition-colors"
+                      className="p-2 bg-gray-800 hover:bg-green-600 text-gray-400 hover:text-white rounded-full transition-colors"
+                      title="WhatsApp"
                     >
                       <MessageCircle className="h-5 w-5" />
                     </a>
@@ -248,7 +249,8 @@ const Footer = () => {
                       href={social.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-pink-400 transition-colors"
+                      className="p-2 bg-gray-800 hover:bg-pink-600 text-gray-400 hover:text-white rounded-full transition-colors"
+                      title="Instagram"
                     >
                       <Instagram className="h-5 w-5" />
                     </a>
@@ -258,7 +260,8 @@ const Footer = () => {
                       href={social.youtube}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-red-400 transition-colors"
+                      className="p-2 bg-gray-800 hover:bg-red-600 text-gray-400 hover:text-white rounded-full transition-colors"
+                      title="YouTube"
                     >
                       <Youtube className="h-5 w-5" />
                     </a>

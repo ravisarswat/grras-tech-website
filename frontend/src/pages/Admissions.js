@@ -272,68 +272,17 @@ const Admissions = () => {
         {/* Eligibility Checker */}
         <section className="py-16 bg-gray-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-white rounded-2xl p-8 shadow-lg animate-fade-in-up">
-              <div className="text-center mb-8">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-                  Check Your Eligibility
-                </h2>
-                <p className="text-gray-600">
-                  Select a course to check if you meet the eligibility criteria
-                </p>
-              </div>
-              
-              <div className="max-w-md mx-auto space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Select Course
-                  </label>
-                  <select
-                    value={selectedCourse}
-                    onChange={(e) => setSelectedCourse(e.target.value)}
-                    className="form-input w-full"
-                  >
-                    <option value="">Choose a course...</option>
-                    {courses.map(course => (
-                      <option key={course.slug} value={course.slug}>
-                        {course.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                
-                <button
-                  onClick={checkEligibility}
-                  className="btn-primary w-full"
-                >
-                  Check Eligibility
-                </button>
-                
-                {eligibilityResult && (
-                  <div className={`p-4 rounded-lg ${
-                    eligibilityResult.eligible 
-                      ? 'bg-green-50 border border-green-200' 
-                      : 'bg-red-50 border border-red-200'
-                  }`}>
-                    <p className={`text-sm ${
-                      eligibilityResult.eligible ? 'text-green-800' : 'text-red-800'
-                    }`}>
-                      {eligibilityResult.message}
-                    </p>
-                    
-                    {eligibilityResult.eligible && (
-                      <div className="mt-4">
-                        <Link
-                          to="/contact"
-                          className="btn-primary text-sm"
-                        >
-                          Apply Now
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
+            <div className="text-center mb-12 animate-fade-in-up">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Are You Eligible?
+              </h2>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                Find out if you meet the requirements for your chosen course and get personalized guidance
+              </p>
+            </div>
+            
+            <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+              <EligibilityWidget />
             </div>
           </div>
         </section>

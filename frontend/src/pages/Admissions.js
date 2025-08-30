@@ -164,22 +164,7 @@ const Admissions = () => {
     }
   ];
 
-  const checkEligibility = () => {
-    if (!selectedCourse) {
-      setEligibilityResult({ eligible: false, message: 'Please select a course first.' });
-      return;
-    }
 
-    const course = courses.find(c => c.slug === selectedCourse);
-    if (course) {
-      setEligibilityResult({
-        eligible: true,
-        course: course.name,
-        eligibility: course.eligibility,
-        message: `Great! You can apply for ${course.name}. The eligibility requirement is: ${course.eligibility}`
-      });
-    }
-  };
 
   return (
     <>

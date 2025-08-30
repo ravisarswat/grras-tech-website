@@ -1,1 +1,1 @@
-{"buildCmd": "npm ci && npm run build", "startCmd": "npm start"}
+{"buildCmd": "npm ci", "startCmd": "npm start"}

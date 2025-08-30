@@ -464,6 +464,7 @@ const AdminContent = () => {
     { id: 'home', name: 'Home Page', icon: <Home className="h-5 w-5" /> },
     { id: 'about', name: 'About', icon: <Info className="h-5 w-5" /> },
     { id: 'courses', name: 'Courses', icon: <BookOpen className="h-5 w-5" /> },
+    { id: 'footer', name: 'Footer', icon: <MessageSquare className="h-5 w-5" /> },
     { id: 'faqs', name: 'FAQs', icon: <HelpCircle className="h-5 w-5" /> },
     { id: 'testimonials', name: 'Testimonials', icon: <MessageSquare className="h-5 w-5" /> },
     { id: 'settings', name: 'Settings', icon: <Settings className="h-5 w-5" /> }

@@ -13,6 +13,7 @@ import {
   GraduationCap
 } from 'lucide-react';
 import SEO from '../components/SEO';
+import EligibilityWidget from '../components/EligibilityWidget';
 
 const Home = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);

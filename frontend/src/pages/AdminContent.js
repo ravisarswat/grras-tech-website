@@ -780,6 +780,14 @@ const AdminContent = () => {
             </div>
           )}
 
+          {/* Footer Tab */}
+          {activeTab === 'footer' && (
+            <FooterTab 
+              content={content} 
+              updateContent={updateContent}
+            />
+          )}
+
           {/* FAQs Tab */}
           {activeTab === 'faqs' && (
             <div className="space-y-6">

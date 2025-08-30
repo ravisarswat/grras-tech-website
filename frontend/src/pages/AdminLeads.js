@@ -7,7 +7,6 @@ import {
   Mail,
   Phone,
   BookOpen,
-  Eye,
   RefreshCw,
   AlertCircle,
   LogIn
@@ -66,7 +65,6 @@ const AdminLeads = () => {
     } catch (error) {
       console.error('Auth check failed:', error);
       setIsAuthenticated(false);
-      // Clear invalid token
       localStorage.removeItem('admin_token');
     }
     setLoading(false);
@@ -203,6 +201,16 @@ const AdminLeads = () => {
     return [...new Set(leads.map(lead => lead[field]).filter(Boolean))];
   };
 
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-IN', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
   // Login Form
   if (!isAuthenticated) {
     return (
@@ -255,7 +263,7 @@ const AdminLeads = () => {
             
             <div className="text-center">
               <p className="text-xs text-gray-500">
-                Use the same password as Admin Content
+                Use the same password as Admin Content (grras-admin)
               </p>
             </div>
           </form>
@@ -275,219 +283,11 @@ const AdminLeads = () => {
       </div>
     );
   }
-      
-      if (response.status === 200) {
-        localStorage.setItem('adminPassword', credentials.password);
-        setIsAuthenticated(true);
-        toast.success('Login successful');
-      }
-    } catch (error) {
-      setAuthError('Invalid password. Please try again.');
-      toast.error('Login failed');
-    }
-  };
-
-  const fetchLeads = async () => {
-    try {
-      const response = await axios.get(`${API}/leads`, {
-        auth: {
-          username: 'admin',
-          password: localStorage.getItem('adminPassword')
-        }
-      });
-      
-      setLeads(response.data.leads || []);
-    } catch (error) {
-      console.error('Error fetching leads:', error);
-      toast.error('Failed to fetch leads');
-      
-      if (error.response?.status === 401) {
-        setIsAuthenticated(false);
-        localStorage.removeItem('adminPassword');
-      }
-    }
-  };
-
-  const filterLeads = () => {
-    let filtered = [...leads];
-
-    // Search filter
-    if (searchTerm) {
-      filtered = filtered.filter(lead =>
-        lead.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        lead.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        lead.phone?.includes(searchTerm)
-      );
-    }
-
-    // Course filter
-    if (selectedCourse !== 'all') {
-      filtered = filtered.filter(lead => lead.course_slug === selectedCourse);
-    }
-
-    // Date filter
-    if (dateRange !== 'all') {
-      const now = new Date();
-      const filterDate = new Date();
-      
-      switch (dateRange) {
-        case 'today':
-          filterDate.setHours(0, 0, 0, 0);
-          filtered = filtered.filter(lead => new Date(lead.timestamp) >= filterDate);
-          break;
-        case 'week':
-          filterDate.setDate(now.getDate() - 7);
-          filtered = filtered.filter(lead => new Date(lead.timestamp) >= filterDate);
-          break;
-        case 'month':
-          filterDate.setMonth(now.getMonth() - 1);
-          filtered = filtered.filter(lead => new Date(lead.timestamp) >= filterDate);
-          break;
-      }
-    }
-
-    setFilteredLeads(filtered);
-  };
-
-  const exportToCSV = () => {
-    if (filteredLeads.length === 0) {
-      toast.error('No data to export');
-      return;
-    }
-
-    const headers = ['Name', 'Email', 'Phone', 'Course', 'Message', 'Date'];
-    const csvContent = [
-      headers.join(','),
-      ...filteredLeads.map(lead => [
-        `"${lead.name || ''}"`,
-        `"${lead.email || ''}"`,
-        `"${lead.phone || ''}"`,
-        `"${getCourseNameFromSlug(lead.course_slug || '')}"`,
-        `"${(lead.message || '').replace(/"/g, '""')}"`,
-        `"${formatDate(lead.timestamp)}"`
-      ].join(','))
-    ].join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `grras_leads_${new Date().toISOString().split('T')[0]}.csv`;
-    link.click();
-    
-    toast.success('Data exported successfully');
-  };
-
-  const getCourseNameFromSlug = (slug) => {
-    const courseNames = {
-      'bca-degree': 'BCA Degree Program',
-      'devops-training': 'DevOps Training',
-      'redhat-certifications': 'Red Hat Certifications',
-      'data-science-machine-learning': 'Data Science & ML',
-      'java-salesforce': 'Java & Salesforce',
-      'python': 'Python',
-      'c-cpp-dsa': 'C/C++ & DSA'
-    };
-    return courseNames[slug] || slug;
-  };
-
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-IN', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  };
-
-  const getUniqueCourseSlugs = () => {
-    const slugs = [...new Set(leads.map(lead => lead.course_slug).filter(Boolean))];
-    return slugs;
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="spinner mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return (
-      <>
-        <SEO
-          title="Admin Login - GRRAS Solutions"
-          description="Admin panel for GRRAS Solutions Training Institute"
-        />
-        
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-md w-full space-y-8">
-            <div className="text-center">
-              <h2 className="mt-6 text-3xl font-bold text-gray-900">
-                Admin Login
-              </h2>
-              <p className="mt-2 text-sm text-gray-600">
-                Access the leads management panel
-              </p>
-            </div>
-            
-            <form className="mt-8 space-y-6" onSubmit={handleLogin}>
-              <div className="space-y-4">
-                <div>
-                  <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                    Username
-                  </label>
-                  <input
-                    id="username"
-                    name="username"
-                    type="text"
-                    value="admin"
-                    readOnly
-                    className="form-input bg-gray-100"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                    Password
-                  </label>
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={credentials.password}
-                    onChange={(e) => setCredentials(prev => ({ ...prev, password: e.target.value }))}
-                    className="form-input"
-                    placeholder="Enter admin password"
-                    required
-                  />
-                </div>
-              </div>
-
-              {authError && (
-                <div className="text-red-600 text-sm text-center">
-                  {authError}
-                </div>
-              )}
-
-              <button type="submit" className="btn-primary w-full">
-                Sign In
-              </button>
-            </form>
-          </div>
-        </div>
-      </>
-    );
-  }
 
   return (
     <>
       <SEO
-        title="Admin Panel - Leads Management | GRRAS Solutions"
+        title="Admin Leads - GRRAS Solutions"
         description="Manage leads and inquiries for GRRAS Solutions Training Institute"
       />
       
@@ -558,7 +358,7 @@ const AdminLeads = () => {
                 <div className="ml-4">
                   <p className="text-sm font-medium text-gray-600">Syllabus Downloads</p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {leads.filter(lead => lead.course_slug).length}
+                    {leads.filter(lead => lead.type === 'syllabus_download').length}
                   </p>
                 </div>
               </div>
@@ -568,9 +368,9 @@ const AdminLeads = () => {
               <div className="flex items-center">
                 <Mail className="h-8 w-8 text-orange-500" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">General Inquiries</p>
+                  <p className="text-sm font-medium text-gray-600">Contact Forms</p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {leads.filter(lead => !lead.course_slug).length}
+                    {leads.filter(lead => lead.type === 'contact_form').length}
                   </p>
                 </div>
               </div>
@@ -606,12 +406,11 @@ const AdminLeads = () => {
                   className="form-input"
                 >
                   <option value="all">All Courses</option>
-                  {getUniqueCourseSlugs().map(slug => (
-                    <option key={slug} value={slug}>
-                      {getCourseNameFromSlug(slug)}
+                  {getUniqueValues('course').map(course => (
+                    <option key={course} value={course}>
+                      {course}
                     </option>
                   ))}
-                  <option value="">General Inquiry</option>
                 </select>
               </div>
               
@@ -662,13 +461,16 @@ const AdminLeads = () => {
                         Message
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Type
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Date
                       </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {filteredLeads.map((lead, index) => (
-                      <tr key={lead.id || index} className="hover:bg-gray-50">
+                      <tr key={lead._id || index} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div>
                             <div className="text-sm font-medium text-gray-900">
@@ -686,9 +488,9 @@ const AdminLeads = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
-                            {lead.course_slug ? (
+                            {lead.course ? (
                               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                {getCourseNameFromSlug(lead.course_slug)}
+                                {lead.course}
                               </span>
                             ) : (
                               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
@@ -699,8 +501,17 @@ const AdminLeads = () => {
                         </td>
                         <td className="px-6 py-4">
                           <div className="text-sm text-gray-900 max-w-xs truncate">
-                            {lead.message || 'Syllabus download request'}
+                            {lead.message || 'No message'}
                           </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            lead.type === 'syllabus_download' 
+                              ? 'bg-purple-100 text-purple-800' 
+                              : 'bg-green-100 text-green-800'
+                          }`}>
+                            {lead.type === 'syllabus_download' ? 'Syllabus Download' : 'Contact Form'}
+                          </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {formatDate(lead.timestamp)}

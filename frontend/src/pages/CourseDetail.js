@@ -320,32 +320,32 @@ const CourseDetail = () => {
                   <h3 className="text-xl font-bold text-gray-900 mb-4">
                     Course Details
                   </h3>
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     {course.level && (
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Level:</span>
-                        <span className="font-medium text-gray-900">{course.level}</span>
+                      <div className="flex justify-between items-start">
+                        <span className="text-gray-600 font-medium">Level:</span>
+                        <span className="font-medium text-gray-900 text-right">{course.level}</span>
                       </div>
                     )}
                     
                     {course.mode && course.mode.length > 0 && (
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Mode:</span>
-                        <span className="font-medium text-gray-900">{course.mode.join(', ')}</span>
+                      <div className="flex justify-between items-start">
+                        <span className="text-gray-600 font-medium">Mode:</span>
+                        <span className="font-medium text-gray-900 text-right">{course.mode.join(', ')}</span>
                       </div>
                     )}
                     
                     {course.eligibility && (
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Eligibility:</span>
-                        <span className="font-medium text-gray-900">{course.eligibility}</span>
+                      <div className="flex justify-between items-start">
+                        <span className="text-gray-600 font-medium">Eligibility:</span>
+                        <span className="font-medium text-gray-900 text-right max-w-xs">{course.eligibility}</span>
                       </div>
                     )}
                     
                     {course.category && (
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Category:</span>
-                        <span className="font-medium text-gray-900 capitalize">{course.category}</span>
+                      <div className="flex justify-between items-start">
+                        <span className="text-gray-600 font-medium">Category:</span>
+                        <span className="font-medium text-gray-900 text-right capitalize">{course.category}</span>
                       </div>
                     )}
                   </div>

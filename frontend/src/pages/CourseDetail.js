@@ -274,11 +274,18 @@ const CourseDetail = () => {
                 {/* Certificate Information */}
                 {course.certificateInfo && (
                   <div className="bg-white rounded-xl p-8 shadow-lg mb-8 animate-fade-in-up">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                      Certificate Information
-                    </h2>
-                    <div className="text-gray-700 leading-relaxed whitespace-pre-line">
-                      {course.certificateInfo}
+                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+                      <div className="flex items-start gap-4">
+                        <div className="text-3xl">🎓</div>
+                        <div>
+                          <h2 className="text-xl font-bold text-gray-900 mb-3">
+                            Certificate of Completion
+                          </h2>
+                          <div className="text-gray-700 leading-relaxed whitespace-pre-line">
+                            {course.certificateInfo}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}

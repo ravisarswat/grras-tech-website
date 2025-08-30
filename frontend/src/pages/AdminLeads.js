@@ -3,14 +3,14 @@ import {
   Users, 
   Download, 
   Search, 
-  Filter, 
   Calendar,
   Mail,
   Phone,
   BookOpen,
   Eye,
   RefreshCw,
-  AlertCircle
+  AlertCircle,
+  LogIn
 } from 'lucide-react';
 import { toast } from 'sonner';
 import SEO from '../components/SEO';
@@ -24,7 +24,7 @@ const AdminLeads = () => {
   const [filteredLeads, setFilteredLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [credentials, setCredentials] = useState({ username: '', password: '' });
+  const [password, setPassword] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCourse, setSelectedCourse] = useState('all');
   const [dateRange, setDateRange] = useState('all');
@@ -46,7 +46,7 @@ const AdminLeads = () => {
 
   const checkAuthentication = async () => {
     try {
-      // Check if we have admin token from AdminContent
+      // Check if we have admin token from AdminContent login
       const token = localStorage.getItem('admin_token');
       if (!token) {
         setIsAuthenticated(false);
@@ -61,6 +61,7 @@ const AdminLeads = () => {
       
       if (response.status === 200) {
         setIsAuthenticated(true);
+        setLeads(response.data.leads || []);
       }
     } catch (error) {
       console.error('Auth check failed:', error);
@@ -70,34 +71,210 @@ const AdminLeads = () => {
     }
     setLoading(false);
   };
-        auth: {
-          username: 'admin',
-          password: localStorage.getItem('adminPassword') || ''
-        }
-      });
-      
-      if (response.status === 200) {
-        setIsAuthenticated(true);
-      }
-    } catch (error) {
-      // Not authenticated, show login form
-      setIsAuthenticated(false);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setAuthError('');
     
     try {
-      const response = await axios.get(`${API}/leads`, {
-        auth: {
-          username: 'admin',
-          password: credentials.password
-        }
+      // Use the same login endpoint as AdminContent
+      const response = await axios.post(`${API}/admin/login`, {
+        password: password
       });
+
+      if (response.data.token) {
+        localStorage.setItem('admin_token', response.data.token);
+        setIsAuthenticated(true);
+        toast.success('Login successful!');
+      }
+    } catch (error) {
+      const errorMessage = error.response?.data?.detail || 'Login failed. Please check your password.';
+      setAuthError(errorMessage);
+      toast.error(errorMessage);
+    }
+  };
+
+  const fetchLeads = async () => {
+    try {
+      const token = localStorage.getItem('admin_token');
+      if (!token) {
+        setIsAuthenticated(false);
+        return;
+      }
+
+      const response = await axios.get(`${API}/leads`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      
+      setLeads(response.data.leads || []);
+    } catch (error) {
+      console.error('Error fetching leads:', error);
+      if (error.response?.status === 401) {
+        setIsAuthenticated(false);
+        localStorage.removeItem('admin_token');
+        toast.error('Session expired. Please login again.');
+      } else {
+        toast.error('Failed to fetch leads');
+      }
+    }
+  };
+
+  const filterLeads = () => {
+    let filtered = [...leads];
+    
+    // Search filter
+    if (searchTerm) {
+      filtered = filtered.filter(lead => 
+        lead.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        lead.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        lead.phone?.includes(searchTerm) ||
+        lead.course?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    
+    // Course filter
+    if (selectedCourse !== 'all') {
+      filtered = filtered.filter(lead => 
+        lead.course?.toLowerCase().includes(selectedCourse.toLowerCase())
+      );
+    }
+    
+    // Date filter
+    if (dateRange !== 'all') {
+      const now = new Date();
+      const filterDate = new Date();
+      
+      switch (dateRange) {
+        case 'today':
+          filterDate.setHours(0, 0, 0, 0);
+          break;
+        case 'week':
+          filterDate.setDate(now.getDate() - 7);
+          break;
+        case 'month':
+          filterDate.setMonth(now.getMonth() - 1);
+          break;
+        default:
+          break;
+      }
+      
+      if (dateRange !== 'all') {
+        filtered = filtered.filter(lead => 
+          new Date(lead.timestamp) >= filterDate
+        );
+      }
+    }
+    
+    setFilteredLeads(filtered);
+  };
+
+  const exportToCSV = () => {
+    if (filteredLeads.length === 0) {
+      toast.error('No leads to export');
+      return;
+    }
+    
+    const headers = ['Name', 'Email', 'Phone', 'Course', 'Message', 'Type', 'Date'];
+    const csvContent = [
+      headers.join(','),
+      ...filteredLeads.map(lead => [
+        lead.name || '',
+        lead.email || '',
+        lead.phone || '',
+        lead.course || '',
+        lead.message || '',
+        lead.type || '',
+        new Date(lead.timestamp).toLocaleDateString()
+      ].join(','))
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `grras_leads_${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    
+    toast.success('Leads exported successfully!');
+  };
+
+  const getUniqueValues = (field) => {
+    return [...new Set(leads.map(lead => lead[field]).filter(Boolean))];
+  };
+
+  // Login Form
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <SEO 
+          title="Admin Leads - GRRAS Solutions"
+          description="Admin leads management"
+        />
+        
+        <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
+          <div className="text-center mb-8">
+            <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+              <Users className="h-8 w-8 text-red-600" />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Admin Leads</h1>
+            <p className="text-gray-600">Sign in to manage leads</p>
+          </div>
+          
+          <form onSubmit={handleLogin} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="form-input"
+                placeholder="Enter admin password"
+                required
+              />
+            </div>
+            
+            {authError && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                <div className="flex items-center gap-2">
+                  <AlertCircle className="h-4 w-4 text-red-500" />
+                  <span className="text-red-700 text-sm">{authError}</span>
+                </div>
+              </div>
+            )}
+            
+            <button
+              type="submit"
+              className="btn-primary w-full flex items-center justify-center gap-2"
+            >
+              <LogIn className="h-4 w-4" />
+              Sign In
+            </button>
+            
+            <div className="text-center">
+              <p className="text-xs text-gray-500">
+                Use the same password as Admin Content
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  // Loading State
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <RefreshCw className="h-8 w-8 text-red-600 animate-spin mx-auto mb-4" />
+          <p className="text-gray-600">Loading leads...</p>
+        </div>
+      </div>
+    );
+  }
       
       if (response.status === 200) {
         localStorage.setItem('adminPassword', credentials.password);

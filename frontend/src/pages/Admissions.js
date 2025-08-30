@@ -19,8 +19,6 @@ import EligibilityWidget from '../components/EligibilityWidget';
 
 const Admissions = () => {
   const { content } = useContent();
-  const [selectedCourse, setSelectedCourse] = useState('');
-  const [eligibilityResult, setEligibilityResult] = useState(null);
 
   // Get courses from CMS instead of hardcoded data
   const cmsCoursesData = content?.courses || [];

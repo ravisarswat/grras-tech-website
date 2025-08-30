@@ -42,6 +42,16 @@ mongo_url = (
 
 logging.info(f"🔗 Connecting to MongoDB: {mongo_url[:50]}{'...' if len(mongo_url) > 50 else ''}")
 client = AsyncIOMotorClient(mongo_url)
+# MongoDB connection with Railway support
+mongo_url = os.environ.get('DATABASE_URL') or os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
+client = AsyncIOMotorClient(
+    mongo_url,
+    tls=True,
+    tlsAllowInvalidCertificates=True,
+    serverSelectionTimeoutMS=10000
+)
+
+#client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ.get('DB_NAME', 'grras_database')]
 
 # Initialize Content Manager - MONGODB ONLY (No JSON fallbacks during normal operation)

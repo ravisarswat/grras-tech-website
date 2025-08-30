@@ -46,8 +46,30 @@ const AdminLeads = () => {
 
   const checkAuthentication = async () => {
     try {
-      // Try to access the leads endpoint to check if we're already authenticated
+      // Check if we have admin token from AdminContent
+      const token = localStorage.getItem('admin_token');
+      if (!token) {
+        setIsAuthenticated(false);
+        setLoading(false);
+        return;
+      }
+
+      // Try to access the leads endpoint with the token
       const response = await axios.get(`${API}/leads`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      
+      if (response.status === 200) {
+        setIsAuthenticated(true);
+      }
+    } catch (error) {
+      console.error('Auth check failed:', error);
+      setIsAuthenticated(false);
+      // Clear invalid token
+      localStorage.removeItem('admin_token');
+    }
+    setLoading(false);
+  };
         auth: {
           username: 'admin',
           password: localStorage.getItem('adminPassword') || ''

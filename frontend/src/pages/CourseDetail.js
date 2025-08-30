@@ -293,11 +293,18 @@ const CourseDetail = () => {
                 {/* Batch Information */}
                 {course.batchesInfo && (
                   <div className="bg-white rounded-xl p-8 shadow-lg animate-fade-in-up">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                      Batch Information
-                    </h2>
-                    <div className="text-gray-700 leading-relaxed whitespace-pre-line">
-                      {course.batchesInfo}
+                    <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
+                      <div className="flex items-start gap-4">
+                        <div className="text-3xl">📅</div>
+                        <div>
+                          <h2 className="text-xl font-bold text-gray-900 mb-3">
+                            Batch Information
+                          </h2>
+                          <div className="text-gray-700 leading-relaxed whitespace-pre-line">
+                            {course.batchesInfo}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}

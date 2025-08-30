@@ -173,18 +173,18 @@ const CourseDetail = () => {
                     Free download • No spam • Instant access
                   </div>
                   
-                  <div className="border-t pt-4">
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-gray-600">Course Fee:</span>
-                      <span className="font-semibold text-gray-900">
+                  <div className="border-t pt-4 space-y-3">
+                    <div className="flex justify-between items-start text-sm">
+                      <span className="text-gray-600 font-medium">Course Fee:</span>
+                      <span className="font-semibold text-gray-900 text-right">
                         {course.fees || 'Contact for Details'}
                       </span>
                     </div>
                     
                     {course.batchesInfo && (
-                      <div className="flex justify-between items-center text-sm mt-2">
-                        <span className="text-gray-600">Batches:</span>
-                        <span className="font-semibold text-gray-900">
+                      <div className="flex justify-between items-start text-sm">
+                        <span className="text-gray-600 font-medium">Batches:</span>
+                        <span className="font-semibold text-gray-900 text-right max-w-xs">
                           {course.batchesInfo.split('\n')[0]}
                         </span>
                       </div>

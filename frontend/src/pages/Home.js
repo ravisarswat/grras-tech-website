@@ -445,23 +445,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Eligibility Check Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 animate-fade-in-up">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Are You Eligible?
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Find out if you meet the requirements for your chosen course and get personalized guidance
-            </p>
-          </div>
-          
-          <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <EligibilityWidget />
-          </div>
-        </div>
-      </section>
+
     </>
   );
 };

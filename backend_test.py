@@ -292,13 +292,16 @@ class BackendTester:
                 test_course = courses[0]
                 slug = test_course.get("slug")
                 
-                # Test syllabus generation
+                # Test syllabus generation with proper form data
                 form_data = aiohttp.FormData()
                 form_data.add_field('name', 'Priya Sharma')
                 form_data.add_field('email', 'priya.sharma@example.com')
                 form_data.add_field('phone', '9876543210')
                 
-                async with self.session.post(f"{self.api_base}/courses/{slug}/syllabus", data=form_data) as response:
+                # Remove Content-Type header for form data
+                headers = {}
+                
+                async with self.session.post(f"{self.api_base}/courses/{slug}/syllabus", data=form_data, headers=headers) as response:
                     if response.status == 200:
                         # Check if response is PDF
                         content_type = response.headers.get('content-type', '')
@@ -310,7 +313,8 @@ class BackendTester:
                             self.errors.append(f"Syllabus endpoint returned non-PDF content: {content_type}")
                             return False
                     else:
-                        self.errors.append(f"Syllabus generation failed with status {response.status}")
+                        response_text = await response.text()
+                        self.errors.append(f"Syllabus generation failed with status {response.status}: {response_text}")
                         return False
         except Exception as e:
             self.errors.append(f"Syllabus generation test failed: {str(e)}")

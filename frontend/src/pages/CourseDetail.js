@@ -315,14 +315,15 @@ const CourseDetail = () => {
                 {/* Course Highlights */}
                 {course.highlights && course.highlights.length > 0 && (
                   <div className="bg-white rounded-xl p-6 shadow-lg animate-fade-in-up">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                      <Star className="h-5 w-5 text-yellow-500" />
                       Course Highlights
                     </h3>
                     <div className="space-y-3">
                       {course.highlights.map((highlight, index) => (
-                        <div key={index} className="flex items-center gap-2">
-                          <Star className="h-4 w-4 text-yellow-500" />
-                          <span className="text-gray-700 text-sm">{highlight}</span>
+                        <div key={index} className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                          <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0" />
+                          <span className="text-gray-700 text-sm leading-relaxed">{highlight}</span>
                         </div>
                       ))}
                     </div>

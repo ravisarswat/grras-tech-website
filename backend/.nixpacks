@@ -1,1 +1,0 @@
-{"buildCmd": "pip install --no-cache-dir -r requirements.txt", "startCmd": "python server.py"}

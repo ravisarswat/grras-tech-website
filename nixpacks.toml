@@ -1,11 +1,17 @@
-[phases.build]
-cmds = [
-    "npm ci",
-    "npm run build"
-]
+# Nixpacks Configuration for GRRAS Solutions
+[variables]
+NODE_VERSION = "20"
+NPM_VERSION = "9"
 
 [phases.setup]
-nixPkgs = ["nodejs-20_x", "npm-9_x"]
+nixPkgs = ["nodejs_20", "python39"]
+
+[phases.build]
+cmds = [
+    "cd frontend && npm ci --only=production",
+    "cd frontend && npm run build",
+    "cd backend && pip install -r requirements.txt"
+]
 
 [start]
-cmd = "npm start"
+cmd = "python backend/server.py"

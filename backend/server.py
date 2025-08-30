@@ -1,37 +1,33 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Form, Depends, Response, Request, UploadFile, File
-from fastapi.responses import FileResponse, JSONResponse
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, Request, Query, Form
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse, FileResponse, RedirectResponse
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.staticfiles import StaticFiles
-from dotenv import load_dotenv
-from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
+from content_manager import ContentManager
+import uvicorn
 import os
 import logging
-from pathlib import Path
-from pydantic import BaseModel, Field, EmailStr
-from typing import List, Optional, Dict, Any
-import uuid
+from dotenv import load_dotenv
 from datetime import datetime, timezone
-import json
-import aiofiles
+from typing import Dict, Any, Optional, List
 import secrets
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter, A4
-from reportlab.lib import colors
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
-from reportlab.lib.units import inch
-import asyncio
-import tempfile
-from urllib.parse import urlparse
 import hashlib
-import jwt
-from content_manager import ContentManager
-import mimetypes
-import shutil
+from pydantic import BaseModel
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle, PageBreak
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.units import inch
+from reportlab.lib import colors
+import tempfile
+import asyncio
+import aiofiles
 
-ROOT_DIR = Path(__file__).parent
-load_dotenv(ROOT_DIR / '.env')
+# Load environment variables
+load_dotenv()
+
+# Logging configuration
+logging.basicConfig(level=logging.INFO)
 
 # MongoDB connection - SINGLE SOURCE OF TRUTH (GitHub ENV priority)
 mongo_url = (
@@ -51,232 +47,162 @@ content_manager = ContentManager(
     db_name=os.environ.get('DB_NAME', 'grras_database')
 )
 
-# Create directories
-os.makedirs('/app/backend/storage', exist_ok=True)
-os.makedirs('/app/backend/temp', exist_ok=True)
-os.makedirs('/app/backend/data/media', exist_ok=True)
-os.makedirs('/app/backend/data/versions', exist_ok=True) 
-os.makedirs('/app/backend/data/backups', exist_ok=True)
+# Create FastAPI app
+app = FastAPI(
+    title="GRRAS Solutions Training Institute API",
+    description="Professional IT Training Institute API",
+    version="1.0.0"
+)
 
-# Tools configuration
-TOOLS_CONFIG = {
-    "devops-training": [
-        "Linux (RHCSA)", "Linux Server Administration", "Ansible",
-        "AWS", "Terraform", "Docker", "Kubernetes",
-        "Jenkins", "GitHub"
-    ],
-    "bca-degree": [
-        "Programming in C", "Java", "DBMS", "Web Technologies", 
-        "Cloud & DevOps Basics", "AI/ML Basics"
-    ],
-    "redhat-certifications": [
-        "RHCSA", "RHCE", "DO188 (OpenShift Dev)", 
-        "DO280 (OpenShift Admin)", "OpenShift with AI"
-    ],
-    "data-science-machine-learning": [
-        "Python", "Statistics", "Pandas & NumPy", 
-        "Scikit-learn", "TensorFlow/Keras"
-    ],
-    "java-salesforce": [
-        "Core Java", "Advanced Java", "Salesforce Admin", "Salesforce Developer"
-    ],
-    "python": [
-        "Python Core", "OOP in Python", "NumPy", 
-        "Pandas", "Flask/Django Basics"
-    ],
-    "c-cpp-dsa": [
-        "C", "C++ (OOP)", "Data Structures", "Algorithms", "Problem Solving"
-    ]
-}
-
-# Course names mapping
-COURSE_NAMES = {
-    "devops-training": "DevOps Training",
-    "bca-degree": "BCA Degree Program", 
-    "redhat-certifications": "Red Hat Certifications",
-    "data-science-machine-learning": "Data Science & Machine Learning",
-    "java-salesforce": "Java & Salesforce",
-    "python": "Python",
-    "c-cpp-dsa": "C/C++ & DSA"
-}
-
-# Create the main app
-app = FastAPI(title="GRRAS Solutions Training Institute API")
-
-# Create a router with the /api prefix
-api_router = APIRouter(prefix="/api")
+# CORS Configuration 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins for Railway deployment
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Security
-security = HTTPBasic()
-ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'grras-admin')
-JWT_SECRET = os.environ.get('JWT_SECRET', 'grras-jwt-secret-key-change-in-production')
+security = HTTPBearer()
 
-def verify_admin(credentials: HTTPBasicCredentials = Depends(security)):
-    correct_password = secrets.compare_digest(credentials.password, ADMIN_PASSWORD)
-    if not correct_password:
-        raise HTTPException(status_code=401, detail="Invalid credentials")
-    return credentials
+# Admin credentials
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'grras@admin2024')
 
-def create_admin_token(username: str = "admin") -> str:
-    """Create JWT token for admin session"""
-    payload = {
-        "username": username,
-        "exp": datetime.now(timezone.utc).timestamp() + 86400  # 24 hours
-    }
-    return jwt.encode(payload, JWT_SECRET, algorithm="HS256")
+# Pydantic models
+class LoginRequest(BaseModel):
+    password: str
 
-def verify_admin_token(request: Request):
-    """Verify admin JWT token from cookie or Authorization header"""
-    token = None
-    
-    # Check Authorization header first (Bearer token)
-    auth_header = request.headers.get("authorization")
-    if auth_header and auth_header.startswith("Bearer "):
-        token = auth_header.split(" ")[1]
-    
-    # Fallback to cookie
-    if not token:
-        token = request.cookies.get("admin_token")
-    
-    if not token:
-        raise HTTPException(status_code=401, detail="Not authenticated")
-    
-    try:
-        payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
-        if payload.get("exp", 0) < datetime.now(timezone.utc).timestamp():
-            raise HTTPException(status_code=401, detail="Token expired")
-        return payload["username"]
-    except jwt.InvalidTokenError:
-        raise HTTPException(status_code=401, detail="Invalid token")
-
-# Storage abstraction
-class StorageService:
-    def __init__(self):
-        # FORCE MongoDB storage for leads (Railway-proof)
-        self.storage_type = 'mongo'  # Always use MongoDB
-        self.json_file = '/app/backend/storage/leads.json'
-    
-    async def save_lead(self, lead_data: dict):
-        if self.storage_type == 'mongo':
-            return await self._save_to_mongo(lead_data)
-        else:
-            return await self._save_to_json(lead_data)
-    
-    async def get_leads(self):
-        if self.storage_type == 'mongo':
-            return await self._get_from_mongo()
-        else:
-            return await self._get_from_json()
-    
-    async def _save_to_json(self, lead_data: dict):
-        try:
-            if os.path.exists(self.json_file):
-                async with aiofiles.open(self.json_file, 'r') as f:
-                    leads = json.loads(await f.read())
-            else:
-                leads = []
-            
-            leads.append(lead_data)
-            
-            async with aiofiles.open(self.json_file, 'w') as f:
-                await f.write(json.dumps(leads, indent=2, default=str))
-            
-            return lead_data
-        except Exception as e:
-            logging.error(f"Error saving to JSON: {e}")
-            raise HTTPException(status_code=500, detail="Failed to save lead")
-    
-    async def _get_from_json(self):
-        try:
-            if not os.path.exists(self.json_file):
-                return []
-            
-            async with aiofiles.open(self.json_file, 'r') as f:
-                leads = json.loads(await f.read())
-            return leads
-        except Exception as e:
-            logging.error(f"Error reading from JSON: {e}")
-            return []
-    
-    async def _save_to_mongo(self, lead_data: dict):
-        try:
-            result = await db.leads.insert_one(lead_data)
-            lead_data['_id'] = str(result.inserted_id)
-            return lead_data
-        except Exception as e:
-            logging.error(f"Error saving to MongoDB: {e}")
-            raise HTTPException(status_code=500, detail="Failed to save lead")
-    
-    async def _get_from_mongo(self):
-        try:
-            cursor = db.leads.find().sort('timestamp', -1)
-            leads = await cursor.to_list(length=None)
-            for lead in leads:
-                lead['_id'] = str(lead['_id'])
-            return leads
-        except Exception as e:
-            logging.error(f"Error reading from MongoDB: {e}")
-            return []
-
-storage = StorageService()
-
-# Models
-class Lead(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    name: str
-    email: EmailStr
-    phone: str
-    course_slug: Optional[str] = None
-    message: Optional[str] = None
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    consent: bool = True
-
-class LeadCreate(BaseModel):
-    name: str
-    email: EmailStr
-    phone: str
-    course_slug: Optional[str] = None
-    message: Optional[str] = None
-    consent: bool = True
-
-class SyllabusRequest(BaseModel):
-    name: str
-    email: EmailStr
-    phone: str
-    course_slug: str
-    consent: bool = True
-
-class ContentUpdate(BaseModel):
+class ContentRequest(BaseModel):
     content: Dict[str, Any]
     isDraft: Optional[bool] = False
 
-class AdminLogin(BaseModel):
-    password: str
+class LeadRequest(BaseModel):
+    name: str
+    email: str
+    phone: str
+    course: str
+    message: Optional[str] = ""
 
-class VersionRestore(BaseModel):
-    versionId: str
+def verify_admin_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """Verify admin JWT token"""
+    token = credentials.credentials
+    
+    # Simple token verification (in production, use proper JWT)
+    expected_token = hashlib.sha256(f"grras_admin_{ADMIN_PASSWORD}".encode()).hexdigest()
+    if token != expected_token:
+        raise HTTPException(status_code=401, detail="Invalid admin token")
+    
+    return True
 
-class BackupRestore(BaseModel):
-    filename: str
+# API Routes
+api_router = APIRouter(prefix="/api")
 
-class MediaUpload(BaseModel):
-    filename: str
-    fileData: bytes
-
-# PDF Generation
-async def generate_syllabus_pdf(course_slug: str, student_name: str) -> str:
-    """Generate a professional syllabus PDF using dynamic content"""
+@api_router.get("/health")
+async def health_check():
+    """API Health Check"""
     try:
-        # Get current content
+        # Test MongoDB connection
+        await db.list_collection_names()
+        return {"status": "healthy", "database": "connected", "timestamp": datetime.utcnow().isoformat()}
+    except Exception as e:
+        logging.error(f"Health check failed: {e}")
+        return {"status": "unhealthy", "error": str(e), "timestamp": datetime.utcnow().isoformat()}
+
+@api_router.post("/admin/login")
+async def admin_login(request: LoginRequest):
+    """Admin authentication"""
+    if request.password == ADMIN_PASSWORD:
+        # Generate simple token (in production, use proper JWT)
+        token = hashlib.sha256(f"grras_admin_{ADMIN_PASSWORD}".encode()).hexdigest()
+        return {"token": token, "message": "Login successful"}
+    else:
+        raise HTTPException(status_code=401, detail="Invalid password")
+
+@api_router.get("/content")
+async def get_content():
+    """Get all CMS content"""
+    try:
+        content = await content_manager.get_content()
+        return {"content": content, "timestamp": datetime.utcnow().isoformat()}
+    except Exception as e:
+        logging.error(f"Error fetching content: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch content")
+
+@api_router.post("/content")
+async def save_content(request: ContentRequest, admin_verified: bool = Depends(verify_admin_token)):
+    """Save CMS content (Admin only)"""
+    try:
+        updated_content = await content_manager.save_content(
+            request.content, 
+            user="admin", 
+            is_draft=request.isDraft
+        )
+        return {
+            "message": "Content saved successfully", 
+            "content": updated_content,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        logging.error(f"Error saving content: {e}")
+        raise HTTPException(status_code=500, detail="Failed to save content")
+
+@api_router.get("/courses")
+async def get_courses():
+    """Get all courses from CMS"""
+    try:
         content = await content_manager.get_content()
         courses = content.get("courses", [])
-        institute = content.get("institute", {})
         
-        # Find the course
-        course = next((c for c in courses if c["slug"] == course_slug), None)
+        # Filter only visible courses and sort by order
+        visible_courses = [
+            course for course in courses 
+            if course.get("visible", True)
+        ]
+        visible_courses.sort(key=lambda x: x.get("order", 999))
+        
+        return {
+            "courses": visible_courses,
+            "total": len(visible_courses),
+            "timestamp": datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        logging.error(f"Error fetching courses: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch courses")
+
+@api_router.get("/courses/{slug}")
+async def get_course(slug: str):
+    """Get specific course by slug"""
+    try:
+        content = await content_manager.get_content()
+        courses = content.get("courses", [])
+        
+        course = next((c for c in courses if c.get("slug") == slug), None)
         if not course:
-            logging.error(f"Course not found: {course_slug}")
-            raise HTTPException(status_code=404, detail=f"Course '{course_slug}' not found in CMS")
+            raise HTTPException(status_code=404, detail="Course not found")
+        
+        return course
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error fetching course {slug}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch course")
+
+@api_router.post("/courses/{slug}/syllabus")
+async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(...), phone: str = Form(...)):
+    """Generate and download course syllabus PDF"""
+    try:
+        # Get course data from CMS
+        content = await content_manager.get_content()
+        courses = content.get("courses", [])
+        course = next((c for c in courses if c.get("slug") == slug), None)
+        
+        if not course:
+            raise HTTPException(status_code=404, detail="Course not found")
+        
+        # Get institute data from CMS
+        institute = content.get("institute", {})
+        branding = content.get("branding", {})
         
         # Ensure required fields exist with comprehensive defaults
         course_name = course.get("title", "Course")
@@ -291,38 +217,31 @@ async def generate_syllabus_pdf(course_slug: str, student_name: str) -> str:
         certificate_info = course.get("certificateInfo", "Certificate provided on successful completion")
         eligibility = course.get("eligibility", "Contact for eligibility criteria")
         
-        # Validate student name
-        if not student_name or not student_name.strip():
-            student_name = "Student"
+        # Create temporary PDF file
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp_file:
+            pdf_path = tmp_file.name
         
-        # Create temporary file with absolute path
-        temp_dir = '/app/backend/temp'
-        os.makedirs(temp_dir, exist_ok=True)
-        temp_file = os.path.join(temp_dir, f"syllabus_{course_slug}_{uuid.uuid4().hex[:8]}.pdf")
-        
-        logging.info(f"Generating PDF for course: {course_name}, student: {student_name}")
-        
-        # Create PDF
-        doc = SimpleDocTemplate(temp_file, pagesize=A4, topMargin=1*inch)
+        # Generate PDF
+        doc = SimpleDocTemplate(pdf_path, pagesize=A4, topMargin=1*inch)
         styles = getSampleStyleSheet()
         
         # Custom styles
         title_style = ParagraphStyle(
             'CustomTitle',
-            parent=styles['Title'],
+            parent=styles['Heading1'],
             fontSize=24,
-            textColor=colors.HexColor('#DC2626'),
             spaceAfter=30,
-            alignment=1  # Center
+            textColor=colors.HexColor('#DC2626'),
+            alignment=1  # Center alignment
         )
         
         heading_style = ParagraphStyle(
             'CustomHeading',
-            parent=styles['Heading1'],
+            parent=styles['Heading2'],
             fontSize=16,
-            textColor=colors.HexColor('#DC2626'),
-            spaceAfter=12,
-            spaceBefore=20
+            spaceBefore=20,
+            spaceAfter=10,
+            textColor=colors.HexColor('#DC2626')
         )
         
         normal_style = ParagraphStyle(
@@ -333,49 +252,29 @@ async def generate_syllabus_pdf(course_slug: str, student_name: str) -> str:
             leading=14
         )
         
-        # Content
+        # Build content
         content_elements = []
         
-        # Try to add logo if available
-        branding = content.get("branding", {})
-        logo_url = branding.get("logoUrl", "")
+        # Header with logo and institute info
+        try:
+            # Try to add logo (with error handling)
+            logo_url = branding.get("logoUrl", "")
+            if logo_url:
+                try:
+                    # This is a simplified approach - in production you'd want better logo handling
+                    content_elements.append(Paragraph("🎓 GRRAS Solutions Training Institute", title_style))
+                except:
+                    content_elements.append(Paragraph("🎓 GRRAS Solutions Training Institute", title_style))
+            else:
+                content_elements.append(Paragraph("🎓 GRRAS Solutions Training Institute", title_style))
+        except:
+            content_elements.append(Paragraph("📚 Professional IT Training Institute", normal_style))
         
-        if logo_url:
-            try:
-                # For now, add institute name with enhanced styling (logo implementation would require image handling)
-                enhanced_title_style = ParagraphStyle(
-                    'EnhancedTitle',
-                    parent=styles['Title'],
-                    fontSize=28,
-                    textColor=colors.HexColor('#DC2626'),
-                    spaceAfter=30,
-                    alignment=1,  # Center
-                    leading=32
-                )
-                institute_name = institute.get("name", "GRRAS Solutions Training Institute")
-                content_elements.append(Paragraph(f"<b>{institute_name}</b>", enhanced_title_style))
-                content_elements.append(Paragraph("📚 Professional IT Training Institute", normal_style))
-                content_elements.append(Spacer(1, 20))
-            except:
-                # Fallback to standard header
-                institute_name = institute.get("name", "GRRAS Solutions Training Institute")
-                content_elements.append(Paragraph(institute_name, title_style))
-                content_elements.append(Spacer(1, 20))
-        else:
-            # Standard header without logo
-            institute_name = institute.get("name", "GRRAS Solutions Training Institute")
-            content_elements.append(Paragraph(institute_name, title_style))
-            content_elements.append(Spacer(1, 20))
+        content_elements.append(Spacer(1, 20))
         
         # Course title
-        content_elements.append(Paragraph(f"{course_name} - Detailed Syllabus", heading_style))
-        content_elements.append(Spacer(1, 10))
-        
-        # Student name
-        content_elements.append(Paragraph(f"Prepared for: {student_name}", normal_style))
-        content_elements.append(Paragraph(f"Date: {datetime.now().strftime('%B %d, %Y')}", normal_style))
-        content_elements.append(Paragraph(f"Document ID: SYL-{course_slug.upper()}-{datetime.now().strftime('%Y%m%d')}", normal_style))
-        content_elements.append(Spacer(1, 30))
+        content_elements.append(Paragraph(f"Course Syllabus: {course_name}", title_style))
+        content_elements.append(Spacer(1, 20))
         
         # Course Details
         content_elements.append(Paragraph("Course Information", heading_style))
@@ -433,382 +332,113 @@ async def generate_syllabus_pdf(course_slug: str, student_name: str) -> str:
         content_elements.append(Paragraph(certificate_info, normal_style))
         content_elements.append(Spacer(1, 20))
         
-        # Schedule and fees
-        content_elements.append(Paragraph("Schedule & Fees", heading_style))
-        content_elements.append(Paragraph("For detailed schedule, duration, and fee structure, please contact our admissions team.", normal_style))
-        content_elements.append(Spacer(1, 30))
+        # Contact Information
+        institute_name = institute.get("name", "GRRAS Solutions Training Institute")
+        address = institute.get("address", "A-81, Singh Bhoomi Khatipura Rd, Jaipur, Rajasthan")
+        phones = institute.get("phones", ["090019 91227"])
+        emails = institute.get("emails", ["info@grrassolutions.com"])
         
-        # Footer with institute info
         content_elements.append(Paragraph("Contact Information", heading_style))
-        content_elements.append(Paragraph(institute_name, normal_style))
+        content_elements.append(Paragraph(f"<b>Institute:</b> {institute_name}", normal_style))
+        content_elements.append(Paragraph(f"<b>Address:</b> {address}", normal_style))
+        content_elements.append(Paragraph(f"<b>Phone:</b> {', '.join(phones)}", normal_style))
+        content_elements.append(Paragraph(f"<b>Email:</b> {', '.join(emails)}", normal_style))
+        content_elements.append(Spacer(1, 20))
         
-        address = institute.get("address", "A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012")
-        content_elements.append(Paragraph(address, normal_style))
-        
-        phone = institute.get("phone", "090019 91227")
-        content_elements.append(Paragraph(f"Phone: {phone}", normal_style))
+        # Footer
+        content_elements.append(Paragraph("For more information and admissions, please contact our counselors.", normal_style))
         
         # Build PDF
         doc.build(content_elements)
         
-        # Verify file was created
-        if not os.path.exists(temp_file):
-            raise HTTPException(status_code=500, detail="PDF file creation failed")
+        # Store lead information
+        try:
+            lead_data = {
+                "name": name,
+                "email": email,
+                "phone": phone,
+                "course": course_name,
+                "type": "syllabus_download",
+                "timestamp": datetime.utcnow().isoformat(),
+                "ip": "Railway-Server"
+            }
             
-        logging.info(f"PDF generated successfully: {temp_file}")
-        return temp_file
+            # Save to MongoDB
+            collection = db.leads
+            await collection.insert_one(lead_data)
+            
+        except Exception as e:
+            logging.warning(f"Failed to store lead data: {e}")
         
-    except Exception as e:
-        logging.error(f"Error generating PDF: {e}")
-        raise HTTPException(status_code=500, detail="Failed to generate PDF")
-
-# API Routes
-@api_router.get("/")
-async def root():
-    return {"message": "GRRAS Solutions Training Institute API", "status": "active"}
-
-@api_router.get("/courses")
-async def get_courses():
-    """Get all available courses from content"""
-    try:
-        content = await content_manager.get_content()
-        courses = content.get("courses", [])
+        # Return PDF file
+        return FileResponse(
+            pdf_path, 
+            filename=f"{course_name.replace(' ', '_')}_Syllabus.pdf",
+            media_type="application/pdf"
+        )
         
-        # Filter visible courses and sort by order
-        visible_courses = [
-            course for course in courses 
-            if course.get("visible", True)
-        ]
-        visible_courses.sort(key=lambda x: x.get("order", 999))
-        
-        return {"courses": visible_courses}
-    except Exception as e:
-        logging.error(f"Error getting courses: {e}")
-        raise HTTPException(status_code=500, detail="Failed to get courses")
-
-@api_router.get("/courses/{course_slug}")
-async def get_course(course_slug: str):
-    """Get specific course details from content"""
-    try:
-        content = await content_manager.get_content()
-        courses = content.get("courses", [])
-        
-        course = next((c for c in courses if c["slug"] == course_slug), None)
-        if not course:
-            raise HTTPException(status_code=404, detail="Course not found")
-        
-        if not course.get("visible", True):
-            raise HTTPException(status_code=404, detail="Course not found")
-        
-        return course
     except HTTPException:
         raise
     except Exception as e:
-        logging.error(f"Error getting course {course_slug}: {e}")
-        raise HTTPException(status_code=500, detail="Failed to get course")
-
-@api_router.post("/leads")
-async def create_lead(lead: LeadCreate):
-    """Create a new lead"""
-    lead_data = lead.dict()
-    lead_data['id'] = str(uuid.uuid4())
-    lead_data['timestamp'] = datetime.now(timezone.utc)
-    
-    # Validate phone number (Indian format)
-    if not lead_data['phone'].isdigit() or len(lead_data['phone']) != 10:
-        raise HTTPException(status_code=400, detail="Phone number must be 10 digits")
-    
-    saved_lead = await storage.save_lead(lead_data)
-    return {"success": True, "lead_id": saved_lead['id']}
+        logging.error(f"Error generating syllabus for {slug}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to generate syllabus")
 
 @api_router.get("/leads")
-async def get_leads(credentials: HTTPBasicCredentials = Depends(verify_admin)):
-    """Get all leads (admin only)"""
-    leads = await storage.get_leads()
-    return {"leads": leads}
-
-@api_router.post("/syllabus")
-async def generate_syllabus(request: SyllabusRequest):
-    """Generate and download syllabus PDF"""
-    # Get current content to validate course
-    content = await content_manager.get_content()
-    courses = content.get("courses", [])
-    
-    # Validate course exists and is visible
-    course = next((c for c in courses if c["slug"] == request.course_slug), None)
-    if not course or not course.get("visible", True):
-        raise HTTPException(status_code=404, detail="Course not found")
-    
-    # Validate phone
-    if not request.phone.isdigit() or len(request.phone) != 10:
-        raise HTTPException(status_code=400, detail="Phone number must be 10 digits")
-    
-    # Save lead
-    lead_data = request.dict()
-    lead_data['id'] = str(uuid.uuid4())
-    lead_data['timestamp'] = datetime.now(timezone.utc)
-    await storage.save_lead(lead_data)
-    
-    # Generate PDF
-    pdf_path = await generate_syllabus_pdf(request.course_slug, request.name)
-    
-    # Return PDF file
-    course_name = course.get("title", "Course")
-    filename = f"GRRAS_{course_name.replace(' ', '_')}_Syllabus.pdf"
-    
-    return FileResponse(
-        pdf_path, 
-        media_type='application/pdf',
-        filename=filename,
-        headers={"Content-Disposition": f"attachment; filename={filename}"}
-    )
-
-@api_router.get("/content")
-async def get_content():
-    """Get current site content"""
-    content = await content_manager.get_content()
-    return {"content": content}
-
-@api_router.post("/content")
-async def update_content(
-    content_update: ContentUpdate,
-    username: str = Depends(verify_admin_token)
-):
-    """Update site content (admin only)"""
+async def get_leads(admin_verified: bool = Depends(verify_admin_token)):
+    """Get all leads (Admin only)"""
     try:
-        updated_content = await content_manager.save_content(
-            content_update.content, 
-            user=username,
-            is_draft=content_update.isDraft
-        )
-        return {"success": True, "content": updated_content, "isDraft": content_update.isDraft}
-    except Exception as e:
-        logging.error(f"Error updating content: {e}")
-        raise HTTPException(status_code=500, detail="Failed to update content")
-
-@api_router.post("/content/publish")
-async def publish_content(username: str = Depends(verify_admin_token)):
-    """Publish draft content"""
-    try:
-        published_content = await content_manager.publish_content(user=username)
-        return {"success": True, "content": published_content}
-    except Exception as e:
-        logging.error(f"Error publishing content: {e}")
-        raise HTTPException(status_code=500, detail="Failed to publish content")
-
-@api_router.get("/content/versions")
-async def get_content_versions(
-    limit: int = 20,
-    username: str = Depends(verify_admin_token)
-):
-    """Get content version history"""
-    try:
-        versions = await content_manager.get_version_history(limit)
-        return {"versions": versions}
-    except Exception as e:
-        logging.error(f"Error getting versions: {e}")
-        raise HTTPException(status_code=500, detail="Failed to get versions")
-
-@api_router.post("/content/restore")
-async def restore_content_version(
-    restore_data: VersionRestore,
-    username: str = Depends(verify_admin_token)
-):
-    """Restore content from version"""
-    try:
-        restored_content = await content_manager.restore_version(restore_data.versionId, username)
-        return {"success": True, "content": restored_content}
-    except Exception as e:
-        logging.error(f"Error restoring version: {e}")
-        raise HTTPException(status_code=500, detail="Failed to restore version")
-
-@api_router.get("/content/backups")
-async def get_backups(username: str = Depends(verify_admin_token)):
-    """Get available backups"""
-    try:
-        backups = await content_manager.get_backups()
-        return {"backups": backups}
-    except Exception as e:
-        logging.error(f"Error getting backups: {e}")
-        raise HTTPException(status_code=500, detail="Failed to get backups")
-
-@api_router.post("/content/backup")
-async def create_backup(username: str = Depends(verify_admin_token)):
-    """Create manual backup"""
-    try:
-        backup_filename = await content_manager.create_backup(username)
-        return {"success": True, "filename": backup_filename}
-    except Exception as e:
-        logging.error(f"Error creating backup: {e}")
-        raise HTTPException(status_code=500, detail="Failed to create backup")
-
-@api_router.post("/content/backup/restore")
-async def restore_backup(
-    restore_data: BackupRestore,
-    username: str = Depends(verify_admin_token)
-):
-    """Restore content from backup"""
-    try:
-        restored_content = await content_manager.restore_backup(restore_data.filename, username)
-        return {"success": True, "content": restored_content}
-    except Exception as e:
-        logging.error(f"Error restoring backup: {e}")
-        raise HTTPException(status_code=500, detail="Failed to restore backup")
-
-@api_router.get("/media")
-async def get_media_files(username: str = Depends(verify_admin_token)):
-    """Get media files"""
-    try:
-        media_files = await content_manager.get_media_files()
-        return {"media": media_files}
-    except Exception as e:
-        logging.error(f"Error getting media files: {e}")
-        raise HTTPException(status_code=500, detail="Failed to get media files")
-
-@api_router.post("/media/upload")
-async def upload_media_file(
-    file: UploadFile = File(...),
-    username: str = Depends(verify_admin_token)
-):
-    """Upload media file"""
-    try:
-        # Validate file type
-        allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'application/pdf']
-        if file.content_type not in allowed_types:
-            raise HTTPException(status_code=400, detail="File type not allowed")
+        collection = db.leads
+        leads = await collection.find({}).sort("timestamp", -1).to_list(1000)
         
-        # Read file content
-        file_content = await file.read()
-        
-        # Generate unique filename
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"{timestamp}_{file.filename}"
-        
-        # Save file
-        file_url = await content_manager.save_media_file(filename, file_content)
+        # Convert ObjectId to string for JSON serialization
+        for lead in leads:
+            if "_id" in lead:
+                lead["_id"] = str(lead["_id"])
         
         return {
-            "success": True,
-            "filename": filename,
-            "url": file_url,
-            "size": len(file_content),
-            "type": file.content_type
+            "leads": leads,
+            "total": len(leads),
+            "timestamp": datetime.utcnow().isoformat()
         }
     except Exception as e:
-        logging.error(f"Error uploading media file: {e}")
-        raise HTTPException(status_code=500, detail="Failed to upload file")
+        logging.error(f"Error fetching leads: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch leads")
 
-@api_router.delete("/media/{filename}")
-async def delete_media_file(
-    filename: str,
-    username: str = Depends(verify_admin_token)
-):
-    """Delete media file"""
+@api_router.post("/contact")
+async def submit_contact(request: LeadRequest):
+    """Submit contact form"""
     try:
-        success = await content_manager.delete_media_file(filename)
-        if success:
-            return {"success": True, "message": "File deleted"}
-        else:
-            raise HTTPException(status_code=404, detail="File not found")
+        lead_data = {
+            "name": request.name,
+            "email": request.email,
+            "phone": request.phone,
+            "course": request.course,
+            "message": request.message,
+            "type": "contact_form",
+            "timestamp": datetime.utcnow().isoformat(),
+            "ip": "Railway-Server"
+        }
+        
+        # Save to MongoDB
+        collection = db.leads
+        await collection.insert_one(lead_data)
+        
+        return {"message": "Contact form submitted successfully"}
+        
     except Exception as e:
-        logging.error(f"Error deleting media file: {e}")
-        raise HTTPException(status_code=500, detail="Failed to delete file")
+        logging.error(f"Error submitting contact form: {e}")
+        raise HTTPException(status_code=500, detail="Failed to submit contact form")
 
-@api_router.get("/content/audit")
-async def get_content_audit(
-    limit: int = 50,
-    username: str = Depends(verify_admin_token)
-):
-    """Get content audit logs (admin only)"""
-    try:
-        audit_logs = await content_manager.get_audit_logs(limit)
-        return {"audit_logs": audit_logs}
-    except Exception as e:
-        logging.error(f"Error getting audit logs: {e}")
-        raise HTTPException(status_code=500, detail="Failed to get audit logs")
-
-@api_router.post("/admin/login")
-async def admin_login(login_data: AdminLogin, response: Response):
-    """Admin login endpoint"""
-    if not secrets.compare_digest(login_data.password, ADMIN_PASSWORD):
-        raise HTTPException(status_code=401, detail="Invalid password")
-    
-    # Create JWT token
-    token = create_admin_token()
-    
-    # Set httpOnly cookie (secure=True for Railway HTTPS, but allow cross-site)
-    response.set_cookie(
-        key="admin_token",
-        value=token,
-        httponly=True,
-        max_age=86400,  # 24 hours
-        secure=True,  # HTTPS required for Railway
-        samesite="none"  # Allow cross-site cookies for Railway domains
-    )
-    
-    return {"success": True, "message": "Login successful", "token": token}
-
-@api_router.post("/admin/logout") 
-async def admin_logout(response: Response):
-    """Admin logout endpoint"""
-    response.delete_cookie("admin_token")
-    return {"success": True, "message": "Logout successful"}
-
-@api_router.get("/admin/verify")
-async def verify_admin_session(username: str = Depends(verify_admin_token)):
-    """Verify admin session"""
-    return {"authenticated": True, "username": username}
-
-# Include router
+# Include API router
 app.include_router(api_router)
 
-# Mount static files for media
-app.mount("/media", StaticFiles(directory="/app/backend/data/media"), name="media")
+# Root endpoint
+@app.get("/")
+async def root():
+    """API Root - Redirect to health check"""
+    return RedirectResponse(url="/api/health")
 
-# CORS with Railway support
-railway_cors_origins = [
-    "http://localhost:3000",  # Local development
-    "https://*.railway.app",  # Railway frontend domains
-    "https://*.up.railway.app",  # Railway preview domains
-    "https://frontend-service-production-9b9d.up.railway.app",  # Your specific frontend URL
-]
-
-# Add custom domain if specified
-custom_domain = os.environ.get('FRONTEND_URL')
-if custom_domain:
-    railway_cors_origins.append(custom_domain)
-
-# Add existing CORS_ORIGINS for backward compatibility
-existing_origins = os.environ.get('CORS_ORIGINS', '*').split(',')
-railway_cors_origins.extend(existing_origins)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=["*"],  # Temporarily allow all for debugging
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
-
-# Health check endpoint for Railway
-@app.get("/health")
-async def health_check():
-    """Health check endpoint for Railway"""
-    return {"status": "healthy", "timestamp": datetime.now(timezone.utc).isoformat()}
-
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()
-
-# Railway-specific startup
 if __name__ == "__main__":
-    import uvicorn
-    port = int(os.environ.get('PORT', 8001))
+    # Railway deployment
+    port = int(os.environ.get("PORT", 8001))
     uvicorn.run(app, host="0.0.0.0", port=port)

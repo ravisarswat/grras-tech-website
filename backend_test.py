@@ -65,8 +65,7 @@ class BackendTester:
         timeout = aiohttp.ClientTimeout(total=30)
         self.session = aiohttp.ClientSession(
             connector=connector,
-            timeout=timeout,
-            headers={'Content-Type': 'application/json'}
+            timeout=timeout
         )
         logger.info("✅ HTTP session initialized")
     

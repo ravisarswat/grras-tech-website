@@ -150,8 +150,10 @@ const Footer = () => {
 
             {/* Dynamic Footer Columns */}
             {footerColumns.map((column, index) => (
-              <div key={column.id || index}>
-                <h4 className="text-lg font-semibold text-white mb-4">{column.title}</h4>
+              <div key={column.id || index} className="lg:col-span-1">
+                <h4 className="text-lg font-semibold text-white mb-6 border-b border-gray-700 pb-2">
+                  {column.title}
+                </h4>
                 <ul className="space-y-3">
                   {column.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
@@ -160,17 +162,21 @@ const Footer = () => {
                           href={link.href}
                           target={link.target || '_blank'}
                           rel="noopener noreferrer"
-                          className="text-gray-300 hover:text-white transition-colors text-sm flex items-center gap-1"
+                          className="text-gray-300 hover:text-white transition-colors text-sm flex items-center gap-2 group"
                         >
-                          {link.label}
-                          {link.target === '_blank' && <ExternalLink className="h-3 w-3" />}
+                          <span className="group-hover:translate-x-1 transition-transform duration-200">
+                            {link.label}
+                          </span>
+                          {link.target === '_blank' && <ExternalLink className="h-3 w-3 opacity-70" />}
                         </a>
                       ) : (
                         <Link
                           to={link.href}
-                          className="text-gray-300 hover:text-white transition-colors text-sm"
+                          className="text-gray-300 hover:text-white transition-colors text-sm group flex items-center"
                         >
-                          {link.label}
+                          <span className="group-hover:translate-x-1 transition-transform duration-200">
+                            {link.label}
+                          </span>
                         </Link>
                       )}
                     </li>
@@ -181,16 +187,25 @@ const Footer = () => {
 
             {/* Popular Courses */}
             {popularCourses.length > 0 && (
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-4">Popular Courses</h4>
+              <div className="lg:col-span-1">
+                <h4 className="text-lg font-semibold text-white mb-6 border-b border-gray-700 pb-2">
+                  Popular Courses
+                </h4>
                 <ul className="space-y-3">
                   {popularCourses.map((course) => (
                     <li key={course.slug}>
                       <Link
                         to={`/courses/${course.slug}`}
-                        className="text-gray-300 hover:text-white transition-colors text-sm block"
+                        className="text-gray-300 hover:text-white transition-colors text-sm block group"
                       >
-                        {course.title || course.name}
+                        <span className="group-hover:translate-x-1 transition-transform duration-200 block">
+                          {course.title || course.name}
+                        </span>
+                        {course.fees && (
+                          <span className="text-xs text-gray-500 mt-1 block">
+                            {course.fees}
+                          </span>
+                        )}
                       </Link>
                     </li>
                   ))}

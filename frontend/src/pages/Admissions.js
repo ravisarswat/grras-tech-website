@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import SEO from '../components/SEO';
 import { useContent } from '../contexts/ContentContext';
+import EligibilityWidget from '../components/EligibilityWidget';
 
 const Admissions = () => {
   const { content } = useContent();

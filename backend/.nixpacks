@@ -1,0 +1,1 @@
+{"buildCmd": "pip install -r requirements.txt", "startCmd": "python server.py"}

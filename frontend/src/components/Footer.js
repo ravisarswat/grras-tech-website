@@ -104,17 +104,15 @@ const Footer = () => {
               
               {/* Contact Information */}
               <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <MapPin className="h-5 w-5 text-red-400 mt-1 flex-shrink-0" />
-                  <div className="text-gray-300 text-sm leading-relaxed">
-                    <p className="font-medium text-white mb-1">Address:</p>
-                    <address className="not-italic">
-                      {address.split(',').map((line, index) => (
-                        <span key={index} className="block">
-                          {line.trim()}
-                        </span>
-                      ))}
-                    </address>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                  <MapPin className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5 sm:mt-0" />
+                  <div>
+                    <p className="text-white font-medium text-sm">Address:</p>
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      A-81, Singh Bhoomi Khatipura Rd,<br className="md:hidden" />
+                      <span className="hidden md:inline"> </span>behind Marudhar Hospital,<br />
+                      Jaipur, Rajasthan 302012
+                    </p>
                   </div>
                 </div>
                 

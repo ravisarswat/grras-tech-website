@@ -18,10 +18,18 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 class BackendTester:
-    def __init__(self):
-        # Get backend URL from frontend .env file
-        self.frontend_env_path = "/app/frontend/.env"
-        self.backend_url = self._get_backend_url()
+    def __init__(self, production_mode=False):
+        # Production mode for testing https://www.grras.tech
+        self.production_mode = production_mode
+        
+        if production_mode:
+            self.backend_url = "https://www.grras.tech"
+            logger.info("🌐 PRODUCTION MODE: Testing https://www.grras.tech")
+        else:
+            # Get backend URL from frontend .env file
+            self.frontend_env_path = "/app/frontend/.env"
+            self.backend_url = self._get_backend_url()
+            
         self.api_base = f"{self.backend_url}/api"
         self.session = None
         self.admin_token = None

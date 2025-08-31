@@ -464,7 +464,22 @@ const CertificationCoursesPage = () => {
             {/* Vendor Description */}
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center justify-center gap-3">
-                <span className="text-4xl">{currentVendor.icon}</span>
+                {currentVendor.icon && currentVendor.icon.startsWith('http') ? (
+                  <img 
+                    src={currentVendor.icon} 
+                    alt={`${currentVendor.name} Logo`}
+                    className="w-12 h-12 object-contain"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'inline';
+                    }}
+                  />
+                ) : (
+                  <span className="text-4xl">{currentVendor.icon}</span>
+                )}
+                <span className="text-4xl" style={{ display: currentVendor.icon && currentVendor.icon.startsWith('http') ? 'none' : 'inline' }}>
+                  {currentVendor.icon && !currentVendor.icon.startsWith('http') ? currentVendor.icon : ''}
+                </span>
                 {currentVendor.name}
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">

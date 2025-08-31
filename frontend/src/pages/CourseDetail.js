@@ -14,7 +14,7 @@ import {
   Info
 } from 'lucide-react';
 import SEO, { CoursePageSEO } from '../components/SEO';
-import DirectPDFDownload from '../components/DirectPDFDownload';
+import SyllabusModal from '../components/SyllabusModal';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;

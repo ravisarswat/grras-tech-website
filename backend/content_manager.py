@@ -377,10 +377,30 @@ class ContentManager:
                     "popularCourses": {
                         "title": "Our Popular Courses",
                         "subtitle": "Industry-relevant courses designed to make you job-ready",
-                        "selectionMode": "auto",  # auto or manual
+                        "selectionMode": "auto",
                         "maxItems": 4,
-                        "manualSelection": [],  # slugs of manually selected courses
+                        "manualSelection": [],
                         "showViewAll": True
+                    },
+                    "courseCategories": {
+                        "title": "Explore by Category",
+                        "subtitle": "Find courses organized by your career interests",
+                        "showCategories": True,
+                        "maxCategories": 6,
+                        "layout": "grid"
+                    },
+                    "learningPaths": {
+                        "title": "Guided Learning Paths",
+                        "subtitle": "Structured career-focused learning journeys",
+                        "showPaths": True,
+                        "maxPaths": 3,
+                        "featured": True
+                    },
+                    "courseDiscovery": {
+                        "searchPlaceholder": "Search courses (e.g., RHCSA, AWS, Kubernetes)",
+                        "quickFilters": ["Popular", "Certification", "Beginner", "Advanced"],
+                        "showInstantSearch": True,
+                        "maxSearchResults": 6
                     },
                     "featuredCoursesLimit": 4,
                     "showStats": True,

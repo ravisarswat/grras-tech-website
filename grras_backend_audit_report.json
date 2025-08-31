@@ -1,0 +1,224 @@
+{
+  "audit_timestamp": "2025-08-31T17:29:54.819098",
+  "backend_url": "https://grras-cms.preview.emergentagent.com",
+  "audit_results": {
+    "data_completeness": {
+      "total_courses": 24,
+      "complete_courses": 14,
+      "incomplete_courses": 10,
+      "completeness_rate": "58.3%",
+      "missing_fields_summary": {
+        "learningOutcomes": 7,
+        "careerRoles": 7,
+        "description": 5,
+        "eligibility": 4,
+        "highlights": 2
+      },
+      "incomplete_course_details": [
+        {
+          "title": "DevOps Training",
+          "slug": "devops-training",
+          "missing_fields": [
+            "learningOutcomes",
+            "careerRoles"
+          ]
+        },
+        {
+          "title": "Cyber Security",
+          "slug": "cyber-security",
+          "missing_fields": [
+            "description",
+            "eligibility"
+          ]
+        },
+        {
+          "title": "BCA Degree Program",
+          "slug": "bca-degree",
+          "missing_fields": [
+            "learningOutcomes",
+            "careerRoles"
+          ]
+        },
+        {
+          "title": "Red Hat Certifications",
+          "slug": "redhat-certifications",
+          "missing_fields": [
+            "learningOutcomes",
+            "careerRoles"
+          ]
+        },
+        {
+          "title": "Data Science & Machine Learning",
+          "slug": "data-science-machine-learning",
+          "missing_fields": [
+            "learningOutcomes",
+            "careerRoles"
+          ]
+        },
+        {
+          "title": "C / C++ & Data Structures",
+          "slug": "c-cpp-dsa",
+          "missing_fields": [
+            "description"
+          ]
+        },
+        {
+          "title": "Java & Salesforce (Admin + Developer)",
+          "slug": "java-salesforce-admin-developer",
+          "missing_fields": [
+            "learningOutcomes",
+            "careerRoles"
+          ]
+        },
+        {
+          "title": "Test CMS Course",
+          "slug": "test-cms-course",
+          "missing_fields": [
+            "description",
+            "eligibility",
+            "highlights",
+            "learningOutcomes",
+            "careerRoles"
+          ]
+        },
+        {
+          "title": "Test Comprehensive Course",
+          "slug": "test-comprehensive-course",
+          "missing_fields": [
+            "description",
+            "eligibility"
+          ]
+        },
+        {
+          "title": "Test CMS Course",
+          "slug": "test-cms-course",
+          "missing_fields": [
+            "description",
+            "eligibility",
+            "highlights",
+            "learningOutcomes",
+            "careerRoles"
+          ]
+        }
+      ],
+      "pricing_issues": [
+        "Course 'Test CMS Course' has inconsistent fee format: Free",
+        "Course 'Test CMS Course' has inconsistent fee format: Free"
+      ],
+      "categories_found": [
+        "programming",
+        "degree",
+        "cloud",
+        "test",
+        "devops",
+        "security",
+        "certification",
+        "technology"
+      ],
+      "uncategorized_courses": []
+    },
+    "api_security": {
+      "cors_configured": false,
+      "admin_endpoints_protected": false,
+      "input_validation": false,
+      "rate_limiting": "unknown",
+      "exposed_sensitive_data": [
+        "key",
+        "key"
+      ]
+    },
+    "database_integrity": {
+      "total_courses": 24,
+      "unique_slugs": 16,
+      "duplicate_slugs": [
+        "cka-certified-kubernetes-administrator",
+        "rhcsa-red-hat-system-administrator",
+        "do188-red-hat-openshift-development",
+        "aws-cloud-practitioner-certification",
+        "aws-solutions-architect-associate",
+        "rhce-red-hat-certified-engineer",
+        "test-cms-course",
+        "cks-certified-kubernetes-security"
+      ],
+      "duplicate_titles": [
+        "RHCE - Red Hat Certified Engineer",
+        "CKS - Certified Kubernetes Security Specialist",
+        "DO188 - Red Hat OpenShift Development I",
+        "Test CMS Course",
+        "AWS Solutions Architect Associate Certification",
+        "CKA - Certified Kubernetes Administrator",
+        "AWS Cloud Practitioner Certification Training",
+        "RHCSA - Red Hat System Administrator Certification"
+      ],
+      "data_consistency": "issues_found",
+      "leads_count": 93
+    },
+    "cms_functionality": {
+      "response_time": 0.010504961013793945,
+      "required_sections_present": [
+        "courses",
+        "institute",
+        "branding",
+        "pages",
+        "courseCategories",
+        "learningPaths"
+      ],
+      "missing_sections": [],
+      "sections_completeness": "6/6",
+      "seo_metadata_ready": true,
+      "learning_paths_count": 6,
+      "course_categories_count": 6,
+      "total_content_sections": 16
+    },
+    "performance": {
+      "response_times": {
+        "Health Check": {
+          "average_ms": 7.04,
+          "min_ms": 5.5,
+          "max_ms": 9.91
+        },
+        "CMS Content": {
+          "average_ms": 10.94,
+          "min_ms": 10.76,
+          "max_ms": 11.05
+        },
+        "Courses List": {
+          "average_ms": 8.74,
+          "min_ms": 8.42,
+          "max_ms": 9.2
+        }
+      },
+      "concurrent_requests": {
+        "total_requests": 5,
+        "successful_requests": 5,
+        "total_time_seconds": 0.029,
+        "success_rate": "100.0%"
+      },
+      "error_handling": {
+        "404_handling": true,
+        "invalid_endpoint_handling": true
+      },
+      "overall_performance": "excellent"
+    }
+  },
+  "performance_metrics": {
+    "admin_auth_time": 0.064361572265625,
+    "courses_api_time": 0.012630462646484375,
+    "db_health_time": 0.00553441047668457,
+    "cms_content_time": 0.010504961013793945
+  },
+  "issues_found": [
+    "Admin endpoint not protected - status: 403"
+  ],
+  "overall_assessment": {
+    "status": "NEEDS_IMPROVEMENT",
+    "critical_issues": 0,
+    "minor_issues": 1,
+    "data_completeness_rate": "58.3%",
+    "average_response_time_ms": 8.91,
+    "recommendations": [
+      "Add missing 'learningOutcomes' field to 7 courses",
+      "Remove duplicate course slugs to ensure data integrity"
+    ]
+  }
+}

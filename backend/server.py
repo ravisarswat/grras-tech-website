@@ -776,7 +776,7 @@ async def delete_multiple_leads(request: BulkDeleteRequest, admin_verified: bool
         return {
             "message": f"Successfully deleted {result.deleted_count} leads",
             "deleted_count": result.deleted_count,
-            "requested_count": len(lead_ids)
+            "requested_count": len(request.lead_ids)
         }
         
     except HTTPException:

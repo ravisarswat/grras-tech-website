@@ -17,6 +17,7 @@ import { useContent } from '../contexts/ContentContext';
 
 
 const Home = () => {
+  const { content } = useContent();
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [stats, setStats] = useState({
     years: 0,

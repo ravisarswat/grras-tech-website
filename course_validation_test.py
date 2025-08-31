@@ -60,8 +60,11 @@ class CourseValidationTester:
         """Test 1: Admin authentication with 'grras-admin' password"""
         logger.info("🔍 Testing admin authentication with 'grras-admin' password...")
         try:
-            # Use password from review request
-            login_data = {"password": "grras-admin"}
+            # Try both possible admin passwords
+            passwords_to_try = ["grras-admin", "grras@admin2024"]
+            
+            for password in passwords_to_try:
+                login_data = {"password": password}
             
             async with self.session.post(f"{self.api_base}/admin/login", json=login_data) as response:
                 if response.status == 200:

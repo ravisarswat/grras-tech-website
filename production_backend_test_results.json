@@ -1,0 +1,62 @@
+{
+  "timestamp": "2025-08-31T09:33:11.039154",
+  "backend_url": "https://grras-tech-website-production.up.railway.app",
+  "total_tests": 5,
+  "passed_tests": 4,
+  "failed_tests": 1,
+  "success_rate": "80.0%",
+  "test_results": {
+    "health_check": true,
+    "courses_endpoint": true,
+    "cms_content": true,
+    "admin_authentication": true,
+    "course_analysis": true
+  },
+  "errors": [
+    "Missing certification courses for keywords: ['aws', 'kubernetes', 'red hat', 'rhce', 'cka', 'cks', 'cloud practitioner', 'solutions architect']",
+    "Course Analysis: object bool can't be used in 'await' expression"
+  ],
+  "courses_analysis": {
+    "total_courses": 7,
+    "certification_courses_found": 1,
+    "certification_courses": [
+      {
+        "title": "RHCSA",
+        "slug": "rhcsa",
+        "matched_keyword": "rhcsa"
+      }
+    ],
+    "all_courses": [
+      {
+        "title": "DevOps Training",
+        "slug": "devops-training"
+      },
+      {
+        "title": "BCA Degree Program",
+        "slug": "bca-degree"
+      },
+      {
+        "title": "RHCSA",
+        "slug": "rhcsa"
+      },
+      {
+        "title": "Data Science & Machine Learning",
+        "slug": "data-science-machine-learning"
+      },
+      {
+        "title": "Cyber Security",
+        "slug": "cyber-security"
+      },
+      {
+        "title": "Java & Salesforce (Admin + Developer)",
+        "slug": "java-salesforce"
+      },
+      {
+        "title": "C / C++ & Data Structures",
+        "slug": "c-cpp-dsa"
+      }
+    ]
+  },
+  "backend_accessible": true,
+  "new_certifications_missing": false
+}

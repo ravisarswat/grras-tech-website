@@ -624,6 +624,15 @@ const AdminLeads = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {formatDate(lead.timestamp)}
                         </td>
+                        <td className="px-3 py-4 whitespace-nowrap">
+                          <button
+                            onClick={() => handleDeleteSingle(lead)}
+                            className="text-red-600 hover:text-red-900 hover:bg-red-50 p-1 rounded-md transition-colors"
+                            title="Delete this lead"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>

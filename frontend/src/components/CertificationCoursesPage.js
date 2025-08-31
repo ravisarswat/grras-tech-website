@@ -204,7 +204,7 @@ const CertificationCoursesPage = () => {
     const level = course.level?.toLowerCase() || '';
 
     if (vendor === 'redhat') {
-      if (title.includes('rhcsa') || title.includes('basics')) return 'foundation';
+      if (title.includes('rhcsa') || title.includes('basics') || title.includes('foundation')) return 'foundation';
       if (title.includes('rhce') || title.includes('do188') || title.includes('engineer')) return 'professional';
       return 'specialist';
     }
@@ -219,6 +219,18 @@ const CertificationCoursesPage = () => {
       if (title.includes('cka') || title.includes('administrator')) return 'administrator';
       if (title.includes('cks') || title.includes('security')) return 'security';
       return 'developer';
+    }
+
+    if (vendor === 'programming') {
+      if (level.includes('beginner') || title.includes('basics') || title.includes('foundation')) return 'beginner';
+      if (level.includes('advanced') || title.includes('advanced') || title.includes('professional')) return 'professional';
+      return 'intermediate';
+    }
+
+    if (vendor === 'degree') {
+      if (title.includes('bca') || title.includes('bachelor')) return 'undergraduate';
+      if (title.includes('diploma') || title.includes('certificate')) return 'diploma';
+      return 'certification';
     }
 
     return 'all';

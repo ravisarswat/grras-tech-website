@@ -237,10 +237,13 @@ class ContentMigrationTester:
                         logger.info("✅ learningPaths successfully added by migration")
                         
                         # Log structure of learningPaths
-                        paths = self.content_after_migration.get("learningPaths", [])
-                        logger.info(f"  - Found {len(paths)} learning paths")
-                        for path in paths[:3]:  # Show first 3
-                            logger.info(f"    • {path.get('name', 'Unknown')}: {path.get('description', 'No description')}")
+                        paths = self.content_after_migration.get("learningPaths", {})
+                        if isinstance(paths, dict):
+                            logger.info(f"  - Found {len(paths)} learning paths")
+                            for key, path in list(paths.items())[:3]:  # Show first 3
+                                logger.info(f"    • {path.get('title', 'Unknown')}: {path.get('description', 'No description')}")
+                        else:
+                            logger.info(f"  - learningPaths structure: {type(paths)}")
                     else:
                         self.errors.append("learningPaths not found after migration")
                     

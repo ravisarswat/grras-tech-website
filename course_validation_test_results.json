@@ -1,0 +1,642 @@
+{
+  "timestamp": "2025-08-31T11:26:28.523336",
+  "backend_url": "https://grras-cms-rebuild.preview.emergentagent.com",
+  "total_tests": 6,
+  "passed_tests": 3,
+  "failed_tests": 3,
+  "success_rate": "50.0%",
+  "test_results": {
+    "admin_authentication": false,
+    "get_all_courses": true,
+    "identify_missing_oneliner": true,
+    "fix_missing_oneliners": true,
+    "update_courses_via_cms": false,
+    "verify_fix": false
+  },
+  "errors": [
+    "Admin login failed with status 401: {\"detail\":\"Invalid password\"}",
+    "No admin token available for CMS update",
+    "Verification failed: 14 courses still missing oneLiner"
+  ],
+  "courses_missing_oneliner_initially": 14,
+  "courses_fixed": 14,
+  "fixed_courses_details": [
+    {
+      "title": "AWS Cloud Practitioner Certification Training",
+      "slug": "aws-cloud-practitioner-certification",
+      "oneLiner": "AWS Cloud fundamentals and certification preparation for cloud computing basics",
+      "course_data": {
+        "title": "AWS Cloud Practitioner Certification Training",
+        "slug": "aws-cloud-practitioner-certification",
+        "duration": "6-8 weeks",
+        "fees": "\u20b915,000",
+        "level": "Beginner to Intermediate",
+        "category": "cloud",
+        "description": "Master AWS Cloud fundamentals and prepare for AWS Certified Cloud Practitioner exam",
+        "overview": "Master AWS Cloud fundamentals and prepare for AWS Certified Cloud Practitioner exam",
+        "tools": [
+          "AWS Console",
+          "Cloud Computing",
+          "AWS Services",
+          "Cloud Security"
+        ],
+        "highlights": [
+          "AWS Cloud concepts and services",
+          "Security and compliance basics",
+          "Billing and pricing models",
+          "Hands-on AWS practice",
+          "Exam preparation"
+        ],
+        "eligibility": "Basic computer knowledge and interest in cloud computing",
+        "visible": true,
+        "order": 10,
+        "learningOutcomes": [
+          "Understand AWS Cloud concepts",
+          "Learn AWS services",
+          "Master security basics",
+          "Prepare for certification exam"
+        ],
+        "careerRoles": [
+          "Cloud Support Associate",
+          "AWS Cloud Practitioner",
+          "Cloud Operations Specialist"
+        ],
+        "oneLiner": "AWS Cloud fundamentals and certification preparation for cloud computing basics"
+      }
+    },
+    {
+      "title": "AWS Solutions Architect Associate Certification",
+      "slug": "aws-solutions-architect-associate",
+      "oneLiner": "Design scalable AWS architectures and prepare for Solutions Architect certification",
+      "course_data": {
+        "title": "AWS Solutions Architect Associate Certification",
+        "slug": "aws-solutions-architect-associate",
+        "duration": "8-10 weeks",
+        "fees": "\u20b925,000",
+        "level": "Intermediate to Advanced",
+        "category": "cloud",
+        "description": "Design and deploy secure, scalable AWS applications. Prepare for Solutions Architect Associate exam",
+        "overview": "Design and deploy secure, scalable AWS applications. Prepare for Solutions Architect Associate exam",
+        "tools": [
+          "AWS EC2",
+          "S3",
+          "VPC",
+          "IAM",
+          "CloudFormation",
+          "Lambda"
+        ],
+        "highlights": [
+          "Design secure architectures",
+          "Resilient and scalable systems",
+          "High-performing architectures",
+          "Cost optimization",
+          "Real-world projects"
+        ],
+        "eligibility": "AWS Cloud Practitioner knowledge or equivalent experience",
+        "visible": true,
+        "order": 11,
+        "learningOutcomes": [
+          "Design secure AWS architectures",
+          "Build scalable systems",
+          "Optimize costs",
+          "Deploy applications"
+        ],
+        "careerRoles": [
+          "Solutions Architect",
+          "Cloud Architect",
+          "AWS Consultant"
+        ],
+        "oneLiner": "Design scalable AWS architectures and prepare for Solutions Architect certification"
+      }
+    },
+    {
+      "title": "CKA - Certified Kubernetes Administrator",
+      "slug": "cka-certified-kubernetes-administrator",
+      "oneLiner": "Master Kubernetes administration and container orchestration for production environments",
+      "course_data": {
+        "title": "CKA - Certified Kubernetes Administrator",
+        "slug": "cka-certified-kubernetes-administrator",
+        "duration": "6-8 weeks",
+        "fees": "\u20b920,000",
+        "level": "Intermediate to Advanced",
+        "category": "cloud",
+        "description": "Master Kubernetes administration and prepare for CKA certification exam",
+        "overview": "Master Kubernetes administration and prepare for CKA certification exam",
+        "tools": [
+          "Kubernetes",
+          "kubectl",
+          "Docker",
+          "Container Runtime",
+          "etcd"
+        ],
+        "highlights": [
+          "Cluster architecture and installation",
+          "Workloads and scheduling",
+          "Services and networking",
+          "Storage management",
+          "Troubleshooting"
+        ],
+        "eligibility": "Basic Linux knowledge and container concepts",
+        "visible": true,
+        "order": 12,
+        "learningOutcomes": [
+          "Manage Kubernetes clusters",
+          "Deploy applications",
+          "Configure networking",
+          "Handle storage"
+        ],
+        "careerRoles": [
+          "Kubernetes Administrator",
+          "DevOps Engineer",
+          "Container Specialist"
+        ],
+        "oneLiner": "Master Kubernetes administration and container orchestration for production environments"
+      }
+    },
+    {
+      "title": "CKS - Certified Kubernetes Security Specialist",
+      "slug": "cks-certified-kubernetes-security",
+      "oneLiner": "Advanced Kubernetes security practices and CKS certification preparation",
+      "course_data": {
+        "title": "CKS - Certified Kubernetes Security Specialist",
+        "slug": "cks-certified-kubernetes-security",
+        "duration": "4-6 weeks",
+        "fees": "\u20b922,000",
+        "level": "Advanced",
+        "category": "security",
+        "description": "Master Kubernetes security and prepare for CKS certification exam",
+        "overview": "Master Kubernetes security and prepare for CKS certification exam",
+        "tools": [
+          "Kubernetes",
+          "Security Tools",
+          "Network Policies",
+          "RBAC",
+          "Pod Security"
+        ],
+        "highlights": [
+          "Cluster hardening",
+          "System hardening",
+          "Microservice vulnerabilities",
+          "Supply chain security",
+          "Runtime security"
+        ],
+        "eligibility": "CKA certification or equivalent Kubernetes experience",
+        "visible": true,
+        "order": 13,
+        "learningOutcomes": [
+          "Secure Kubernetes clusters",
+          "Implement security policies",
+          "Monitor threats",
+          "Audit systems"
+        ],
+        "careerRoles": [
+          "Security Engineer",
+          "DevSecOps Engineer",
+          "Kubernetes Security Specialist"
+        ],
+        "oneLiner": "Advanced Kubernetes security practices and CKS certification preparation"
+      }
+    },
+    {
+      "title": "RHCSA - Red Hat System Administrator Certification",
+      "slug": "rhcsa-red-hat-system-administrator",
+      "oneLiner": "Red Hat Linux system administration fundamentals and RHCSA certification",
+      "course_data": {
+        "title": "RHCSA - Red Hat System Administrator Certification",
+        "slug": "rhcsa-red-hat-system-administrator",
+        "duration": "6-8 weeks",
+        "fees": "\u20b918,000",
+        "level": "Beginner to Intermediate",
+        "category": "certification",
+        "description": "Master Linux system administration with Red Hat Enterprise Linux",
+        "overview": "Master Linux system administration with Red Hat Enterprise Linux",
+        "tools": [
+          "RHEL",
+          "Linux Command Line",
+          "systemd",
+          "Network Configuration",
+          "Storage Management"
+        ],
+        "highlights": [
+          "System administration tasks",
+          "User and group management",
+          "File systems and storage",
+          "Network configuration",
+          "System monitoring"
+        ],
+        "eligibility": "Basic computer knowledge, no prior Linux experience required",
+        "visible": true,
+        "order": 14,
+        "learningOutcomes": [
+          "Manage Linux systems",
+          "Configure networks",
+          "Handle storage",
+          "Monitor performance"
+        ],
+        "careerRoles": [
+          "System Administrator",
+          "Linux Administrator",
+          "IT Support Specialist"
+        ],
+        "oneLiner": "Red Hat Linux system administration fundamentals and RHCSA certification"
+      }
+    },
+    {
+      "title": "RHCE - Red Hat Certified Engineer",
+      "slug": "rhce-red-hat-certified-engineer",
+      "oneLiner": "Advanced Red Hat automation with Ansible and RHCE certification preparation",
+      "course_data": {
+        "title": "RHCE - Red Hat Certified Engineer",
+        "slug": "rhce-red-hat-certified-engineer",
+        "duration": "8-10 weeks",
+        "fees": "\u20b925,000",
+        "level": "Advanced",
+        "category": "certification",
+        "description": "Advanced Linux automation with Ansible and Red Hat technologies",
+        "overview": "Advanced Linux automation with Ansible and Red Hat technologies",
+        "tools": [
+          "Ansible",
+          "RHEL",
+          "Automation",
+          "Playbooks",
+          "Linux Administration"
+        ],
+        "highlights": [
+          "Automation with Ansible",
+          "Advanced system administration",
+          "Network services",
+          "Security implementation",
+          "Performance tuning"
+        ],
+        "eligibility": "RHCSA certification or equivalent Linux experience",
+        "visible": true,
+        "order": 15,
+        "learningOutcomes": [
+          "Automate with Ansible",
+          "Manage complex systems",
+          "Deploy services",
+          "Optimize performance"
+        ],
+        "careerRoles": [
+          "DevOps Engineer",
+          "Automation Engineer",
+          "Senior System Administrator"
+        ],
+        "oneLiner": "Advanced Red Hat automation with Ansible and RHCE certification preparation"
+      }
+    },
+    {
+      "title": "DO188 - Red Hat OpenShift Development I",
+      "slug": "do188-red-hat-openshift-development",
+      "oneLiner": "Container development with Podman and OpenShift application deployment",
+      "course_data": {
+        "title": "DO188 - Red Hat OpenShift Development I",
+        "slug": "do188-red-hat-openshift-development",
+        "duration": "4-6 weeks",
+        "fees": "\u20b920,000",
+        "level": "Intermediate",
+        "category": "cloud",
+        "description": "Introduction to containers with Podman and OpenShift development",
+        "overview": "Introduction to containers with Podman and OpenShift development",
+        "tools": [
+          "Podman",
+          "OpenShift",
+          "Containers",
+          "Kubernetes",
+          "Container Registry"
+        ],
+        "highlights": [
+          "Container fundamentals",
+          "Podman container management",
+          "OpenShift development",
+          "Container images",
+          "Application deployment"
+        ],
+        "eligibility": "Basic Linux knowledge and programming concepts",
+        "visible": true,
+        "order": 16,
+        "learningOutcomes": [
+          "Build containers",
+          "Deploy on OpenShift",
+          "Manage applications",
+          "Use registries"
+        ],
+        "careerRoles": [
+          "Container Developer",
+          "OpenShift Developer",
+          "Cloud Application Developer"
+        ],
+        "oneLiner": "Container development with Podman and OpenShift application deployment"
+      }
+    },
+    {
+      "title": "AWS Cloud Practitioner Certification Training",
+      "slug": "aws-cloud-practitioner-certification",
+      "oneLiner": "AWS Cloud fundamentals and certification preparation for cloud computing basics",
+      "course_data": {
+        "title": "AWS Cloud Practitioner Certification Training",
+        "slug": "aws-cloud-practitioner-certification",
+        "duration": "6-8 weeks",
+        "fees": "\u20b915,000",
+        "level": "Beginner to Intermediate",
+        "category": "cloud",
+        "description": "Master AWS Cloud fundamentals and prepare for AWS Certified Cloud Practitioner exam",
+        "overview": "Master AWS Cloud fundamentals and prepare for AWS Certified Cloud Practitioner exam",
+        "tools": [
+          "AWS Console",
+          "Cloud Computing",
+          "AWS Services",
+          "Cloud Security"
+        ],
+        "highlights": [
+          "AWS Cloud concepts and services",
+          "Security and compliance basics",
+          "Billing and pricing models",
+          "Hands-on AWS practice",
+          "Exam preparation"
+        ],
+        "eligibility": "Basic computer knowledge and interest in cloud computing",
+        "visible": true,
+        "order": 17,
+        "learningOutcomes": [
+          "Understand AWS Cloud concepts",
+          "Learn AWS services",
+          "Master security basics",
+          "Prepare for certification exam"
+        ],
+        "careerRoles": [
+          "Cloud Support Associate",
+          "AWS Cloud Practitioner",
+          "Cloud Operations Specialist"
+        ],
+        "oneLiner": "AWS Cloud fundamentals and certification preparation for cloud computing basics"
+      }
+    },
+    {
+      "title": "AWS Solutions Architect Associate Certification",
+      "slug": "aws-solutions-architect-associate",
+      "oneLiner": "Design scalable AWS architectures and prepare for Solutions Architect certification",
+      "course_data": {
+        "title": "AWS Solutions Architect Associate Certification",
+        "slug": "aws-solutions-architect-associate",
+        "duration": "8-10 weeks",
+        "fees": "\u20b925,000",
+        "level": "Intermediate to Advanced",
+        "category": "cloud",
+        "description": "Design and deploy secure, scalable AWS applications. Prepare for Solutions Architect Associate exam",
+        "overview": "Design and deploy secure, scalable AWS applications. Prepare for Solutions Architect Associate exam",
+        "tools": [
+          "AWS EC2",
+          "S3",
+          "VPC",
+          "IAM",
+          "CloudFormation",
+          "Lambda"
+        ],
+        "highlights": [
+          "Design secure architectures",
+          "Resilient and scalable systems",
+          "High-performing architectures",
+          "Cost optimization",
+          "Real-world projects"
+        ],
+        "eligibility": "AWS Cloud Practitioner knowledge or equivalent experience",
+        "visible": true,
+        "order": 18,
+        "learningOutcomes": [
+          "Design secure AWS architectures",
+          "Build scalable systems",
+          "Optimize costs",
+          "Deploy applications"
+        ],
+        "careerRoles": [
+          "Solutions Architect",
+          "Cloud Architect",
+          "AWS Consultant"
+        ],
+        "oneLiner": "Design scalable AWS architectures and prepare for Solutions Architect certification"
+      }
+    },
+    {
+      "title": "CKA - Certified Kubernetes Administrator",
+      "slug": "cka-certified-kubernetes-administrator",
+      "oneLiner": "Master Kubernetes administration and container orchestration for production environments",
+      "course_data": {
+        "title": "CKA - Certified Kubernetes Administrator",
+        "slug": "cka-certified-kubernetes-administrator",
+        "duration": "6-8 weeks",
+        "fees": "\u20b920,000",
+        "level": "Intermediate to Advanced",
+        "category": "cloud",
+        "description": "Master Kubernetes administration and prepare for CKA certification exam",
+        "overview": "Master Kubernetes administration and prepare for CKA certification exam",
+        "tools": [
+          "Kubernetes",
+          "kubectl",
+          "Docker",
+          "Container Runtime",
+          "etcd"
+        ],
+        "highlights": [
+          "Cluster architecture and installation",
+          "Workloads and scheduling",
+          "Services and networking",
+          "Storage management",
+          "Troubleshooting"
+        ],
+        "eligibility": "Basic Linux knowledge and container concepts",
+        "visible": true,
+        "order": 19,
+        "learningOutcomes": [
+          "Manage Kubernetes clusters",
+          "Deploy applications",
+          "Configure networking",
+          "Handle storage"
+        ],
+        "careerRoles": [
+          "Kubernetes Administrator",
+          "DevOps Engineer",
+          "Container Specialist"
+        ],
+        "oneLiner": "Master Kubernetes administration and container orchestration for production environments"
+      }
+    },
+    {
+      "title": "CKS - Certified Kubernetes Security Specialist",
+      "slug": "cks-certified-kubernetes-security",
+      "oneLiner": "Advanced Kubernetes security practices and CKS certification preparation",
+      "course_data": {
+        "title": "CKS - Certified Kubernetes Security Specialist",
+        "slug": "cks-certified-kubernetes-security",
+        "duration": "4-6 weeks",
+        "fees": "\u20b922,000",
+        "level": "Advanced",
+        "category": "security",
+        "description": "Master Kubernetes security and prepare for CKS certification exam",
+        "overview": "Master Kubernetes security and prepare for CKS certification exam",
+        "tools": [
+          "Kubernetes",
+          "Security Tools",
+          "Network Policies",
+          "RBAC",
+          "Pod Security"
+        ],
+        "highlights": [
+          "Cluster hardening",
+          "System hardening",
+          "Microservice vulnerabilities",
+          "Supply chain security",
+          "Runtime security"
+        ],
+        "eligibility": "CKA certification or equivalent Kubernetes experience",
+        "visible": true,
+        "order": 20,
+        "learningOutcomes": [
+          "Secure Kubernetes clusters",
+          "Implement security policies",
+          "Monitor threats",
+          "Audit systems"
+        ],
+        "careerRoles": [
+          "Security Engineer",
+          "DevSecOps Engineer",
+          "Kubernetes Security Specialist"
+        ],
+        "oneLiner": "Advanced Kubernetes security practices and CKS certification preparation"
+      }
+    },
+    {
+      "title": "RHCSA - Red Hat System Administrator Certification",
+      "slug": "rhcsa-red-hat-system-administrator",
+      "oneLiner": "Red Hat Linux system administration fundamentals and RHCSA certification",
+      "course_data": {
+        "title": "RHCSA - Red Hat System Administrator Certification",
+        "slug": "rhcsa-red-hat-system-administrator",
+        "duration": "6-8 weeks",
+        "fees": "\u20b918,000",
+        "level": "Beginner to Intermediate",
+        "category": "certification",
+        "description": "Master Linux system administration with Red Hat Enterprise Linux",
+        "overview": "Master Linux system administration with Red Hat Enterprise Linux",
+        "tools": [
+          "RHEL",
+          "Linux Command Line",
+          "systemd",
+          "Network Configuration",
+          "Storage Management"
+        ],
+        "highlights": [
+          "System administration tasks",
+          "User and group management",
+          "File systems and storage",
+          "Network configuration",
+          "System monitoring"
+        ],
+        "eligibility": "Basic computer knowledge, no prior Linux experience required",
+        "visible": true,
+        "order": 21,
+        "learningOutcomes": [
+          "Manage Linux systems",
+          "Configure networks",
+          "Handle storage",
+          "Monitor performance"
+        ],
+        "careerRoles": [
+          "System Administrator",
+          "Linux Administrator",
+          "IT Support Specialist"
+        ],
+        "oneLiner": "Red Hat Linux system administration fundamentals and RHCSA certification"
+      }
+    },
+    {
+      "title": "RHCE - Red Hat Certified Engineer",
+      "slug": "rhce-red-hat-certified-engineer",
+      "oneLiner": "Advanced Red Hat automation with Ansible and RHCE certification preparation",
+      "course_data": {
+        "title": "RHCE - Red Hat Certified Engineer",
+        "slug": "rhce-red-hat-certified-engineer",
+        "duration": "8-10 weeks",
+        "fees": "\u20b925,000",
+        "level": "Advanced",
+        "category": "certification",
+        "description": "Advanced Linux automation with Ansible and Red Hat technologies",
+        "overview": "Advanced Linux automation with Ansible and Red Hat technologies",
+        "tools": [
+          "Ansible",
+          "RHEL",
+          "Automation",
+          "Playbooks",
+          "Linux Administration"
+        ],
+        "highlights": [
+          "Automation with Ansible",
+          "Advanced system administration",
+          "Network services",
+          "Security implementation",
+          "Performance tuning"
+        ],
+        "eligibility": "RHCSA certification or equivalent Linux experience",
+        "visible": true,
+        "order": 22,
+        "learningOutcomes": [
+          "Automate with Ansible",
+          "Manage complex systems",
+          "Deploy services",
+          "Optimize performance"
+        ],
+        "careerRoles": [
+          "DevOps Engineer",
+          "Automation Engineer",
+          "Senior System Administrator"
+        ],
+        "oneLiner": "Advanced Red Hat automation with Ansible and RHCE certification preparation"
+      }
+    },
+    {
+      "title": "DO188 - Red Hat OpenShift Development I",
+      "slug": "do188-red-hat-openshift-development",
+      "oneLiner": "Container development with Podman and OpenShift application deployment",
+      "course_data": {
+        "title": "DO188 - Red Hat OpenShift Development I",
+        "slug": "do188-red-hat-openshift-development",
+        "duration": "4-6 weeks",
+        "fees": "\u20b920,000",
+        "level": "Intermediate",
+        "category": "cloud",
+        "description": "Introduction to containers with Podman and OpenShift development",
+        "overview": "Introduction to containers with Podman and OpenShift development",
+        "tools": [
+          "Podman",
+          "OpenShift",
+          "Containers",
+          "Kubernetes",
+          "Container Registry"
+        ],
+        "highlights": [
+          "Container fundamentals",
+          "Podman container management",
+          "OpenShift development",
+          "Container images",
+          "Application deployment"
+        ],
+        "eligibility": "Basic Linux knowledge and programming concepts",
+        "visible": true,
+        "order": 23,
+        "learningOutcomes": [
+          "Build containers",
+          "Deploy on OpenShift",
+          "Manage applications",
+          "Use registries"
+        ],
+        "careerRoles": [
+          "Container Developer",
+          "OpenShift Developer",
+          "Cloud Application Developer"
+        ],
+        "oneLiner": "Container development with Podman and OpenShift application deployment"
+      }
+    }
+  ],
+  "admin_panel_validation_fixed": false
+}

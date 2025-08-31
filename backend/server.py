@@ -843,12 +843,6 @@ async def delete_lead(lead_id: str, admin_verified: bool = Depends(verify_admin_
     except Exception as e:
         logging.error(f"Error deleting lead {lead_id}: {e}")
         raise HTTPException(status_code=500, detail="Failed to delete lead")
-        
-    except HTTPException:
-        raise
-    except Exception as e:
-        logging.error(f"Error bulk deleting leads: {e}")
-        raise HTTPException(status_code=500, detail="Failed to delete leads")
 
 @api_router.post("/contact")
 async def submit_contact(request: LeadRequest):

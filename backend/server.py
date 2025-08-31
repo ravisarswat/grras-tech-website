@@ -341,30 +341,7 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
             bottomMargin=20*mm
         )
         
-        # Custom page counting
-        class PageCounterDocTemplate(SimpleDocTemplate):
-            def __init__(self, *args, **kwargs):
-                SimpleDocTemplate.__init__(self, *args, **kwargs)
-                self.page_count = 0
-                
-            def build(self, flowables, onFirstPage=None, onLaterPages=None):
-                # First pass to count pages
-                temp_doc = SimpleDocTemplate(pdf_path, pagesize=A4)
-                temp_doc.build(flowables)
-                # Estimate page count (this is approximate)
-                self.page_count = max(2, len(flowables) // 15 + 1)
-                
-                # Second pass with page count
-                SimpleDocTemplate.build(self, flowables, onFirstPage, onLaterPages)
-        
-        doc = PageCounterDocTemplate(
-            pdf_path,
-            pagesize=A4,
-            rightMargin=20*mm,
-            leftMargin=20*mm,
-            topMargin=25*mm,
-            bottomMargin=25*mm
-        )
+
         
         def create_header_footer(canvas, doc):
             template_handler.create_header_footer(canvas, doc)

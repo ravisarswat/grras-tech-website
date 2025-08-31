@@ -277,8 +277,8 @@
       "featured": true,
       "order": 1,
       "thumbnailUrl": "",
-      "category": "cloud",
-      "level": "Intermediate",
+      "category": "devops",
+      "level": "Professional Level",
       "mode": [
         "Classroom",
         "Online"
@@ -438,7 +438,7 @@
       "oneLiner": "Enterprise Development Mastery",
       "description": "Master Java programming and Salesforce development for enterprise applications with hands-on projects and industry certification preparation.",
       "duration": "6 Months",
-      "fees": "₹40,000 (EMI Available)",
+      "fees": "\u20b940,000 (EMI Available)",
       "tools": [
         "Core Java",
         "Advanced Java",
@@ -480,7 +480,7 @@
       "oneLiner": "Versatile Programming Language",
       "description": "Complete Python programming from basics to advanced with web development, automation, and data handling capabilities.",
       "duration": "4 Months",
-      "fees": "₹25,000 (EMI Available)",
+      "fees": "\u20b925,000 (EMI Available)",
       "tools": [
         "Python Core",
         "OOP in Python",
@@ -523,7 +523,7 @@
       "oneLiner": "Foundation Programming Excellence",
       "description": "Master C/C++ programming with data structures and algorithms, building strong programming foundations for competitive coding and software development.",
       "duration": "5 Months",
-      "fees": "₹20,000 (EMI Available)",
+      "fees": "\u20b920,000 (EMI Available)",
       "tools": [
         "C",
         "C++ (OOP)",
@@ -569,7 +569,7 @@
       "fees": "Contact for latest fee",
       "tools": [
         "Kali Linux",
-        "Wireshark", 
+        "Wireshark",
         "Metasploit",
         "Nmap",
         "Burp Suite"

@@ -120,6 +120,14 @@ class ContentManager:
                             "order": 3
                         }
                     ],
+                    "popularCourses": {
+                        "title": "Our Popular Courses",
+                        "subtitle": "Industry-relevant courses designed to make you job-ready",
+                        "selectionMode": "auto",  # auto or manual
+                        "maxItems": 4,
+                        "manualSelection": [],  # slugs of manually selected courses
+                        "showViewAll": True
+                    },
                     "featuredCoursesLimit": 4,
                     "showStats": True,
                     "showTestimonials": True,

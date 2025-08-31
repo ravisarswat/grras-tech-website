@@ -192,8 +192,8 @@ const CertificationCoursesPage = () => {
 
       let categorizedFlag = false;
 
-      // Degree categorization (check first to avoid conflicts)
-      if (courseVendors.degree.keywords.some(keyword => searchText.includes(keyword))) {
+      // PRIORITY 1: Direct category field matching (for admin-set categories)
+      if (category === 'degree' || title.includes('bca') || title.includes('degree')) {
         result.degree.push({
           ...course,
           vendor: 'degree',
@@ -201,8 +201,7 @@ const CertificationCoursesPage = () => {
         });
         categorizedFlag = true;
       }
-      // Red Hat categorization
-      else if (courseVendors.redhat.keywords.some(keyword => searchText.includes(keyword))) {
+      else if (category === 'certification' || courseVendors.redhat.keywords.some(keyword => searchText.includes(keyword))) {
         result.redhat.push({
           ...course,
           vendor: 'redhat',
@@ -210,8 +209,7 @@ const CertificationCoursesPage = () => {
         });
         categorizedFlag = true;
       }
-      // AWS categorization
-      else if (courseVendors.aws.keywords.some(keyword => searchText.includes(keyword))) {
+      else if (category === 'cloud' || courseVendors.aws.keywords.some(keyword => searchText.includes(keyword))) {
         result.aws.push({
           ...course,
           vendor: 'aws',
@@ -219,8 +217,7 @@ const CertificationCoursesPage = () => {
         });
         categorizedFlag = true;
       }
-      // Kubernetes categorization
-      else if (courseVendors.kubernetes.keywords.some(keyword => searchText.includes(keyword))) {
+      else if (category === 'container' || courseVendors.kubernetes.keywords.some(keyword => searchText.includes(keyword))) {
         result.kubernetes.push({
           ...course,
           vendor: 'kubernetes',
@@ -228,8 +225,7 @@ const CertificationCoursesPage = () => {
         });
         categorizedFlag = true;
       }
-      // DevOps categorization
-      else if (courseVendors.devops.keywords.some(keyword => searchText.includes(keyword))) {
+      else if (category === 'devops' || courseVendors.devops.keywords.some(keyword => searchText.includes(keyword))) {
         result.devops.push({
           ...course,
           vendor: 'devops',
@@ -237,9 +233,16 @@ const CertificationCoursesPage = () => {
         });
         categorizedFlag = true;
       }
-      // Programming categorization (exclude degree courses)
-      else if (!title.includes('bca') && !title.includes('degree') && 
-               courseVendors.programming.keywords.some(keyword => searchText.includes(keyword))) {
+      else if (category === 'programming' && !title.includes('bca') && !title.includes('degree')) {
+        result.programming.push({
+          ...course,
+          vendor: 'programming',
+          level: determineLevel(course, 'programming')
+        });
+        categorizedFlag = true;
+      }
+      // PRIORITY 2: Keyword-based fallback matching
+      else if (!categorizedFlag && courseVendors.programming.keywords.some(keyword => searchText.includes(keyword))) {
         result.programming.push({
           ...course,
           vendor: 'programming',

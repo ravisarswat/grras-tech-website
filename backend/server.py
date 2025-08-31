@@ -227,18 +227,48 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp_file:
             pdf_path = tmp_file.name
         
-        # Generate PDF
-        doc = SimpleDocTemplate(pdf_path, pagesize=A4, topMargin=1*inch)
+        # Enhanced PDF generation with custom page template
+        doc = SimpleDocTemplate(
+            pdf_path, 
+            pagesize=A4, 
+            rightMargin=2*cm,
+            leftMargin=2*cm,
+            topMargin=2.5*cm,
+            bottomMargin=2*cm
+        )
+        
         styles = getSampleStyleSheet()
         
-        # Custom styles
+        # Enhanced custom styles with better typography
         title_style = ParagraphStyle(
             'CustomTitle',
             parent=styles['Heading1'],
-            fontSize=24,
-            spaceAfter=30,
+            fontSize=28,
+            spaceAfter=20,
+            spaceBefore=10,
             textColor=colors.HexColor('#DC2626'),
-            alignment=1  # Center alignment
+            alignment=TA_CENTER,
+            fontName='Helvetica-Bold'
+        )
+        
+        institute_style = ParagraphStyle(
+            'InstituteTitle',
+            parent=styles['Heading1'],
+            fontSize=22,
+            spaceAfter=5,
+            textColor=colors.HexColor('#1F2937'),
+            alignment=TA_CENTER,
+            fontName='Helvetica-Bold'
+        )
+        
+        subtitle_style = ParagraphStyle(
+            'SubtitleStyle',
+            parent=styles['Normal'],
+            fontSize=12,
+            spaceAfter=20,
+            textColor=colors.HexColor('#6B7280'),
+            alignment=TA_CENTER,
+            fontName='Helvetica'
         )
         
         heading_style = ParagraphStyle(
@@ -246,16 +276,55 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
             parent=styles['Heading2'],
             fontSize=16,
             spaceBefore=20,
-            spaceAfter=10,
-            textColor=colors.HexColor('#DC2626')
+            spaceAfter=12,
+            textColor=colors.HexColor('#DC2626'),
+            fontName='Helvetica-Bold',
+            borderWidth=1,
+            borderColor=colors.HexColor('#FEE2E2'),
+            borderPadding=8,
+            backColor=colors.HexColor('#FEF2F2')
+        )
+        
+        subheading_style = ParagraphStyle(
+            'SubHeading',
+            parent=styles['Heading3'],
+            fontSize=14,
+            spaceBefore=15,
+            spaceAfter=8,
+            textColor=colors.HexColor('#374151'),
+            fontName='Helvetica-Bold'
         )
         
         normal_style = ParagraphStyle(
             'CustomNormal',
             parent=styles['Normal'],
             fontSize=11,
+            spaceAfter=8,
+            leading=16,
+            textColor=colors.HexColor('#374151'),
+            alignment=TA_JUSTIFY
+        )
+        
+        bullet_style = ParagraphStyle(
+            'BulletStyle',
+            parent=styles['Normal'],
+            fontSize=11,
             spaceAfter=6,
-            leading=14
+            leading=15,
+            leftIndent=20,
+            bulletIndent=10,
+            textColor=colors.HexColor('#374151')
+        )
+        
+        highlight_style = ParagraphStyle(
+            'HighlightStyle',
+            parent=styles['Normal'],
+            fontSize=11,
+            spaceAfter=6,
+            leading=15,
+            leftIndent=15,
+            textColor=colors.HexColor('#059669'),
+            fontName='Helvetica-Bold'
         )
         
         # Build content

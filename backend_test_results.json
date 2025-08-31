@@ -1,10 +1,10 @@
 {
-  "timestamp": "2025-08-31T09:00:45.640504",
+  "timestamp": "2025-08-31T11:27:10.427140",
   "backend_url": "https://grras-cms-rebuild.preview.emergentagent.com",
   "total_tests": 12,
-  "passed_tests": 11,
-  "failed_tests": 1,
-  "success_rate": "91.7%",
+  "passed_tests": 7,
+  "failed_tests": 5,
+  "success_rate": "58.3%",
   "test_results": {
     "server_health": true,
     "mongodb_connection": true,
@@ -12,20 +12,22 @@
     "courses_endpoint": true,
     "course_data_structure": false,
     "eligibility_widget_data": false,
-    "admin_authentication": true,
+    "admin_authentication": false,
     "contact_form": true,
     "syllabus_generation": true,
-    "leads_management": true,
-    "new_courses_addition": true,
+    "leads_management": false,
+    "new_courses_addition": false,
     "new_courses_verification": true,
-    "new_learning_paths_addition": true,
+    "new_learning_paths_addition": false,
     "new_learning_paths_verification": true
   },
   "errors": [
-    "Some courses missing required fields for EligibilityWidget"
+    "Some courses missing required fields for EligibilityWidget",
+    "Admin login failed with status 401"
   ],
   "critical_issues": [
-    "Course data missing required fields for EligibilityWidget"
+    "Course data missing required fields for EligibilityWidget",
+    "Failed to add new certification courses to CMS"
   ],
   "eligibility_widget_ready": false
 }

@@ -1004,17 +1004,21 @@ class BackendTester:
 
 async def main():
     """Main test execution"""
-    tester = BackendTester()
+    # Check if production mode is requested
+    production_mode = len(sys.argv) > 1 and sys.argv[1] == "--production"
+    
+    tester = BackendTester(production_mode=production_mode)
     
     try:
         summary = await tester.run_all_tests()
         tester.print_summary(summary)
         
         # Save results to file
-        with open('/app/backend_test_results.json', 'w') as f:
+        results_file = '/app/backend_test_results_production.json' if production_mode else '/app/backend_test_results.json'
+        with open(results_file, 'w') as f:
             json.dump(summary, f, indent=2)
         
-        print(f"\n💾 Test results saved to: /app/backend_test_results.json")
+        print(f"\n💾 Test results saved to: {results_file}")
         
         # Exit with appropriate code
         if summary['critical_issues']:

@@ -157,7 +157,7 @@ const Footer = () => {
                 <ul className="space-y-3">
                   {column.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
-                      {link.href.startsWith('http') ? (
+                      {link.href && link.href.startsWith('http') ? (
                         <a
                           href={link.href}
                           target={link.target || '_blank'}

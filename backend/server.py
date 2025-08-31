@@ -723,6 +723,65 @@ async def get_leads(admin_verified: bool = Depends(verify_admin_token)):
         logging.error(f"Error fetching leads: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch leads")
 
+@api_router.delete("/leads/{lead_id}")
+async def delete_lead(lead_id: str, admin_verified: bool = Depends(verify_admin_token)):
+    """Delete a specific lead (Admin only)"""
+    try:
+        from bson import ObjectId
+        from bson.errors import InvalidId
+        
+        # Validate ObjectId format
+        try:
+            object_id = ObjectId(lead_id)
+        except InvalidId:
+            raise HTTPException(status_code=400, detail="Invalid lead ID format")
+        
+        collection = db.leads
+        result = await collection.delete_one({"_id": object_id})
+        
+        if result.deleted_count == 0:
+            raise HTTPException(status_code=404, detail="Lead not found")
+        
+        logging.info(f"✅ Lead deleted: {lead_id}")
+        return {"message": "Lead deleted successfully", "lead_id": lead_id}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error deleting lead {lead_id}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete lead")
+
+@api_router.delete("/leads/bulk")
+async def delete_multiple_leads(lead_ids: List[str], admin_verified: bool = Depends(verify_admin_token)):
+    """Delete multiple leads (Admin only)"""
+    try:
+        from bson import ObjectId
+        from bson.errors import InvalidId
+        
+        # Validate all ObjectId formats
+        object_ids = []
+        for lead_id in lead_ids:
+            try:
+                object_ids.append(ObjectId(lead_id))
+            except InvalidId:
+                raise HTTPException(status_code=400, detail=f"Invalid lead ID format: {lead_id}")
+        
+        collection = db.leads
+        result = await collection.delete_many({"_id": {"$in": object_ids}})
+        
+        logging.info(f"✅ Bulk deleted {result.deleted_count} leads")
+        return {
+            "message": f"Successfully deleted {result.deleted_count} leads",
+            "deleted_count": result.deleted_count,
+            "requested_count": len(lead_ids)
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error bulk deleting leads: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete leads")
+
 @api_router.post("/contact")
 async def submit_contact(request: LeadRequest):
     """Submit contact form"""

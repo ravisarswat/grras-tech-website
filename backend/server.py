@@ -402,12 +402,18 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         # Course Information - Label: Value format with ₹ for fee
         content_elements.append(Paragraph("Course Information", section_heading_style))
         
-        # Format fee with proper rupee symbol (avoid encoding issues)
-        formatted_fee = fees
+        # Format fee with safe rupee symbol (avoid encoding issues)
+        formatted_fee = str(fees) if fees else "Contact for details"
         if fees and fees.lower() not in ['contact for details', 'on request', 'varies']:
-            # Add rupee symbol if not already present and it's a number
-            if not any(symbol in fees for symbol in ['₹', 'Rs', 'INR']) and any(char.isdigit() for char in fees):
+            # Add Rs. if not already present and contains numbers
+            if not any(symbol in str(fees).lower() for symbol in ['rs', 'inr', 'rupee']) and any(char.isdigit() for char in str(fees)):
                 formatted_fee = f"Rs. {fees}"
+            elif '₹' in str(fees):
+                # Replace ₹ with Rs. to avoid encoding issues
+                formatted_fee = str(fees).replace('₹', 'Rs.')
+            elif '■' in str(fees):
+                # Fix corrupted rupee symbol
+                formatted_fee = str(fees).replace('■', 'Rs. ')
         
         course_info_items = [
             f"<b>Duration:</b> {duration}",

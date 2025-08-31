@@ -66,16 +66,17 @@ const SyllabusModal = ({ isOpen, onClose, courseSlug, courseName }) => {
     setIsSubmitting(true);
     
     try {
-      const requestData = {
-        name: formData.name.trim(),
-        email: formData.email.trim(),
-        phone: formData.phone.replace(/\D/g, ''),
-        course_slug: courseSlug,
-        consent: formData.consent
-      };
+      // Create FormData for backend Form parameters
+      const formData_request = new FormData();
+      formData_request.append('name', formData.name.trim());
+      formData_request.append('email', formData.email.trim());
+      formData_request.append('phone', formData.phone.replace(/\D/g, ''));
       
-      const response = await axios.post(`${API}/syllabus`, requestData, {
-        responseType: 'blob'
+      const response = await axios.post(`${API}/courses/${courseSlug}/syllabus`, formData_request, {
+        responseType: 'blob',
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       });
       
       // Create download link

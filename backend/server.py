@@ -488,95 +488,83 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         content_elements.append(course_table)
         content_elements.append(Spacer(1, 12*mm))
         
-        # Course Overview
-        if course_description:
-            content_elements.append(Paragraph("📋 Course Overview", heading_style))
-            content_elements.append(Paragraph(course_description, normal_style))
-            content_elements.append(Spacer(1, 15))
-        
-        # Course Highlights with enhanced styling
+        # Course Highlights Section
         if highlights:
-            content_elements.append(Paragraph("⭐ Course Highlights", heading_style))
-            highlights_table = []
-            for i in range(0, len(highlights[:8]), 2):  # Two columns layout
+            content_elements.append(Paragraph("COURSE HIGHLIGHTS", section_heading_style))
+            content_elements.append(Spacer(1, 3*mm))
+            
+            # Create highlights in a professional grid
+            highlights_data = []
+            for i in range(0, len(highlights[:8]), 2):
                 row = []
                 row.append(f"✓ {highlights[i]}")
                 if i + 1 < len(highlights[:8]):
                     row.append(f"✓ {highlights[i + 1]}")
                 else:
                     row.append("")
-                highlights_table.append(row)
+                highlights_data.append(row)
             
-            if highlights_table:
-                table = Table(highlights_table, colWidths=[3*inch, 3*inch])
-                table.setStyle(TableStyle([
+            if highlights_data:
+                highlights_table = Table(highlights_data, colWidths=[80*mm, 80*mm])
+                highlights_table.setStyle(TableStyle([
                     ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
                     ('FONTSIZE', (0, 0), (-1, -1), 10),
                     ('TEXTCOLOR', (0, 0), (-1, -1), colors.HexColor('#059669')),
                     ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
                     ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-                    ('LEFTPADDING', (0, 0), (-1, -1), 5),
-                    ('RIGHTPADDING', (0, 0), (-1, -1), 5),
-                    ('TOPPADDING', (0, 0), (-1, -1), 3),
-                    ('BOTTOMPADDING', (0, 0), (-1, -1), 3)
+                    ('LEFTPADDING', (0, 0), (-1, -1), 3),
+                    ('RIGHTPADDING', (0, 0), (-1, -1), 3),
+                    ('TOPPADDING', (0, 0), (-1, -1), 2),
+                    ('BOTTOMPADDING', (0, 0), (-1, -1), 2)
                 ]))
-                content_elements.append(table)
-            content_elements.append(Spacer(1, 15))
+                content_elements.append(highlights_table)
+            content_elements.append(Spacer(1, 8*mm))
         
-        # Tools/Technologies section with icons
+        # Learning Outcomes Section
+        if learning_outcomes:
+            content_elements.append(Paragraph("LEARNING OUTCOMES", section_heading_style))
+            content_elements.append(Spacer(1, 3*mm))
+            
+            for i, outcome in enumerate(learning_outcomes[:10], 1):
+                content_elements.append(Paragraph(f"{i}. {outcome}", bullet_style))
+            content_elements.append(Spacer(1, 8*mm))
+        
+        # Tools & Technologies Section
         if tools:
-            content_elements.append(Paragraph("🛠️ Tools & Technologies Covered", heading_style))
-            tools_list = []
-            for i in range(0, len(tools), 3):  # Three columns layout
+            content_elements.append(Paragraph("TOOLS & TECHNOLOGIES", section_heading_style))
+            content_elements.append(Spacer(1, 3*mm))
+            
+            tools_data = []
+            for i in range(0, len(tools), 3):
                 row = []
                 for j in range(3):
                     if i + j < len(tools):
                         row.append(f"• {tools[i + j]}")
                     else:
                         row.append("")
-                tools_list.append(row)
+                tools_data.append(row)
             
-            if tools_list:
-                tools_table = Table(tools_list, colWidths=[2*inch, 2*inch, 2*inch])
+            if tools_data:
+                tools_table = Table(tools_data, colWidths=[53*mm, 53*mm, 54*mm])
                 tools_table.setStyle(TableStyle([
                     ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
-                    ('FONTSIZE', (0, 0), (-1, -1), 10),
-                    ('TEXTCOLOR', (0, 0), (-1, -1), colors.HexColor('#374151')),
+                    ('FONTSIZE', (0, 0), (-1, -1), 9),
+                    ('TEXTCOLOR', (0, 0), (-1, -1), colors.HexColor('#4B5563')),
                     ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
                     ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-                    ('LEFTPADDING', (0, 0), (-1, -1), 5),
-                    ('TOPPADDING', (0, 0), (-1, -1), 3),
-                    ('BOTTOMPADDING', (0, 0), (-1, -1), 3)
+                    ('LEFTPADDING', (0, 0), (-1, -1), 2),
+                    ('TOPPADDING', (0, 0), (-1, -1), 1),
+                    ('BOTTOMPADDING', (0, 0), (-1, -1), 1)
                 ]))
                 content_elements.append(tools_table)
-            content_elements.append(Spacer(1, 15))
+            content_elements.append(Spacer(1, 8*mm))
         
-        # Learning Outcomes with better presentation
-        if learning_outcomes:
-            content_elements.append(Paragraph("🎯 What You'll Learn", heading_style))
-            for i, outcome in enumerate(learning_outcomes[:8], 1):
-                content_elements.append(Paragraph(f"{i}. {outcome}", bullet_style))
-            content_elements.append(Spacer(1, 15))
-        else:
-            # Enhanced default learning outcomes
-            content_elements.append(Paragraph("🎯 Learning Outcomes", heading_style))
-            content_elements.append(Paragraph("Upon successful completion of this program, you will:", normal_style))
-            default_outcomes = [
-                "Master industry-relevant skills and technologies",
-                "Gain practical experience through hands-on projects",
-                "Be prepared for industry certifications",
-                "Develop strong problem-solving capabilities",
-                "Build a professional portfolio",
-                "Understand industry best practices"
-            ]
-            for i, outcome in enumerate(default_outcomes, 1):
-                content_elements.append(Paragraph(f"{i}. {outcome}", bullet_style))
-            content_elements.append(Spacer(1, 15))
-        
-        # Career Opportunities with salary ranges if available
+        # Career Opportunities Section
         if career_roles:
-            content_elements.append(Paragraph("💼 Career Opportunities", heading_style))
-            roles_table = []
+            content_elements.append(Paragraph("CAREER OPPORTUNITIES", section_heading_style))
+            content_elements.append(Spacer(1, 3*mm))
+            
+            careers_data = []
             for i in range(0, len(career_roles[:8]), 2):
                 row = []
                 row.append(f"→ {career_roles[i]}")
@@ -584,38 +572,40 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
                     row.append(f"→ {career_roles[i + 1]}")
                 else:
                     row.append("")
-                roles_table.append(row)
+                careers_data.append(row)
             
-            if roles_table:
-                table = Table(roles_table, colWidths=[3*inch, 3*inch])
-                table.setStyle(TableStyle([
+            if careers_data:
+                careers_table = Table(careers_data, colWidths=[80*mm, 80*mm])
+                careers_table.setStyle(TableStyle([
                     ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
                     ('FONTSIZE', (0, 0), (-1, -1), 10),
                     ('TEXTCOLOR', (0, 0), (-1, -1), colors.HexColor('#7C2D12')),
                     ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
                     ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-                    ('LEFTPADDING', (0, 0), (-1, -1), 5),
-                    ('TOPPADDING', (0, 0), (-1, -1), 3),
-                    ('BOTTOMPADDING', (0, 0), (-1, -1), 3)
+                    ('LEFTPADDING', (0, 0), (-1, -1), 3),
+                    ('TOPPADDING', (0, 0), (-1, -1), 2),
+                    ('BOTTOMPADDING', (0, 0), (-1, -1), 2)
                 ]))
-                content_elements.append(table)
-            content_elements.append(Spacer(1, 15))
+                content_elements.append(careers_table)
+            content_elements.append(Spacer(1, 8*mm))
         
-        # Certificate Information with enhanced styling
-        content_elements.append(Paragraph("🏆 Certificate Information", heading_style))
-        content_elements.append(Paragraph(certificate_info, normal_style))
+        # Certificate Information
+        content_elements.append(Paragraph("CERTIFICATION DETAILS", section_heading_style))
+        content_elements.append(Spacer(1, 3*mm))
+        content_elements.append(Paragraph(certificate_info, body_style))
         
-        # Add certification benefits
+        # Certification benefits in highlight box
         cert_benefits = [
-            "Industry-recognized certificate upon successful completion",
-            "Digital certificate with verification QR code",
-            "Certificate can be shared on LinkedIn and other platforms",
-            "Lifetime validity with institute verification"
+            "✓ Industry-recognized certificate upon completion",
+            "✓ Digital verification with QR code",
+            "✓ LinkedIn profile enhancement ready",
+            "✓ Lifetime validity with institute backing"
         ]
-        for benefit in cert_benefits:
-            content_elements.append(Paragraph(f"✓ {benefit}", highlight_style))
         
-        content_elements.append(Spacer(1, 20))
+        for benefit in cert_benefits:
+            content_elements.append(Paragraph(benefit, highlight_box_style))
+        
+        content_elements.append(Spacer(1, 10*mm))
         
         # Page break for contact information
         content_elements.append(PageBreak())

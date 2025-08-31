@@ -23,8 +23,8 @@ class BackendTester:
         self.production_mode = production_mode
         
         if production_mode:
-            self.backend_url = "https://www.grras.tech"
-            logger.info("🌐 PRODUCTION MODE: Testing https://www.grras.tech")
+            self.backend_url = "https://grras-tech-website-production.up.railway.app"
+            logger.info("🌐 PRODUCTION MODE: Testing https://grras-tech-website-production.up.railway.app")
         else:
             # Get backend URL from frontend .env file
             self.frontend_env_path = "/app/frontend/.env"

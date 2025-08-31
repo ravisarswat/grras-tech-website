@@ -392,15 +392,6 @@ const CourseEditor = ({
                     This determines which level section the course appears in within its category
                   </div>
                 </div>
-                    <option value="">Select level</option>
-                    <option value="Beginner">Beginner</option>
-                    <option value="Intermediate">Intermediate</option>
-                    <option value="Advanced">Advanced</option>
-                    <option value="Beginner to Intermediate">Beginner to Intermediate</option>
-                    <option value="Beginner to Advanced">Beginner to Advanced</option>
-                    <option value="Intermediate to Advanced">Intermediate to Advanced</option>
-                  </select>
-                </div>
               </div>
               
               <div className="grid md:grid-cols-2 gap-4">

@@ -231,97 +231,64 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         # Generate PDF IN MEMORY
         pdf_buffer = BytesIO()
         
-        # Professional PDF Template Class
-        class GRRASPDFTemplate:
-            def __init__(self, institute_data, branding_data, course_data):
-                self.institute_data = institute_data
-                self.branding_data = branding_data
-                self.course_data = course_data
-                self.logo_image_data = None
-                self.setup_logo()
-                
-            def setup_logo(self):
-                """Download and prepare logo with correct aspect ratio"""
-                logo_url = self.branding_data.get("logoUrl", "")
-                if logo_url and logo_url.startswith('http'):
-                    try:
-                        response = requests.get(logo_url, timeout=10)
-                        if response.status_code == 200:
-                            self.logo_image_data = BytesIO(response.content)
-                            logging.info("✅ Logo loaded for PDF template")
-                        else:
-                            logging.warning(f"Logo load failed: HTTP {response.status_code}")
-                    except Exception as e:
-                        logging.warning(f"Logo loading error: {e}")
-                        
-            def create_header_footer(self, canvas_obj, doc):
-                """Create header and footer for each page"""
-                canvas_obj.saveState()
-                
-                page_width = A4[0]
-                page_height = A4[1]
-                
-                # HEADER - Clean professional design
-                header_height = 20*mm
-                header_y = page_height - header_height
-                
-                # Header background - subtle red stripe
-                canvas_obj.setFillColor(colors.HexColor('#DC2626'))
-                canvas_obj.rect(0, page_height - 8*mm, page_width, 8*mm, fill=True, stroke=False)
-                
-                # Logo with correct aspect ratio
-                if self.logo_image_data:
-                    try:
-                        self.logo_image_data.seek(0)
-                        # Maintain aspect ratio: max 35mm width, 12mm height
-                        logo_img = Image(self.logo_image_data, width=35*mm, height=12*mm, kind='proportional')
-                        logo_img.drawOn(canvas_obj, 20*mm, page_height - 15*mm)
-                    except Exception as e:
-                        logging.warning(f"Logo drawing error: {e}")
-                
-                # Institute name and website in header
-                canvas_obj.setFillColor(colors.HexColor('#1F2937'))
-                canvas_obj.setFont("Helvetica-Bold", 12)
-                institute_name = self.institute_data.get("name", "GRRAS Solutions Training Institute")
-                canvas_obj.drawString(65*mm, page_height - 10*mm, institute_name)
-                
-                canvas_obj.setFont("Helvetica", 9)
-                canvas_obj.setFillColor(colors.HexColor('#DC2626'))
-                canvas_obj.drawString(65*mm, page_height - 14*mm, "https://www.grras.tech")
-                
-                # FOOTER - Page number and website on every page
-                footer_y = 15*mm
-                canvas_obj.setFillColor(colors.HexColor('#6B7280'))
-                canvas_obj.setFont("Helvetica", 8)
-                
-                # Page number and website
-                page_num = canvas_obj.getPageNumber()
-                canvas_obj.drawString(20*mm, footer_y, f"Page {page_num}")
-                canvas_obj.drawRightString(page_width - 20*mm, footer_y, "www.grras.tech")
-                
-                # Full contact info only on LAST page
-                total_pages = getattr(doc, 'page_count', 1)
-                if page_num == total_pages:
-                    self.add_contact_footer(canvas_obj, footer_y)
-                
-                canvas_obj.restoreState()
-                
-            def add_contact_footer(self, canvas_obj, footer_y):
-                """Add full contact information on last page"""
-                canvas_obj.setFont("Helvetica", 8)
-                canvas_obj.setFillColor(colors.HexColor('#374151'))
-                
-                address = self.institute_data.get("address", "A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012")
-                phone = ', '.join(self.institute_data.get("phones", ["090019 91227"]))
-                email = ', '.join(self.institute_data.get("emails", ["info@grrassolutions.com"]))
-                
-                # Contact details in compact format
-                contact_y = footer_y + 8*mm
-                canvas_obj.drawString(20*mm, contact_y, f"Address: {address}")
-                canvas_obj.drawString(20*mm, contact_y - 3*mm, f"Phone: {phone} | Email: {email}")
-        
-        # Initialize template handler
-        template_handler = GRRASPDFTemplate(institute, branding, course)
+        # Professional PDF Template with Working Headers/Footers
+        def create_header_footer(canvas_obj, doc):
+            """Create professional header and footer for each page"""
+            canvas_obj.saveState()
+            
+            page_width, page_height = A4
+            
+            # === PROFESSIONAL HEADER ===
+            # Red header background
+            canvas_obj.setFillColor(colors.HexColor('#DC2626'))
+            canvas_obj.rect(0, page_height - 15*mm, page_width, 15*mm, fill=1)
+            
+            # GRRAS logo area (try to load logo)
+            logo_url = branding.get("logoUrl", "")
+            logo_drawn = False
+            if logo_url and logo_url.startswith('http'):
+                try:
+                    response = requests.get(logo_url, timeout=5)
+                    if response.status_code == 200:
+                        logo_data = BytesIO(response.content)
+                        logo_img = Image(logo_data, width=30*mm, height=10*mm)
+                        logo_img.drawOn(canvas_obj, 15*mm, page_height - 13*mm)
+                        logo_drawn = True
+                        logging.info("✅ Logo successfully added to PDF")
+                except Exception as e:
+                    logging.warning(f"Logo load failed: {e}")
+            
+            # Institute name in header
+            canvas_obj.setFillColor(colors.white)
+            canvas_obj.setFont("Helvetica-Bold", 14)
+            institute_name = institute.get("name", "GRRAS Solutions Training Institute")
+            x_pos = 50*mm if logo_drawn else 15*mm
+            canvas_obj.drawString(x_pos, page_height - 8*mm, institute_name)
+            
+            canvas_obj.setFont("Helvetica", 10)
+            canvas_obj.drawString(x_pos, page_height - 12*mm, "www.grras.tech")
+            
+            # === PROFESSIONAL FOOTER ===
+            # Footer line
+            canvas_obj.setStrokeColor(colors.HexColor('#DC2626'))
+            canvas_obj.setLineWidth(0.5)
+            canvas_obj.line(15*mm, 15*mm, page_width - 15*mm, 15*mm)
+            
+            # Page number and contact
+            canvas_obj.setFillColor(colors.HexColor('#666666'))
+            canvas_obj.setFont("Helvetica", 9)
+            page_num = canvas_obj.getPageNumber()
+            canvas_obj.drawString(15*mm, 10*mm, f"Page {page_num}")
+            
+            # Contact info in footer
+            phone = ', '.join(institute.get("phones", ["090019 91227"]))
+            canvas_obj.drawRightString(page_width - 15*mm, 10*mm, f"Phone: {phone}")
+            
+            # Email on second line
+            email = ', '.join(institute.get("emails", ["info@grrassolutions.com"]))
+            canvas_obj.drawRightString(page_width - 15*mm, 6*mm, f"Email: {email}")
+            
+            canvas_obj.restoreState()
         
         # Create PDF document
         doc = SimpleDocTemplate(

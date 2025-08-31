@@ -101,6 +101,18 @@ const CertificationCoursesPage = () => {
         developer: { name: 'Developer Level', description: 'Application development' }
       }
     },
+    devops: {
+      name: 'DevOps Engineering',
+      icon: '🔧',
+      color: 'green',
+      description: 'DevOps, MLOps, SecOps and automation technologies',
+      keywords: ['devops', 'mlops', 'secops', 'automation', 'ci/cd', 'jenkins', 'docker', 'terraform', 'ansible'],
+      levels: {
+        foundation: { name: 'Foundation Level', description: 'DevOps fundamentals' },
+        professional: { name: 'Professional Level', description: 'Advanced DevOps practices' },
+        expert: { name: 'Expert Level', description: 'Enterprise DevOps leadership' }
+      }
+    },
     programming: {
       name: 'Programming & Development',
       icon: '💻',

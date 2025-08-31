@@ -532,6 +532,18 @@ const AdminLeads = () => {
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
+                      <th className="px-3 py-3 text-left">
+                        <button
+                          onClick={toggleSelectAll}
+                          className="flex items-center justify-center w-5 h-5 text-gray-500 hover:text-gray-700"
+                        >
+                          {selectedLeads.size === filteredLeads.length && filteredLeads.length > 0 ? (
+                            <CheckSquare className="w-4 h-4" />
+                          ) : (
+                            <Square className="w-4 h-4" />
+                          )}
+                        </button>
+                      </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Contact Info
                       </th>
@@ -546,6 +558,9 @@ const AdminLeads = () => {
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Date
+                      </th>
+                      <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Action
                       </th>
                     </tr>
                   </thead>

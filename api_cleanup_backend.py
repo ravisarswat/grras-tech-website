@@ -33,10 +33,14 @@ def get_current_content():
 def update_content(content):
     """Update CMS content via admin API"""
     try:
-        response = requests.put(
-            f"{BASE_URL}/admin/content",
+        payload = {
+            "content": content,
+            "isDraft": False
+        }
+        response = requests.post(
+            f"{BASE_URL}/content",
             headers=get_admin_headers(),
-            json=content
+            json=payload
         )
         response.raise_for_status()
         return response.json()

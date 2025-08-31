@@ -29,7 +29,7 @@ const Header = () => {
   const navigationItems = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
-    { name: 'Certifications', path: '/courses', hasDropdown: true },
+    { name: 'Courses', path: '/courses', hasDropdown: true },
     { name: 'Learning Paths', path: '/learning-paths' },
     { name: 'Admissions', path: '/admissions' },
     { name: 'Testimonials', path: '/testimonials' },

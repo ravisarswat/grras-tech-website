@@ -234,8 +234,8 @@ class BackendTester:
         """Test 5: Admin authentication"""
         logger.info("🔍 Testing admin authentication...")
         try:
-            # Test login with default password
-            login_data = {"password": "grras@admin2024"}
+            # Test login with password from review request
+            login_data = {"password": "grras-admin"}
             
             async with self.session.post(f"{self.api_base}/admin/login", json=login_data) as response:
                 if response.status == 200:

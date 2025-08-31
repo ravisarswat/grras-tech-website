@@ -663,7 +663,7 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         # Certificate Information
         content_elements.append(Paragraph("CERTIFICATION DETAILS", section_heading_style))
         content_elements.append(Spacer(1, 3*mm))
-        content_elements.append(Paragraph(certificate_info, body_style))
+        content_elements.append(Paragraph(certificate_info, body_text_style))
         
         # Certification benefits in highlight box
         cert_benefits = [

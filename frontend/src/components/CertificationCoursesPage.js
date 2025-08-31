@@ -436,8 +436,8 @@ const CertificationCoursesPage = () => {
                     <div key={level} className="space-y-6">
                       {/* Level Header */}
                       <div className="flex items-center gap-4 mb-8">
-                        <div className={`w-12 h-12 bg-${currentVendor.color}-100 rounded-xl flex items-center justify-center`}>
-                          <Target className={`h-6 w-6 text-${currentVendor.color}-600`} />
+                        <div className={`w-12 h-12 ${getVendorColors(currentVendor.color).bg} rounded-xl flex items-center justify-center`}>
+                          <Target className={`h-6 w-6 ${getVendorColors(currentVendor.color).text}`} />
                         </div>
                         <div>
                           <h3 className="text-2xl font-bold text-gray-900">{levelInfo.name}</h3>

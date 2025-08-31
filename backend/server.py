@@ -344,92 +344,89 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         
         styles = getSampleStyleSheet()
         
-        # Enhanced custom styles with better typography
+        # Professional Typography Styles
         title_style = ParagraphStyle(
-            'CustomTitle',
+            'CourseTitle',
             parent=styles['Heading1'],
-            fontSize=28,
-            spaceAfter=20,
-            spaceBefore=10,
+            fontSize=24,
+            spaceAfter=15,
+            spaceBefore=20,
             textColor=colors.HexColor('#DC2626'),
             alignment=TA_CENTER,
             fontName='Helvetica-Bold'
         )
         
-        institute_style = ParagraphStyle(
-            'InstituteTitle',
-            parent=styles['Heading1'],
-            fontSize=22,
-            spaceAfter=5,
-            textColor=colors.HexColor('#1F2937'),
-            alignment=TA_CENTER,
-            fontName='Helvetica-Bold'
-        )
-        
-        subtitle_style = ParagraphStyle(
-            'SubtitleStyle',
-            parent=styles['Normal'],
-            fontSize=12,
-            spaceAfter=20,
-            textColor=colors.HexColor('#6B7280'),
-            alignment=TA_CENTER,
-            fontName='Helvetica'
-        )
-        
-        heading_style = ParagraphStyle(
-            'CustomHeading',
+        section_heading_style = ParagraphStyle(
+            'SectionHeading',
             parent=styles['Heading2'],
-            fontSize=16,
-            spaceBefore=20,
-            spaceAfter=12,
+            fontSize=14,
+            spaceBefore=18,
+            spaceAfter=10,
+            textColor=colors.white,
+            fontName='Helvetica-Bold',
+            backColor=colors.HexColor('#DC2626'),
+            borderPadding=(8, 12, 8, 12),  # top, right, bottom, left
+            alignment=TA_LEFT
+        )
+        
+        subsection_heading_style = ParagraphStyle(
+            'SubsectionHeading',
+            parent=styles['Heading3'],
+            fontSize=12,
+            spaceBefore=12,
+            spaceAfter=6,
             textColor=colors.HexColor('#DC2626'),
             fontName='Helvetica-Bold',
-            borderWidth=1,
-            borderColor=colors.HexColor('#FEE2E2'),
-            borderPadding=8,
-            backColor=colors.HexColor('#FEF2F2')
+            leftIndent=0
         )
         
-        subheading_style = ParagraphStyle(
-            'SubHeading',
-            parent=styles['Heading3'],
-            fontSize=14,
-            spaceBefore=15,
-            spaceAfter=8,
-            textColor=colors.HexColor('#374151'),
-            fontName='Helvetica-Bold'
-        )
-        
-        normal_style = ParagraphStyle(
-            'CustomNormal',
+        body_style = ParagraphStyle(
+            'Body',
             parent=styles['Normal'],
-            fontSize=11,
-            spaceAfter=8,
-            leading=16,
+            fontSize=10,
+            spaceAfter=6,
+            leading=14,
             textColor=colors.HexColor('#374151'),
-            alignment=TA_JUSTIFY
+            alignment=TA_JUSTIFY,
+            firstLineIndent=0
         )
         
         bullet_style = ParagraphStyle(
-            'BulletStyle',
+            'Bullet',
             parent=styles['Normal'],
-            fontSize=11,
-            spaceAfter=6,
-            leading=15,
-            leftIndent=20,
+            fontSize=10,
+            spaceAfter=4,
+            leading=13,
+            leftIndent=15,
             bulletIndent=10,
-            textColor=colors.HexColor('#374151')
+            textColor=colors.HexColor('#4B5563')
         )
         
-        highlight_style = ParagraphStyle(
-            'HighlightStyle',
+        highlight_box_style = ParagraphStyle(
+            'HighlightBox',
             parent=styles['Normal'],
-            fontSize=11,
+            fontSize=10,
             spaceAfter=6,
-            leading=15,
-            leftIndent=15,
-            textColor=colors.HexColor('#059669'),
-            fontName='Helvetica-Bold'
+            leading=13,
+            textColor=colors.HexColor('#065F46'),
+            backColor=colors.HexColor('#F0FDF4'),
+            borderColor=colors.HexColor('#10B981'),
+            borderWidth=1,
+            borderPadding=(6, 8, 6, 8)
+        )
+        
+        info_box_style = ParagraphStyle(
+            'InfoBox',
+            parent=styles['Normal'],
+            fontSize=9,
+            spaceAfter=8,
+            leading=12,
+            textColor=colors.HexColor('#1E40AF'),
+            backColor=colors.HexColor('#F0F9FF'),
+            borderColor=colors.HexColor('#3B82F6'),
+            borderWidth=1,
+            borderPadding=(8, 10, 8, 10),
+            alignment=TA_CENTER
         )
         
         # Build content with enhanced layout

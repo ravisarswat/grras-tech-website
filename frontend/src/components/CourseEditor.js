@@ -371,6 +371,11 @@ const CourseEditor = ({
                       <option value="Professional Level">Professional Level</option>
                       <option value="Expert Level">Expert Level</option>
                     </optgroup>
+                    <optgroup label="🛡️ Cybersecurity Levels">
+                      <option value="Foundation Level">Foundation Level</option>
+                      <option value="Professional Level">Professional Level</option>
+                      <option value="Expert Level">Expert Level</option>
+                    </optgroup>
                     <optgroup label="💻 Programming Levels">
                       <option value="Beginner Level">Beginner Level</option>
                       <option value="Intermediate Level">Intermediate Level</option>

@@ -651,6 +651,9 @@ class BackendTester:
         if not self.test_results["eligibility_widget_data"]:
             critical_issues.append("Course data missing required fields for EligibilityWidget")
         
+        if not self.test_results["new_courses_addition"]:
+            critical_issues.append("Failed to add new certification courses to CMS")
+        
         return critical_issues
     
     def print_summary(self, summary: Dict[str, Any]):

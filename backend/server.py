@@ -1,33 +1,25 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Depends, Request, Query, Form
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, Form
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, FileResponse, RedirectResponse, Response
+from fastapi.responses import RedirectResponse, Response
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from fastapi.staticfiles import StaticFiles
 from motor.motor_asyncio import AsyncIOMotorClient
 from content_manager import ContentManager
 import uvicorn
 import os
 import logging
 from dotenv import load_dotenv
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Dict, Any, Optional, List
-import secrets
 import hashlib
 from pydantic import BaseModel
-from reportlab.lib.pagesizes import A4, letter
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle, PageBreak, Frame, PageTemplate, KeepTogether
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle, KeepTogether
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.units import inch, cm, mm
+from reportlab.lib.units import mm
 from reportlab.lib import colors
-from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_RIGHT, TA_JUSTIFY
-from reportlab.pdfgen import canvas
-from reportlab.platypus.tableofcontents import TableOfContents
-import tempfile
-import asyncio
-import aiofiles
+from reportlab.lib.enums import TA_LEFT, TA_CENTER
 import requests
 from io import BytesIO
-import base64
 from bson import ObjectId
 from bson.errors import InvalidId
 
@@ -685,7 +677,7 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         # Call-to-Action
         cta_content = "🚀 <b>Ready to Transform Your Career? Join GRRAS Today!</b><br/><br/>"
         cta_content += "Contact our counselors for personalized guidance and enrollment assistance.<br/>"
-        cta_content += f"Visit us at: https://www.grras.tech"
+        cta_content += "Visit us at: https://www.grras.tech"
         
         content_elements.append(Paragraph(cta_content, certification_box_style))
         
@@ -781,7 +773,7 @@ async def delete_multiple_leads(request: BulkDeleteRequest, admin_verified: bool
     logging.info(f"🔍 Request lead_ids: {request.lead_ids}")
     logging.info(f"🔍 Admin verified: {admin_verified}")
     try:
-        logging.info(f"🔍 Starting bulk delete validation...")
+        logging.info("🔍 Starting bulk delete validation...")
         # Validate all ObjectId formats
         object_ids = []
         for lead_id in request.lead_ids:

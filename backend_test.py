@@ -494,8 +494,33 @@ class BackendTester:
                     }
                 ]
                 
+                # Check if courses already exist to avoid duplicates
+                existing_slugs = {course.get("slug") for course in current_courses}
+                new_course_slugs = {
+                    "aws-cloud-practitioner-certification",
+                    "aws-solutions-architect-associate", 
+                    "cka-certified-kubernetes-administrator",
+                    "cks-certified-kubernetes-security",
+                    "rhcsa-red-hat-system-administrator",
+                    "rhce-red-hat-certified-engineer",
+                    "do188-red-hat-openshift-development"
+                }
+                
+                # Only add courses that don't already exist
+                courses_to_add = []
+                for new_course in new_courses:
+                    if new_course["slug"] not in existing_slugs:
+                        courses_to_add.append(new_course)
+                
+                if not courses_to_add:
+                    logger.info("✅ All certification courses already exist in CMS")
+                    self.test_results["new_courses_addition"] = True
+                    return True
+                
+                logger.info(f"📊 Adding {len(courses_to_add)} new courses (avoiding duplicates)")
+                
                 # Add new courses to existing courses
-                updated_courses = current_courses + new_courses
+                updated_courses = current_courses + courses_to_add
                 current_content["courses"] = updated_courses
                 
                 # Save updated content

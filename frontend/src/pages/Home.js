@@ -290,6 +290,26 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Course Discovery Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 animate-fade-in-up">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Find Your Perfect Course
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+              Discover courses that match your career goals with our smart search and category-based navigation
+            </p>
+            
+            {/* Course Search Bar */}
+            <CourseSearchBar />
+          </div>
+        </div>
+      </section>
+
+      {/* Course Categories Grid */}
+      <CourseCategoriesGrid />
+
       {/* Featured Courses Section */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -156,6 +156,15 @@ const Header = () => {
                               className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
                               onClick={() => setIsCoursesOpen(false)}
                             >
+                              <div className="w-4 h-4 mr-3 flex items-center justify-center text-green-600">🔧</div>
+                              <span>DevOps Engineering</span>
+                            </Link>
+                            
+                            <Link
+                              to="/courses"
+                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
+                              onClick={() => setIsCoursesOpen(false)}
+                            >
                               <div className="w-4 h-4 mr-3 flex items-center justify-center text-purple-600">💻</div>
                               <span>Programming & Development</span>
                             </Link>

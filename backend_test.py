@@ -37,7 +37,9 @@ class BackendTester:
             "admin_authentication": False,
             "contact_form": False,
             "syllabus_generation": False,
-            "leads_management": False
+            "leads_management": False,
+            "new_courses_addition": False,
+            "new_courses_verification": False
         }
         
         self.errors = []

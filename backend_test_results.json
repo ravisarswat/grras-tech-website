@@ -1,10 +1,10 @@
 {
-  "timestamp": "2025-08-31T07:41:18.997720",
+  "timestamp": "2025-08-31T08:02:13.349232",
   "backend_url": "https://grras-cms-rebuild.preview.emergentagent.com",
-  "total_tests": 8,
-  "passed_tests": 7,
+  "total_tests": 10,
+  "passed_tests": 9,
   "failed_tests": 1,
-  "success_rate": "87.5%",
+  "success_rate": "90.0%",
   "test_results": {
     "server_health": true,
     "mongodb_connection": true,
@@ -15,7 +15,9 @@
     "admin_authentication": true,
     "contact_form": true,
     "syllabus_generation": true,
-    "leads_management": true
+    "leads_management": true,
+    "new_courses_addition": true,
+    "new_courses_verification": true
   },
   "errors": [
     "Some courses missing required fields for EligibilityWidget"

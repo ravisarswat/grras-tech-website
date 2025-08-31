@@ -9,7 +9,8 @@ import {
   GraduationCap,
   ArrowRight,
   BookOpen,
-  Users
+  Users,
+  Target
 } from 'lucide-react';
 import { useContent } from '../contexts/ContentContext';
 

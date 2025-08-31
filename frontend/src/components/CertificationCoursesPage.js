@@ -472,15 +472,30 @@ const CertificationCoursesPage = () => {
 
 // Professional Certification Course Card Component
 const CertificationCourseCard = ({ course, vendor }) => {
+  // Get color classes based on vendor
+  const getVendorColors = (vendorColor) => {
+    const colorMap = {
+      red: { bg: 'bg-red-100', text: 'text-red-600', gradient: 'from-red-500 to-red-600' },
+      orange: { bg: 'bg-orange-100', text: 'text-orange-600', gradient: 'from-orange-500 to-orange-600' },
+      blue: { bg: 'bg-blue-100', text: 'text-blue-600', gradient: 'from-blue-500 to-blue-600' },
+      purple: { bg: 'bg-purple-100', text: 'text-purple-600', gradient: 'from-purple-500 to-purple-600' },
+      indigo: { bg: 'bg-indigo-100', text: 'text-indigo-600', gradient: 'from-indigo-500 to-indigo-600' },
+      gray: { bg: 'bg-gray-100', text: 'text-gray-600', gradient: 'from-gray-500 to-gray-600' }
+    };
+    return colorMap[vendorColor] || colorMap.gray;
+  };
+
+  const colors = getVendorColors(vendor.color);
+
   return (
     <div className="group bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 overflow-hidden">
       {/* Card Header */}
-      <div className={`h-2 bg-gradient-to-r from-${vendor.color}-500 to-${vendor.color}-600`}></div>
+      <div className={`h-2 bg-gradient-to-r ${colors.gradient}`}></div>
       
       <div className="p-8">
         {/* Certification Badge */}
         <div className="flex items-start justify-between mb-6">
-          <div className={`w-16 h-16 bg-${vendor.color}-100 rounded-2xl flex items-center justify-center text-2xl font-bold text-${vendor.color}-600`}>
+          <div className={`w-16 h-16 ${colors.bg} rounded-2xl flex items-center justify-center text-2xl font-bold ${colors.text}`}>
             {vendor.icon}
           </div>
           

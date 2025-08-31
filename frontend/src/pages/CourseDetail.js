@@ -14,7 +14,6 @@ import {
   Info
 } from 'lucide-react';
 import SEO, { CoursePageSEO } from '../components/SEO';
-import SyllabusModal from '../components/SyllabusModal';
 import DirectPDFDownload from '../components/DirectPDFDownload';
 import axios from 'axios';
 

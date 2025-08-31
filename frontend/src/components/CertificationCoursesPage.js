@@ -309,6 +309,14 @@ const CertificationCoursesPage = () => {
           });
           categorizedFlag = true;
         }
+        else if (courseVendors.cybersecurity.keywords.some(keyword => searchText.includes(keyword))) {
+          result.cybersecurity.push({
+            ...course,
+            vendor: 'cybersecurity',
+            level: determineLevel(course, 'cybersecurity')
+          });
+          categorizedFlag = true;
+        }
         else if (courseVendors.programming.keywords.some(keyword => searchText.includes(keyword))) {
           result.programming.push({
             ...course,

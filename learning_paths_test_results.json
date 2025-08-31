@@ -1,0 +1,48 @@
+{
+  "timestamp": "2025-08-31T07:40:58.202532",
+  "backend_url": "https://grras-cms-rebuild.preview.emergentagent.com",
+  "test_focus": "Learning Paths CMS Content",
+  "total_tests": 6,
+  "passed_tests": 5,
+  "failed_tests": 1,
+  "success_rate": "83.3%",
+  "test_results": {
+    "cms_content_accessible": true,
+    "learning_paths_section_exists": true,
+    "learning_paths_has_data": true,
+    "learning_paths_structure_valid": false,
+    "featured_learning_paths_exist": true,
+    "content_migration_successful": true
+  },
+  "errors": [
+    "No learning paths have valid structure"
+  ],
+  "learning_paths_data_summary": {
+    "data_type": "dict",
+    "has_data": true,
+    "keys": [
+      "cloud-engineer",
+      "redhat-specialist",
+      "kubernetes-expert"
+    ],
+    "structure": "Dictionary containing learning paths data",
+    "sample_fields": [
+      "title",
+      "slug",
+      "description",
+      "duration",
+      "level",
+      "totalCourses",
+      "estimatedHours",
+      "featured",
+      "courses",
+      "outcomes",
+      "careerRoles",
+      "averageSalary",
+      "seo"
+    ]
+  },
+  "recommendations": [
+    "Fix learningPaths data structure - ensure required fields (id, title, description, duration, courses)"
+  ]
+}

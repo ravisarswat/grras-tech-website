@@ -398,6 +398,16 @@ const AdminLeads = () => {
                   <Download className="h-4 w-4" />
                   Export CSV
                 </button>
+                
+                {selectedLeads.size > 0 && (
+                  <button
+                    onClick={handleDeleteSelected}
+                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    Delete Selected ({selectedLeads.size})
+                  </button>
+                )}
               </div>
             </div>
           </div>

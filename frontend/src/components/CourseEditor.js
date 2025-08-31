@@ -330,6 +330,7 @@ const CourseEditor = ({
                     <option value="certification">🔴 Red Hat Technologies</option>
                     <option value="cloud">☁️ AWS Cloud Platform</option>
                     <option value="container">⚙️ Kubernetes Ecosystem</option>
+                    <option value="devops">🔧 DevOps Engineering</option>
                     <option value="programming">💻 Programming & Development</option>
                     <option value="degree">🎓 Degree Programs</option>
                     <option value="security">🛡️ Cybersecurity</option>
@@ -349,6 +350,48 @@ const CourseEditor = ({
                     onChange={(e) => handleFieldUpdate('level', e.target.value)}
                     className="form-input"
                   >
+                    <option value="">Select level</option>
+                    <optgroup label="🔴 Red Hat Levels">
+                      <option value="Foundation Level">Foundation Level</option>
+                      <option value="Professional Level">Professional Level</option>
+                      <option value="Specialist Level">Specialist Level</option>
+                    </optgroup>
+                    <optgroup label="☁️ AWS Levels">
+                      <option value="Foundation Level">Foundation Level</option>
+                      <option value="Associate Level">Associate Level</option>
+                      <option value="Professional Level">Professional Level</option>
+                    </optgroup>
+                    <optgroup label="⚙️ Kubernetes Levels">
+                      <option value="Administrator Level">Administrator Level</option>
+                      <option value="Security Level">Security Level</option>
+                      <option value="Developer Level">Developer Level</option>
+                    </optgroup>
+                    <optgroup label="🔧 DevOps Levels">
+                      <option value="Foundation Level">Foundation Level</option>
+                      <option value="Professional Level">Professional Level</option>
+                      <option value="Expert Level">Expert Level</option>
+                    </optgroup>
+                    <optgroup label="💻 Programming Levels">
+                      <option value="Beginner Level">Beginner Level</option>
+                      <option value="Intermediate Level">Intermediate Level</option>
+                      <option value="Professional Level">Professional Level</option>
+                    </optgroup>
+                    <optgroup label="🎓 Degree Levels">
+                      <option value="Undergraduate">Undergraduate</option>
+                      <option value="Diploma">Diploma</option>
+                      <option value="Certification">Certification</option>
+                    </optgroup>
+                    <optgroup label="📚 General Levels">
+                      <option value="Beginner">Beginner</option>
+                      <option value="Intermediate">Intermediate</option>
+                      <option value="Advanced">Advanced</option>
+                      <option value="Expert">Expert</option>
+                    </optgroup>
+                  </select>
+                  <div className="mt-1 text-xs text-gray-500">
+                    This determines which level section the course appears in within its category
+                  </div>
+                </div>
                     <option value="">Select level</option>
                     <option value="Beginner">Beginner</option>
                     <option value="Intermediate">Intermediate</option>

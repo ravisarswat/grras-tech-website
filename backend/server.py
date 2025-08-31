@@ -729,7 +729,6 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         pdf_content = pdf_buffer.getvalue()
         
         # Create response with proper headers
-        from fastapi.responses import Response
         return Response(
             content=pdf_content,
             media_type="application/pdf",

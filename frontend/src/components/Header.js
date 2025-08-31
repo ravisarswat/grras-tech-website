@@ -89,12 +89,12 @@ const Header = () => {
                       >
                         {/* Header */}
                         <div className="px-4 py-2 border-b border-gray-100">
-                          <h3 className="text-sm font-semibold text-gray-900">Certification Academy</h3>
+                          <h3 className="text-sm font-semibold text-gray-900">Course Categories</h3>
                         </div>
                         
-                        {/* Certification Tracks */}
+                        {/* Course Categories */}
                         <div className="px-4 py-2">
-                          <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Certification Tracks</h4>
+                          <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Technology Tracks</h4>
                           
                           <div className="space-y-1">
                             <Link
@@ -102,8 +102,17 @@ const Header = () => {
                               className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
                               onClick={() => setIsCoursesOpen(false)}
                             >
-                              <div className="w-2 h-2 bg-red-500 rounded-full mr-3"></div>
-                              <span>🔴 Red Hat Technologies</span>
+                              <img 
+                                src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg" 
+                                alt="Red Hat" 
+                                className="w-4 h-4 mr-3"
+                                onError={(e) => {
+                                  e.target.style.display = 'none';
+                                  e.target.nextSibling.style.display = 'inline';
+                                }}
+                              />
+                              <div className="w-2 h-2 bg-red-500 rounded-full mr-3" style={{display: 'none'}}></div>
+                              <span>Red Hat Technologies</span>
                             </Link>
                             
                             <Link
@@ -111,8 +120,17 @@ const Header = () => {
                               className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
                               onClick={() => setIsCoursesOpen(false)}
                             >
-                              <div className="w-2 h-2 bg-orange-500 rounded-full mr-3"></div>
-                              <span>☁️ AWS Cloud Platform</span>
+                              <img 
+                                src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" 
+                                alt="AWS" 
+                                className="w-4 h-4 mr-3"
+                                onError={(e) => {
+                                  e.target.style.display = 'none';
+                                  e.target.nextSibling.style.display = 'inline';
+                                }}
+                              />
+                              <div className="w-2 h-2 bg-orange-500 rounded-full mr-3" style={{display: 'none'}}></div>
+                              <span>AWS Cloud Platform</span>
                             </Link>
                             
                             <Link
@@ -120,15 +138,42 @@ const Header = () => {
                               className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
                               onClick={() => setIsCoursesOpen(false)}
                             >
-                              <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-                              <span>⚙️ Kubernetes Ecosystem</span>
+                              <img 
+                                src="https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg" 
+                                alt="Kubernetes" 
+                                className="w-4 h-4 mr-3"
+                                onError={(e) => {
+                                  e.target.style.display = 'none';
+                                  e.target.nextSibling.style.display = 'inline';
+                                }}
+                              />
+                              <div className="w-2 h-2 bg-blue-500 rounded-full mr-3" style={{display: 'none'}}></div>
+                              <span>Kubernetes Ecosystem</span>
+                            </Link>
+                            
+                            <Link
+                              to="/courses"
+                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
+                              onClick={() => setIsCoursesOpen(false)}
+                            >
+                              <div className="w-4 h-4 mr-3 flex items-center justify-center text-purple-600">💻</div>
+                              <span>Programming & Development</span>
+                            </Link>
+                            
+                            <Link
+                              to="/courses"
+                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
+                              onClick={() => setIsCoursesOpen(false)}
+                            >
+                              <div className="w-4 h-4 mr-3 flex items-center justify-center text-indigo-600">🎓</div>
+                              <span>Degree Programs</span>
                             </Link>
                           </div>
                         </div>
                         
                         <div className="border-t border-gray-100 my-2"></div>
                         
-                        {/* All Certifications Link */}
+                        {/* All Courses Link */}
                         <Link
                           to="/courses"
                           className="flex items-center px-4 py-3 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
@@ -136,7 +181,7 @@ const Header = () => {
                         >
                           <BookOpen className="h-4 w-4 mr-3 text-gray-400" />
                           <div>
-                            <div className="font-medium">All Certifications</div>
+                            <div className="font-medium">All Courses</div>
                             <div className="text-xs text-gray-500">Browse complete catalog</div>
                           </div>
                         </Link>

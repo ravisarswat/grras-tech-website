@@ -83,9 +83,14 @@ const About = () => {
 
   const milestones = [
     {
+      year: '2007',
+      title: 'Red Hat Authorization',
+      description: 'Became authorized Red Hat training partner for official certifications and established our foundation in enterprise Linux training.'
+    },
+    {
       year: '2014',
-      title: 'Foundation',
-      description: 'GRRAS Solutions established with a vision to provide quality IT education in Jaipur.'
+      title: 'Institute Expansion',
+      description: 'GRRAS Solutions expanded with comprehensive IT education programs and modern infrastructure in Jaipur.'
     },
     {
       year: '2016',
@@ -96,11 +101,6 @@ const About = () => {
       year: '2018',
       title: 'BCA Program Launch',
       description: 'Launched industry-integrated BCA degree program with specializations.'
-    },
-    {
-      year: '2020',
-      title: 'Red Hat Authorization',
-      description: 'Became authorized Red Hat training partner for official certifications.'
     },
     {
       year: '2022',

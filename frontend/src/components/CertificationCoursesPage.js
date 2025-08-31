@@ -1,0 +1,469 @@
+import React, { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { 
+  Award, 
+  Clock, 
+  Users, 
+  TrendingUp, 
+  ArrowRight,
+  Star,
+  CheckCircle,
+  BookOpen,
+  Target,
+  Search,
+  Filter
+} from 'lucide-react';
+import SEO from '../components/SEO';
+import { useContent } from '../contexts/ContentContext';
+
+const CertificationCoursesPage = () => {
+  const { content } = useContent();
+  const [activeTab, setActiveTab] = useState('redhat');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedLevel, setSelectedLevel] = useState('all');
+
+  const courses = content?.courses || [];
+
+  // Vendor-based course organization
+  const courseVendors = {
+    redhat: {
+      name: 'Red Hat Technologies',
+      icon: '🔴',
+      color: 'red',
+      description: 'Industry-leading Linux and OpenShift certifications',
+      keywords: ['red hat', 'rhcsa', 'rhce', 'do188', 'openshift', 'linux', 'ansible'],
+      levels: {
+        foundation: { name: 'Foundation Level', description: 'Start your Red Hat journey' },
+        professional: { name: 'Professional Level', description: 'Advanced system administration' },
+        specialist: { name: 'Specialist Level', description: 'Expert-level specializations' }
+      }
+    },
+    aws: {
+      name: 'AWS Cloud Platform',
+      icon: '☁️',
+      color: 'orange',
+      description: 'Amazon Web Services cloud computing certifications',
+      keywords: ['aws', 'cloud', 'amazon', 'practitioner', 'solutions architect', 'developer'],
+      levels: {
+        foundation: { name: 'Foundation Level', description: 'Cloud computing basics' },
+        associate: { name: 'Associate Level', description: 'Professional cloud skills' },
+        professional: { name: 'Professional Level', description: 'Expert cloud architecture' }
+      }
+    },
+    kubernetes: {
+      name: 'Kubernetes Ecosystem',
+      icon: '⚙️',
+      color: 'blue',
+      description: 'Container orchestration and cloud-native technologies',
+      keywords: ['kubernetes', 'cka', 'cks', 'ckad', 'container', 'docker', 'cloud native'],
+      levels: {
+        administrator: { name: 'Administrator Level', description: 'Cluster administration' },
+        security: { name: 'Security Level', description: 'Security specialization' },
+        developer: { name: 'Developer Level', description: 'Application development' }
+      }
+    },
+    general: {
+      name: 'All Certifications',
+      icon: '📚',
+      color: 'gray',
+      description: 'Complete certification catalog',
+      keywords: [],
+      levels: {
+        all: { name: 'All Levels', description: 'Browse all available courses' }
+      }
+    }
+  };
+
+  // Categorize courses by vendor
+  const categorizedCourses = useMemo(() => {
+    const categorized = {
+      redhat: [],
+      aws: [],
+      kubernetes: [],
+      general: []
+    };
+
+    courses.forEach(course => {
+      const title = course.title?.toLowerCase() || '';
+      const category = course.category?.toLowerCase() || '';
+      const tools = course.tools?.join(' ').toLowerCase() || '';
+      const searchText = `${title} ${category} ${tools}`;
+
+      // Categorize by vendor keywords
+      if (courseVendors.redhat.keywords.some(keyword => searchText.includes(keyword))) {
+        categorized.redhat.push({
+          ...course,
+          vendor: 'redhat',
+          level: determineLevel(course, 'redhat')
+        });
+      } else if (courseVendors.aws.keywords.some(keyword => searchText.includes(keyword))) {
+        categorized.aws.push({
+          ...course,
+          vendor: 'aws',
+          level: determineLevel(course, 'aws')
+        });
+      } else if (courseVendors.kubernetes.keywords.some(keyword => searchText.includes(keyword))) {
+        categorized.kubernetes.push({
+          ...course,
+          vendor: 'kubernetes',
+          level: determineLevel(course, 'kubernetes')
+        });
+      } else {
+        categorized.general.push({
+          ...course,
+          vendor: 'general',
+          level: 'all'
+        });
+      }
+    });
+
+    return categorized;
+  }, [courses]);
+
+  // Determine certification level based on course content
+  const determineLevel = (course, vendor) => {
+    const title = course.title?.toLowerCase() || '';
+    const level = course.level?.toLowerCase() || '';
+
+    if (vendor === 'redhat') {
+      if (title.includes('rhcsa') || title.includes('basics')) return 'foundation';
+      if (title.includes('rhce') || title.includes('do188') || title.includes('engineer')) return 'professional';
+      return 'specialist';
+    }
+
+    if (vendor === 'aws') {
+      if (title.includes('practitioner') || title.includes('foundation')) return 'foundation';
+      if (title.includes('associate') || title.includes('developer')) return 'associate';
+      return 'professional';
+    }
+
+    if (vendor === 'kubernetes') {
+      if (title.includes('cka') || title.includes('administrator')) return 'administrator';
+      if (title.includes('cks') || title.includes('security')) return 'security';
+      return 'developer';
+    }
+
+    return 'all';
+  };
+
+  // Filter courses based on search and level
+  const filteredCourses = useMemo(() => {
+    const vendorCourses = categorizedCourses[activeTab] || [];
+    
+    return vendorCourses.filter(course => {
+      // Search filter
+      if (searchTerm.trim()) {
+        const searchLower = searchTerm.toLowerCase();
+        const matchesSearch = 
+          course.title?.toLowerCase().includes(searchLower) ||
+          course.oneLiner?.toLowerCase().includes(searchLower) ||
+          course.tools?.some(tool => tool.toLowerCase().includes(searchLower));
+        
+        if (!matchesSearch) return false;
+      }
+
+      // Level filter
+      if (selectedLevel !== 'all' && course.level !== selectedLevel) {
+        return false;
+      }
+
+      return true;
+    });
+  }, [categorizedCourses, activeTab, searchTerm, selectedLevel]);
+
+  // Group courses by level for display
+  const coursesByLevel = useMemo(() => {
+    const grouped = {};
+    const vendor = courseVendors[activeTab];
+    
+    filteredCourses.forEach(course => {
+      const level = course.level || 'all';
+      if (!grouped[level]) {
+        grouped[level] = [];
+      }
+      grouped[level].push(course);
+    });
+
+    return grouped;
+  }, [filteredCourses, activeTab]);
+
+  const currentVendor = courseVendors[activeTab];
+
+  return (
+    <>
+      <SEO
+        title={`${currentVendor.name} Certifications - GRRAS Solutions`}
+        description={`Professional ${currentVendor.name} certification training with hands-on experience and industry recognition.`}
+        keywords={`${currentVendor.keywords.join(', ')}, certification training, IT courses`}
+      />
+      
+      <div className="min-h-screen bg-gray-50">
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div className="animate-fade-in-up">
+              <div className="inline-flex items-center gap-2 bg-white bg-opacity-10 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium mb-6">
+                <Award className="h-4 w-4" />
+                Professional IT Certifications
+              </div>
+              
+              <h1 className="text-4xl md:text-6xl font-bold mb-6">
+                GRRAS Certification Academy
+              </h1>
+              
+              <p className="text-xl text-gray-100 mb-8 max-w-4xl mx-auto">
+                Industry-Leading IT Certifications & Professional Training Programs
+                <br />
+                Build expertise with hands-on experience and recognized credentials
+              </p>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12 max-w-3xl mx-auto">
+                <div className="text-center">
+                  <div className="text-3xl font-bold mb-2">{categorizedCourses.redhat.length}</div>
+                  <div className="text-sm text-gray-200">Red Hat Certs</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold mb-2">{categorizedCourses.aws.length}</div>
+                  <div className="text-sm text-gray-200">AWS Certs</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold mb-2">{categorizedCourses.kubernetes.length}</div>
+                  <div className="text-sm text-gray-200">K8s Certs</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold mb-2">95%</div>
+                  <div className="text-sm text-gray-200">Success Rate</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Classic Tabs Navigation */}  
+        <section className="bg-white border-b sticky top-0 z-40 shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex space-x-8 overflow-x-auto py-4">
+              {Object.entries(courseVendors).map(([key, vendor]) => (
+                <button
+                  key={key}
+                  onClick={() => setActiveTab(key)}
+                  className={`flex items-center gap-3 px-6 py-3 rounded-lg font-medium whitespace-nowrap transition-all ${
+                    activeTab === key
+                      ? `bg-${vendor.color}-100 text-${vendor.color}-700 border-2 border-${vendor.color}-200`
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                  }`}
+                >
+                  <span className="text-lg">{vendor.icon}</span>
+                  <div className="text-left">
+                    <div className="font-semibold">{vendor.name}</div>
+                    <div className="text-xs opacity-75">{categorizedCourses[key]?.length || 0} courses</div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Search and Filters */}
+        <section className="py-6 bg-gray-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+              {/* Search Bar */}
+              <div className="relative flex-1 max-w-md">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder={`Search ${currentVendor.name.toLowerCase()}...`}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                />
+              </div>
+              
+              {/* Level Filter */}
+              <div className="flex items-center gap-4">
+                <select
+                  value={selectedLevel}
+                  onChange={(e) => setSelectedLevel(e.target.value)}
+                  className="px-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-red-500"
+                >
+                  <option value="all">All Levels</option>
+                  {Object.entries(currentVendor.levels).map(([key, level]) => (
+                    <option key={key} value={key}>{level.name}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Courses Display */}
+        <section className="py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Vendor Description */}
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center justify-center gap-3">
+                <span className="text-4xl">{currentVendor.icon}</span>
+                {currentVendor.name}
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                {currentVendor.description}
+              </p>
+            </div>
+
+            {filteredCourses.length === 0 ? (
+              <div className="text-center py-16">
+                <BookOpen className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">No courses found</h3>
+                <p className="text-gray-600 mb-6">
+                  Try adjusting your search terms or level filter.
+                </p>
+                <button
+                  onClick={() => {
+                    setSearchTerm('');
+                    setSelectedLevel('all');
+                  }}
+                  className="btn-primary"
+                >
+                  Clear Filters
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-12">
+                {Object.entries(coursesByLevel).map(([level, levelCourses]) => {
+                  const levelInfo = currentVendor.levels[level] || { name: 'General', description: '' };
+                  
+                  return (
+                    <div key={level} className="space-y-6">
+                      {/* Level Header */}
+                      <div className="flex items-center gap-4 mb-8">
+                        <div className={`w-12 h-12 bg-${currentVendor.color}-100 rounded-xl flex items-center justify-center`}>
+                          <Target className={`h-6 w-6 text-${currentVendor.color}-600`} />
+                        </div>
+                        <div>
+                          <h3 className="text-2xl font-bold text-gray-900">{levelInfo.name}</h3>
+                          <p className="text-gray-600">{levelInfo.description}</p>
+                        </div>
+                        <div className="ml-auto bg-gray-100 px-3 py-1 rounded-full text-sm text-gray-600">
+                          {levelCourses.length} course{levelCourses.length !== 1 ? 's' : ''}
+                        </div>
+                      </div>
+
+                      {/* Course Cards Grid */}
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {levelCourses.map((course) => (
+                          <CertificationCourseCard 
+                            key={course.slug} 
+                            course={course} 
+                            vendor={currentVendor}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </section>
+      </div>
+    </>
+  );
+};
+
+// Professional Certification Course Card Component
+const CertificationCourseCard = ({ course, vendor }) => {
+  return (
+    <div className="group bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 overflow-hidden">
+      {/* Card Header */}
+      <div className={`h-2 bg-gradient-to-r from-${vendor.color}-500 to-${vendor.color}-600`}></div>
+      
+      <div className="p-8">
+        {/* Certification Badge */}
+        <div className="flex items-start justify-between mb-6">
+          <div className={`w-16 h-16 bg-${vendor.color}-100 rounded-2xl flex items-center justify-center text-2xl font-bold text-${vendor.color}-600`}>
+            {vendor.icon}
+          </div>
+          
+          <div className="text-right">
+            <div className="text-2xl font-bold text-gray-900 mb-1">{course.fees}</div>
+            {course.featured && (
+              <span className="inline-flex items-center gap-1 bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">
+                <Star className="h-3 w-3 fill-current" />
+                Popular
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Course Info */}
+        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-red-600 transition-colors line-clamp-2">
+          {course.title}
+        </h3>
+        
+        <p className="text-gray-600 mb-6 leading-relaxed line-clamp-3">
+          {course.oneLiner}
+        </p>
+
+        {/* Course Details */}
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="text-center p-3 bg-gray-50 rounded-lg">
+            <Clock className="h-4 w-4 text-blue-600 mx-auto mb-1" />
+            <div className="text-xs text-gray-600 mb-1">Duration</div>
+            <div className="font-semibold text-sm">{course.duration}</div>
+          </div>
+          
+          <div className="text-center p-3 bg-gray-50 rounded-lg">
+            <Users className="h-4 w-4 text-green-600 mx-auto mb-1" />
+            <div className="text-xs text-gray-600 mb-1">Level</div>
+            <div className="font-semibold text-sm">{course.level}</div>
+          </div>
+        </div>
+
+        {/* Key Highlights */}
+        {course.highlights && course.highlights.length > 0 && (
+          <div className="mb-6">
+            <h4 className="text-sm font-semibold text-gray-900 mb-3">What You'll Learn:</h4>
+            <div className="space-y-2">
+              {course.highlights.slice(0, 3).map((highlight, index) => (
+                <div key={index} className="flex items-center gap-2 text-sm text-gray-600">
+                  <CheckCircle className="h-3 w-3 text-green-500 shrink-0" />
+                  <span className="line-clamp-1">{highlight}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Action Buttons */}
+        <div className="flex gap-3">
+          <Link
+            to={`/courses/${course.slug}`}
+            className="flex-1 inline-flex items-center justify-center gap-2 bg-red-600 text-white py-3 px-4 rounded-xl font-medium hover:bg-red-700 transition-colors group/btn"
+          >
+            View Details
+            <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+          </Link>
+          
+          <Link
+            to="/admissions"
+            className="inline-flex items-center justify-center px-4 py-3 border-2 border-red-600 text-red-600 rounded-xl font-medium hover:bg-red-50 transition-colors"
+          >
+            Enroll
+          </Link>
+        </div>
+
+        {/* Certification Badge */}
+        <div className="mt-4 pt-4 border-t border-gray-100">
+          <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
+            <Award className="h-3 w-3" />
+            <span>Industry-Recognized Certification</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CertificationCoursesPage;

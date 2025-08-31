@@ -31,6 +31,10 @@ const AdminLeads = () => {
   const [selectedCourse, setSelectedCourse] = useState('all');
   const [dateRange, setDateRange] = useState('all');
   const [authError, setAuthError] = useState('');
+  const [selectedLeads, setSelectedLeads] = useState(new Set());
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [leadsToDelete, setLeadsToDelete] = useState([]);
 
   useEffect(() => {
     checkAuthentication();

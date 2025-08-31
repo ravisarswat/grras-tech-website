@@ -1,0 +1,13 @@
+[build]
+builder = "dockerFile"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "python server.py"
+healthcheckPath = "/api/health"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+
+[variables]
+PORT = "8001"
+PYTHONPATH = "/app"

@@ -1,6 +1,6 @@
 {
   "timestamp": "2025-08-31T11:27:10.427140",
-  "backend_url": "https://grras-cms-rebuild.preview.emergentagent.com",
+  "backend_url": "https://grras-cms.preview.emergentagent.com",
   "total_tests": 12,
   "passed_tests": 7,
   "failed_tests": 5,

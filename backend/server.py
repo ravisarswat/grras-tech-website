@@ -361,13 +361,13 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         
         styles = getSampleStyleSheet()
         
-        # Professional Typography Styles
+        # GRRAS PDF Typography Styles - following specific rules
         title_style = ParagraphStyle(
             'CourseTitle',
             parent=styles['Heading1'],
-            fontSize=24,
-            spaceAfter=15,
-            spaceBefore=20,
+            fontSize=22,
+            spaceAfter=12,
+            spaceBefore=15,
             textColor=colors.HexColor('#DC2626'),
             alignment=TA_CENTER,
             fontName='Helvetica-Bold'
@@ -376,74 +376,71 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         section_heading_style = ParagraphStyle(
             'SectionHeading',
             parent=styles['Heading2'],
-            fontSize=14,
-            spaceBefore=18,
-            spaceAfter=10,
+            fontSize=13,
+            spaceBefore=15,
+            spaceAfter=8,
             textColor=colors.white,
             fontName='Helvetica-Bold',
             backColor=colors.HexColor('#DC2626'),
-            borderPadding=(8, 12, 8, 12),  # top, right, bottom, left
-            alignment=TA_LEFT
+            borderPadding=6,
+            alignment=TA_LEFT,
+            keepWithNext=True  # Keep heading with content
         )
         
-        subsection_heading_style = ParagraphStyle(
-            'SubsectionHeading',
-            parent=styles['Heading3'],
-            fontSize=12,
-            spaceBefore=12,
-            spaceAfter=6,
-            textColor=colors.HexColor('#DC2626'),
-            fontName='Helvetica-Bold',
-            leftIndent=0
-        )
-        
-        body_style = ParagraphStyle(
-            'Body',
+        body_text_style = ParagraphStyle(
+            'BodyText',
             parent=styles['Normal'],
             fontSize=10,
-            spaceAfter=6,
-            leading=14,
+            spaceAfter=5,
+            leading=13,
             textColor=colors.HexColor('#374151'),
-            alignment=TA_JUSTIFY,
+            alignment=TA_LEFT,
             firstLineIndent=0
         )
         
-        bullet_style = ParagraphStyle(
-            'Bullet',
+        bullet_list_style = ParagraphStyle(
+            'BulletList',
+            parent=styles['Normal'],
+            fontSize=10,
+            spaceAfter=3,
+            leading=13,
+            leftIndent=12,
+            bulletIndent=8,
+            textColor=colors.HexColor('#374151')
+        )
+        
+        number_list_style = ParagraphStyle(
+            'NumberList',
             parent=styles['Normal'],
             fontSize=10,
             spaceAfter=4,
             leading=13,
             leftIndent=15,
-            bulletIndent=10,
-            textColor=colors.HexColor('#4B5563')
+            textColor=colors.HexColor('#374151')
         )
         
-        highlight_box_style = ParagraphStyle(
-            'HighlightBox',
+        certification_box_style = ParagraphStyle(
+            'CertificationBox',
             parent=styles['Normal'],
             fontSize=10,
-            spaceAfter=6,
+            spaceAfter=8,
             leading=13,
-            textColor=colors.HexColor('#065F46'),
-            backColor=colors.HexColor('#F0FDF4'),
-            borderColor=colors.HexColor('#10B981'),
+            textColor=colors.HexColor('#0F766E'),
+            backColor=colors.HexColor('#F0FDFA'),
+            borderColor=colors.HexColor('#14B8A6'),
             borderWidth=1,
-            borderPadding=(6, 8, 6, 8)
+            borderPadding=8,
+            alignment=TA_LEFT
         )
         
-        info_box_style = ParagraphStyle(
-            'InfoBox',
+        info_label_style = ParagraphStyle(
+            'InfoLabel',
             parent=styles['Normal'],
-            fontSize=9,
-            spaceAfter=8,
+            fontSize=10,
+            spaceAfter=2,
             leading=12,
-            textColor=colors.HexColor('#1E40AF'),
-            backColor=colors.HexColor('#F0F9FF'),
-            borderColor=colors.HexColor('#3B82F6'),
-            borderWidth=1,
-            borderPadding=(8, 10, 8, 10),
-            alignment=TA_CENTER
+            textColor=colors.HexColor('#374151'),
+            fontName='Helvetica'
         )
         
         # Professional PDF content structure

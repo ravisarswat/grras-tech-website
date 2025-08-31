@@ -36,16 +36,31 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/courses" element={<Courses />} />
+          
+          {/* Course Routes */}
+          <Route path="/courses" element={<EnhancedCourses />} />
+          <Route path="/courses/category/:categorySlug" element={<CategoryCoursePage />} />
           <Route path="/courses/:slug" element={<CourseDetail />} />
+          
+          {/* Learning Path Routes */}
+          <Route path="/learning-paths" element={<LearningPaths />} />
+          <Route path="/learning-paths/:pathSlug" element={<LearningPathDetail />} />
+          
+          {/* Other Routes */}
           <Route path="/admissions" element={<Admissions />} />
           <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
+          
+          {/* Admin Routes */}
           <Route path="/admin/leads" element={<AdminLeads />} />
           <Route path="/admin/content" element={<AdminContent />} />
+          
+          {/* Legacy course route for backward compatibility */}
+          <Route path="/old-courses" element={<Courses />} />
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

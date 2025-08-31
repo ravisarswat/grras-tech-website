@@ -770,31 +770,6 @@ async def get_leads(admin_verified: bool = Depends(verify_admin_token)):
         logging.error(f"Error fetching leads: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch leads")
 
-@api_router.delete("/leads/{lead_id}")
-async def delete_lead(lead_id: str, admin_verified: bool = Depends(verify_admin_token)):
-    """Delete a specific lead (Admin only)"""
-    try:
-        # Validate ObjectId format
-        try:
-            object_id = ObjectId(lead_id)
-        except InvalidId:
-            raise HTTPException(status_code=400, detail="Invalid lead ID format")
-        
-        collection = db.leads
-        result = await collection.delete_one({"_id": object_id})
-        
-        if result.deleted_count == 0:
-            raise HTTPException(status_code=404, detail="Lead not found")
-        
-        logging.info(f"✅ Lead deleted: {lead_id}")
-        return {"message": "Lead deleted successfully", "lead_id": lead_id}
-        
-    except HTTPException:
-        raise
-    except Exception as e:
-        logging.error(f"Error deleting lead {lead_id}: {e}")
-        raise HTTPException(status_code=500, detail="Failed to delete lead")
-
 class BulkDeleteRequest(BaseModel):
     lead_ids: List[str]
     
@@ -837,6 +812,37 @@ async def delete_multiple_leads(request: BulkDeleteRequest, admin_verified: bool
             "deleted_count": result.deleted_count,
             "requested_count": len(request.lead_ids)
         }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error bulk deleting leads: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete leads")
+
+@api_router.delete("/leads/{lead_id}")
+async def delete_lead(lead_id: str, admin_verified: bool = Depends(verify_admin_token)):
+    """Delete a specific lead (Admin only)"""
+    try:
+        # Validate ObjectId format
+        try:
+            object_id = ObjectId(lead_id)
+        except InvalidId:
+            raise HTTPException(status_code=400, detail="Invalid lead ID format")
+        
+        collection = db.leads
+        result = await collection.delete_one({"_id": object_id})
+        
+        if result.deleted_count == 0:
+            raise HTTPException(status_code=404, detail="Lead not found")
+        
+        logging.info(f"✅ Lead deleted: {lead_id}")
+        return {"message": "Lead deleted successfully", "lead_id": lead_id}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error deleting lead {lead_id}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete lead")
         
     except HTTPException:
         raise

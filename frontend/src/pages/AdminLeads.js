@@ -566,7 +566,19 @@ const AdminLeads = () => {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {filteredLeads.map((lead, index) => (
-                      <tr key={lead._id || index} className="hover:bg-gray-50">
+                      <tr key={lead._id || index} className={`hover:bg-gray-50 ${selectedLeads.has(lead._id) ? 'bg-blue-50' : ''}`}>
+                        <td className="px-3 py-4">
+                          <button
+                            onClick={() => toggleLeadSelection(lead._id)}
+                            className="flex items-center justify-center w-5 h-5 text-gray-500 hover:text-gray-700"
+                          >
+                            {selectedLeads.has(lead._id) ? (
+                              <CheckSquare className="w-4 h-4 text-blue-600" />
+                            ) : (
+                              <Square className="w-4 h-4" />
+                            )}
+                          </button>
+                        </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div>
                             <div className="text-sm font-medium text-gray-900">

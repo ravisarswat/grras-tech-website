@@ -227,15 +227,120 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp_file:
             pdf_path = tmp_file.name
         
-        # Enhanced PDF generation with custom page template
+        # Professional PDF template class
+        class ProfessionalTemplate:
+            def __init__(self, pdf_path, institute_data, branding_data, course_data):
+                self.pdf_path = pdf_path
+                self.institute_data = institute_data
+                self.branding_data = branding_data
+                self.course_data = course_data
+                self.logo_image = None
+                self.setup_logo()
+                
+            def setup_logo(self):
+                """Download and prepare logo for PDF"""
+                logo_url = self.branding_data.get("logoUrl", "")
+                if logo_url and logo_url.startswith('http'):
+                    try:
+                        response = requests.get(logo_url, timeout=10)
+                        if response.status_code == 200:
+                            self.logo_image = BytesIO(response.content)
+                            logging.info("✅ Logo loaded successfully")
+                        else:
+                            logging.warning(f"Failed to load logo: HTTP {response.status_code}")
+                    except Exception as e:
+                        logging.warning(f"Error loading logo: {e}")
+                        
+            def create_header_footer_template(self, canvas_obj, doc):
+                """Professional header and footer for each page"""
+                canvas_obj.saveState()
+                
+                # Page dimensions
+                page_width = A4[0]
+                page_height = A4[1]
+                
+                # Header section
+                header_y = page_height - 40*mm
+                
+                # Header background
+                canvas_obj.setFillColor(colors.HexColor('#DC2626'))
+                canvas_obj.rect(0, header_y, page_width, 25*mm, fill=True, stroke=False)
+                
+                # Logo in header
+                if self.logo_image:
+                    try:
+                        self.logo_image.seek(0)  # Reset stream position
+                        img = Image(self.logo_image, width=40*mm, height=15*mm)
+                        img.drawOn(canvas_obj, 20*mm, header_y + 5*mm)
+                    except Exception as e:
+                        logging.warning(f"Error drawing logo: {e}")
+                
+                # Institute name in header
+                canvas_obj.setFillColor(colors.white)
+                canvas_obj.setFont("Helvetica-Bold", 16)
+                institute_name = self.institute_data.get("name", "GRRAS Solutions Training Institute")
+                canvas_obj.drawString(70*mm, header_y + 12*mm, institute_name)
+                
+                canvas_obj.setFont("Helvetica", 10)
+                canvas_obj.drawString(70*mm, header_y + 7*mm, 
+                                    self.institute_data.get("tagline", "Empowering Futures Through Technology"))
+                
+                # Footer section
+                footer_y = 15*mm
+                
+                # Footer line
+                canvas_obj.setStrokeColor(colors.HexColor('#DC2626'))
+                canvas_obj.setLineWidth(1)
+                canvas_obj.line(20*mm, footer_y + 10*mm, page_width - 20*mm, footer_y + 10*mm)
+                
+                # Footer content
+                canvas_obj.setFillColor(colors.HexColor('#6B7280'))
+                canvas_obj.setFont("Helvetica", 8)
+                
+                # Left footer: Contact info
+                phone = ', '.join(self.institute_data.get("phones", ["090019 91227"]))
+                canvas_obj.drawString(20*mm, footer_y + 5*mm, f"📞 {phone}")
+                
+                email = ', '.join(self.institute_data.get("emails", ["info@grrassolutions.com"]))
+                canvas_obj.drawString(20*mm, footer_y + 1*mm, f"📧 {email}")
+                
+                # Right footer: Page number and date
+                page_num = canvas_obj.getPageNumber()
+                canvas_obj.drawRightString(page_width - 20*mm, footer_y + 5*mm, f"Page {page_num}")
+                
+                current_date = datetime.now().strftime("%B %Y")
+                canvas_obj.drawRightString(page_width - 20*mm, footer_y + 1*mm, f"Generated: {current_date}")
+                
+                canvas_obj.restoreState()
+        
+        # Initialize professional template
+        template_handler = ProfessionalTemplate(pdf_path, institute, branding, course)
+        
+        # Enhanced PDF generation with professional layout
         doc = SimpleDocTemplate(
             pdf_path, 
             pagesize=A4, 
-            rightMargin=2*cm,
-            leftMargin=2*cm,
-            topMargin=2.5*cm,
-            bottomMargin=2*cm
+            rightMargin=20*mm,
+            leftMargin=20*mm,
+            topMargin=30*mm,
+            bottomMargin=25*mm
         )
+        
+        # Set up page template with header/footer
+        def on_first_page(canvas, doc):
+            template_handler.create_header_footer_template(canvas, doc)
+            
+        def on_later_pages(canvas, doc):
+            template_handler.create_header_footer_template(canvas, doc)
+        
+        doc.pageTemplates = [
+            PageTemplate(id='first', frames=[Frame(20*mm, 25*mm, A4[0]-40*mm, A4[1]-55*mm, 
+                                                 leftPadding=0, bottomPadding=0, rightPadding=0, topPadding=0)],
+                        onPage=on_first_page),
+            PageTemplate(id='later', frames=[Frame(20*mm, 25*mm, A4[0]-40*mm, A4[1]-55*mm,
+                                                 leftPadding=0, bottomPadding=0, rightPadding=0, topPadding=0)],
+                        onPage=on_later_pages)
+        ]
         
         styles = getSampleStyleSheet()
         

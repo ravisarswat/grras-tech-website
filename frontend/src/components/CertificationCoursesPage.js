@@ -48,6 +48,12 @@ const CertificationCoursesPage = () => {
       return 'developer';
     }
 
+    if (vendor === 'devops') {
+      if (level.includes('beginner') || title.includes('basics') || title.includes('foundation')) return 'foundation';
+      if (level.includes('advanced') || title.includes('advanced') || title.includes('expert')) return 'expert';
+      return 'professional';
+    }
+
     if (vendor === 'programming') {
       if (level.includes('beginner') || title.includes('basics') || title.includes('foundation') || title.includes('c++')) return 'beginner';
       if (level.includes('advanced') || title.includes('advanced') || title.includes('professional') || title.includes('machine learning')) return 'professional';

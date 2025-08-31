@@ -1,0 +1,86 @@
+{
+  "timestamp": "2025-08-31T09:42:03.947536",
+  "production_url": "https://grras-tech-website-production.up.railway.app",
+  "total_tests": 5,
+  "passed_tests": 5,
+  "failed_tests": 0,
+  "success_rate": "100.0%",
+  "test_results": {
+    "admin_login_working": true,
+    "migration_endpoint_working": true,
+    "courses_endpoint_working": true,
+    "course_count_verification": true,
+    "certification_courses_present": true,
+    "learning_paths_present": true
+  },
+  "errors": [],
+  "total_courses": 13,
+  "found_courses": [
+    {
+      "title": "DevOps Training",
+      "slug": "devops-training",
+      "category": "cloud"
+    },
+    {
+      "title": "BCA Degree Program",
+      "slug": "bca-degree",
+      "category": "degree"
+    },
+    {
+      "title": "RHCSA",
+      "slug": "rhcsa",
+      "category": "certification"
+    },
+    {
+      "title": "Data Science & Machine Learning",
+      "slug": "data-science-machine-learning",
+      "category": "programming"
+    },
+    {
+      "title": "Cyber Security",
+      "slug": "cyber-security",
+      "category": "security"
+    },
+    {
+      "title": "Java & Salesforce (Admin + Developer)",
+      "slug": "java-salesforce",
+      "category": "programming"
+    },
+    {
+      "title": "C / C++ & Data Structures",
+      "slug": "c-cpp-dsa",
+      "category": "programming"
+    },
+    {
+      "title": "AWS Cloud Practitioner Certification Training",
+      "slug": "aws-cloud-practitioner-certification",
+      "category": "cloud"
+    },
+    {
+      "title": "AWS Solutions Architect Associate Certification",
+      "slug": "aws-solutions-architect-associate",
+      "category": "cloud"
+    },
+    {
+      "title": "CKA - Certified Kubernetes Administrator",
+      "slug": "cka-certified-kubernetes-administrator",
+      "category": "cloud"
+    },
+    {
+      "title": "CKS - Certified Kubernetes Security Specialist",
+      "slug": "cks-certified-kubernetes-security",
+      "category": "security"
+    },
+    {
+      "title": "RHCE - Red Hat Certified Engineer",
+      "slug": "rhce-red-hat-certified-engineer",
+      "category": "certification"
+    },
+    {
+      "title": "DO188 - Red Hat OpenShift Development I",
+      "slug": "do188-red-hat-openshift-development",
+      "category": "cloud"
+    }
+  ],
+  "verification_successful": true
+}

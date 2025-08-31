@@ -1,4 +1,5 @@
 import React from 'react';
+import { useContent } from '../contexts/ContentContext';
 import { Link } from 'react-router-dom';
 import { 
   Users, 

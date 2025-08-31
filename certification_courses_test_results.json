@@ -1,0 +1,29 @@
+{
+  "timestamp": "2025-08-31T12:14:56.456475",
+  "backend_url": "https://grras-cms.preview.emergentagent.com",
+  "test_focus": "CertificationCoursesPage functionality",
+  "total_tests": 5,
+  "passed_tests": 5,
+  "failed_tests": 0,
+  "success_rate": "100.0%",
+  "test_results": {
+    "health_check": true,
+    "cms_content_accessible": true,
+    "courses_endpoint_working": true,
+    "courses_data_complete": true,
+    "course_categories_available": true,
+    "learning_paths_available": true,
+    "individual_course_access": true,
+    "no_backend_errors": true
+  },
+  "errors": [],
+  "courses_found": 23,
+  "frontend_ready": {
+    "ready": true,
+    "critical_functionality": "working",
+    "course_categories": "available",
+    "learning_paths": "available",
+    "course_data_quality": "good",
+    "individual_access": "working"
+  }
+}

@@ -786,6 +786,22 @@ const AdminContent = () => {
             </div>
           )}
 
+          {/* Categories Tab */}
+          {activeTab === 'categories' && (
+            <CategoryManager 
+              content={content} 
+              updateContent={updateContent}
+            />
+          )}
+
+          {/* Learning Paths Tab */}
+          {activeTab === 'paths' && (
+            <LearningPathManager 
+              content={content} 
+              updateContent={updateContent}
+            />
+          )}
+
           {/* Footer Tab */}
           {activeTab === 'footer' && (
             <FooterTab 

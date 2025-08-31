@@ -586,7 +586,7 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
             content_elements.append(Spacer(1, 3*mm))
             
             for i, outcome in enumerate(learning_outcomes[:10], 1):
-                content_elements.append(Paragraph(f"{i}. {outcome}", bullet_style))
+                content_elements.append(Paragraph(f"{i}. {outcome}", number_list_style))
             content_elements.append(Spacer(1, 8*mm))
         
         # Tools & Technologies Section

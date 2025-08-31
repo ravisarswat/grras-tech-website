@@ -166,6 +166,7 @@ const CertificationCoursesPage = () => {
       redhat: [],
       aws: [],
       kubernetes: [],
+      devops: [],
       programming: [],
       degree: [],
       general: []

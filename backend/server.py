@@ -421,84 +421,89 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         
         content_elements.append(Spacer(1, 8*mm))
         
-        # Course Highlights - each item one line, keep together
+        # Course Highlights Section (NO DUPLICATES)
         if highlights:
-            highlights_section = []
-            highlights_section.append(Paragraph("Course Highlights", section_heading_style))
+            content_elements.append(Paragraph("Course Highlights", section_heading_style))
             
-            for highlight in highlights[:12]:  # Limit for space
-                highlights_section.append(Paragraph(f"✓ {highlight}", bullet_list_style))
+            for highlight in highlights[:8]:  # Limit for space
+                # Clean highlight text - remove any unicode issues
+                clean_highlight = str(highlight).replace('✓', '•').replace('$', '').replace('\\', '')
+                content_elements.append(Paragraph(f"• {clean_highlight}", bullet_list_style))
             
-            # Keep highlights together on same page
-            content_elements.append(KeepTogether(highlights_section))
             content_elements.append(Spacer(1, 8*mm))
         
-        # Learning Outcomes - each item one line, keep together  
+        # Learning Outcomes Section (NO DUPLICATES)
         if learning_outcomes:
-            outcomes_section = []
-            outcomes_section.append(Paragraph("What You'll Learn", section_heading_style))
+            content_elements.append(Paragraph("What You'll Learn", section_heading_style))
             
-            for i, outcome in enumerate(learning_outcomes[:12], 1):
-                outcomes_section.append(Paragraph(f"{i}. {outcome}", number_list_style))
+            for i, outcome in enumerate(learning_outcomes[:8], 1):
+                # Clean outcome text
+                clean_outcome = str(outcome).replace('$', '').replace('\\', '')
+                content_elements.append(Paragraph(f"{i}. {clean_outcome}", number_list_style))
             
-            content_elements.append(KeepTogether(outcomes_section))
             content_elements.append(Spacer(1, 8*mm))
         
-        # Tools & Technologies - Multi-column grid (3 columns)
+        # Tools & Technologies Section (NO DUPLICATES) 
         if tools:
-            content_elements.append(Paragraph("Tools & Technologies Covered", section_heading_style))
+            content_elements.append(Paragraph("Tools & Technologies", section_heading_style))
             
-            # Create 3-column grid
+            # Create clean 2-column layout (better fitting)
             tools_data = []
-            for i in range(0, len(tools), 3):
+            for i in range(0, len(tools), 2):
                 row = []
-                for j in range(3):
+                for j in range(2):
                     if i + j < len(tools):
-                        row.append(f"• {tools[i + j]}")
+                        clean_tool = str(tools[i + j]).replace('$', '').replace('\\', '')
+                        row.append(f"• {clean_tool}")
                     else:
                         row.append("")
                 tools_data.append(row)
             
             if tools_data:
-                tools_table = Table(tools_data, colWidths=[53*mm, 53*mm, 54*mm])
+                tools_table = Table(tools_data, colWidths=[80*mm, 80*mm])
                 tools_table.setStyle(TableStyle([
                     ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
-                    ('FONTSIZE', (0, 0), (-1, -1), 9),
+                    ('FONTSIZE', (0, 0), (-1, -1), 10),
                     ('TEXTCOLOR', (0, 0), (-1, -1), colors.HexColor('#374151')),
                     ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
                     ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-                    ('LEFTPADDING', (0, 0), (-1, -1), 2),
-                    ('TOPPADDING', (0, 0), (-1, -1), 2),
-                    ('BOTTOMPADDING', (0, 0), (-1, -1), 2),
+                    ('LEFTPADDING', (0, 0), (-1, -1), 5),
+                    ('TOPPADDING', (0, 0), (-1, -1), 3),
+                    ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
                 ]))
                 content_elements.append(tools_table)
             content_elements.append(Spacer(1, 8*mm))
         
-        # Career Opportunities
+        # Career Opportunities Section (NO DUPLICATES)
         if career_roles:
-            careers_section = []
-            careers_section.append(Paragraph("Career Opportunities", section_heading_style))
+            content_elements.append(Paragraph("Career Opportunities", section_heading_style))
             
-            for role in career_roles[:10]:
-                careers_section.append(Paragraph(f"→ {role}", bullet_list_style))
+            for role in career_roles[:6]:
+                clean_role = str(role).replace('$', '').replace('\\', '')
+                content_elements.append(Paragraph(f"• {clean_role}", bullet_list_style))
             
-            content_elements.append(KeepTogether(careers_section))
             content_elements.append(Spacer(1, 8*mm))
         
-        # Certification Section - Styled block with icon
-        cert_content = f"🏆 <b>Certification Details</b><br/><br/>{certificate_info}<br/><br/>"
-        cert_content += "✓ Industry-recognized certificate upon completion<br/>"
-        cert_content += "✓ Digital verification available<br/>"
-        cert_content += "✓ LinkedIn profile enhancement ready<br/>"
-        cert_content += "✓ Lifetime validity with institute backing"
+        # Certification Section (NO DUPLICATES) - Clean and Professional
+        content_elements.append(Paragraph("Certification Details", section_heading_style))
         
-        # Add QR code info if available
-        qr_info = course.get("certificateQR") or course.get("verificationLink")
-        if qr_info:
-            cert_content += f"<br/><br/>📱 <b>Verification:</b> {qr_info}"
+        # Clean certificate info
+        clean_cert_info = str(certificate_info).replace('$', '').replace('\\', '')
+        content_elements.append(Paragraph(clean_cert_info, body_text_style))
+        content_elements.append(Spacer(1, 4*mm))
         
-        content_elements.append(Paragraph(cert_content, certification_box_style))
-        content_elements.append(Spacer(1, 10*mm))
+        # Certificate benefits - no unicode symbols that cause issues
+        cert_benefits = [
+            "• Industry-recognized certificate upon completion",
+            "• Digital verification available", 
+            "• LinkedIn profile enhancement ready",
+            "• Lifetime validity with institute backing"
+        ]
+        
+        for benefit in cert_benefits:
+            content_elements.append(Paragraph(benefit, bullet_list_style))
+        
+        content_elements.append(Spacer(1, 8*mm))
         
         # Course Highlights Section
         if highlights:

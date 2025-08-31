@@ -24,6 +24,13 @@ const LearningPaths = () => {
   const [selectedLevel, setSelectedLevel] = useState('all');
   const [sortBy, setSortBy] = useState('popular');
   
+  // Debug logging
+  console.log('LearningPaths Debug:', {
+    content: content,
+    learningPaths: content?.learningPaths,
+    learningPathsKeys: content?.learningPaths ? Object.keys(content.learningPaths) : 'undefined'
+  });
+  
   const learningPaths = content?.learningPaths || {};
   const courses = content?.courses || [];
 

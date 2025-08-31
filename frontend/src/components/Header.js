@@ -327,13 +327,15 @@ const Header = () => {
               ))}
               
               <div className="pt-4 border-t border-gray-100">
-                <Link
-                  to="/admissions"
+                <a
+                  href="https://www.grras.tech/admissions"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="block w-full text-center btn-primary"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Apply Now
-                </Link>
+                </a>
               </div>
             </div>
           </div>

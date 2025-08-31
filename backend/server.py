@@ -651,20 +651,24 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         content_elements.append(Spacer(1, 8*mm))
         content_elements.append(Paragraph(f"<i>Generated on: {current_date}</i>", body_text_style))
         
-        # Build PDF with GRRAS template
+        # Build PDF with WORKING GRRAS template
         try:
-            doc.build(content_elements, onFirstPage=create_header_footer, onLaterPages=create_header_footer)
-            logging.info(f"✅ GRRAS PDF generated for {course_name}")
+            # ENSURE header/footer function is called for EVERY page
+            doc.build(content_elements, 
+                     onFirstPage=create_header_footer, 
+                     onLaterPages=create_header_footer)
+            logging.info(f"✅ GRRAS PDF with headers/footers generated for {course_name}")
         except Exception as e:
             logging.error(f"PDF generation error: {e}")
-            # Fallback to simple document
+            # Fallback without headers if main generation fails
             try:
                 pdf_buffer.seek(0)  # Reset buffer
+                pdf_buffer.truncate(0)  # Clear buffer completely
                 simple_doc = SimpleDocTemplate(pdf_buffer, pagesize=A4)
                 simple_doc.build(content_elements)
-                logging.info("✅ Fallback PDF generation successful")
+                logging.info("✅ Fallback PDF generation (without headers) successful")
             except Exception as fallback_error:
-                logging.error(f"Fallback PDF generation also failed: {fallback_error}")
+                logging.error(f"Complete PDF generation failure: {fallback_error}")
                 raise HTTPException(status_code=422, detail=f"Failed to generate syllabus: {str(fallback_error)}")
         
         # Store lead information (non-blocking)

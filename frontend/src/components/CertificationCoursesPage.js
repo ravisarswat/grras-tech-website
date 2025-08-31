@@ -104,6 +104,8 @@ const CertificationCoursesPage = () => {
       redhat: [],
       aws: [],
       kubernetes: [],
+      programming: [],
+      degree: [],
       general: []
     };
 
@@ -111,33 +113,85 @@ const CertificationCoursesPage = () => {
       const title = course.title?.toLowerCase() || '';
       const category = course.category?.toLowerCase() || '';
       const tools = course.tools?.join(' ').toLowerCase() || '';
-      const searchText = `${title} ${category} ${tools}`;
+      const oneLiner = course.oneLiner?.toLowerCase() || '';
+      const searchText = `${title} ${category} ${tools} ${oneLiner}`;
 
-      // Categorize by vendor keywords
+      let categorized_flag = false;
+
+      // Categorize by vendor keywords with improved logic
       if (courseVendors.redhat.keywords.some(keyword => searchText.includes(keyword))) {
         categorized.redhat.push({
           ...course,
           vendor: 'redhat',
           level: determineLevel(course, 'redhat')
         });
-      } else if (courseVendors.aws.keywords.some(keyword => searchText.includes(keyword))) {
+        categorized_flag = true;
+      }
+      
+      if (courseVendors.aws.keywords.some(keyword => searchText.includes(keyword))) {
         categorized.aws.push({
           ...course,
           vendor: 'aws',
           level: determineLevel(course, 'aws')
         });
-      } else if (courseVendors.kubernetes.keywords.some(keyword => searchText.includes(keyword))) {
+        categorized_flag = true;
+      }
+      
+      if (courseVendors.kubernetes.keywords.some(keyword => searchText.includes(keyword))) {
         categorized.kubernetes.push({
           ...course,
           vendor: 'kubernetes',
           level: determineLevel(course, 'kubernetes')
         });
-      } else {
-        categorized.general.push({
+        categorized_flag = true;
+      }
+      
+      if (courseVendors.programming.keywords.some(keyword => searchText.includes(keyword))) {
+        categorized.programming.push({
           ...course,
-          vendor: 'general',
-          level: 'all'
+          vendor: 'programming',
+          level: determineLevel(course, 'programming')
         });
+        categorized_flag = true;
+      }
+      
+      if (courseVendors.degree.keywords.some(keyword => searchText.includes(keyword))) {
+        categorized.degree.push({
+          ...course,
+          vendor: 'degree',
+          level: determineLevel(course, 'degree')
+        });
+        categorized_flag = true;
+      }
+
+      // Always add to general category
+      categorized.general.push({
+        ...course,
+        vendor: 'general',
+        level: 'all'
+      });
+
+      // If not categorized elsewhere, ensure it's visible somewhere
+      if (!categorized_flag) {
+        // Check if it's a programming course by common terms
+        if (title.includes('java') || title.includes('salesforce') || title.includes('c++') || 
+            title.includes('data structures') || title.includes('programming') ||
+            category.includes('programming') || category.includes('development')) {
+          categorized.programming.push({
+            ...course,
+            vendor: 'programming',
+            level: determineLevel(course, 'programming')
+          });
+        }
+        // Check if it's a degree program
+        else if (title.includes('bca') || title.includes('degree') || title.includes('bachelor') ||
+                 category.includes('degree') || category.includes('graduation')) {
+          categorized.degree.push({
+            ...course,
+            vendor: 'degree', 
+            level: determineLevel(course, 'degree')
+          });
+        }
       }
     });
 

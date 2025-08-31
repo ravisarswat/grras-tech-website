@@ -899,6 +899,8 @@ class BackendTester:
                 ("Leads Management", self.test_leads_management),
                 ("New Certification Courses Addition", self.test_new_courses_addition),
                 ("New Certification Courses Verification", self.test_new_courses_verification),
+                ("New Learning Paths Addition", self.test_new_learning_paths_addition),
+                ("New Learning Paths Verification", self.test_new_learning_paths_verification),
             ]
             
             passed_tests = 0

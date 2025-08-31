@@ -1,0 +1,21 @@
+{
+  "timestamp": "2025-08-31T03:48:02.720343",
+  "backend_url": "https://training-admin-cms.preview.emergentagent.com",
+  "total_tests": 6,
+  "passed_tests": 6,
+  "failed_tests": 0,
+  "success_rate": "100.0%",
+  "test_results": {
+    "pdf_endpoint_form_data": true,
+    "pdf_multiple_courses": true,
+    "pdf_content_validation": true,
+    "pdf_styling_validation": true,
+    "lead_storage_validation": true,
+    "error_handling_invalid_slug": true,
+    "cms_data_integration": true,
+    "enhanced_features": true
+  },
+  "errors": [],
+  "courses_tested": 9,
+  "enhanced_pdf_status": "WORKING"
+}

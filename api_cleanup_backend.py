@@ -25,7 +25,9 @@ def get_current_content():
     try:
         response = requests.get(f"{BASE_URL}/content")
         response.raise_for_status()
-        return response.json()
+        data = response.json()
+        # Handle nested content structure
+        return data.get('content', data)
     except Exception as e:
         print(f"❌ Error fetching content: {e}")
         return None

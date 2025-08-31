@@ -227,16 +227,17 @@ const CertificationCoursesPage = () => {
   const determineLevel = (course, vendor) => {
     const title = course.title?.toLowerCase() || '';
     const level = course.level?.toLowerCase() || '';
+    const category = course.category?.toLowerCase() || '';
 
     if (vendor === 'redhat') {
-      if (title.includes('rhcsa') || title.includes('basics') || title.includes('foundation')) return 'foundation';
-      if (title.includes('rhce') || title.includes('do188') || title.includes('engineer')) return 'professional';
+      if (title.includes('rhcsa') || title.includes('basics') || title.includes('foundation') || level.includes('beginner')) return 'foundation';
+      if (title.includes('rhce') || title.includes('do188') || title.includes('engineer') || level.includes('advanced')) return 'professional';
       return 'specialist';
     }
 
     if (vendor === 'aws') {
-      if (title.includes('practitioner') || title.includes('foundation')) return 'foundation';
-      if (title.includes('associate') || title.includes('developer')) return 'associate';
+      if (title.includes('practitioner') || title.includes('foundation') || level.includes('beginner')) return 'foundation';
+      if (title.includes('associate') || title.includes('developer') || level.includes('intermediate')) return 'associate';
       return 'professional';
     }
 
@@ -247,8 +248,8 @@ const CertificationCoursesPage = () => {
     }
 
     if (vendor === 'programming') {
-      if (level.includes('beginner') || title.includes('basics') || title.includes('foundation')) return 'beginner';
-      if (level.includes('advanced') || title.includes('advanced') || title.includes('professional')) return 'professional';
+      if (level.includes('beginner') || title.includes('basics') || title.includes('foundation') || title.includes('c++')) return 'beginner';
+      if (level.includes('advanced') || title.includes('advanced') || title.includes('professional') || title.includes('machine learning')) return 'professional';
       return 'intermediate';
     }
 

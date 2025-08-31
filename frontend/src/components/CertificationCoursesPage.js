@@ -73,9 +73,16 @@ const CertificationCoursesPage = () => {
     }
 
     if (vendor === 'programming') {
-      if (level.includes('beginner') || title.includes('basics') || title.includes('foundation') || title.includes('c++')) return 'beginner';
-      if (level.includes('advanced') || title.includes('advanced') || title.includes('professional') || title.includes('machine learning')) return 'professional';
-      return 'intermediate';
+      // Check exact level matches first
+      if (level.includes('intermediate level') || level.includes('intermediate')) return 'intermediate';
+      if (level.includes('advanced') || level.includes('professional') || title.includes('machine learning') || title.includes('data science')) return 'professional';
+      if (level.includes('beginner') || title.includes('basics') || title.includes('foundation')) return 'beginner';
+      
+      // Default based on course complexity
+      if (title.includes('data science') || title.includes('machine learning')) return 'professional';
+      if (title.includes('c++') || title.includes('data structures')) return 'intermediate';
+      
+      return 'intermediate'; // Default for programming courses
     }
 
     if (vendor === 'degree') {

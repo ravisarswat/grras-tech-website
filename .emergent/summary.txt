@@ -1,19 +1,23 @@
 <analysis>
-The trajectory details the development of the GRRAS Solutions Training Institute website. Initially, the AI engineer established a full-stack MVP and then rapidly evolved it into a CMS-driven system using React, FastAPI, and MongoDB Atlas. A major focus was on robust content management, including an expanded course schema and dynamic UI rendering.
-
-Significant challenges arose with Railway deployment, primarily related to dependency management (yarn vs. npm), conflicting build configurations (monorepo detection), and persistent data synchronization between local and production MongoDB instances. The AI iteratively addressed these, refining , , and other deployment-related files, often cleaning up redundant or conflicting configurations.
-
-Beyond deployment, the AI implemented comprehensive CMS features: a new , dynamic header/footer, and an . It also performed extensive UI/UX improvements on course detail pages. The most recent efforts involved resolving a specific login issue for the  page and identifying that the  was incorrectly placed on the homepage, which is the immediate task at hand.
+The AI engineer successfully transformed an MVP into a CMS-driven application, overcoming significant Railway deployment issues involving conflicting build configurations and dependency management. Initial tasks included fixing login for , relocating the , and implementing CMS control for homepage content. A major focus was on fixing and enhancing the PDF generation system, which required multiple iterations to address frontend endpoint mismatches, persistent browser caching, backend null-safety, proper ReportLab styling, logo integration, and character encoding. Concurrently, full lead deletion functionality (single and bulk) was added to the admin panel. The current work is focused on a strategic overhaul of course organization, introducing categories and learning paths, with a detailed plan for CMS and frontend enhancements and a Railway staging environment.
 </analysis>
 
 <product_requirements>
-The GRRAS Solutions Training Institute requires a professional, multi-page website with a lead capture system, PDF syllabus downloads, an admin panel for lead management and content, GRRAS branding, and responsive design with SEO. The project advanced to a fully CMS-driven system, enabling dynamic content management (hero banner, course details, settings, footer, contact info) via a secure admin panel () with CRUD, reordering, visibility toggles, and version history. Content should be editable through the CMS, and all frontend pages must render exclusively from this data, with PDF generation reflecting live CMS content. A critical requirement was ensuring CMS data persistence across Railway deployments. Recent specific tasks included fully binding all course fields, adding a Cyber Security course, fixing the header Courses dropdown, binding Contact page and Footer details from CMS, improving logo visibility, ensuring CMS data persistence after GitHub deploys, updating the production domain to , and an Eligibility Widget to dynamically display course eligibility from the CMS.
+The GRRAS Solutions Training Institute requires a professional, multi-page, responsive, SEO-friendly website with a lead capture system, PDF syllabus downloads, and a CMS admin panel for managing content, leads, and settings. Key features include dynamic content for hero banners, courses, footer, and contact information, with CRUD operations, reordering, visibility toggles, and version history.
+Recent explicit requests included:
+- Relocate and fix the Check Your Eligibility widget to , ensuring it displays course eligibility and handles missing data gracefully.
+- Fix the Send Us a Message contact form to save user queries to the database.
+- Make Popular Courses on the homepage CMS-editable (title, subtitle, auto/manual selection, max items).
+- Provide guidance for updating the frontend domain to .
+- Fix and enhance PDF generation: ensure backend reliability (null safety, in-memory, proper response headers, 422 errors instead of 500s), and significantly improve PDF quality (logo, headers/footers, alignment, no duplicates, correct symbols/encoding).
+- Add individual and bulk lead deletion functionality to the admin panel.
+- Implement a comprehensive course organization strategy for numerous certification courses, including categories and learning paths, with a market-proven, mobile-first UX. This involves extensive CMS and frontend enhancements and a dedicated Railway staging environment.
 </product_requirements>
 
 <key_technical_concepts>
--   **Full-stack Development:** React (frontend) with Tailwind CSS, FastAPI (backend) with Pydantic.
--   **Data Management:** MongoDB Atlas (database), custom CMS logic for content CRUD, JWT for admin authentication,  for PDF generation.
--   **Deployment:** Railway platform (containerized deployment), Nixpacks for build configuration, npm <command>
+- **Full-stack Development**: React (frontend) with Tailwind CSS, FastAPI (backend) with Pydantic.
+- **Data Management**: MongoDB Atlas (database), custom CMS logic, JWT for admin authentication,  for PDF generation,  for in-memory PDF.
+- **Deployment**: Railway platform (containerized), Nixpacks for build configuration, npm <command>
 
 Usage:
 
@@ -46,7 +50,7 @@ or on the command line via: npm <command> --key=value
 More configuration info: npm help config
 Configuration fields: npm help 7 config
 
-npm@10.8.2 /usr/lib/node_modules/npm for frontend package management, 
+npm@10.8.2 /usr/lib/node_modules/npm for frontend, 
 Usage:   
   pip <command> [options]
 
@@ -123,56 +127,72 @@ General Options:
   --resume-retries <resume_retries>
                               Maximum attempts to resume or restart an
                               incomplete download. (default: 5) for backend.
--   **Environment Configuration:**  variables for URLs/credentials, .
+- **Environment**:  variables, CORS.
 </key_technical_concepts>
 
 <code_architecture>
 
 
--   **/app/backend/server.py**: Main FastAPI app.
-    -   **Changes**: Updated to prioritize  from environment for MongoDB connection, enhanced PDF generation to include new, comprehensive course fields.
+-   **/app/backend/server.py**: Main FastAPI application and API endpoints.
+    -   **Summary**: Handles API routes, MongoDB connection, PDF generation, and lead management.
+    -   **Changes**: PDF generation endpoint  was extensively rewritten multiple times to ensure null-safety, in-memory PDF creation (), proper  headers, 422 error handling, and professional ReportLab styling (logo, header/footer, typography, layout, character encoding, rupee symbol, no duplicate content). Lead deletion endpoints  and  were added.
 -   **/app/backend/content_manager.py**: Core CMS logic.
-    -   **Changes**: Refactored to exclusively use MongoDB for content storage; all JSON fallbacks and seeding mechanisms were removed from , , and audit logging methods. Duplicate class definition removed.
--   **/app/frontend/src/pages/AdminContent.js**: Main CMS admin UI.
-    -   **Changes**: Modified to include a new Footer tab and to integrate the  component for managing all course details, expanding its functionality beyond basic fields.
--   **/app/frontend/src/pages/Courses.js**: Displays course list.
-    -   **Changes**: Completely rewritten to exclusively use CMS data, removing all static course fallbacks and rendering course cards based on the new, expanded schema.
--   **/app/frontend/src/pages/CourseDetail.js**: Displays individual course details.
-    -   **Changes**: Updated to exclusively use CMS data, handle the expanded course schema gracefully (hiding empty fields), improved hero section/CTA card, added loading/error handling, and received significant UI/UX improvements (alignment, spacing, styled cards for Certificate/Batch info).  icon imported.
+    -   **Summary**: Manages content storage and retrieval from MongoDB.
+    -   **Changes**: Modified to include CMS schema for homepage Popular Courses and now being updated for advanced course organization (categories, learning paths).
+-   **/app/backend/requirements.txt**: Python dependencies.
+    -   **Summary**: Lists all Python packages needed for the backend.
+    -   **Changes**:  was explicitly added and pinned.
+-   **/app/frontend/src/pages/Home.js**: Homepage component.
+    -   **Summary**: Displays the hero section, popular courses, and other highlights.
+    -   **Changes**:  was removed. The Popular Courses section was updated to consume CMS data dynamically via , replacing hardcoded .
+-   **/app/frontend/src/pages/Admissions.js**: Admissions page component.
+    -   **Summary**: Contains admissions-related information.
+    -   **Changes**: The basic eligibility checker was replaced with the more advanced  component, which was moved here from . Unused state variables and functions related to the old checker were removed.
+-   **/app/frontend/src/pages/Contact.js**: Contact Us page component.
+    -   **Summary**: Contains a contact form for user inquiries.
+    -   **Changes**: The form submission endpoint was corrected from  to .
 -   **/app/frontend/src/pages/AdminLeads.js**: Admin panel for lead management.
-    -   **Changes**: Completely rewritten to align its authentication mechanism with , using a shared  and the same login endpoint/password () to resolve login failures for this specific page.
--   **/app/frontend/src/pages/Home.js**: Homepage.
-    -   **Changes**: The  component was temporarily added to this page, after the courses section.
--   **/app/frontend/src/components/Header.js**: Site header.
-    -   **Changes**: Updated course dropdown to use  (instead of ) from CMS data for dynamic navigation, fixed clickability issues.
--   **/app/frontend/src/components/Footer.js**: Site footer.
-    -   **Changes**: Completely rewritten to render dynamically from CMS-managed footer data, with significant styling improvements for logo visibility, layout, contact info, column alignment, social media icons, and overall professionalism.
--   **/app/frontend/src/components/CourseEditor.js**: (New File) Component for adding/editing courses in the admin panel, supporting the expanded course schema (overview, highlights, learningOutcomes, careerRoles, level, certificateInfo, batchesInfo, category, thumbnailUrl, order, visible, seo).
--   **/app/frontend/src/components/FooterTab.js**: (New File) Component encapsulating the entire Footer management logic for the CMS admin.
--   **/app/frontend/src/components/EligibilityWidget.js**: (New File) Component for the Check Your Eligibility feature, designed to display course eligibility dynamically.
--   **/app/package.json**: (Root Level - New) Consolidated Node.js dependencies and build/start scripts at the root level for Railway's unified build process, eliminating separate frontend/backend  configurations.
--   **/app/requirements.txt**: (Root Level - New) Consolidated Python dependencies at the root level, including  and To use the fastapi command, please install "fastapi[standard]":
-
-	pip install "fastapi[standard]" for the backend.
--   **/app/nixpacks.toml**: (Root Level - New) Single configuration file for Railway, explicitly defining the build ( for frontend) and start ( for backend) commands, and specifying Node.js 20 + Python 3.11.
--   Other railway related files were largely consolidated or removed to simplify the deployment setup.
+    -   **Summary**: Displays captured leads and allows management.
+    -   **Changes**: Enhanced with selection checkboxes, Select All functionality, individual delete buttons, a Delete Selected bulk button, and a confirmation modal for lead deletion. The bulk delete frontend request format was fixed to match backend expectations.
+-   **/app/frontend/src/pages/CourseDetail.js**: Individual course detail page.
+    -   **Summary**: Displays details of a specific course and includes a Download Syllabus button.
+    -   **Changes**: Temporarily reverted to use  for PDF download, after attempts with  failed due to caching issues. It now passes  (instead of ) to the modal.
+-   **/app/frontend/src/components/SyllabusModal.js**: Component for downloading the course syllabus PDF.
+    -   **Summary**: Handles the form submission for PDF generation.
+    -   **Changes**: Extensively modified. The API endpoint was corrected from  to . Form data submission was changed from JSON to . Null-safe access for  and  fields was implemented to prevent JavaScript errors. It was temporarily removed/replaced by  during caching issues, then re-integrated with fixes.
+-   **/app/frontend/src/components/EligibilityWidget.js**: New component for checking course eligibility.
+    -   **Summary**: Dynamically displays eligibility criteria for selected courses.
+    -   **Changes**: Moved from  to . Enhanced to show a friendly fallback message when eligibility text is missing.
+-   **/app/frontend/src/components/DirectPDFDownload.js**: (New, then removed) Temporary component for direct PDF download.
+    -   **Summary**: Created as a fallback during persistent frontend caching issues for PDF download.
+    -   **Changes**: Created to bypass issues with , implemented form submission with  and a clean UI, then effectively removed by reverting CourseDetail to use .
+-   **/app/nixpacks.toml**: Root-level Railway configuration.
+    -   **Summary**: Defines build and start commands for Railway deployment.
+    -   **Changes**: Consolidated build commands to simplify deployment and explicitly set Node.js and Python versions.
+-   **/app/package.json**: Root-level Node.js dependencies and scripts.
+    -   **Summary**: Manages frontend dependencies and build scripts.
+    -   **Changes**: Consolidated dependencies and build scripts for Railway.
 </code_architecture>
 
 <pending_tasks>
--   Move the Check Your Eligibility widget from  to .
--   Verify production domain environment variable for .
--   Address any remaining revalidation/caching issues after CMS content updates.
--   Ensure all popular courses logic is implemented as per options (top N visible or manually picked).
+- Create Railway staging project for course organization.
+- Implement  (Add/Edit/Delete, Icons, Descriptions, Course Assignment) in Admin Panel.
+- Implement  (Create, Add Courses, Prerequisites, Order, Pricing, Duration) in Admin Panel.
+- Enhance Homepage with , , and .
+- Create new frontend pages for all courses with filtering, category-specific displays, learning paths, and advanced search.
+- Further mobile optimization for new course discovery features.
 </pending_tasks>
 
 <current_work>
-Immediately before this summary request, the AI engineer had just completed a series of critical fixes addressing persistent Railway deployment failures, which involved a drastic cleanup of conflicting build configuration files and a re-consolidation of , , and  at the root level to simplify the build process for Railway. This was concluded with the expectation that the next GitHub commit would lead to a successful deployment.
+Immediately before this summary request, the AI engineer had completed a series of critical fixes and enhancements, bringing the GRRAS website to a robust, CMS-driven state. The most recent completed work involved comprehensively fixing and enhancing the PDF generation system and implementing full lead deletion functionality in the admin panel.
 
-Following this, the user reported that the  login was failing while  worked with the password . The AI successfully identified and fixed this, rewriting  to use the same shared authentication logic and token as , ensuring consistent login behavior.
+Specifically:
+- **PDF Generation**: The AI engineer successfully resolved all remaining PDF quality issues. The system now produces industry-standard, professional course syllabi with full GRRAS branding, including a proper logo and professional headers/footers on every page. Duplicate content has been eliminated, all character encoding issues (e.g., rupee symbol, C++ text) are resolved, and the layout is clean, readable, and properly formatted using dynamic CMS data. Backend tests confirmed all specified courses (DevOps, C/C++/DSA, Cyber Security) generate high-quality PDFs without errors. This was an iterative process, debugging persistent frontend caching issues and meticulously refining the ReportLab implementation in .
+- **Lead Deletion**: Both individual and bulk lead deletion functionality were fully implemented in the admin panel. This included adding backend API endpoints in  and enhancing  with selection checkboxes, a Select All feature, individual delete buttons, a Delete Selected bulk button, and a confirmation modal. The bulk delete frontend request format was also corrected.
 
-The trajectory then shows the AI identifying an unstated issue: the Check Your Eligibility widget, which was recently created and integrated, was incorrectly placed on the  page instead of the  page. The AI's last action was to begin locating the widget's current placement in  to initiate its relocation.
+The user then shifted focus, asking for a strategy to best display numerous certification courses. The AI proposed a Hybrid Approach (Progressive Disclosure) with categories and learning paths, detailing a comprehensive implementation plan involving CMS schema updates, new frontend pages, search/filtering, and mobile optimization. The user confirmed this plan and the AI engineer has just started implementing **Phase 1: CMS Foundation**, by modifying  to add advanced course organization features, specifically for course categories and learning paths.
 </current_work>
 
 <optional_next_step>
-Relocate the  from the  page to the  page.
+The next step is to add course discovery and search configuration to the home page, continuing the implementation of the course organization strategy.
 </optional_next_step>

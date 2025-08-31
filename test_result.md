@@ -2,7 +2,7 @@
 
 ## Test Summary
 - **Test Date**: 2025-08-30T11:45:59
-- **Backend URL**: https://training-admin-cms.preview.emergentagent.com
+- **Backend URL**: https://grras-cms-rebuild.preview.emergentagent.com
 - **Overall Success Rate**: 87.5% (7/8 tests passed)
 - **Critical Issues**: 1 (EligibilityWidget data compatibility)
 
@@ -146,7 +146,7 @@ The backend system is **HIGHLY FUNCTIONAL** with excellent performance and stabi
 **Test Focus**: Enhanced PDF generation improvements including styling, content structure, and CMS integration
 
 **Test Date**: 2025-08-31T03:48:02
-**Backend URL**: https://training-admin-cms.preview.emergentagent.com
+**Backend URL**: https://grras-cms-rebuild.preview.emergentagent.com
 **Overall Success Rate**: 100% (6/6 enhanced PDF tests passed)
 **Edge Case Success Rate**: 100% (4/4 edge case tests passed)
 

@@ -572,6 +572,8 @@ class BackendTester:
             self.errors.append(f"New courses verification test failed: {str(e)}")
             logger.error(f"❌ New courses verification test failed: {e}")
             return False
+    
+    async def run_all_tests(self) -> Dict[str, Any]:
         """Run all backend tests"""
         logger.info("🚀 Starting comprehensive backend testing...")
         

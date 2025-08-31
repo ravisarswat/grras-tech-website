@@ -528,7 +528,7 @@ class BackendTester:
                 
                 async with self.session.post(f"{self.api_base}/content", json=content_request, headers=headers) as save_response:
                     if save_response.status == 200:
-                        logger.info(f"✅ Successfully added {len(new_courses)} new certification courses")
+                        logger.info(f"✅ Successfully added {len(courses_to_add)} new certification courses")
                         logger.info(f"📊 Total courses now: {len(updated_courses)}")
                         self.test_results["new_courses_addition"] = True
                         return True

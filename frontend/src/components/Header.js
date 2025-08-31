@@ -311,16 +311,86 @@ const Header = () => {
                   {/* Mobile Courses Submenu */}
                   {item.hasDropdown && (
                     <div className="pl-6 space-y-1 mt-2">
-                      {courses.map((course) => (
-                        <Link
-                          key={course.slug}
-                          to={`/courses/${course.slug}`}
-                          className="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          {course.name}
-                        </Link>
-                      ))}
+                      <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 px-3">
+                        Technology Tracks
+                      </div>
+                      
+                      <Link
+                        to="/courses?tab=redhat"
+                        className="flex items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <span className="text-red-500 mr-2">🔴</span>
+                        Red Hat Technologies
+                      </Link>
+                      
+                      <Link
+                        to="/courses?tab=aws"
+                        className="flex items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <span className="text-orange-500 mr-2">☁️</span>
+                        AWS Cloud Platform
+                      </Link>
+                      
+                      <Link
+                        to="/courses?tab=kubernetes"
+                        className="flex items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <span className="text-blue-500 mr-2">⚙️</span>
+                        Kubernetes Ecosystem
+                      </Link>
+                      
+                      <Link
+                        to="/courses?tab=devops"
+                        className="flex items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <span className="text-green-500 mr-2">🔧</span>
+                        DevOps Engineering
+                      </Link>
+                      
+                      <Link
+                        to="/courses?tab=cybersecurity"
+                        className="flex items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <span className="text-slate-500 mr-2">🛡️</span>
+                        Cybersecurity & Ethical Hacking
+                      </Link>
+                      
+                      <Link
+                        to="/courses?tab=programming"
+                        className="flex items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <span className="text-purple-500 mr-2">💻</span>
+                        Programming & Development
+                      </Link>
+                      
+                      <Link
+                        to="/courses?tab=degree"
+                        className="flex items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <span className="text-indigo-500 mr-2">🎓</span>
+                        Degree Programs
+                      </Link>
+                      
+                      <div className="border-t border-gray-100 my-2"></div>
+                      
+                      <Link
+                        to="/courses"
+                        className="flex items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <BookOpen className="h-4 w-4 mr-2 text-gray-400" />
+                        <div>
+                          <div className="font-medium">All Courses</div>
+                          <div className="text-xs text-gray-500">Browse complete catalog</div>
+                        </div>
+                      </Link>
                     </div>
                   )}
                 </div>

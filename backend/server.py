@@ -443,64 +443,121 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
             fontName='Helvetica'
         )
         
-        # Professional PDF content structure
+        # PDF Content Generation - Following GRRAS Rules
         content_elements = []
         
-        # Title page content (header/footer handled by template)
-        content_elements.append(Spacer(1, 20*mm))
-        
-        # Course title section
-        content_elements.append(Paragraph("COURSE SYLLABUS", title_style))
-        content_elements.append(Spacer(1, 5*mm))
-        
-        # Course name with decorative line
-        content_elements.append(Paragraph(f"{course_name}", title_style))
+        # Course Title
         content_elements.append(Spacer(1, 10*mm))
+        content_elements.append(Paragraph("COURSE SYLLABUS", title_style))
+        content_elements.append(Paragraph(f"{course_name}", title_style))
+        content_elements.append(Spacer(1, 8*mm))
         
-        # Professional course overview box
+        # Course Overview (if available)
         if course_description:
-            overview_content = f"<b>Course Overview:</b><br/>{course_description}"
-            content_elements.append(Paragraph(overview_content, info_box_style))
+            content_elements.append(Paragraph("Course Overview", section_heading_style))
+            content_elements.append(Paragraph(course_description, body_text_style))
             content_elements.append(Spacer(1, 8*mm))
         
-        # Course details in professional table
-        course_details = [
-            ['Course Information', ''],
-            ['Duration', duration],
-            ['Level', level],
-            ['Investment', fees],
-            ['Eligibility', eligibility]
+        # Course Information - Label: Value format with ₹ for fee
+        content_elements.append(Paragraph("Course Information", section_heading_style))
+        
+        # Format fee with ₹ symbol
+        formatted_fee = fees
+        if fees and fees.lower() not in ['contact for details', 'on request', 'varies']:
+            # Add ₹ symbol if not already present and it's a number
+            if not fees.startswith('₹') and any(char.isdigit() for char in fees):
+                formatted_fee = f"₹ {fees}"
+        
+        course_info_items = [
+            f"<b>Duration:</b> {duration}",
+            f"<b>Level:</b> {level}",
+            f"<b>Fee:</b> {formatted_fee}",
+            f"<b>Eligibility:</b> {eligibility}"
         ]
         
-        # Professional table styling
-        course_table = Table(course_details, colWidths=[45*mm, 120*mm])
-        course_table.setStyle(TableStyle([
-            # Header row
-            ('SPAN', (0, 0), (1, 0)),
-            ('BACKGROUND', (0, 0), (1, 0), colors.HexColor('#DC2626')),
-            ('TEXTCOLOR', (0, 0), (1, 0), colors.white),
-            ('FONTNAME', (0, 0), (1, 0), 'Helvetica-Bold'),
-            ('FONTSIZE', (0, 0), (1, 0), 12),
-            ('ALIGN', (0, 0), (1, 0), 'CENTER'),
-            
-            # Data rows
-            ('BACKGROUND', (0, 1), (0, -1), colors.HexColor('#F8FAFC')),
-            ('FONTNAME', (0, 1), (0, -1), 'Helvetica-Bold'),
-            ('FONTNAME', (1, 1), (1, -1), 'Helvetica'),
-            ('FONTSIZE', (0, 1), (-1, -1), 10),
-            ('TEXTCOLOR', (0, 1), (-1, -1), colors.HexColor('#374151')),
-            
-            # Borders and padding
-            ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#E5E7EB')),
-            ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-            ('LEFTPADDING', (0, 0), (-1, -1), 8),
-            ('RIGHTPADDING', (0, 0), (-1, -1), 8),
-            ('TOPPADDING', (0, 0), (-1, -1), 6),
-            ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
-        ]))
+        for item in course_info_items:
+            content_elements.append(Paragraph(item, info_label_style))
         
-        content_elements.append(course_table)
-        content_elements.append(Spacer(1, 12*mm))
+        content_elements.append(Spacer(1, 8*mm))
+        
+        # Course Highlights - each item one line, keep together
+        if highlights:
+            highlights_section = []
+            highlights_section.append(Paragraph("Course Highlights", section_heading_style))
+            
+            for highlight in highlights[:12]:  # Limit for space
+                highlights_section.append(Paragraph(f"✓ {highlight}", bullet_list_style))
+            
+            # Keep highlights together on same page
+            content_elements.append(KeepTogether(highlights_section))
+            content_elements.append(Spacer(1, 8*mm))
+        
+        # Learning Outcomes - each item one line, keep together  
+        if learning_outcomes:
+            outcomes_section = []
+            outcomes_section.append(Paragraph("What You'll Learn", section_heading_style))
+            
+            for i, outcome in enumerate(learning_outcomes[:12], 1):
+                outcomes_section.append(Paragraph(f"{i}. {outcome}", number_list_style))
+            
+            content_elements.append(KeepTogether(outcomes_section))
+            content_elements.append(Spacer(1, 8*mm))
+        
+        # Tools & Technologies - Multi-column grid (3 columns)
+        if tools:
+            content_elements.append(Paragraph("Tools & Technologies Covered", section_heading_style))
+            
+            # Create 3-column grid
+            tools_data = []
+            for i in range(0, len(tools), 3):
+                row = []
+                for j in range(3):
+                    if i + j < len(tools):
+                        row.append(f"• {tools[i + j]}")
+                    else:
+                        row.append("")
+                tools_data.append(row)
+            
+            if tools_data:
+                tools_table = Table(tools_data, colWidths=[53*mm, 53*mm, 54*mm])
+                tools_table.setStyle(TableStyle([
+                    ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
+                    ('FONTSIZE', (0, 0), (-1, -1), 9),
+                    ('TEXTCOLOR', (0, 0), (-1, -1), colors.HexColor('#374151')),
+                    ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+                    ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+                    ('LEFTPADDING', (0, 0), (-1, -1), 2),
+                    ('TOPPADDING', (0, 0), (-1, -1), 2),
+                    ('BOTTOMPADDING', (0, 0), (-1, -1), 2),
+                ]))
+                content_elements.append(tools_table)
+            content_elements.append(Spacer(1, 8*mm))
+        
+        # Career Opportunities
+        if career_roles:
+            careers_section = []
+            careers_section.append(Paragraph("Career Opportunities", section_heading_style))
+            
+            for role in career_roles[:10]:
+                careers_section.append(Paragraph(f"→ {role}", bullet_list_style))
+            
+            content_elements.append(KeepTogether(careers_section))
+            content_elements.append(Spacer(1, 8*mm))
+        
+        # Certification Section - Styled block with icon
+        cert_content = f"🏆 <b>Certification Details</b><br/><br/>{certificate_info}<br/><br/>"
+        cert_content += "✓ Industry-recognized certificate upon completion<br/>"
+        cert_content += "✓ Digital verification available<br/>"
+        cert_content += "✓ LinkedIn profile enhancement ready<br/>"
+        cert_content += "✓ Lifetime validity with institute backing"
+        
+        # Add QR code info if available
+        qr_info = course.get("certificateQR") or course.get("verificationLink")
+        if qr_info:
+            cert_content += f"<br/><br/>📱 <b>Verification:</b> {qr_info}"
+        
+        content_elements.append(Paragraph(cert_content, certification_box_style))
+        content_elements.append(Spacer(1, 10*mm))
         
         # Course Highlights Section
         if highlights:

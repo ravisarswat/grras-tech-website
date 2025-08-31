@@ -124,6 +124,80 @@ const AdminLeads = () => {
     }
   };
 
+  // Delete Functions
+  const handleDeleteSingle = (lead) => {
+    setLeadsToDelete([lead]);
+    setShowDeleteConfirm(true);
+  };
+
+  const handleDeleteSelected = () => {
+    const leadsToDeleteArray = filteredLeads.filter(lead => selectedLeads.has(lead._id));
+    setLeadsToDelete(leadsToDeleteArray);
+    setShowDeleteConfirm(true);
+  };
+
+  const confirmDelete = async () => {
+    if (leadsToDelete.length === 0) return;
+
+    setIsDeleting(true);
+    try {
+      const token = localStorage.getItem('admin_token');
+      
+      if (leadsToDelete.length === 1) {
+        // Delete single lead
+        await axios.delete(`${API}/leads/${leadsToDelete[0]._id}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        toast.success('Lead deleted successfully!');
+      } else {
+        // Delete multiple leads
+        const leadIds = leadsToDelete.map(lead => lead._id);
+        await axios.delete(`${API}/leads/bulk`, {
+          data: leadIds,
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        toast.success(`${leadsToDelete.length} leads deleted successfully!`);
+      }
+      
+      // Refresh leads and clear selections
+      await fetchLeads();
+      setSelectedLeads(new Set());
+      setShowDeleteConfirm(false);
+      setLeadsToDelete([]);
+      
+    } catch (error) {
+      console.error('Error deleting leads:', error);
+      if (error.response?.status === 401) {
+        setIsAuthenticated(false);
+        localStorage.removeItem('admin_token');
+        toast.error('Session expired. Please login again.');
+      } else {
+        toast.error('Failed to delete leads. Please try again.');
+      }
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  // Selection Functions
+  const toggleLeadSelection = (leadId) => {
+    const newSelected = new Set(selectedLeads);
+    if (newSelected.has(leadId)) {
+      newSelected.delete(leadId);
+    } else {
+      newSelected.add(leadId);
+    }
+    setSelectedLeads(newSelected);
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedLeads.size === filteredLeads.length) {
+      setSelectedLeads(new Set());
+    } else {
+      setSelectedLeads(new Set(filteredLeads.map(lead => lead._id)));
+    }
+  };
+
   const filterLeads = () => {
     let filtered = [...leads];
     

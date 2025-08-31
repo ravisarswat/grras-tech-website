@@ -42,9 +42,9 @@ const SyllabusModal = ({ isOpen, onClose, courseSlug, courseName }) => {
       newErrors.email = 'Please enter a valid email address';
     }
     
-    if (!formData.phone.trim()) {
+    if (!formData.phone || !formData.phone.trim()) {
       newErrors.phone = 'Phone number is required';
-    } else if (!/^\d{10}$/.test(formData.phone.replace(/\D/g, ''))) {
+    } else if (!/^\d{10}$/.test((formData.phone || '').replace(/\D/g, ''))) {
       newErrors.phone = 'Please enter a valid 10-digit phone number';
     }
     

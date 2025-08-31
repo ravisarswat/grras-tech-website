@@ -15,8 +15,13 @@ import {
 import SEO from '../components/SEO';
 
 const About = () => {
+  const { content } = useContent();
+  
+  // Get years of excellence from CMS content
+  const yearsOfExcellence = content?.institute?.stats?.yearsOfExcellence || '18+';
+  
   const stats = [
-    { number: '10+', label: 'Years of Excellence', icon: <Award className="h-8 w-8" /> },
+    { number: yearsOfExcellence, label: 'Years of Excellence', icon: <Award className="h-8 w-8" /> },
     { number: '5000+', label: 'Students Trained', icon: <Users className="h-8 w-8" /> },
     { number: '95%', label: 'Placement Rate', icon: <TrendingUp className="h-8 w-8" /> },
     { number: '100+', label: 'Hiring Partners', icon: <Target className="h-8 w-8" /> }

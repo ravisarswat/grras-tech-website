@@ -308,21 +308,29 @@ const CertificationCoursesPage = () => {
               </p>
 
               {/* Stats */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12 max-w-3xl mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-12 max-w-4xl mx-auto">
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-2">{categorizedCourses.redhat.length}</div>
-                  <div className="text-sm text-gray-200">Red Hat Certs</div>
+                  <div className="text-2xl font-bold mb-2">{categorizedCourses.redhat.length}</div>
+                  <div className="text-sm text-gray-200">Red Hat</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-2">{categorizedCourses.aws.length}</div>
-                  <div className="text-sm text-gray-200">AWS Certs</div>
+                  <div className="text-2xl font-bold mb-2">{categorizedCourses.aws.length}</div>
+                  <div className="text-sm text-gray-200">AWS</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-2">{categorizedCourses.kubernetes.length}</div>
-                  <div className="text-sm text-gray-200">K8s Certs</div>
+                  <div className="text-2xl font-bold mb-2">{categorizedCourses.kubernetes.length}</div>
+                  <div className="text-sm text-gray-200">Kubernetes</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-2">95%</div>
+                  <div className="text-2xl font-bold mb-2">{categorizedCourses.programming.length}</div>
+                  <div className="text-sm text-gray-200">Programming</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold mb-2">{categorizedCourses.degree.length}</div>
+                  <div className="text-sm text-gray-200">Degrees</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold mb-2">95%</div>
                   <div className="text-sm text-gray-200">Success Rate</div>
                 </div>
               </div>

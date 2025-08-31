@@ -399,7 +399,22 @@ const CertificationCoursesPage = () => {
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                   }`}
                 >
-                  <span className="text-lg">{vendor.icon}</span>
+                  {vendor.icon && vendor.icon.startsWith('http') ? (
+                    <img 
+                      src={vendor.icon} 
+                      alt={`${vendor.name} Logo`}
+                      className="w-6 h-6 object-contain"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'inline';
+                      }}
+                    />
+                  ) : (
+                    <span className="text-lg">{vendor.icon}</span>
+                  )}
+                  <span className="text-lg" style={{ display: vendor.icon && vendor.icon.startsWith('http') ? 'none' : 'inline' }}>
+                    {vendor.icon && !vendor.icon.startsWith('http') ? vendor.icon : ''}
+                  </span>
                   <div className="text-left">
                     <div className="font-semibold">{vendor.name}</div>
                     <div className="text-xs opacity-75">{categorizedCourses[key]?.length || 0} courses</div>

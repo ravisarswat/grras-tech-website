@@ -807,8 +807,15 @@ async def delete_multiple_leads(request: BulkDeleteRequest, admin_verified: bool
         object_ids = []
         for lead_id in request.lead_ids:
             try:
-                object_ids.append(ObjectId(lead_id))
-            except InvalidId:
+                logging.info(f"🔍 Converting lead_id: {lead_id} (type: {type(lead_id)})")
+                object_id = ObjectId(lead_id)
+                object_ids.append(object_id)
+                logging.info(f"✅ Successfully converted: {object_id}")
+            except InvalidId as e:
+                logging.error(f"❌ Invalid ObjectId: {lead_id} - {e}")
+                raise HTTPException(status_code=400, detail=f"Invalid lead ID format: {lead_id}")
+            except Exception as e:
+                logging.error(f"❌ Unexpected error converting {lead_id}: {e}")
                 raise HTTPException(status_code=400, detail=f"Invalid lead ID format: {lead_id}")
         
         collection = db.leads

@@ -279,6 +279,19 @@ const CertificationCoursesPage = () => {
 
   const currentVendor = courseVendors[activeTab];
 
+  // Get color classes based on vendor
+  const getVendorColors = (vendorColor) => {
+    const colorMap = {
+      red: { bg: 'bg-red-100', text: 'text-red-600', gradient: 'from-red-500 to-red-600' },
+      orange: { bg: 'bg-orange-100', text: 'text-orange-600', gradient: 'from-orange-500 to-orange-600' },
+      blue: { bg: 'bg-blue-100', text: 'text-blue-600', gradient: 'from-blue-500 to-blue-600' },
+      purple: { bg: 'bg-purple-100', text: 'text-purple-600', gradient: 'from-purple-500 to-purple-600' },
+      indigo: { bg: 'bg-indigo-100', text: 'text-indigo-600', gradient: 'from-indigo-500 to-indigo-600' },
+      gray: { bg: 'bg-gray-100', text: 'text-gray-600', gradient: 'from-gray-500 to-gray-600' }
+    };
+    return colorMap[vendorColor] || colorMap.gray;
+  };
+
   return (
     <>
       <SEO

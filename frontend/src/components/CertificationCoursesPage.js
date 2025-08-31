@@ -31,7 +31,7 @@ const CertificationCoursesPage = () => {
       icon: '🔴',
       color: 'red',
       description: 'Industry-leading Linux and OpenShift certifications',
-      keywords: ['red hat', 'rhcsa', 'rhce', 'do188', 'openshift', 'linux', 'ansible'],
+      keywords: ['red hat', 'rhcsa', 'rhce', 'do188', 'openshift', 'linux', 'ansible', 'redhat'],
       levels: {
         foundation: { name: 'Foundation Level', description: 'Start your Red Hat journey' },
         professional: { name: 'Professional Level', description: 'Advanced system administration' },
@@ -62,11 +62,35 @@ const CertificationCoursesPage = () => {
         developer: { name: 'Developer Level', description: 'Application development' }
       }
     },
+    programming: {
+      name: 'Programming & Development',
+      icon: '💻',
+      color: 'purple',
+      description: 'Programming languages and software development skills',
+      keywords: ['java', 'salesforce', 'c++', 'dsa', 'data structures', 'programming', 'development', 'coding'],
+      levels: {
+        beginner: { name: 'Beginner Level', description: 'Programming fundamentals' },
+        intermediate: { name: 'Intermediate Level', description: 'Advanced programming concepts' },
+        professional: { name: 'Professional Level', description: 'Industry-ready development' }
+      }
+    },
+    degree: {
+      name: 'Degree Programs',
+      icon: '🎓',
+      color: 'indigo',
+      description: 'Comprehensive degree and diploma programs',
+      keywords: ['bca', 'degree', 'bachelor', 'diploma', 'graduation', 'computer applications'],
+      levels: {
+        undergraduate: { name: 'Undergraduate', description: 'Bachelor degree programs' },
+        diploma: { name: 'Diploma', description: 'Professional diploma courses' },
+        certification: { name: 'Certification', description: 'Professional certifications' }
+      }
+    },
     general: {
-      name: 'All Certifications',
+      name: 'All Courses',
       icon: '📚',
       color: 'gray',
-      description: 'Complete certification catalog',
+      description: 'Complete course catalog including all specializations',
       keywords: [],
       levels: {
         all: { name: 'All Levels', description: 'Browse all available courses' }

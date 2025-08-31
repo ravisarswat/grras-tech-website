@@ -678,59 +678,32 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         
         content_elements.append(Spacer(1, 10*mm))
         
-        # New page for contact and admission info
-        content_elements.append(PageBreak())
-        
-        # Admission Process Section
-        content_elements.append(Paragraph("ADMISSION PROCESS", section_heading_style))
-        content_elements.append(Spacer(1, 5*mm))
+        # Admission Process - Numbered list with consistent punctuation
+        content_elements.append(Paragraph("Admission Process", section_heading_style))
         
         admission_steps = [
-            ("1", "INQUIRY", "Submit online form or visit our campus for course consultation"),
-            ("2", "COUNSELING", "Meet with expert counselors to discuss career goals and course fit"),
-            ("3", "ENROLLMENT", "Complete admission with documents and secure your seat"),
-            ("4", "ONBOARDING", "Join orientation session and begin your learning journey")
+            "Submit your inquiry online or visit our campus for course consultation.",
+            "Meet with our expert counselors to discuss career goals and course fit.", 
+            "Complete admission with required documents and secure your seat.",
+            "Join orientation session and begin your learning journey."
         ]
         
-        for step_num, step_title, step_desc in admission_steps:
-            step_content = f"<b>Step {step_num}: {step_title}</b><br/>{step_desc}"
-            content_elements.append(Paragraph(step_content, highlight_box_style))
-            content_elements.append(Spacer(1, 3*mm))
-        
-        content_elements.append(Spacer(1, 8*mm))
-        
-        # Contact Information Section
-        content_elements.append(Paragraph("GET IN TOUCH", section_heading_style))
-        content_elements.append(Spacer(1, 5*mm))
-        
-        # Professional contact layout
-        institute_name = institute.get("name", "GRRAS Solutions Training Institute")
-        address = institute.get("address", "A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012")
-        phones = institute.get("phones", ["090019 91227"])
-        emails = institute.get("emails", ["info@grrassolutions.com"])
-        website = institute.get("website", "https://grrassolutions.com")
-        
-        # Format address properly (split into multiple lines)
-        address_lines = address.split(',')
-        formatted_address = '<br/>'.join([line.strip() for line in address_lines])
-        
-        contact_info = [
-            f"<b>{institute_name}</b>",
-            f"📍 <b>Address:</b><br/>{formatted_address}",
-            f"📞 <b>Phone:</b> {', '.join(phones)}",
-            f"📧 <b>Email:</b> {', '.join(emails)}",
-            f"🌐 <b>Website:</b> {website}"
-        ]
-        
-        for info in contact_info:
-            content_elements.append(Paragraph(info, body_style))
-            content_elements.append(Spacer(1, 3*mm))
+        for i, step in enumerate(admission_steps, 1):
+            content_elements.append(Paragraph(f"{i}. {step}", number_list_style))
         
         content_elements.append(Spacer(1, 10*mm))
         
-        # Professional Call-to-Action
-        cta_content = "Ready to Transform Your Career? Join GRRAS Today!"
-        content_elements.append(Paragraph(cta_content, info_box_style))
+        # Call-to-Action
+        cta_content = "🚀 <b>Ready to Transform Your Career? Join GRRAS Today!</b><br/><br/>"
+        cta_content += "Contact our counselors for personalized guidance and enrollment assistance.<br/>"
+        cta_content += f"Visit us at: https://www.grras.tech"
+        
+        content_elements.append(Paragraph(cta_content, certification_box_style))
+        
+        # Add generation date - DD Mon YYYY format
+        current_date = datetime.now().strftime("%d %b %Y")
+        content_elements.append(Spacer(1, 8*mm))
+        content_elements.append(Paragraph(f"<i>Generated on: {current_date}</i>", body_text_style))
         
         # Build PDF with professional template
         try:

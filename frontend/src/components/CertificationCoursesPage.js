@@ -573,7 +573,22 @@ const CertificationCourseCard = ({ course, vendor }) => {
         {/* Certification Badge */}
         <div className="flex items-start justify-between mb-6">
           <div className={`w-16 h-16 ${colors.bg} rounded-2xl flex items-center justify-center text-2xl font-bold ${colors.text}`}>
-            {vendor.icon}
+            {vendor.icon && vendor.icon.startsWith('http') ? (
+              <img 
+                src={vendor.icon} 
+                alt={`${vendor.name} Logo`}
+                className="w-10 h-10 object-contain"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'inline';
+                }}
+              />
+            ) : (
+              <span>{vendor.icon}</span>
+            )}
+            <span style={{ display: vendor.icon && vendor.icon.startsWith('http') ? 'none' : 'inline' }}>
+              {vendor.icon && !vendor.icon.startsWith('http') ? vendor.icon : ''}
+            </span>
           </div>
           
           <div className="text-right">

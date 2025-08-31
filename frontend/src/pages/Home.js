@@ -78,12 +78,50 @@ const Home = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const featuredCourses = [
+  // Get popular courses configuration from CMS
+  const popularCoursesConfig = content?.pages?.home?.popularCourses || {};
+  const allCourses = content?.courses || [];
+  
+  // Generate popular courses based on CMS configuration
+  const getPopularCourses = () => {
+    const { selectionMode = 'auto', maxItems = 4, manualSelection = [] } = popularCoursesConfig;
+    
+    // Filter visible courses
+    const visibleCourses = allCourses.filter(course => course.visible !== false);
+    
+    let selectedCourses;
+    if (selectionMode === 'manual' && manualSelection.length > 0) {
+      // Manual selection: use admin-selected courses
+      selectedCourses = manualSelection
+        .map(slug => visibleCourses.find(course => course.slug === slug))
+        .filter(Boolean); // Remove any null/undefined results
+    } else {
+      // Auto selection: use featured courses or first N courses
+      selectedCourses = visibleCourses
+        .filter(course => course.featured || course.popular)
+        .sort((a, b) => (a.order || 999) - (b.order || 999));
+      
+      // If not enough featured courses, add more from visible courses
+      if (selectedCourses.length < maxItems) {
+        const remainingCourses = visibleCourses
+          .filter(course => !selectedCourses.find(sc => sc.slug === course.slug))
+          .sort((a, b) => (a.order || 999) - (b.order || 999));
+        selectedCourses = [...selectedCourses, ...remainingCourses];
+      }
+    }
+    
+    return selectedCourses.slice(0, maxItems);
+  };
+
+  const featuredCourses = getPopularCourses();
+  
+  // Fallback courses if no CMS courses available
+  const fallbackCourses = [
     {
       slug: 'bca-degree',
-      name: 'BCA Degree Program',
-      tagline: 'Industry-Integrated Bachelor Degree',
-      description: 'Complete BCA program with cloud computing, DevOps, and AI/ML specializations.',
+      title: 'BCA Degree Program',
+      oneLiner: 'Industry-Integrated Bachelor Degree',
+      overview: 'Complete BCA program with cloud computing, DevOps, and AI/ML specializations.',
       duration: '3 Years',
       level: 'Beginner to Advanced',
       highlights: ['Recognized Degree', 'Industry Projects', 'Placement Assistance'],
@@ -91,9 +129,9 @@ const Home = () => {
     },
     {
       slug: 'devops-training',
-      name: 'DevOps Training',
-      tagline: 'Master Modern DevOps Practices',
-      description: 'Comprehensive DevOps training covering AWS, Docker, Kubernetes, Jenkins, and more.',
+      title: 'DevOps Training',
+      oneLiner: 'Master Modern DevOps Practices',
+      overview: 'Comprehensive DevOps training covering AWS, Docker, Kubernetes, Jenkins, and more.',
       duration: '6 Months',
       level: 'Intermediate',
       highlights: ['Hands-on Labs', 'AWS Certification', 'Live Projects'],
@@ -101,9 +139,9 @@ const Home = () => {
     },
     {
       slug: 'data-science-machine-learning',
-      name: 'Data Science & ML',
-      tagline: 'Future of Technology',
-      description: 'Complete data science program with Python, statistics, and machine learning.',
+      title: 'Data Science & ML',
+      oneLiner: 'Future of Technology',
+      overview: 'Complete data science program with Python, statistics, and machine learning.',
       duration: '8 Months',
       level: 'Beginner to Advanced',
       highlights: ['Python Mastery', 'Real Datasets', 'Industry Mentors'],
@@ -111,15 +149,18 @@ const Home = () => {
     },
     {
       slug: 'redhat-certifications',
-      name: 'Red Hat Certifications',
-      tagline: 'Linux & OpenShift Excellence',
-      description: 'RHCSA, RHCE, and OpenShift certifications with hands-on experience.',
+      title: 'Red Hat Certifications',
+      oneLiner: 'Linux & OpenShift Excellence',
+      overview: 'RHCSA, RHCE, and OpenShift certifications with hands-on experience.',
       duration: '4 Months',
       level: 'Intermediate',
       highlights: ['Official Certification', 'Lab Access', 'Expert Trainers'],
       icon: '🐧'
     }
   ];
+
+  // Use CMS courses or fallback
+  const displayCourses = featuredCourses.length > 0 ? featuredCourses : fallbackCourses.slice(0, popularCoursesConfig.maxItems || 4);
 
   const highlights = [
     {

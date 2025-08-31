@@ -702,6 +702,25 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
                 logging.error(f"Fallback PDF generation also failed: {fallback_error}")
                 raise HTTPException(status_code=422, detail=f"Failed to generate syllabus: {str(fallback_error)}")
         
+        # Store lead information (non-blocking)
+        try:
+            lead_data = {
+                "name": name,
+                "email": email,
+                "phone": phone,
+                "course": course_name,
+                "type": "syllabus_download",
+                "timestamp": datetime.utcnow().isoformat()
+            }
+            
+            # Save to MongoDB
+            collection = db.leads
+            await collection.insert_one(lead_data)
+            logging.info(f"✅ Lead saved for syllabus download: {email}")
+            
+        except Exception as e:
+            logging.warning(f"Failed to store lead data: {e}")
+        
         # Return PDF from memory
         pdf_buffer.seek(0)
         pdf_content = pdf_buffer.getvalue()

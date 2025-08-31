@@ -63,10 +63,43 @@ const CourseCategoriesGrid = () => {
             const IconComponent = iconMap[category.icon] || BookOpen;
             const categoryCoursesCount = category.courses?.length || 0;
             
+            // Map category slugs to course tabs
+            let courseTabLink = '/courses';
+            switch(categorySlug) {
+              case 'cloud-devops':
+              case 'devops':
+                courseTabLink = '/courses?tab=devops';
+                break;
+              case 'linux-redhat':
+              case 'redhat':
+                courseTabLink = '/courses?tab=redhat';
+                break;
+              case 'kubernetes-containers':
+              case 'kubernetes':
+                courseTabLink = '/courses?tab=kubernetes';
+                break;
+              case 'cybersecurity':
+              case 'security':
+                courseTabLink = '/courses?tab=cybersecurity';
+                break;
+              case 'degree-programs':
+              case 'degree':
+                courseTabLink = '/courses?tab=degree';
+                break;
+              case 'programming':
+                courseTabLink = '/courses?tab=programming';
+                break;
+              case 'aws':
+                courseTabLink = '/courses?tab=aws';
+                break;
+              default:
+                courseTabLink = '/courses?tab=general';
+            }
+            
             return (
               <Link
                 key={categorySlug}
-                to={`/courses/category/${categorySlug}`}
+                to={courseTabLink}
                 className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
               >
                 {/* Category Icon & Header */}

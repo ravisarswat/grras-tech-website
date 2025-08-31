@@ -515,21 +515,89 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         
         content_elements.append(Spacer(1, 20))
         
-        # Contact Information
-        institute_name = institute.get("name", "GRRAS Solutions Training Institute")
+        # Page break for contact information
+        content_elements.append(PageBreak())
+        
+        # Contact Information with enhanced styling
         address = institute.get("address", "A-81, Singh Bhoomi Khatipura Rd, Jaipur, Rajasthan")
         phones = institute.get("phones", ["090019 91227"])
         emails = institute.get("emails", ["info@grrassolutions.com"])
+        website = institute.get("website", "https://grrassolutions.com")
         
-        content_elements.append(Paragraph("Contact Information", heading_style))
-        content_elements.append(Paragraph(f"<b>Institute:</b> {institute_name}", normal_style))
-        content_elements.append(Paragraph(f"<b>Address:</b> {address}", normal_style))
-        content_elements.append(Paragraph(f"<b>Phone:</b> {', '.join(phones)}", normal_style))
-        content_elements.append(Paragraph(f"<b>Email:</b> {', '.join(emails)}", normal_style))
+        content_elements.append(Paragraph("📞 Contact Information", heading_style))
+        
+        # Contact details in a professional table
+        contact_data = [
+            ['🏢 Institute', institute_name],
+            ['📍 Address', address],
+            ['📱 Phone', ', '.join(phones)],
+            ['📧 Email', ', '.join(emails)],
+            ['🌐 Website', website]
+        ]
+        
+        contact_table = Table(contact_data, colWidths=[1.5*inch, 4.5*inch])
+        contact_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#F3F4F6')),
+            ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor('#374151')),
+            ('TEXTCOLOR', (1, 0), (1, -1), colors.HexColor('#111827')),
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
+            ('FONTNAME', (1, 0), (1, -1), 'Helvetica'),
+            ('FONTSIZE', (0, 0), (-1, -1), 11),
+            ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#E5E7EB')),
+            ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+            ('LEFTPADDING', (0, 0), (-1, -1), 8),
+            ('RIGHTPADDING', (0, 0), (-1, -1), 8),
+            ('TOPPADDING', (0, 0), (-1, -1), 6),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 6)
+        ]))
+        
+        content_elements.append(contact_table)
+        content_elements.append(Spacer(1, 25))
+        
+        # Admission Process
+        content_elements.append(Paragraph("📋 Admission Process", heading_style))
+        admission_steps = [
+            "1. Submit your inquiry online or visit our campus",
+            "2. Meet with our expert counselors for course guidance", 
+            "3. Complete enrollment with required documents",
+            "4. Join orientation and start your learning journey"
+        ]
+        
+        for step in admission_steps:
+            content_elements.append(Paragraph(step, bullet_style))
+        
         content_elements.append(Spacer(1, 20))
         
-        # Footer
-        content_elements.append(Paragraph("For more information and admissions, please contact our counselors.", normal_style))
+        # Call to Action
+        cta_style = ParagraphStyle(
+            'CTAStyle',
+            parent=styles['Normal'],
+            fontSize=12,
+            textColor=colors.HexColor('#DC2626'),
+            alignment=TA_CENTER,
+            fontName='Helvetica-Bold',
+            borderWidth=2,
+            borderColor=colors.HexColor('#DC2626'),
+            borderPadding=10,
+            backColor=colors.HexColor('#FEF2F2')
+        )
+        
+        content_elements.append(Paragraph("🚀 Ready to Start Your IT Career? Contact Our Counselors Today!", cta_style))
+        content_elements.append(Spacer(1, 15))
+        
+        # Footer with generation info
+        footer_style = ParagraphStyle(
+            'FooterStyle',
+            parent=styles['Normal'],
+            fontSize=9,
+            textColor=colors.HexColor('#6B7280'),
+            alignment=TA_CENTER
+        )
+        
+        current_date = datetime.now().strftime("%B %d, %Y")
+        content_elements.append(Paragraph(f"Generated on {current_date} | {institute_name}", footer_style))
+        content_elements.append(Paragraph("This syllabus is subject to updates. Please contact us for the latest information.", footer_style))
         
         # Build PDF
         doc.build(content_elements)

@@ -292,15 +292,15 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in-up">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Our Popular Courses
+              {popularCoursesConfig.title || 'Our Popular Courses'}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Industry-relevant courses designed to make you job-ready
+              {popularCoursesConfig.subtitle || 'Industry-relevant courses designed to make you job-ready'}
             </p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
-            {featuredCourses.map((course, index) => (
+            {displayCourses.map((course, index) => (
               <div 
                 key={course.slug}
                 className="course-card relative p-8 animate-fade-in-up"

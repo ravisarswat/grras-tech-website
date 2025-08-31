@@ -705,14 +705,15 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         content_elements.append(Spacer(1, 8*mm))
         content_elements.append(Paragraph(f"<i>Generated on: {current_date}</i>", body_text_style))
         
-        # Build PDF with professional template
+        # Build PDF with GRRAS template
         try:
-            doc.build(content_elements, onFirstPage=on_first_page, onLaterPages=on_later_pages)
-            logging.info("✅ Professional PDF generated successfully")
+            doc.build(content_elements, onFirstPage=create_header_footer, onLaterPages=create_header_footer)
+            logging.info(f"✅ GRRAS PDF generated for {course_name}")
         except Exception as e:
-            logging.error(f"Error building PDF: {e}")
-            # Fallback to simple build
-            doc.build(content_elements)
+            logging.error(f"PDF generation error: {e}")
+            # Fallback to simple document
+            simple_doc = SimpleDocTemplate(pdf_path, pagesize=A4)
+            simple_doc.build(content_elements)
         
         # Store lead information
         try:

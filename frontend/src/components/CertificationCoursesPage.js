@@ -173,8 +173,17 @@ const CertificationCoursesPage = () => {
 
       let categorizedFlag = false;
 
+      // Degree categorization (check first to avoid conflicts)
+      if (courseVendors.degree.keywords.some(keyword => searchText.includes(keyword))) {
+        result.degree.push({
+          ...course,
+          vendor: 'degree',
+          level: determineLevel(course, 'degree')
+        });
+        categorizedFlag = true;
+      }
       // Red Hat categorization
-      if (courseVendors.redhat.keywords.some(keyword => searchText.includes(keyword))) {
+      else if (courseVendors.redhat.keywords.some(keyword => searchText.includes(keyword))) {
         result.redhat.push({
           ...course,
           vendor: 'redhat',
@@ -182,9 +191,8 @@ const CertificationCoursesPage = () => {
         });
         categorizedFlag = true;
       }
-      
       // AWS categorization
-      if (courseVendors.aws.keywords.some(keyword => searchText.includes(keyword))) {
+      else if (courseVendors.aws.keywords.some(keyword => searchText.includes(keyword))) {
         result.aws.push({
           ...course,
           vendor: 'aws',
@@ -192,9 +200,8 @@ const CertificationCoursesPage = () => {
         });
         categorizedFlag = true;
       }
-      
       // Kubernetes categorization
-      if (courseVendors.kubernetes.keywords.some(keyword => searchText.includes(keyword))) {
+      else if (courseVendors.kubernetes.keywords.some(keyword => searchText.includes(keyword))) {
         result.kubernetes.push({
           ...course,
           vendor: 'kubernetes',
@@ -202,23 +209,13 @@ const CertificationCoursesPage = () => {
         });
         categorizedFlag = true;
       }
-      
-      // Programming categorization
-      if (courseVendors.programming.keywords.some(keyword => searchText.includes(keyword))) {
+      // Programming categorization (exclude degree courses)
+      else if (!title.includes('bca') && !title.includes('degree') && 
+               courseVendors.programming.keywords.some(keyword => searchText.includes(keyword))) {
         result.programming.push({
           ...course,
           vendor: 'programming',
           level: determineLevel(course, 'programming')
-        });
-        categorizedFlag = true;
-      }
-      
-      // Degree categorization
-      if (courseVendors.degree.keywords.some(keyword => searchText.includes(keyword))) {
-        result.degree.push({
-          ...course,
-          vendor: 'degree',
-          level: determineLevel(course, 'degree')
         });
         categorizedFlag = true;
       }

@@ -331,14 +331,14 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         # Initialize template handler
         template_handler = GRRASPDFTemplate(institute, branding, course)
         
-        # Document setup with proper margins
+        # Create PDF document
         doc = SimpleDocTemplate(
-            pdf_path,
+            pdf_buffer,
             pagesize=A4,
             rightMargin=20*mm,
             leftMargin=20*mm,
-            topMargin=25*mm,  # Space for header
-            bottomMargin=20*mm  # Space for footer
+            topMargin=25*mm,
+            bottomMargin=20*mm
         )
         
         # Custom page counting

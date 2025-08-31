@@ -724,11 +724,18 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         except Exception as e:
             logging.warning(f"Failed to store lead data: {e}")
         
-        # Return PDF file
-        return FileResponse(
-            pdf_path, 
-            filename=f"{course_name.replace(' ', '_')}_Syllabus.pdf",
-            media_type="application/pdf"
+        # Return PDF from memory
+        pdf_buffer.seek(0)
+        pdf_content = pdf_buffer.getvalue()
+        
+        # Create response with proper headers
+        from fastapi.responses import Response
+        return Response(
+            content=pdf_content,
+            media_type="application/pdf",
+            headers={
+                "Content-Disposition": f"attachment; filename={course_name.replace(' ', '_')}_Syllabus.pdf"
+            }
         )
         
     except HTTPException:

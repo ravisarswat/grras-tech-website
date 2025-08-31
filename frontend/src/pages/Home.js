@@ -31,7 +31,11 @@ const Home = () => {
 
   // Animate stats on load
   useEffect(() => {
-    const targetStats = { years: 10, students: 5000, certifications: 1500, placement: 95 };
+    // Get years from CMS content, fallback to 18 if not available
+    const yearsOfExcellence = content?.institute?.stats?.yearsOfExcellence || '18+';
+    const yearsNumber = parseInt(yearsOfExcellence.replace('+', ''));
+    
+    const targetStats = { years: yearsNumber, students: 5000, certifications: 1500, placement: 95 };
     
     const animateStats = () => {
       const duration = 2000; // 2 seconds

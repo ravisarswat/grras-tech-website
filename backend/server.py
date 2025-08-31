@@ -199,6 +199,7 @@ async def get_course(slug: str):
 @api_router.post("/courses/{slug}/syllabus")
 async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(...), phone: str = Form(...)):
     """Generate and download course syllabus PDF"""
+    pdf_buffer = None
     try:
         # Get course data from CMS
         content = await content_manager.get_content()

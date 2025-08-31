@@ -1,25 +1,21 @@
 {
-  "timestamp": "2025-08-31T04:58:17.307654",
+  "timestamp": "2025-08-31T05:04:06.076053",
   "backend_url": "https://training-admin-cms.preview.emergentagent.com",
   "total_tests": 6,
-  "passed_tests": 3,
-  "failed_tests": 3,
-  "success_rate": "50.0%",
+  "passed_tests": 5,
+  "failed_tests": 1,
+  "success_rate": "83.3%",
   "test_results": {
     "admin_authentication": true,
     "leads_list_access": true,
     "single_lead_deletion": true,
-    "bulk_lead_deletion": false,
+    "bulk_lead_deletion": true,
     "invalid_lead_id_handling": false,
-    "non_existent_lead_handling": false,
+    "non_existent_lead_handling": true,
     "mongodb_data_verification": true
   },
   "errors": [
-    "Bulk lead deletion failed with status 400: {\"detail\":\"Invalid lead ID format\"}",
-    "Invalid ID '' should return 400, got 405",
-    "Bulk deletion with non-existent IDs failed with status 400"
+    "Invalid ID '' should return 400, got 405"
   ],
-  "critical_issues": [
-    "Bulk lead deletion is not working"
-  ]
+  "critical_issues": []
 }

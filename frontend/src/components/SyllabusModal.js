@@ -86,7 +86,8 @@ const SyllabusModal = ({ isOpen, onClose, courseSlug, courseName }) => {
       
       // Get filename from response headers or create one
       const contentDisposition = response.headers['content-disposition'];
-      let filename = `GRRAS_${courseName.replace(/\s+/g, '_')}_Syllabus.pdf`;
+      const safeCouseName = courseName || 'Course';
+      let filename = `GRRAS_${safeCouseName.replace(/\s+/g, '_')}_Syllabus.pdf`;
       
       if (contentDisposition) {
         const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;

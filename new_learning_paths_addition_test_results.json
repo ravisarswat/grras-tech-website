@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-08-31T08:08:49.436509",
+  "backend_url": "https://grras-cms-rebuild.preview.emergentagent.com",
+  "total_tests": 9,
+  "passed_tests": 9,
+  "failed_tests": 0,
+  "success_rate": "100.0%",
+  "test_results": {
+    "server_health": true,
+    "admin_authentication": true,
+    "cms_content_access": true,
+    "prerequisite_courses_exist": true,
+    "new_learning_paths_addition": true,
+    "learning_paths_verification": true,
+    "learning_paths_data_structure": true,
+    "course_mapping_validation": true,
+    "featured_paths_configuration": true
+  },
+  "errors": [],
+  "critical_issues": [],
+  "added_paths_count": 3
+}

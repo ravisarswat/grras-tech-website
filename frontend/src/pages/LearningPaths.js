@@ -12,7 +12,8 @@ import {
   Award,
   PlayCircle,
   Search,
-  Filter
+  Filter,
+  Target
 } from 'lucide-react';
 import SEO from '../components/SEO';
 import { useContent } from '../contexts/ContentContext';

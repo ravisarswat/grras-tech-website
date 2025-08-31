@@ -331,6 +331,7 @@ const CourseEditor = ({
                     <option value="cloud">☁️ AWS Cloud Platform</option>
                     <option value="container">⚙️ Kubernetes Ecosystem</option>
                     <option value="devops">🔧 DevOps Engineering</option>
+                    <option value="security">🛡️ Cybersecurity & Ethical Hacking</option>
                     <option value="programming">💻 Programming & Development</option>
                     <option value="degree">🎓 Degree Programs</option>
                     <option value="other">📚 Other</option>

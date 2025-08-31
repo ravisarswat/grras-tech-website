@@ -1,0 +1,114 @@
+{
+  "timestamp": "2025-08-31T17:47:59.821088",
+  "backend_url": "https://edutech-platform.preview.emergentagent.com",
+  "overall_score": {
+    "passed": 19,
+    "total": 19,
+    "percentage": 100.0
+  },
+  "category_scores": {
+    "core_api_health": {
+      "passed": 3,
+      "total": 3,
+      "percentage": 100.0
+    },
+    "course_data_integrity": {
+      "passed": 5,
+      "total": 5,
+      "percentage": 100.0
+    },
+    "cms_content_structure": {
+      "passed": 4,
+      "total": 4,
+      "percentage": 100.0
+    },
+    "admin_functions": {
+      "passed": 3,
+      "total": 3,
+      "percentage": 100.0
+    },
+    "quality_verification": {
+      "passed": 4,
+      "total": 4,
+      "percentage": 100.0
+    }
+  },
+  "detailed_results": {
+    "core_api_health": {
+      "fastapi_server": true,
+      "mongodb_connectivity": true,
+      "main_endpoints": true
+    },
+    "course_data_integrity": {
+      "course_count_14": true,
+      "no_test_courses": true,
+      "no_duplicates": true,
+      "required_fields": true,
+      "enhanced_fields": true
+    },
+    "cms_content_structure": {
+      "content_api": true,
+      "course_categories": true,
+      "learning_paths": true,
+      "individual_endpoints": true
+    },
+    "admin_functions": {
+      "authentication": true,
+      "content_updates": true,
+      "lead_management": true
+    },
+    "quality_verification": {
+      "no_broken_data": true,
+      "proper_categorization": true,
+      "pricing_formats": true,
+      "seo_fields": true
+    }
+  },
+  "detailed_analysis": {
+    "courses": {
+      "total_count": 14,
+      "courses_with_required_fields": 12,
+      "courses_with_enhanced_fields": 10,
+      "duplicate_slugs": 0,
+      "duplicate_titles": 0,
+      "test_courses_found": [],
+      "missing_fields_details": [
+        {
+          "title": "Cyber Security",
+          "missing": [
+            "description",
+            "eligibility"
+          ]
+        },
+        {
+          "title": "C / C++ & Data Structures",
+          "missing": [
+            "description"
+          ]
+        }
+      ]
+    },
+    "cms": {
+      "course_categories_count": 6,
+      "learning_paths_count": 6,
+      "total_cms_sections": 16
+    },
+    "leads": {
+      "count": 95
+    },
+    "quality": {
+      "broken_data_issues": 0,
+      "categorization_issues": 0,
+      "pricing_issues": 0,
+      "seo_issues": 1
+    }
+  },
+  "errors": [],
+  "review_requirements_status": {
+    "core_api_health": true,
+    "course_data_integrity": true,
+    "cms_content_structure": true,
+    "admin_functions": true,
+    "quality_verification": true
+  }
+}

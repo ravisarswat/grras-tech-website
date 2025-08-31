@@ -327,29 +327,64 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
             fontName='Helvetica-Bold'
         )
         
-        # Build content
+        # Build content with enhanced layout
         content_elements = []
         
         # Header with logo and institute info
-        try:
-            # Try to add logo (with error handling)
-            logo_url = branding.get("logoUrl", "")
-            if logo_url:
-                try:
-                    # This is a simplified approach - in production you'd want better logo handling
-                    content_elements.append(Paragraph("🎓 GRRAS Solutions Training Institute", title_style))
-                except:
-                    content_elements.append(Paragraph("🎓 GRRAS Solutions Training Institute", title_style))
-            else:
-                content_elements.append(Paragraph("🎓 GRRAS Solutions Training Institute", title_style))
-        except:
-            content_elements.append(Paragraph("📚 Professional IT Training Institute", normal_style))
+        institute_name = institute.get("name", "GRRAS Solutions Training Institute")
+        institute_tagline = institute.get("tagline", "Empowering Futures Through Technology")
         
-        content_elements.append(Spacer(1, 20))
+        # Try to add logo from URL
+        logo_url = branding.get("logoUrl", "")
+        if logo_url and logo_url.startswith('http'):
+            try:
+                # Download and embed logo
+                response = requests.get(logo_url, timeout=10)
+                if response.status_code == 200:
+                    logo_data = BytesIO(response.content)
+                    logo_img = Image(logo_data, width=2*inch, height=0.8*inch)
+                    logo_img.hAlign = 'CENTER'
+                    content_elements.append(logo_img)
+                    content_elements.append(Spacer(1, 10))
+            except Exception as e:
+                logging.warning(f"Failed to load logo: {e}")
+                # Fallback to text header
+                content_elements.append(Paragraph("🎓", title_style))
         
-        # Course title
-        content_elements.append(Paragraph(f"Course Syllabus: {course_name}", title_style))
-        content_elements.append(Spacer(1, 20))
+        # Institute header
+        content_elements.append(Paragraph(institute_name, institute_style))
+        content_elements.append(Paragraph(institute_tagline, subtitle_style))
+        content_elements.append(Spacer(1, 15))
+        
+        # Course title with enhanced styling
+        content_elements.append(Paragraph(f"Course Syllabus", title_style))
+        content_elements.append(Paragraph(f"{course_name}", institute_style))
+        content_elements.append(Spacer(1, 25))
+        
+        # Professional course information table
+        course_info_data = [
+            ['Duration', duration],
+            ['Level', level],
+            ['Fees', fees],
+            ['Eligibility', eligibility[:100] + '...' if len(eligibility) > 100 else eligibility]
+        ]
+        
+        course_info_table = Table(course_info_data, colWidths=[2*inch, 4*inch])
+        course_info_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#F3F4F6')),
+            ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor('#374151')),
+            ('TEXTCOLOR', (1, 0), (1, -1), colors.HexColor('#111827')),
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
+            ('FONTNAME', (1, 0), (1, -1), 'Helvetica'),
+            ('FONTSIZE', (0, 0), (-1, -1), 11),
+            ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#E5E7EB')),
+            ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+            ('ROWBACKGROUNDS', (0, 0), (-1, -1), [colors.white, colors.HexColor('#F9FAFB')])
+        ]))
+        
+        content_elements.append(course_info_table)
+        content_elements.append(Spacer(1, 25))
         
         # Course Details
         content_elements.append(Paragraph("Course Information", heading_style))

@@ -197,6 +197,7 @@ const CertificationCoursesPage = () => {
       aws: [],
       kubernetes: [],
       devops: [],
+      cybersecurity: [],
       programming: [],
       degree: [],
       general: []

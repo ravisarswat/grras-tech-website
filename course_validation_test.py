@@ -66,22 +66,23 @@ class CourseValidationTester:
             for password in passwords_to_try:
                 login_data = {"password": password}
             
-            async with self.session.post(f"{self.api_base}/admin/login", json=login_data) as response:
-                if response.status == 200:
-                    data = await response.json()
-                    self.admin_token = data.get("token")
-                    
-                    if self.admin_token:
-                        logger.info("✅ Admin authentication successful with 'grras-admin' password")
-                        self.test_results["admin_authentication"] = True
-                        return True
+                async with self.session.post(f"{self.api_base}/admin/login", json=login_data) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        self.admin_token = data.get("token")
+                        
+                        if self.admin_token:
+                            logger.info(f"✅ Admin authentication successful with password: {password}")
+                            self.test_results["admin_authentication"] = True
+                            return True
+                        else:
+                            logger.warning(f"⚠️ Login successful with {password} but no token received")
                     else:
-                        self.errors.append("Admin login successful but no token received")
-                        return False
-                else:
-                    response_text = await response.text()
-                    self.errors.append(f"Admin login failed with status {response.status}: {response_text}")
-                    return False
+                        logger.warning(f"⚠️ Login failed with password {password}, status: {response.status}")
+            
+            # If we get here, all passwords failed
+            self.errors.append("Admin login failed with all attempted passwords")
+            return False
         except Exception as e:
             self.errors.append(f"Admin authentication failed: {str(e)}")
             logger.error(f"❌ Admin authentication failed: {e}")

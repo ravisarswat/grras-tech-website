@@ -334,7 +334,6 @@ const CourseEditor = ({
                     <option value="devops">🔧 DevOps Engineering</option>
                     <option value="programming">💻 Programming & Development</option>
                     <option value="degree">🎓 Degree Programs</option>
-                    <option value="security">🛡️ Cybersecurity</option>
                     <option value="other">📚 Other</option>
                   </select>
                   <div className="mt-1 text-xs text-gray-500">

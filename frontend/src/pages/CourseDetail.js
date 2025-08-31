@@ -432,12 +432,24 @@ const CourseDetail = () => {
       </div>
 
       {/* Syllabus Modal */}
-      <SyllabusModal
-        isOpen={showSyllabusModal}
-        onClose={() => setShowSyllabusModal(false)}
-        courseSlug={course.slug}
-        courseName={course.title || course.name || 'Course'}
-      />
+      {showSyllabusModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-xl max-w-lg w-full relative">
+            <button
+              onClick={() => setShowSyllabusModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold"
+            >
+              ×
+            </button>
+            <div className="p-6">
+              <DirectPDFDownload 
+                courseSlug={course.slug} 
+                courseName={course.title || course.name || 'Course'} 
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

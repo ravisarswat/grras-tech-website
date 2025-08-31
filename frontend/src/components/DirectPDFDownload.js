@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DirectPDFDownload = ({ courseSlug, courseName }) => {
+const DirectPDFDownload = ({ courseSlug, courseName, onClose }) => {
   const handleDirectDownload = async (e) => {
     e.preventDefault();
     

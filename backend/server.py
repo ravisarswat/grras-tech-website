@@ -290,22 +290,15 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
             
             canvas_obj.restoreState()
         
-        # Create PDF document
+        # Create PDF document with proper margins for header/footer
         doc = SimpleDocTemplate(
             pdf_buffer,
             pagesize=A4,
-            rightMargin=20*mm,
-            leftMargin=20*mm,
-            topMargin=25*mm,
-            bottomMargin=20*mm
+            rightMargin=15*mm,
+            leftMargin=15*mm,
+            topMargin=20*mm,  # Space for header
+            bottomMargin=25*mm  # Space for footer
         )
-        
-
-        
-        def create_header_footer(canvas, doc):
-            template_handler.create_header_footer(canvas, doc)
-            
-        doc.page_count = 2  # Default estimate
         
         styles = getSampleStyleSheet()
         

@@ -751,8 +751,11 @@ async def delete_lead(lead_id: str, admin_verified: bool = Depends(verify_admin_
         logging.error(f"Error deleting lead {lead_id}: {e}")
         raise HTTPException(status_code=500, detail="Failed to delete lead")
 
+class BulkDeleteRequest(BaseModel):
+    lead_ids: List[str]
+
 @api_router.delete("/leads/bulk")
-async def delete_multiple_leads(lead_ids: List[str], admin_verified: bool = Depends(verify_admin_token)):
+async def delete_multiple_leads(request: BulkDeleteRequest, admin_verified: bool = Depends(verify_admin_token)):
     """Delete multiple leads (Admin only)"""
     try:
         from bson import ObjectId

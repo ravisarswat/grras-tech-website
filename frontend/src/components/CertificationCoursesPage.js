@@ -67,7 +67,7 @@ const CertificationCoursesPage = () => {
   const courseVendors = {
     redhat: {
       name: 'Red Hat Technologies',
-      icon: 'https://logos-world.net/wp-content/uploads/2020/08/Red-Hat-Logo.png',
+      icon: 'https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg',
       color: 'red',
       description: 'Industry-leading Linux and OpenShift certifications',
       keywords: ['red hat', 'rhcsa', 'rhce', 'do188', 'openshift', 'linux', 'ansible', 'redhat'],

@@ -429,64 +429,64 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
             alignment=TA_CENTER
         )
         
-        # Build content with enhanced layout
+        # Professional PDF content structure
         content_elements = []
         
-        # Header with logo and institute info
-        institute_name = institute.get("name", "GRRAS Solutions Training Institute")
-        institute_tagline = institute.get("tagline", "Empowering Futures Through Technology")
+        # Title page content (header/footer handled by template)
+        content_elements.append(Spacer(1, 20*mm))
         
-        # Try to add logo from URL
-        logo_url = branding.get("logoUrl", "")
-        if logo_url and logo_url.startswith('http'):
-            try:
-                # Download and embed logo
-                response = requests.get(logo_url, timeout=10)
-                if response.status_code == 200:
-                    logo_data = BytesIO(response.content)
-                    logo_img = Image(logo_data, width=2*inch, height=0.8*inch)
-                    logo_img.hAlign = 'CENTER'
-                    content_elements.append(logo_img)
-                    content_elements.append(Spacer(1, 10))
-            except Exception as e:
-                logging.warning(f"Failed to load logo: {e}")
-                # Fallback to text header
-                content_elements.append(Paragraph("🎓", title_style))
+        # Course title section
+        content_elements.append(Paragraph("COURSE SYLLABUS", title_style))
+        content_elements.append(Spacer(1, 5*mm))
         
-        # Institute header
-        content_elements.append(Paragraph(institute_name, institute_style))
-        content_elements.append(Paragraph(institute_tagline, subtitle_style))
-        content_elements.append(Spacer(1, 15))
+        # Course name with decorative line
+        content_elements.append(Paragraph(f"{course_name}", title_style))
+        content_elements.append(Spacer(1, 10*mm))
         
-        # Course title with enhanced styling
-        content_elements.append(Paragraph(f"Course Syllabus", title_style))
-        content_elements.append(Paragraph(f"{course_name}", institute_style))
-        content_elements.append(Spacer(1, 25))
+        # Professional course overview box
+        if course_description:
+            overview_content = f"<b>Course Overview:</b><br/>{course_description}"
+            content_elements.append(Paragraph(overview_content, info_box_style))
+            content_elements.append(Spacer(1, 8*mm))
         
-        # Professional course information table
-        course_info_data = [
+        # Course details in professional table
+        course_details = [
+            ['Course Information', ''],
             ['Duration', duration],
             ['Level', level],
-            ['Fees', fees],
-            ['Eligibility', eligibility[:100] + '...' if len(eligibility) > 100 else eligibility]
+            ['Investment', fees],
+            ['Eligibility', eligibility]
         ]
         
-        course_info_table = Table(course_info_data, colWidths=[2*inch, 4*inch])
-        course_info_table.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#F3F4F6')),
-            ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor('#374151')),
-            ('TEXTCOLOR', (1, 0), (1, -1), colors.HexColor('#111827')),
-            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-            ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
-            ('FONTNAME', (1, 0), (1, -1), 'Helvetica'),
-            ('FONTSIZE', (0, 0), (-1, -1), 11),
-            ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#E5E7EB')),
+        # Professional table styling
+        course_table = Table(course_details, colWidths=[45*mm, 120*mm])
+        course_table.setStyle(TableStyle([
+            # Header row
+            ('SPAN', (0, 0), (1, 0)),
+            ('BACKGROUND', (0, 0), (1, 0), colors.HexColor('#DC2626')),
+            ('TEXTCOLOR', (0, 0), (1, 0), colors.white),
+            ('FONTNAME', (0, 0), (1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (1, 0), 12),
+            ('ALIGN', (0, 0), (1, 0), 'CENTER'),
+            
+            # Data rows
+            ('BACKGROUND', (0, 1), (0, -1), colors.HexColor('#F8FAFC')),
+            ('FONTNAME', (0, 1), (0, -1), 'Helvetica-Bold'),
+            ('FONTNAME', (1, 1), (1, -1), 'Helvetica'),
+            ('FONTSIZE', (0, 1), (-1, -1), 10),
+            ('TEXTCOLOR', (0, 1), (-1, -1), colors.HexColor('#374151')),
+            
+            # Borders and padding
+            ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#E5E7EB')),
             ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-            ('ROWBACKGROUNDS', (0, 0), (-1, -1), [colors.white, colors.HexColor('#F9FAFB')])
+            ('LEFTPADDING', (0, 0), (-1, -1), 8),
+            ('RIGHTPADDING', (0, 0), (-1, -1), 8),
+            ('TOPPADDING', (0, 0), (-1, -1), 6),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
         ]))
         
-        content_elements.append(course_info_table)
-        content_elements.append(Spacer(1, 25))
+        content_elements.append(course_table)
+        content_elements.append(Spacer(1, 12*mm))
         
         # Course Overview
         if course_description:

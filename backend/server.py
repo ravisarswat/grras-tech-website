@@ -227,120 +227,137 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp_file:
             pdf_path = tmp_file.name
         
-        # Professional PDF template class
-        class ProfessionalTemplate:
-            def __init__(self, pdf_path, institute_data, branding_data, course_data):
-                self.pdf_path = pdf_path
+        # Professional PDF Template Class
+        class GRRASPDFTemplate:
+            def __init__(self, institute_data, branding_data, course_data):
                 self.institute_data = institute_data
                 self.branding_data = branding_data
                 self.course_data = course_data
-                self.logo_image = None
+                self.logo_image_data = None
                 self.setup_logo()
                 
             def setup_logo(self):
-                """Download and prepare logo for PDF"""
+                """Download and prepare logo with correct aspect ratio"""
                 logo_url = self.branding_data.get("logoUrl", "")
                 if logo_url and logo_url.startswith('http'):
                     try:
                         response = requests.get(logo_url, timeout=10)
                         if response.status_code == 200:
-                            self.logo_image = BytesIO(response.content)
-                            logging.info("✅ Logo loaded successfully")
+                            self.logo_image_data = BytesIO(response.content)
+                            logging.info("✅ Logo loaded for PDF template")
                         else:
-                            logging.warning(f"Failed to load logo: HTTP {response.status_code}")
+                            logging.warning(f"Logo load failed: HTTP {response.status_code}")
                     except Exception as e:
-                        logging.warning(f"Error loading logo: {e}")
+                        logging.warning(f"Logo loading error: {e}")
                         
-            def create_header_footer_template(self, canvas_obj, doc):
-                """Professional header and footer for each page"""
+            def create_header_footer(self, canvas_obj, doc):
+                """Create header and footer for each page"""
                 canvas_obj.saveState()
                 
-                # Page dimensions
                 page_width = A4[0]
                 page_height = A4[1]
                 
-                # Header section
-                header_y = page_height - 40*mm
+                # HEADER - Clean professional design
+                header_height = 20*mm
+                header_y = page_height - header_height
                 
-                # Header background
+                # Header background - subtle red stripe
                 canvas_obj.setFillColor(colors.HexColor('#DC2626'))
-                canvas_obj.rect(0, header_y, page_width, 25*mm, fill=True, stroke=False)
+                canvas_obj.rect(0, page_height - 8*mm, page_width, 8*mm, fill=True, stroke=False)
                 
-                # Logo in header
-                if self.logo_image:
+                # Logo with correct aspect ratio
+                if self.logo_image_data:
                     try:
-                        self.logo_image.seek(0)  # Reset stream position
-                        img = Image(self.logo_image, width=40*mm, height=15*mm)
-                        img.drawOn(canvas_obj, 20*mm, header_y + 5*mm)
+                        self.logo_image_data.seek(0)
+                        # Maintain aspect ratio: max 35mm width, 12mm height
+                        logo_img = Image(self.logo_image_data, width=35*mm, height=12*mm, kind='proportional')
+                        logo_img.drawOn(canvas_obj, 20*mm, page_height - 15*mm)
                     except Exception as e:
-                        logging.warning(f"Error drawing logo: {e}")
+                        logging.warning(f"Logo drawing error: {e}")
                 
-                # Institute name in header
-                canvas_obj.setFillColor(colors.white)
-                canvas_obj.setFont("Helvetica-Bold", 16)
+                # Institute name and website in header
+                canvas_obj.setFillColor(colors.HexColor('#1F2937'))
+                canvas_obj.setFont("Helvetica-Bold", 12)
                 institute_name = self.institute_data.get("name", "GRRAS Solutions Training Institute")
-                canvas_obj.drawString(70*mm, header_y + 12*mm, institute_name)
+                canvas_obj.drawString(65*mm, page_height - 10*mm, institute_name)
                 
-                canvas_obj.setFont("Helvetica", 10)
-                canvas_obj.drawString(70*mm, header_y + 7*mm, 
-                                    self.institute_data.get("tagline", "Empowering Futures Through Technology"))
+                canvas_obj.setFont("Helvetica", 9)
+                canvas_obj.setFillColor(colors.HexColor('#DC2626'))
+                canvas_obj.drawString(65*mm, page_height - 14*mm, "https://www.grras.tech")
                 
-                # Footer section
+                # FOOTER - Page number and website on every page
                 footer_y = 15*mm
-                
-                # Footer line
-                canvas_obj.setStrokeColor(colors.HexColor('#DC2626'))
-                canvas_obj.setLineWidth(1)
-                canvas_obj.line(20*mm, footer_y + 10*mm, page_width - 20*mm, footer_y + 10*mm)
-                
-                # Footer content
                 canvas_obj.setFillColor(colors.HexColor('#6B7280'))
                 canvas_obj.setFont("Helvetica", 8)
                 
-                # Left footer: Contact info
-                phone = ', '.join(self.institute_data.get("phones", ["090019 91227"]))
-                canvas_obj.drawString(20*mm, footer_y + 5*mm, f"📞 {phone}")
-                
-                email = ', '.join(self.institute_data.get("emails", ["info@grrassolutions.com"]))
-                canvas_obj.drawString(20*mm, footer_y + 1*mm, f"📧 {email}")
-                
-                # Right footer: Page number and date
+                # Page number and website
                 page_num = canvas_obj.getPageNumber()
-                canvas_obj.drawRightString(page_width - 20*mm, footer_y + 5*mm, f"Page {page_num}")
+                canvas_obj.drawString(20*mm, footer_y, f"Page {page_num}")
+                canvas_obj.drawRightString(page_width - 20*mm, footer_y, "www.grras.tech")
                 
-                current_date = datetime.now().strftime("%B %Y")
-                canvas_obj.drawRightString(page_width - 20*mm, footer_y + 1*mm, f"Generated: {current_date}")
+                # Full contact info only on LAST page
+                total_pages = getattr(doc, 'page_count', 1)
+                if page_num == total_pages:
+                    self.add_contact_footer(canvas_obj, footer_y)
                 
                 canvas_obj.restoreState()
+                
+            def add_contact_footer(self, canvas_obj, footer_y):
+                """Add full contact information on last page"""
+                canvas_obj.setFont("Helvetica", 8)
+                canvas_obj.setFillColor(colors.HexColor('#374151'))
+                
+                address = self.institute_data.get("address", "A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012")
+                phone = ', '.join(self.institute_data.get("phones", ["090019 91227"]))
+                email = ', '.join(self.institute_data.get("emails", ["info@grrassolutions.com"]))
+                
+                # Contact details in compact format
+                contact_y = footer_y + 8*mm
+                canvas_obj.drawString(20*mm, contact_y, f"Address: {address}")
+                canvas_obj.drawString(20*mm, contact_y - 3*mm, f"Phone: {phone} | Email: {email}")
         
-        # Initialize professional template
-        template_handler = ProfessionalTemplate(pdf_path, institute, branding, course)
+        # Initialize template handler
+        template_handler = GRRASPDFTemplate(institute, branding, course)
         
-        # Enhanced PDF generation with professional layout
+        # Document setup with proper margins
         doc = SimpleDocTemplate(
-            pdf_path, 
-            pagesize=A4, 
+            pdf_path,
+            pagesize=A4,
             rightMargin=20*mm,
             leftMargin=20*mm,
-            topMargin=30*mm,
+            topMargin=25*mm,  # Space for header
+            bottomMargin=20*mm  # Space for footer
+        )
+        
+        # Custom page counting
+        class PageCounterDocTemplate(SimpleDocTemplate):
+            def __init__(self, *args, **kwargs):
+                SimpleDocTemplate.__init__(self, *args, **kwargs)
+                self.page_count = 0
+                
+            def build(self, flowables, onFirstPage=None, onLaterPages=None):
+                # First pass to count pages
+                temp_doc = SimpleDocTemplate(pdf_path, pagesize=A4)
+                temp_doc.build(flowables)
+                # Estimate page count (this is approximate)
+                self.page_count = max(2, len(flowables) // 15 + 1)
+                
+                # Second pass with page count
+                SimpleDocTemplate.build(self, flowables, onFirstPage, onLaterPages)
+        
+        doc = PageCounterDocTemplate(
+            pdf_path,
+            pagesize=A4,
+            rightMargin=20*mm,
+            leftMargin=20*mm,
+            topMargin=25*mm,
             bottomMargin=25*mm
         )
         
-        # Set up page template with header/footer
-        def on_first_page(canvas, doc):
-            template_handler.create_header_footer_template(canvas, doc)
+        def create_header_footer(canvas, doc):
+            template_handler.create_header_footer(canvas, doc)
             
-        def on_later_pages(canvas, doc):
-            template_handler.create_header_footer_template(canvas, doc)
-        
-        doc.pageTemplates = [
-            PageTemplate(id='first', frames=[Frame(20*mm, 25*mm, A4[0]-40*mm, A4[1]-55*mm, 
-                                                 leftPadding=0, bottomPadding=0, rightPadding=0, topPadding=0)],
-                        onPage=on_first_page),
-            PageTemplate(id='later', frames=[Frame(20*mm, 25*mm, A4[0]-40*mm, A4[1]-55*mm,
-                                                 leftPadding=0, bottomPadding=0, rightPadding=0, topPadding=0)],
-                        onPage=on_later_pages)
-        ]
+        doc.page_count = 2  # Default estimate
         
         styles = getSampleStyleSheet()
         

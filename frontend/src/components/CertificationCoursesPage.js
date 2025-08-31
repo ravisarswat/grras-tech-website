@@ -24,6 +24,45 @@ const CertificationCoursesPage = () => {
 
   const courses = content?.courses || [];
 
+  // Determine certification level based on course content
+  const determineLevel = (course, vendor) => {
+    const title = course.title?.toLowerCase() || '';
+    const level = course.level?.toLowerCase() || '';
+    const category = course.category?.toLowerCase() || '';
+
+    if (vendor === 'redhat') {
+      if (title.includes('rhcsa') || title.includes('basics') || title.includes('foundation') || level.includes('beginner')) return 'foundation';
+      if (title.includes('rhce') || title.includes('do188') || title.includes('engineer') || level.includes('advanced')) return 'professional';
+      return 'specialist';
+    }
+
+    if (vendor === 'aws') {
+      if (title.includes('practitioner') || title.includes('foundation') || level.includes('beginner')) return 'foundation';
+      if (title.includes('associate') || title.includes('developer') || level.includes('intermediate')) return 'associate';
+      return 'professional';
+    }
+
+    if (vendor === 'kubernetes') {
+      if (title.includes('cka') || title.includes('administrator')) return 'administrator';
+      if (title.includes('cks') || title.includes('security')) return 'security';
+      return 'developer';
+    }
+
+    if (vendor === 'programming') {
+      if (level.includes('beginner') || title.includes('basics') || title.includes('foundation') || title.includes('c++')) return 'beginner';
+      if (level.includes('advanced') || title.includes('advanced') || title.includes('professional') || title.includes('machine learning')) return 'professional';
+      return 'intermediate';
+    }
+
+    if (vendor === 'degree') {
+      if (title.includes('bca') || title.includes('bachelor')) return 'undergraduate';
+      if (title.includes('diploma') || title.includes('certificate')) return 'diploma';
+      return 'certification';
+    }
+
+    return 'all';
+  };
+
   // Vendor-based course organization
   const courseVendors = {
     redhat: {

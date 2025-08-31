@@ -307,22 +307,22 @@ const Home = () => {
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className="text-4xl">{course.icon}</div>
+                  <div className="text-4xl">{course.icon || '📚'}</div>
                   <span className="text-sm font-medium text-green-600 bg-green-100 px-3 py-1 rounded-full">
-                    {course.level}
+                    {course.level || 'All Levels'}
                   </span>
                 </div>
                 
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  {course.name}
+                  {course.title || course.name}
                 </h3>
                 
                 <p className="text-red-600 font-medium mb-3">
-                  {course.tagline}
+                  {course.oneLiner || course.tagline || 'Professional Training Course'}
                 </p>
                 
                 <p className="text-gray-600 mb-4 leading-relaxed">
-                  {course.description}
+                  {course.overview || course.description || ''}
                 </p>
                 
                 <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">

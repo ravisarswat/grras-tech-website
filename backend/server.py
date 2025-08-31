@@ -674,7 +674,7 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         ]
         
         for benefit in cert_benefits:
-            content_elements.append(Paragraph(benefit, highlight_box_style))
+            content_elements.append(Paragraph(benefit, bullet_list_style))
         
         content_elements.append(Spacer(1, 10*mm))
         

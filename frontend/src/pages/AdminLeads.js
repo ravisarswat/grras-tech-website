@@ -9,7 +9,10 @@ import {
   BookOpen,
   RefreshCw,
   AlertCircle,
-  LogIn
+  LogIn,
+  Trash2,
+  CheckSquare,
+  Square
 } from 'lucide-react';
 import { toast } from 'sonner';
 import SEO from '../components/SEO';

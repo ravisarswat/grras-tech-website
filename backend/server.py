@@ -661,8 +661,14 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         cta_content = "Ready to Transform Your Career? Join GRRAS Today!"
         content_elements.append(Paragraph(cta_content, info_box_style))
         
-        # Build PDF
-        doc.build(content_elements)
+        # Build PDF with professional template
+        try:
+            doc.build(content_elements, onFirstPage=on_first_page, onLaterPages=on_later_pages)
+            logging.info("✅ Professional PDF generated successfully")
+        except Exception as e:
+            logging.error(f"Error building PDF: {e}")
+            # Fallback to simple build
+            doc.build(content_elements)
         
         # Store lead information
         try:

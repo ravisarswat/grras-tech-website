@@ -1,23 +1,19 @@
 {
-  "timestamp": "2025-08-31T11:26:28.523336",
+  "timestamp": "2025-08-31T11:27:00.414909",
   "backend_url": "https://grras-cms-rebuild.preview.emergentagent.com",
   "total_tests": 6,
-  "passed_tests": 3,
-  "failed_tests": 3,
-  "success_rate": "50.0%",
+  "passed_tests": 6,
+  "failed_tests": 0,
+  "success_rate": "100.0%",
   "test_results": {
-    "admin_authentication": false,
+    "admin_authentication": true,
     "get_all_courses": true,
     "identify_missing_oneliner": true,
     "fix_missing_oneliners": true,
-    "update_courses_via_cms": false,
-    "verify_fix": false
+    "update_courses_via_cms": true,
+    "verify_fix": true
   },
-  "errors": [
-    "Admin login failed with status 401: {\"detail\":\"Invalid password\"}",
-    "No admin token available for CMS update",
-    "Verification failed: 14 courses still missing oneLiner"
-  ],
+  "errors": [],
   "courses_missing_oneliner_initially": 14,
   "courses_fixed": 14,
   "fixed_courses_details": [
@@ -638,5 +634,5 @@
       }
     }
   ],
-  "admin_panel_validation_fixed": false
+  "admin_panel_validation_fixed": true
 }

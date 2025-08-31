@@ -92,11 +92,11 @@ const Contact = () => {
         name: formData.name.trim(),
         email: formData.email.trim(),
         phone: formData.phone.replace(/\D/g, ''),
-        message: formData.message.trim(),
-        consent: true
+        course: 'General Inquiry', // Required field for backend
+        message: formData.message.trim()
       };
       
-      await axios.post(`${API}/leads`, requestData);
+      await axios.post(`${API}/contact`, requestData);
       
       toast.success('Message sent successfully!', {
         description: 'We will get back to you within 24 hours.',

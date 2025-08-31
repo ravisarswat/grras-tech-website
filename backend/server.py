@@ -693,47 +693,45 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         except Exception as e:
             logging.error(f"PDF generation error: {e}")
             # Fallback to simple document
-            pdf_buffer.seek(0)  # Reset buffer
-            simple_doc = SimpleDocTemplate(pdf_buffer, pagesize=A4)
-            simple_doc.build(content_elements)
-        
-        # Store lead information
-        try:
-            lead_data = {
-                "name": name,
-                "email": email,
-                "phone": phone,
-                "course": course_name,
-                "type": "syllabus_download",
-                "timestamp": datetime.utcnow().isoformat(),
-                "ip": "Railway-Server"
-            }
-            
-            # Save to MongoDB
-            collection = db.leads
-            await collection.insert_one(lead_data)
-            
-        except Exception as e:
-            logging.warning(f"Failed to store lead data: {e}")
+            try:
+                pdf_buffer.seek(0)  # Reset buffer
+                simple_doc = SimpleDocTemplate(pdf_buffer, pagesize=A4)
+                simple_doc.build(content_elements)
+                logging.info("✅ Fallback PDF generation successful")
+            except Exception as fallback_error:
+                logging.error(f"Fallback PDF generation also failed: {fallback_error}")
+                raise HTTPException(status_code=422, detail=f"Failed to generate syllabus: {str(fallback_error)}")
         
         # Return PDF from memory
         pdf_buffer.seek(0)
         pdf_content = pdf_buffer.getvalue()
+        
+        if not pdf_content:
+            raise HTTPException(status_code=422, detail="Failed to generate syllabus: PDF content is empty")
+        
+        # Create safe filename
+        safe_filename = f"{slug}-syllabus.pdf"
         
         # Create response with proper headers
         return Response(
             content=pdf_content,
             media_type="application/pdf",
             headers={
-                "Content-Disposition": f"attachment; filename={course_name.replace(' ', '_')}_Syllabus.pdf"
+                "Content-Disposition": f"attachment; filename={safe_filename}"
             }
         )
         
     except HTTPException:
         raise
     except Exception as e:
-        logging.error(f"Error generating syllabus for {slug}: {e}")
-        raise HTTPException(status_code=500, detail="Failed to generate syllabus")
+        import traceback
+        error_details = traceback.format_exc()
+        logging.error(f"Error generating syllabus for {slug}: {e}\nStack trace: {error_details}")
+        raise HTTPException(status_code=422, detail=f"Failed to generate syllabus: {str(e)}")
+    finally:
+        # Clean up resources
+        if pdf_buffer:
+            pdf_buffer.close()
 
 @api_router.get("/leads")
 async def get_leads(admin_verified: bool = Depends(verify_admin_token)):

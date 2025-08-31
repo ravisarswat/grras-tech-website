@@ -1,0 +1,23 @@
+{
+  "timestamp": "2025-08-31T09:39:35.974318",
+  "production_url": "https://grras-tech-website-production.up.railway.app",
+  "total_tests": 5,
+  "passed_tests": 3,
+  "failed_tests": 2,
+  "success_rate": "60.0%",
+  "test_results": {
+    "admin_authentication": true,
+    "content_migration": true,
+    "courses_verification": false,
+    "course_count_verification": false,
+    "learning_paths_verification": true
+  },
+  "errors": [
+    "Only found 0 certification courses, expected more",
+    "Course count did not increase: before=7, after=7"
+  ],
+  "course_count_before": 7,
+  "course_count_after": 7,
+  "course_count_increase": 0,
+  "migration_successful": false
+}

@@ -797,6 +797,13 @@ async def delete_lead(lead_id: str, admin_verified: bool = Depends(verify_admin_
 
 class BulkDeleteRequest(BaseModel):
     lead_ids: List[str]
+    
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "lead_ids": ["507f1f77bcf86cd799439011", "507f1f77bcf86cd799439012"]
+            }
+        }
 
 @api_router.delete("/leads/bulk")
 async def delete_multiple_leads(request: BulkDeleteRequest, admin_verified: bool = Depends(verify_admin_token)):

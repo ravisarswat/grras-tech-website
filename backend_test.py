@@ -588,6 +588,8 @@ class BackendTester:
                 ("Contact Form Submission", self.test_contact_form_submission),
                 ("Syllabus PDF Generation", self.test_syllabus_generation),
                 ("Leads Management", self.test_leads_management),
+                ("New Certification Courses Addition", self.test_new_courses_addition),
+                ("New Certification Courses Verification", self.test_new_courses_verification),
             ]
             
             passed_tests = 0

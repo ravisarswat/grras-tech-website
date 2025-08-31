@@ -352,15 +352,17 @@ const Home = () => {
             ))}
           </div>
           
-          <div className="text-center mt-12">
-            <Link
-              to="/courses"
-              className="btn-outline inline-flex items-center"
-            >
-              View All Courses
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </div>
+          {(popularCoursesConfig.showViewAll !== false) && (
+            <div className="text-center mt-12">
+              <Link
+                to="/courses"
+                className="btn-outline inline-flex items-center"
+              >
+                View All Courses
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 

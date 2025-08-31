@@ -129,6 +129,64 @@ async def get_content():
         logging.error(f"Error fetching content: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch content")
 
+@api_router.post("/content/migrate")
+async def migrate_content(admin_verified: bool = Depends(verify_admin_token)):
+    """Migrate existing content to include new course organization features (Admin only)"""
+    try:
+        # Get current content
+        current_content = await content_manager.get_content()
+        
+        # Get default content with new structures
+        default_content = content_manager.get_default_content()
+        
+        # Merge new structures if they don't exist
+        if 'courseCategories' not in current_content:
+            current_content['courseCategories'] = default_content['courseCategories']
+            logging.info("✅ Added courseCategories to existing content")
+        
+        if 'learningPaths' not in current_content:
+            current_content['learningPaths'] = default_content['learningPaths']
+            logging.info("✅ Added learningPaths to existing content")
+        
+        # Update pages.home with new course discovery features if not present
+        if 'pages' in current_content and 'home' in current_content['pages']:
+            home_page = current_content['pages']['home']
+            default_home = default_content['pages']['home']
+            
+            # Add course discovery features if missing
+            if 'courseCategories' not in home_page:
+                home_page['courseCategories'] = default_home['courseCategories']
+                logging.info("✅ Added courseCategories section to homepage")
+            
+            if 'learningPaths' not in home_page:
+                home_page['learningPaths'] = default_home['learningPaths']
+                logging.info("✅ Added learningPaths section to homepage")
+            
+            if 'courseDiscovery' not in home_page:
+                home_page['courseDiscovery'] = default_home['courseDiscovery']
+                logging.info("✅ Added courseDiscovery section to homepage")
+        
+        # Save updated content
+        updated_content = await content_manager.save_content(
+            current_content, 
+            user="system-migration", 
+            is_draft=False
+        )
+        
+        return {
+            "message": "Content migrated successfully to include course organization features",
+            "added_features": [
+                "courseCategories" if 'courseCategories' not in await content_manager.get_content() else None,
+                "learningPaths" if 'learningPaths' not in await content_manager.get_content() else None,
+                "courseDiscovery homepage features"
+            ],
+            "timestamp": datetime.utcnow().isoformat()
+        }
+        
+    except Exception as e:
+        logging.error(f"Error migrating content: {e}")
+        raise HTTPException(status_code=500, detail="Failed to migrate content")
+
 @api_router.post("/content")
 async def save_content(request: ContentRequest, admin_verified: bool = Depends(verify_admin_token)):
     """Save CMS content (Admin only)"""

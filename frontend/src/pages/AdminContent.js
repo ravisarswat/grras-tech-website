@@ -189,23 +189,56 @@ const AdminContent = () => {
         return;
       }
       
-      // Ensure all courses have required arrays and proper structure
+      // Ensure all courses have required arrays and proper structure with auto-fix
       const cleanedContent = {
         ...content,
-        courses: content.courses?.map(course => ({
-          ...course,
-          tools: course.tools || [],
-          highlights: course.highlights || [],
-          learningOutcomes: course.learningOutcomes || [],
-          careerRoles: course.careerRoles || [],
-          mode: course.mode || [],
-          seo: {
-            title: course.seo?.title || '',
-            description: course.seo?.description || '',
-            keywords: course.seo?.keywords || '',
-            ogImage: course.seo?.ogImage || ''
-          }
-        })) || []
+        courses: content.courses?.map((course, index) => {
+          // Auto-fix missing fields globally
+          const cleanedCourse = {
+            ...course,
+            // Ensure basic required fields exist
+            title: course.title?.trim() || `Course ${index + 1}`,
+            slug: course.slug?.trim() || `course-${index + 1}`,
+            oneLiner: course.oneLiner?.trim() || 
+              (course.title ? 
+                `Professional ${course.title.toLowerCase()} training with hands-on experience and industry certification` :
+                'Comprehensive training program with practical skills and certification'
+              ),
+            description: course.description?.trim() || course.oneLiner?.trim() || 'Course description will be updated soon',
+            duration: course.duration?.trim() || '4-6 weeks',
+            fees: course.fees?.trim() || 'Contact for pricing',
+            level: course.level?.trim() || 'Beginner to Intermediate',
+            category: course.category?.trim() || 'general',
+            
+            // Ensure arrays exist
+            tools: course.tools || [],
+            highlights: course.highlights || [],
+            learningOutcomes: course.learningOutcomes || [],
+            careerRoles: course.careerRoles || [],
+            mode: course.mode || [],
+            
+            // Ensure other fields
+            visible: course.visible !== false,
+            featured: course.featured || false,
+            order: course.order || index + 1,
+            
+            // Optional fields with defaults
+            overview: course.overview || course.description || course.oneLiner,
+            eligibility: course.eligibility || 'Basic computer knowledge recommended',
+            certificate: course.certificate || 'Certificate of completion provided',
+            
+            // SEO fields
+            seo: {
+              title: course.seo?.title || course.title,
+              description: course.seo?.description || course.oneLiner,
+              keywords: course.seo?.keywords || course.title?.toLowerCase().replace(/\s+/g, ', '),
+              ogImage: course.seo?.ogImage || '',
+              ...course.seo
+            }
+          };
+          
+          return cleanedCourse;
+        }) || []
       };
       
       await axios.post(`${API}/content`, { content: cleanedContent }, {

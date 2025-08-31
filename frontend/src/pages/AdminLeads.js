@@ -153,8 +153,11 @@ const AdminLeads = () => {
         // Delete multiple leads
         const leadIds = leadsToDelete.map(lead => lead._id);
         await axios.delete(`${API}/leads/bulk`, {
-          data: leadIds,
-          headers: { 'Authorization': `Bearer ${token}` }
+          data: { lead_ids: leadIds },
+          headers: { 
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
         });
         toast.success(`${leadsToDelete.length} leads deleted successfully!`);
       }

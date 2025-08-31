@@ -320,13 +320,17 @@ const CourseEditor = ({
                     className="form-input"
                   >
                     <option value="">Select category</option>
-                    <option value="degree">Degree Program</option>
-                    <option value="programming">Programming</option>
-                    <option value="cloud">Cloud & DevOps</option>
-                    <option value="certification">Certification</option>
-                    <option value="security">Security</option>
-                    <option value="other">Other</option>
+                    <option value="certification">🔴 Red Hat Technologies</option>
+                    <option value="cloud">☁️ AWS Cloud Platform</option>
+                    <option value="container">⚙️ Kubernetes Ecosystem</option>
+                    <option value="programming">💻 Programming & Development</option>
+                    <option value="degree">🎓 Degree Programs</option>
+                    <option value="security">🛡️ Cybersecurity</option>
+                    <option value="other">📚 Other</option>
                   </select>
+                  <div className="mt-1 text-xs text-gray-500">
+                    This determines which tab the course appears in on the Courses page
+                  </div>
                 </div>
                 
                 <div>

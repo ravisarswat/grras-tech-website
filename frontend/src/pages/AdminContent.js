@@ -13,7 +13,9 @@ import {
   History,
   LogOut,
   Shield,
-  AlertCircle
+  AlertCircle,
+  Tag,
+  Route
 } from 'lucide-react';
 import { toast } from 'sonner';
 import SEO from '../components/SEO';

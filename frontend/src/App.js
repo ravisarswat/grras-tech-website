@@ -38,10 +38,14 @@ function AppContent() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           
-          {/* Course Routes */}
-          <Route path="/courses" element={<EnhancedCourses />} />
+          {/* Course Routes - New Classic Certification Academy */}  
+          <Route path="/courses" element={<CertificationCoursesPage />} />
           <Route path="/courses/category/:categorySlug" element={<CategoryCoursePage />} />
           <Route path="/courses/:slug" element={<CourseDetail />} />
+          
+          {/* Legacy course routes for backward compatibility */}
+          <Route path="/enhanced-courses" element={<EnhancedCourses />} />
+          <Route path="/old-courses" element={<Courses />} />
           
           {/* Learning Path Routes */}
           <Route path="/learning-paths" element={<LearningPaths />} />
@@ -58,9 +62,6 @@ function AppContent() {
           {/* Admin Routes */}
           <Route path="/admin/leads" element={<AdminLeads />} />
           <Route path="/admin/content" element={<AdminContent />} />
-          
-          {/* Legacy course route for backward compatibility */}
-          <Route path="/old-courses" element={<Courses />} />
           
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -222,6 +222,15 @@ const CertificationCoursesPage = () => {
         });
         categorizedFlag = true;
       }
+      // DevOps categorization
+      else if (courseVendors.devops.keywords.some(keyword => searchText.includes(keyword))) {
+        result.devops.push({
+          ...course,
+          vendor: 'devops',
+          level: determineLevel(course, 'devops')
+        });
+        categorizedFlag = true;
+      }
       // Programming categorization (exclude degree courses)
       else if (!title.includes('bca') && !title.includes('degree') && 
                courseVendors.programming.keywords.some(keyword => searchText.includes(keyword))) {

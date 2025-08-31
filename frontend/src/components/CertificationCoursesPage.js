@@ -204,8 +204,16 @@ const CertificationCoursesPage = () => {
 
       let categorizedFlag = false;
 
-      // PRIORITY 1: Direct category field matching (for admin-set categories)
-      if (category === 'degree' || title.includes('bca') || title.includes('degree')) {
+      // PRIORITY 1: Direct category field matching (ABSOLUTE PRIORITY)
+      if (category === 'devops') {
+        result.devops.push({
+          ...course,
+          vendor: 'devops',
+          level: determineLevel(course, 'devops')
+        });
+        categorizedFlag = true;
+      }
+      else if (category === 'degree' || title.includes('bca') || title.includes('degree')) {
         result.degree.push({
           ...course,
           vendor: 'degree',
@@ -213,7 +221,7 @@ const CertificationCoursesPage = () => {
         });
         categorizedFlag = true;
       }
-      else if (category === 'certification' || courseVendors.redhat.keywords.some(keyword => searchText.includes(keyword))) {
+      else if (category === 'certification') {
         result.redhat.push({
           ...course,
           vendor: 'redhat',
@@ -221,7 +229,7 @@ const CertificationCoursesPage = () => {
         });
         categorizedFlag = true;
       }
-      else if (category === 'cloud' || courseVendors.aws.keywords.some(keyword => searchText.includes(keyword))) {
+      else if (category === 'cloud') {
         result.aws.push({
           ...course,
           vendor: 'aws',
@@ -229,19 +237,11 @@ const CertificationCoursesPage = () => {
         });
         categorizedFlag = true;
       }
-      else if (category === 'container' || courseVendors.kubernetes.keywords.some(keyword => searchText.includes(keyword))) {
+      else if (category === 'container') {
         result.kubernetes.push({
           ...course,
           vendor: 'kubernetes',
           level: determineLevel(course, 'kubernetes')
-        });
-        categorizedFlag = true;
-      }
-      else if (category === 'devops' || courseVendors.devops.keywords.some(keyword => searchText.includes(keyword))) {
-        result.devops.push({
-          ...course,
-          vendor: 'devops',
-          level: determineLevel(course, 'devops')
         });
         categorizedFlag = true;
       }
@@ -253,14 +253,49 @@ const CertificationCoursesPage = () => {
         });
         categorizedFlag = true;
       }
-      // PRIORITY 2: Keyword-based fallback matching
-      else if (!categorizedFlag && courseVendors.programming.keywords.some(keyword => searchText.includes(keyword))) {
-        result.programming.push({
-          ...course,
-          vendor: 'programming',
-          level: determineLevel(course, 'programming')
-        });
-        categorizedFlag = true;
+      
+      // PRIORITY 2: Keyword-based fallback matching (only if no direct category match)
+      if (!categorizedFlag) {
+        if (courseVendors.redhat.keywords.some(keyword => searchText.includes(keyword))) {
+          result.redhat.push({
+            ...course,
+            vendor: 'redhat',
+            level: determineLevel(course, 'redhat')
+          });
+          categorizedFlag = true;
+        }
+        else if (courseVendors.aws.keywords.some(keyword => searchText.includes(keyword))) {
+          result.aws.push({
+            ...course,
+            vendor: 'aws',
+            level: determineLevel(course, 'aws')
+          });
+          categorizedFlag = true;
+        }
+        else if (courseVendors.kubernetes.keywords.some(keyword => searchText.includes(keyword))) {
+          result.kubernetes.push({
+            ...course,
+            vendor: 'kubernetes',
+            level: determineLevel(course, 'kubernetes')
+          });
+          categorizedFlag = true;
+        }
+        else if (courseVendors.devops.keywords.some(keyword => searchText.includes(keyword))) {
+          result.devops.push({
+            ...course,
+            vendor: 'devops',
+            level: determineLevel(course, 'devops')
+          });
+          categorizedFlag = true;
+        }
+        else if (courseVendors.programming.keywords.some(keyword => searchText.includes(keyword))) {
+          result.programming.push({
+            ...course,
+            vendor: 'programming',
+            level: determineLevel(course, 'programming')
+          });
+          categorizedFlag = true;
+        }
       }
 
       // Always add to general category (unique courses only)

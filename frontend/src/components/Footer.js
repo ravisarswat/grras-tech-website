@@ -201,7 +201,7 @@ const Footer = () => {
                         </span>
                         {course.fees && (
                           <span className="text-xs text-gray-500 mt-1 block">
-                            {course.fees}
+                            {course.fees.includes('₹') ? course.fees : `₹${course.fees}`}
                           </span>
                         )}
                       </Link>

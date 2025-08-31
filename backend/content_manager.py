@@ -183,7 +183,7 @@ class ContentManager:
                             "order": 1,
                             "title": "Linux Fundamentals",
                             "duration": "4 weeks",
-                            "prerequisite": false
+                            "prerequisite": False
                         },
                         {
                             "courseSlug": "aws-solutions-architect", 

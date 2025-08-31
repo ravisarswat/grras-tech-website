@@ -18,9 +18,21 @@ import { useContent } from '../contexts/ContentContext';
 
 const CertificationCoursesPage = () => {
   const { content } = useContent();
-  const [activeTab, setActiveTab] = useState('redhat');
+  const location = useLocation();
+  
+  // Get tab from URL parameter
+  const urlParams = new URLSearchParams(location.search);
+  const tabFromUrl = urlParams.get('tab') || 'redhat';
+  
+  const [activeTab, setActiveTab] = useState(tabFromUrl);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLevel, setSelectedLevel] = useState('all');
+
+  // Update active tab when URL changes
+  useEffect(() => {
+    const newTab = urlParams.get('tab') || 'redhat';
+    setActiveTab(newTab);
+  }, [location.search]);
 
   const courses = content?.courses || [];
 

@@ -348,7 +348,230 @@ class BackendTester:
             logger.error(f"❌ Leads management test failed: {e}")
             return False
     
-    async def run_all_tests(self) -> Dict[str, Any]:
+    async def test_new_courses_addition(self) -> bool:
+        """Test 9: Add new certification courses to CMS"""
+        logger.info("🔍 Testing addition of new certification courses...")
+        
+        if not self.admin_token:
+            logger.warning("⚠️ No admin token available, skipping new courses addition test")
+            return False
+        
+        try:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            
+            # Get current CMS content
+            async with self.session.get(f"{self.api_base}/content") as response:
+                if response.status != 200:
+                    self.errors.append("Failed to get current CMS content for course addition")
+                    return False
+                
+                data = await response.json()
+                current_content = data.get("content", {})
+                current_courses = current_content.get("courses", [])
+                
+                logger.info(f"📊 Current courses count: {len(current_courses)}")
+                
+                # Define new certification courses as per review request
+                new_courses = [
+                    {
+                        "title": "AWS Cloud Practitioner Certification Training",
+                        "slug": "aws-cloud-practitioner-certification",
+                        "duration": "6-8 weeks",
+                        "fees": "₹15,000",
+                        "level": "Beginner to Intermediate",
+                        "category": "cloud",
+                        "description": "Master AWS Cloud fundamentals and prepare for AWS Certified Cloud Practitioner exam",
+                        "overview": "Master AWS Cloud fundamentals and prepare for AWS Certified Cloud Practitioner exam",
+                        "tools": ["AWS Console", "Cloud Computing", "AWS Services", "Cloud Security"],
+                        "highlights": ["AWS Cloud concepts and services", "Security and compliance basics", "Billing and pricing models", "Hands-on AWS practice", "Exam preparation"],
+                        "eligibility": "Basic computer knowledge and interest in cloud computing",
+                        "visible": True,
+                        "order": len(current_courses) + 1,
+                        "learningOutcomes": ["Understand AWS Cloud concepts", "Learn AWS services", "Master security basics", "Prepare for certification exam"],
+                        "careerRoles": ["Cloud Support Associate", "AWS Cloud Practitioner", "Cloud Operations Specialist"]
+                    },
+                    {
+                        "title": "AWS Solutions Architect Associate Certification",
+                        "slug": "aws-solutions-architect-associate",
+                        "duration": "8-10 weeks",
+                        "fees": "₹25,000",
+                        "level": "Intermediate to Advanced",
+                        "category": "cloud",
+                        "description": "Design and deploy secure, scalable AWS applications. Prepare for Solutions Architect Associate exam",
+                        "overview": "Design and deploy secure, scalable AWS applications. Prepare for Solutions Architect Associate exam",
+                        "tools": ["AWS EC2", "S3", "VPC", "IAM", "CloudFormation", "Lambda"],
+                        "highlights": ["Design secure architectures", "Resilient and scalable systems", "High-performing architectures", "Cost optimization", "Real-world projects"],
+                        "eligibility": "AWS Cloud Practitioner knowledge or equivalent experience",
+                        "visible": True,
+                        "order": len(current_courses) + 2,
+                        "learningOutcomes": ["Design secure AWS architectures", "Build scalable systems", "Optimize costs", "Deploy applications"],
+                        "careerRoles": ["Solutions Architect", "Cloud Architect", "AWS Consultant"]
+                    },
+                    {
+                        "title": "CKA - Certified Kubernetes Administrator",
+                        "slug": "cka-certified-kubernetes-administrator",
+                        "duration": "6-8 weeks",
+                        "fees": "₹20,000",
+                        "level": "Intermediate to Advanced",
+                        "category": "cloud",
+                        "description": "Master Kubernetes administration and prepare for CKA certification exam",
+                        "overview": "Master Kubernetes administration and prepare for CKA certification exam",
+                        "tools": ["Kubernetes", "kubectl", "Docker", "Container Runtime", "etcd"],
+                        "highlights": ["Cluster architecture and installation", "Workloads and scheduling", "Services and networking", "Storage management", "Troubleshooting"],
+                        "eligibility": "Basic Linux knowledge and container concepts",
+                        "visible": True,
+                        "order": len(current_courses) + 3,
+                        "learningOutcomes": ["Manage Kubernetes clusters", "Deploy applications", "Configure networking", "Handle storage"],
+                        "careerRoles": ["Kubernetes Administrator", "DevOps Engineer", "Container Specialist"]
+                    },
+                    {
+                        "title": "CKS - Certified Kubernetes Security Specialist",
+                        "slug": "cks-certified-kubernetes-security",
+                        "duration": "4-6 weeks",
+                        "fees": "₹22,000",
+                        "level": "Advanced",
+                        "category": "security",
+                        "description": "Master Kubernetes security and prepare for CKS certification exam",
+                        "overview": "Master Kubernetes security and prepare for CKS certification exam",
+                        "tools": ["Kubernetes", "Security Tools", "Network Policies", "RBAC", "Pod Security"],
+                        "highlights": ["Cluster hardening", "System hardening", "Microservice vulnerabilities", "Supply chain security", "Runtime security"],
+                        "eligibility": "CKA certification or equivalent Kubernetes experience",
+                        "visible": True,
+                        "order": len(current_courses) + 4,
+                        "learningOutcomes": ["Secure Kubernetes clusters", "Implement security policies", "Monitor threats", "Audit systems"],
+                        "careerRoles": ["Security Engineer", "DevSecOps Engineer", "Kubernetes Security Specialist"]
+                    },
+                    {
+                        "title": "RHCSA - Red Hat System Administrator Certification",
+                        "slug": "rhcsa-red-hat-system-administrator",
+                        "duration": "6-8 weeks",
+                        "fees": "₹18,000",
+                        "level": "Beginner to Intermediate",
+                        "category": "certification",
+                        "description": "Master Linux system administration with Red Hat Enterprise Linux",
+                        "overview": "Master Linux system administration with Red Hat Enterprise Linux",
+                        "tools": ["RHEL", "Linux Command Line", "systemd", "Network Configuration", "Storage Management"],
+                        "highlights": ["System administration tasks", "User and group management", "File systems and storage", "Network configuration", "System monitoring"],
+                        "eligibility": "Basic computer knowledge, no prior Linux experience required",
+                        "visible": True,
+                        "order": len(current_courses) + 5,
+                        "learningOutcomes": ["Manage Linux systems", "Configure networks", "Handle storage", "Monitor performance"],
+                        "careerRoles": ["System Administrator", "Linux Administrator", "IT Support Specialist"]
+                    },
+                    {
+                        "title": "RHCE - Red Hat Certified Engineer",
+                        "slug": "rhce-red-hat-certified-engineer",
+                        "duration": "8-10 weeks",
+                        "fees": "₹25,000",
+                        "level": "Advanced",
+                        "category": "certification",
+                        "description": "Advanced Linux automation with Ansible and Red Hat technologies",
+                        "overview": "Advanced Linux automation with Ansible and Red Hat technologies",
+                        "tools": ["Ansible", "RHEL", "Automation", "Playbooks", "Linux Administration"],
+                        "highlights": ["Automation with Ansible", "Advanced system administration", "Network services", "Security implementation", "Performance tuning"],
+                        "eligibility": "RHCSA certification or equivalent Linux experience",
+                        "visible": True,
+                        "order": len(current_courses) + 6,
+                        "learningOutcomes": ["Automate with Ansible", "Manage complex systems", "Deploy services", "Optimize performance"],
+                        "careerRoles": ["DevOps Engineer", "Automation Engineer", "Senior System Administrator"]
+                    },
+                    {
+                        "title": "DO188 - Red Hat OpenShift Development I",
+                        "slug": "do188-red-hat-openshift-development",
+                        "duration": "4-6 weeks",
+                        "fees": "₹20,000",
+                        "level": "Intermediate",
+                        "category": "cloud",
+                        "description": "Introduction to containers with Podman and OpenShift development",
+                        "overview": "Introduction to containers with Podman and OpenShift development",
+                        "tools": ["Podman", "OpenShift", "Containers", "Kubernetes", "Container Registry"],
+                        "highlights": ["Container fundamentals", "Podman container management", "OpenShift development", "Container images", "Application deployment"],
+                        "eligibility": "Basic Linux knowledge and programming concepts",
+                        "visible": True,
+                        "order": len(current_courses) + 7,
+                        "learningOutcomes": ["Build containers", "Deploy on OpenShift", "Manage applications", "Use registries"],
+                        "careerRoles": ["Container Developer", "OpenShift Developer", "Cloud Application Developer"]
+                    }
+                ]
+                
+                # Add new courses to existing courses
+                updated_courses = current_courses + new_courses
+                current_content["courses"] = updated_courses
+                
+                # Save updated content
+                content_request = {"content": current_content, "isDraft": False}
+                
+                async with self.session.post(f"{self.api_base}/content", json=content_request, headers=headers) as save_response:
+                    if save_response.status == 200:
+                        logger.info(f"✅ Successfully added {len(new_courses)} new certification courses")
+                        logger.info(f"📊 Total courses now: {len(updated_courses)}")
+                        self.test_results["new_courses_addition"] = True
+                        return True
+                    else:
+                        response_text = await save_response.text()
+                        self.errors.append(f"Failed to save new courses with status {save_response.status}: {response_text}")
+                        return False
+                        
+        except Exception as e:
+            self.errors.append(f"New courses addition test failed: {str(e)}")
+            logger.error(f"❌ New courses addition test failed: {e}")
+            return False
+    
+    async def test_new_courses_verification(self) -> bool:
+        """Test 10: Verify new certification courses are accessible"""
+        logger.info("🔍 Verifying new certification courses are accessible...")
+        
+        try:
+            # Get courses via API
+            async with self.session.get(f"{self.api_base}/courses") as response:
+                if response.status != 200:
+                    self.errors.append("Failed to get courses for verification")
+                    return False
+                
+                data = await response.json()
+                courses = data.get("courses", [])
+                
+                # Check for new certification courses
+                expected_course_slugs = [
+                    "aws-cloud-practitioner-certification",
+                    "aws-solutions-architect-associate", 
+                    "cka-certified-kubernetes-administrator",
+                    "cks-certified-kubernetes-security",
+                    "rhcsa-red-hat-system-administrator",
+                    "rhce-red-hat-certified-engineer",
+                    "do188-red-hat-openshift-development"
+                ]
+                
+                found_courses = []
+                for course in courses:
+                    if course.get("slug") in expected_course_slugs:
+                        found_courses.append(course.get("slug"))
+                
+                logger.info(f"📊 Found {len(found_courses)} out of {len(expected_course_slugs)} new certification courses")
+                
+                if len(found_courses) == len(expected_course_slugs):
+                    logger.info("✅ All new certification courses are accessible via API")
+                    
+                    # Test individual course access for one of the new courses
+                    test_slug = "aws-cloud-practitioner-certification"
+                    async with self.session.get(f"{self.api_base}/courses/{test_slug}") as course_response:
+                        if course_response.status == 200:
+                            course_data = await course_response.json()
+                            logger.info(f"✅ Individual course access working for '{course_data.get('title')}'")
+                            self.test_results["new_courses_verification"] = True
+                            return True
+                        else:
+                            self.errors.append(f"Individual course access failed for {test_slug}")
+                            return False
+                else:
+                    missing_courses = [slug for slug in expected_course_slugs if slug not in found_courses]
+                    self.errors.append(f"Missing certification courses: {missing_courses}")
+                    return False
+                    
+        except Exception as e:
+            self.errors.append(f"New courses verification test failed: {str(e)}")
+            logger.error(f"❌ New courses verification test failed: {e}")
+            return False
         """Run all backend tests"""
         logger.info("🚀 Starting comprehensive backend testing...")
         

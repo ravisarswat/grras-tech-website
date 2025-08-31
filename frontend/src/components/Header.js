@@ -89,10 +89,46 @@ const Header = () => {
                       >
                         {/* Header */}
                         <div className="px-4 py-2 border-b border-gray-100">
-                          <h3 className="text-sm font-semibold text-gray-900">Our Courses</h3>
+                          <h3 className="text-sm font-semibold text-gray-900">Certification Academy</h3>
                         </div>
                         
-                        {/* All Courses Link */}
+                        {/* Certification Tracks */}
+                        <div className="px-4 py-2">
+                          <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Certification Tracks</h4>
+                          
+                          <div className="space-y-1">
+                            <Link
+                              to="/courses"
+                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
+                              onClick={() => setIsCoursesOpen(false)}
+                            >
+                              <div className="w-2 h-2 bg-red-500 rounded-full mr-3"></div>
+                              <span>🔴 Red Hat Technologies</span>
+                            </Link>
+                            
+                            <Link
+                              to="/courses"
+                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
+                              onClick={() => setIsCoursesOpen(false)}
+                            >
+                              <div className="w-2 h-2 bg-orange-500 rounded-full mr-3"></div>
+                              <span>☁️ AWS Cloud Platform</span>
+                            </Link>
+                            
+                            <Link
+                              to="/courses"
+                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
+                              onClick={() => setIsCoursesOpen(false)}
+                            >
+                              <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                              <span>⚙️ Kubernetes Ecosystem</span>
+                            </Link>
+                          </div>
+                        </div>
+                        
+                        <div className="border-t border-gray-100 my-2"></div>
+                        
+                        {/* All Certifications Link */}
                         <Link
                           to="/courses"
                           className="flex items-center px-4 py-3 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
@@ -100,64 +136,10 @@ const Header = () => {
                         >
                           <BookOpen className="h-4 w-4 mr-3 text-gray-400" />
                           <div>
-                            <div className="font-medium">All Courses</div>
-                            <div className="text-xs text-gray-500">Browse all available courses</div>
+                            <div className="font-medium">All Certifications</div>
+                            <div className="text-xs text-gray-500">Browse complete catalog</div>
                           </div>
                         </Link>
-                        
-                        <div className="border-t border-gray-100 my-2"></div>
-                        
-                        {/* Categories Section */}
-                        <div className="px-4 py-2">
-                          <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Popular Categories</h4>
-                          
-                          <div className="space-y-1">
-                            <Link
-                              to="/courses?category=cloud"
-                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
-                              onClick={() => setIsCoursesOpen(false)}
-                            >
-                              <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-                              <span>Cloud & DevOps</span>
-                            </Link>
-                            
-                            <Link
-                              to="/courses?category=certification"
-                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
-                              onClick={() => setIsCoursesOpen(false)}
-                            >
-                              <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                              <span>Certifications</span>
-                            </Link>
-                            
-                            <Link
-                              to="/courses?category=security"
-                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
-                              onClick={() => setIsCoursesOpen(false)}
-                            >
-                              <div className="w-2 h-2 bg-red-500 rounded-full mr-3"></div>
-                              <span>Cyber Security</span>
-                            </Link>
-                            
-                            <Link
-                              to="/courses?category=programming"
-                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
-                              onClick={() => setIsCoursesOpen(false)}
-                            >
-                              <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                              <span>Programming</span>
-                            </Link>
-                            
-                            <Link
-                              to="/courses?category=degree"
-                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
-                              onClick={() => setIsCoursesOpen(false)}
-                            >
-                              <div className="w-2 h-2 bg-indigo-500 rounded-full mr-3"></div>
-                              <span>Degree Programs</span>
-                            </Link>
-                          </div>
-                        </div>
                         
                         <div className="border-t border-gray-100 my-2"></div>
                         

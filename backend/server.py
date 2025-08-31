@@ -802,9 +802,6 @@ class BulkDeleteRequest(BaseModel):
 async def delete_multiple_leads(request: BulkDeleteRequest, admin_verified: bool = Depends(verify_admin_token)):
     """Delete multiple leads (Admin only)"""
     try:
-        from bson import ObjectId
-        from bson.errors import InvalidId
-        
         # Validate all ObjectId formats
         object_ids = []
         for lead_id in request.lead_ids:

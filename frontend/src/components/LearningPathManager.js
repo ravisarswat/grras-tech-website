@@ -174,7 +174,10 @@ const LearningPathManager = ({ content, updateContent }) => {
     updatePath(pathSlug, 'careerRoles', newRoles);
   };
 
-  const availableCourses = courses.filter(course => course.visible !== false);
+  // Safe check for available courses to prevent undefined errors
+  const availableCourses = courses.filter(course => 
+    course && course.visible !== false && course.slug && course.title
+  );
 
   const levelOptions = [
     'Beginner',

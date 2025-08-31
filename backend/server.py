@@ -701,7 +701,8 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         except Exception as e:
             logging.error(f"PDF generation error: {e}")
             # Fallback to simple document
-            simple_doc = SimpleDocTemplate(pdf_path, pagesize=A4)
+            pdf_buffer.seek(0)  # Reset buffer
+            simple_doc = SimpleDocTemplate(pdf_buffer, pagesize=A4)
             simple_doc.build(content_elements)
         
         # Store lead information

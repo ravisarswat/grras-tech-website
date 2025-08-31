@@ -98,7 +98,7 @@ const Header = () => {
                           
                           <div className="space-y-1">
                             <Link
-                              to="/courses"
+                              to="/courses?tab=redhat"
                               className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
                               onClick={() => setIsCoursesOpen(false)}
                             >
@@ -116,7 +116,7 @@ const Header = () => {
                             </Link>
                             
                             <Link
-                              to="/courses"
+                              to="/courses?tab=aws"
                               className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
                               onClick={() => setIsCoursesOpen(false)}
                             >
@@ -134,7 +134,7 @@ const Header = () => {
                             </Link>
                             
                             <Link
-                              to="/courses"
+                              to="/courses?tab=kubernetes"
                               className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
                               onClick={() => setIsCoursesOpen(false)}
                             >
@@ -152,7 +152,7 @@ const Header = () => {
                             </Link>
                             
                             <Link
-                              to="/courses"
+                              to="/courses?tab=devops"
                               className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
                               onClick={() => setIsCoursesOpen(false)}
                             >
@@ -161,7 +161,7 @@ const Header = () => {
                             </Link>
                             
                             <Link
-                              to="/courses"
+                              to="/courses?tab=programming"
                               className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
                               onClick={() => setIsCoursesOpen(false)}
                             >
@@ -170,7 +170,7 @@ const Header = () => {
                             </Link>
                             
                             <Link
-                              to="/courses"
+                              to="/courses?tab=degree"
                               className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
                               onClick={() => setIsCoursesOpen(false)}
                             >

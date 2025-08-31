@@ -13,6 +13,7 @@ import {
   GraduationCap
 } from 'lucide-react';
 import SEO from '../components/SEO';
+import { useContent } from '../contexts/ContentContext';
 
 
 const Home = () => {

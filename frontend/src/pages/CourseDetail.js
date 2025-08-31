@@ -435,7 +435,7 @@ const CourseDetail = () => {
         isOpen={showSyllabusModal}
         onClose={() => setShowSyllabusModal(false)}
         courseSlug={course.slug}
-        courseName={course.name}
+        courseName={course.title || course.name || 'Course'}
       />
     </>
   );

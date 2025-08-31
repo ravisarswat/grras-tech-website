@@ -68,7 +68,7 @@ const About = () => {
     {
       name: 'Mr. Amit Kumar',
       role: 'DevOps Lead Trainer',
-      experience: '10+ Years Industry Experience',
+      experience: '18+ Years Industry Experience',
       expertise: 'AWS, Docker, Kubernetes',
       image: '👨‍💻'
     },

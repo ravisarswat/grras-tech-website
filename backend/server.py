@@ -808,8 +808,11 @@ class BulkDeleteRequest(BaseModel):
 @api_router.delete("/leads/bulk")
 async def delete_multiple_leads(request: BulkDeleteRequest, admin_verified: bool = Depends(verify_admin_token)):
     """Delete multiple leads (Admin only)"""
+    logging.info(f"🔍 Bulk delete endpoint called with request: {request}")
+    logging.info(f"🔍 Request lead_ids: {request.lead_ids}")
+    logging.info(f"🔍 Admin verified: {admin_verified}")
     try:
-        logging.info(f"🔍 Bulk delete request received: {request.lead_ids}")
+        logging.info(f"🔍 Starting bulk delete validation...")
         # Validate all ObjectId formats
         object_ids = []
         for lead_id in request.lead_ids:

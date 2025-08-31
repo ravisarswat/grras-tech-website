@@ -20,6 +20,8 @@ import SEO from '../components/SEO';
 import SettingsTab from '../components/SettingsTab';
 import CourseEditor from '../components/CourseEditor';
 import FooterTab from '../components/FooterTab';
+import CategoryManager from '../components/CategoryManager';
+import LearningPathManager from '../components/LearningPathManager';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;

@@ -39,7 +39,13 @@ const EligibilityWidget = () => {
     setTimeout(() => {
       const course = availableCourses.find(c => c.slug === courseSlug);
       if (course) {
-        const eligibility = course.eligibility || 'Please contact our counselors for detailed eligibility criteria and guidance.';
+        let eligibility = course.eligibility;
+        
+        // Friendly fallback if eligibility text is missing or empty
+        if (!eligibility || eligibility.trim() === '') {
+          eligibility = `For ${course.title || 'this course'}, please contact our admission counselors for detailed eligibility criteria and personalized guidance. Our team will help you determine if you meet the requirements and guide you through the admission process.`;
+        }
+        
         setEligibilityText(eligibility);
         
         // Update URL parameter

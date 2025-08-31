@@ -131,6 +131,18 @@ const CertificationCoursesPage = () => {
         expert: { name: 'Expert Level', description: 'Enterprise DevOps leadership' }
       }
     },
+    cybersecurity: {
+      name: 'Cybersecurity & Ethical Hacking',
+      icon: '🛡️',
+      color: 'slate',
+      description: 'Cybersecurity, ethical hacking, penetration testing and security analysis',
+      keywords: ['cybersecurity', 'cyber security', 'ethical hacking', 'penetration testing', 'security', 'kali linux', 'wireshark', 'metasploit', 'vulnerability', 'incident response'],
+      levels: {
+        foundation: { name: 'Foundation Level', description: 'Security fundamentals' },
+        professional: { name: 'Professional Level', description: 'Advanced security practices' },
+        expert: { name: 'Expert Level', description: 'Security leadership & consulting' }
+      }
+    },
     programming: {
       name: 'Programming & Development',
       icon: '💻',

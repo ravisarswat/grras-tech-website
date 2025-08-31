@@ -8,3 +8,4 @@ reportlab==4.0.7
 aiofiles==23.2.1
 pymongo==4.6.0
 Pillow==10.1.0
+requests==2.31.0

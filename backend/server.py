@@ -213,18 +213,28 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         institute = content.get("institute", {})
         branding = content.get("branding", {})
         
-        # Ensure required fields exist with comprehensive defaults
-        course_name = course.get("title", "Course")
-        course_description = course.get("overview", course.get("oneLiner", "Professional training course"))
-        tools = course.get("tools", [])
-        highlights = course.get("highlights", [])
-        learning_outcomes = course.get("learningOutcomes", [])
-        career_roles = course.get("careerRoles", [])
-        duration = course.get("duration", "Contact for details")
-        fees = course.get("fees", "Contact for details")
-        level = course.get("level", "All Levels")
-        certificate_info = course.get("certificateInfo", "Certificate provided on successful completion")
-        eligibility = course.get("eligibility", "Contact for eligibility criteria")
+        # Extract course details with NULL SAFETY
+        course_name = course.get("title") or course.get("name") or slug.replace("-", " ").title()
+        course_description = course.get("overview") or course.get("description") or ""
+        highlights = course.get("highlights") or []
+        tools = course.get("tools") or []
+        learning_outcomes = course.get("learningOutcomes") or []
+        career_roles = course.get("careerRoles") or []
+        duration = course.get("duration") or "Contact for details"
+        fees = course.get("fees") or "Contact for details"
+        level = course.get("level") or "All Levels"
+        certificate_info = course.get("certificateInfo") or "Certificate provided on successful completion"
+        eligibility = course.get("eligibility") or "Contact for eligibility criteria"
+        
+        # Ensure all list fields are actually lists
+        if not isinstance(highlights, list):
+            highlights = []
+        if not isinstance(tools, list):
+            tools = []
+        if not isinstance(learning_outcomes, list):
+            learning_outcomes = []
+        if not isinstance(career_roles, list):
+            career_roles = []
         
         # Create temporary PDF file
         with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp_file:

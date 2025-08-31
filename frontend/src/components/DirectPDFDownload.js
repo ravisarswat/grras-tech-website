@@ -57,8 +57,11 @@ const DirectPDFDownload = ({ courseSlug, courseName, onClose }) => {
         document.body.removeChild(link);
         window.URL.revokeObjectURL(url);
         
-        // Show success message
+        // Show success message and close modal
         alert(`✅ Success! ${filename} has been downloaded. Check your Downloads folder.`);
+        if (onClose) {
+          setTimeout(onClose, 1000); // Close modal after showing success
+        }
       } else {
         const errorText = await response.text();
         console.error('PDF download failed:', response.status, errorText);

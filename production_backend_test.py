@@ -306,7 +306,10 @@ class ProductionBackendTester:
                 logger.info(f"{'='*50}")
                 
                 try:
-                    result = await test_func()
+                    if asyncio.iscoroutinefunction(test_func):
+                        result = await test_func()
+                    else:
+                        result = test_func()
                     if result:
                         passed_tests += 1
                         logger.info(f"✅ {test_name}: PASSED")

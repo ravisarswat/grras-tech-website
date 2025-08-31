@@ -607,89 +607,59 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         
         content_elements.append(Spacer(1, 10*mm))
         
-        # Page break for contact information
+        # New page for contact and admission info
         content_elements.append(PageBreak())
         
-        # Contact Information with enhanced styling
-        address = institute.get("address", "A-81, Singh Bhoomi Khatipura Rd, Jaipur, Rajasthan")
+        # Admission Process Section
+        content_elements.append(Paragraph("ADMISSION PROCESS", section_heading_style))
+        content_elements.append(Spacer(1, 5*mm))
+        
+        admission_steps = [
+            ("1", "INQUIRY", "Submit online form or visit our campus for course consultation"),
+            ("2", "COUNSELING", "Meet with expert counselors to discuss career goals and course fit"),
+            ("3", "ENROLLMENT", "Complete admission with documents and secure your seat"),
+            ("4", "ONBOARDING", "Join orientation session and begin your learning journey")
+        ]
+        
+        for step_num, step_title, step_desc in admission_steps:
+            step_content = f"<b>Step {step_num}: {step_title}</b><br/>{step_desc}"
+            content_elements.append(Paragraph(step_content, highlight_box_style))
+            content_elements.append(Spacer(1, 3*mm))
+        
+        content_elements.append(Spacer(1, 8*mm))
+        
+        # Contact Information Section
+        content_elements.append(Paragraph("GET IN TOUCH", section_heading_style))
+        content_elements.append(Spacer(1, 5*mm))
+        
+        # Professional contact layout
+        institute_name = institute.get("name", "GRRAS Solutions Training Institute")
+        address = institute.get("address", "A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012")
         phones = institute.get("phones", ["090019 91227"])
         emails = institute.get("emails", ["info@grrassolutions.com"])
         website = institute.get("website", "https://grrassolutions.com")
         
-        content_elements.append(Paragraph("📞 Contact Information", heading_style))
+        # Format address properly (split into multiple lines)
+        address_lines = address.split(',')
+        formatted_address = '<br/>'.join([line.strip() for line in address_lines])
         
-        # Contact details in a professional table
-        contact_data = [
-            ['🏢 Institute', institute_name],
-            ['📍 Address', address],
-            ['📱 Phone', ', '.join(phones)],
-            ['📧 Email', ', '.join(emails)],
-            ['🌐 Website', website]
+        contact_info = [
+            f"<b>{institute_name}</b>",
+            f"📍 <b>Address:</b><br/>{formatted_address}",
+            f"📞 <b>Phone:</b> {', '.join(phones)}",
+            f"📧 <b>Email:</b> {', '.join(emails)}",
+            f"🌐 <b>Website:</b> {website}"
         ]
         
-        contact_table = Table(contact_data, colWidths=[1.5*inch, 4.5*inch])
-        contact_table.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#F3F4F6')),
-            ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor('#374151')),
-            ('TEXTCOLOR', (1, 0), (1, -1), colors.HexColor('#111827')),
-            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-            ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
-            ('FONTNAME', (1, 0), (1, -1), 'Helvetica'),
-            ('FONTSIZE', (0, 0), (-1, -1), 11),
-            ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#E5E7EB')),
-            ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-            ('LEFTPADDING', (0, 0), (-1, -1), 8),
-            ('RIGHTPADDING', (0, 0), (-1, -1), 8),
-            ('TOPPADDING', (0, 0), (-1, -1), 6),
-            ('BOTTOMPADDING', (0, 0), (-1, -1), 6)
-        ]))
+        for info in contact_info:
+            content_elements.append(Paragraph(info, body_style))
+            content_elements.append(Spacer(1, 3*mm))
         
-        content_elements.append(contact_table)
-        content_elements.append(Spacer(1, 25))
+        content_elements.append(Spacer(1, 10*mm))
         
-        # Admission Process
-        content_elements.append(Paragraph("📋 Admission Process", heading_style))
-        admission_steps = [
-            "1. Submit your inquiry online or visit our campus",
-            "2. Meet with our expert counselors for course guidance", 
-            "3. Complete enrollment with required documents",
-            "4. Join orientation and start your learning journey"
-        ]
-        
-        for step in admission_steps:
-            content_elements.append(Paragraph(step, bullet_style))
-        
-        content_elements.append(Spacer(1, 20))
-        
-        # Call to Action
-        cta_style = ParagraphStyle(
-            'CTAStyle',
-            parent=styles['Normal'],
-            fontSize=12,
-            textColor=colors.HexColor('#DC2626'),
-            alignment=TA_CENTER,
-            fontName='Helvetica-Bold',
-            borderWidth=2,
-            borderColor=colors.HexColor('#DC2626'),
-            borderPadding=10,
-            backColor=colors.HexColor('#FEF2F2')
-        )
-        
-        content_elements.append(Paragraph("🚀 Ready to Start Your IT Career? Contact Our Counselors Today!", cta_style))
-        content_elements.append(Spacer(1, 15))
-        
-        # Footer with generation info
-        footer_style = ParagraphStyle(
-            'FooterStyle',
-            parent=styles['Normal'],
-            fontSize=9,
-            textColor=colors.HexColor('#6B7280'),
-            alignment=TA_CENTER
-        )
-        
-        current_date = datetime.now().strftime("%B %d, %Y")
-        content_elements.append(Paragraph(f"Generated on {current_date} | {institute_name}", footer_style))
-        content_elements.append(Paragraph("This syllabus is subject to updates. Please contact us for the latest information.", footer_style))
+        # Professional Call-to-Action
+        cta_content = "Ready to Transform Your Career? Join GRRAS Today!"
+        content_elements.append(Paragraph(cta_content, info_box_style))
         
         # Build PDF
         doc.build(content_elements)

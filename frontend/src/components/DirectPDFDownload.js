@@ -1,7 +1,7 @@
 import React from 'react';
 
 const DirectPDFDownload = ({ courseSlug, courseName }) => {
-  const handleDirectDownload = (e) => {
+  const handleDirectDownload = async (e) => {
     e.preventDefault();
     
     // Get form data
@@ -16,39 +16,58 @@ const DirectPDFDownload = ({ courseSlug, courseName }) => {
       return;
     }
     
-    // Create a direct form submission to download PDF
-    const downloadForm = document.createElement('form');
-    downloadForm.method = 'POST';
-    downloadForm.action = `${process.env.REACT_APP_BACKEND_URL}/api/courses/${courseSlug}/syllabus`;
-    downloadForm.target = '_blank'; // Open in new tab
-    
-    // Add form fields
-    const nameInput = document.createElement('input');
-    nameInput.type = 'hidden';
-    nameInput.name = 'name';
-    nameInput.value = name;
-    
-    const emailInput = document.createElement('input');
-    emailInput.type = 'hidden';
-    emailInput.name = 'email';
-    emailInput.value = email;
-    
-    const phoneInput = document.createElement('input');
-    phoneInput.type = 'hidden';
-    phoneInput.name = 'phone';
-    phoneInput.value = phone.replace(/\D/g, ''); // Remove non-digits
-    
-    downloadForm.appendChild(nameInput);
-    downloadForm.appendChild(emailInput);
-    downloadForm.appendChild(phoneInput);
-    
-    // Submit form
-    document.body.appendChild(downloadForm);
-    downloadForm.submit();
-    document.body.removeChild(downloadForm);
-    
-    // Show success message
-    alert(`Syllabus for ${courseName || 'the course'} will be downloaded shortly! Check your Downloads folder.`);
+    try {
+      // Create form data for backend
+      const backendFormData = new FormData();
+      backendFormData.append('name', name);
+      backendFormData.append('email', email);
+      backendFormData.append('phone', phone.replace(/\D/g, ''));
+      
+      // Make the request
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/courses/${courseSlug}/syllabus`, {
+        method: 'POST',
+        body: backendFormData
+      });
+      
+      if (response.ok) {
+        // Get the PDF blob
+        const blob = await response.blob();
+        
+        // Create download link
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        
+        // Set filename
+        const contentDisposition = response.headers.get('content-disposition');
+        let filename = `GRRAS_${(courseName || 'Course').replace(/\s+/g, '_')}_Syllabus.pdf`;
+        
+        if (contentDisposition) {
+          const filenameMatch = contentDisposition.match(/filename="?(.+)"?/);
+          if (filenameMatch) {
+            filename = filenameMatch[1];
+          }
+        }
+        
+        link.download = filename;
+        
+        // Trigger download
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        
+        // Show success message
+        alert(`✅ Success! ${filename} has been downloaded. Check your Downloads folder.`);
+      } else {
+        const errorText = await response.text();
+        console.error('PDF download failed:', response.status, errorText);
+        alert('❌ Failed to generate syllabus. Please try again or contact support.');
+      }
+    } catch (error) {
+      console.error('Error downloading PDF:', error);
+      alert('❌ Network error. Please check your connection and try again.');
+    }
   };
   
   return (

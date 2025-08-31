@@ -652,6 +652,80 @@ const AdminLeads = () => {
           </div>
         </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-xl max-w-md w-full p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex-shrink-0 w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                <Trash2 className="w-5 h-5 text-red-600" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Confirm Deletion
+                </h3>
+                <p className="text-sm text-gray-600">
+                  This action cannot be undone.
+                </p>
+              </div>
+            </div>
+            
+            <div className="mb-6">
+              <p className="text-gray-700">
+                Are you sure you want to delete {leadsToDelete.length === 1 ? 'this lead' : `${leadsToDelete.length} leads`}?
+              </p>
+              
+              {leadsToDelete.length <= 3 && (
+                <div className="mt-3 space-y-1">
+                  {leadsToDelete.map((lead, index) => (
+                    <div key={index} className="text-sm text-gray-600 bg-gray-50 p-2 rounded">
+                      <span className="font-medium">{lead.name}</span> - {lead.email}
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {leadsToDelete.length > 3 && (
+                <div className="mt-3 text-sm text-gray-600 bg-gray-50 p-2 rounded">
+                  <span className="font-medium">{leadsToDelete[0].name}</span> - {leadsToDelete[0].email}
+                  <div className="text-gray-500">...and {leadsToDelete.length - 1} more</div>
+                </div>
+              )}
+            </div>
+            
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => {
+                  setShowDeleteConfirm(false);
+                  setLeadsToDelete([]);
+                }}
+                className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                disabled={isDeleting}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                disabled={isDeleting}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg flex items-center gap-2 transition-colors disabled:opacity-50"
+              >
+                {isDeleting ? (
+                  <>
+                    <RefreshCw className="w-4 h-4 animate-spin" />
+                    Deleting...
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="w-4 h-4" />
+                    Delete {leadsToDelete.length === 1 ? 'Lead' : 'Leads'}
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

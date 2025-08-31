@@ -8,7 +8,7 @@ import aiohttp
 import json
 
 async def debug_bulk_delete():
-    backend_url = 'https://grras-cms.preview.emergentagent.com'
+    backend_url = 'https://edutech-platform.preview.emergentagent.com'
     
     async with aiohttp.ClientSession() as session:
         # Get admin token

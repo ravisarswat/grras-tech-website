@@ -1,6 +1,6 @@
 {
   "timestamp": "2025-08-31T08:07:01.479285",
-  "backend_url": "https://grras-cms.preview.emergentagent.com",
+  "backend_url": "https://edutech-platform.preview.emergentagent.com",
   "test_focus": "Learning Paths CMS Content",
   "total_tests": 6,
   "passed_tests": 5,

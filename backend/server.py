@@ -774,9 +774,6 @@ async def get_leads(admin_verified: bool = Depends(verify_admin_token)):
 async def delete_lead(lead_id: str, admin_verified: bool = Depends(verify_admin_token)):
     """Delete a specific lead (Admin only)"""
     try:
-        from bson import ObjectId
-        from bson.errors import InvalidId
-        
         # Validate ObjectId format
         try:
             object_id = ObjectId(lead_id)

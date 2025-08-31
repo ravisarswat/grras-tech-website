@@ -194,10 +194,11 @@ const CourseEditor = ({
             {course.category === 'cloud' && '☁️ AWS'}
             {course.category === 'container' && '⚙️ Kubernetes'}
             {course.category === 'devops' && '🔧 DevOps'}
+            {course.category === 'security' && '🛡️ Cybersecurity'}
             {course.category === 'programming' && '💻 Programming'}
             {course.category === 'degree' && '🎓 Degree'}
             {!course.category && '📚 Uncategorized'}
-            {course.category && !['certification', 'cloud', 'container', 'devops', 'programming', 'degree'].includes(course.category) && '📚 Other'}
+            {course.category && !['certification', 'cloud', 'container', 'devops', 'security', 'programming', 'degree'].includes(course.category) && '📚 Other'}
           </span>
           
           <button

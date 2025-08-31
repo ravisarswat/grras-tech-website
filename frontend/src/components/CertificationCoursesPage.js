@@ -100,7 +100,18 @@ const CertificationCoursesPage = () => {
 
   // Categorize courses by vendor
   const categorizedCourses = useMemo(() => {
-    const categorized = {
+    if (!courses || courses.length === 0) {
+      return {
+        redhat: [],
+        aws: [],
+        kubernetes: [],
+        programming: [],
+        degree: [],
+        general: []
+      };
+    }
+
+    const result = {
       redhat: [],
       aws: [],
       kubernetes: [],
@@ -125,7 +136,7 @@ const CertificationCoursesPage = () => {
 
       // Red Hat categorization
       if (courseVendors.redhat.keywords.some(keyword => searchText.includes(keyword))) {
-        categorized.redhat.push({
+        result.redhat.push({
           ...course,
           vendor: 'redhat',
           level: determineLevel(course, 'redhat')
@@ -135,7 +146,7 @@ const CertificationCoursesPage = () => {
       
       // AWS categorization
       if (courseVendors.aws.keywords.some(keyword => searchText.includes(keyword))) {
-        categorized.aws.push({
+        result.aws.push({
           ...course,
           vendor: 'aws',
           level: determineLevel(course, 'aws')
@@ -145,7 +156,7 @@ const CertificationCoursesPage = () => {
       
       // Kubernetes categorization
       if (courseVendors.kubernetes.keywords.some(keyword => searchText.includes(keyword))) {
-        categorized.kubernetes.push({
+        result.kubernetes.push({
           ...course,
           vendor: 'kubernetes',
           level: determineLevel(course, 'kubernetes')
@@ -155,7 +166,7 @@ const CertificationCoursesPage = () => {
       
       // Programming categorization
       if (courseVendors.programming.keywords.some(keyword => searchText.includes(keyword))) {
-        categorized.programming.push({
+        result.programming.push({
           ...course,
           vendor: 'programming',
           level: determineLevel(course, 'programming')
@@ -165,7 +176,7 @@ const CertificationCoursesPage = () => {
       
       // Degree categorization
       if (courseVendors.degree.keywords.some(keyword => searchText.includes(keyword))) {
-        categorized.degree.push({
+        result.degree.push({
           ...course,
           vendor: 'degree',
           level: determineLevel(course, 'degree')
@@ -174,7 +185,7 @@ const CertificationCoursesPage = () => {
       }
 
       // Always add to general category (unique courses only)
-      categorized.general.push({
+      result.general.push({
         ...course,
         vendor: 'general',
         level: 'all'
@@ -186,8 +197,8 @@ const CertificationCoursesPage = () => {
         if (title.includes('java') || title.includes('c++') || title.includes('data structures') || 
             title.includes('machine learning') || title.includes('data science') ||
             category.includes('programming') || category.includes('technology')) {
-          if (!categorized.programming.find(c => c.slug === course.slug)) {
-            categorized.programming.push({
+          if (!result.programming.find(c => c.slug === course.slug)) {
+            result.programming.push({
               ...course,
               vendor: 'programming',
               level: determineLevel(course, 'programming')
@@ -209,8 +220,8 @@ const CertificationCoursesPage = () => {
         // Degree fallback
         else if (title.includes('bca') || title.includes('degree') || 
                  category.includes('degree')) {
-          if (!categorized.degree.find(c => c.slug === course.slug)) {
-            categorized.degree.push({
+          if (!result.degree.find(c => c.slug === course.slug)) {
+            result.degree.push({
               ...course,
               vendor: 'degree',
               level: determineLevel(course, 'degree')
@@ -220,7 +231,7 @@ const CertificationCoursesPage = () => {
       }
     });
 
-    return categorized;
+    return result;
   }, [courses]);
 
   // Determine certification level based on course content

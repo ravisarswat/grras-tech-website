@@ -75,6 +75,260 @@ class ContentManager:
                     "hiringPartners": "100+"
                 }
             },
+            "courseCategories": {
+                "cloud-devops": {
+                    "name": "Cloud & DevOps",
+                    "slug": "cloud-devops",
+                    "description": "Master cloud platforms, DevOps automation, CI/CD pipelines, and infrastructure management",
+                    "icon": "cloud",
+                    "color": "#3B82F6",
+                    "gradient": "from-blue-500 to-blue-600",
+                    "featured": True,
+                    "courses": ["devops-training", "aws-solutions-architect", "kubernetes-administrator"],
+                    "seo": {
+                        "title": "Cloud & DevOps Training Courses - GRRAS Institute Jaipur",
+                        "description": "Professional Cloud & DevOps training in Jaipur. Learn AWS, Azure, Kubernetes, Docker, Jenkins with hands-on projects and placement support.",
+                        "keywords": "cloud training jaipur, devops course, aws training, kubernetes certification"
+                    }
+                },
+                "linux-redhat": {
+                    "name": "Linux & Red Hat",
+                    "slug": "linux-redhat", 
+                    "description": "Linux administration, Red Hat certifications (RHCSA, RHCE), and enterprise server management",
+                    "icon": "server",
+                    "color": "#EF4444",
+                    "gradient": "from-red-500 to-red-600",
+                    "featured": True,
+                    "courses": ["rhcsa-certification", "rhce-advanced", "linux-fundamentals"],
+                    "seo": {
+                        "title": "Red Hat & Linux Certification Training - GRRAS Jaipur",
+                        "description": "Red Hat authorized training center in Jaipur. RHCSA, RHCE certification courses with hands-on labs and guaranteed placement assistance.",
+                        "keywords": "red hat training jaipur, rhcsa certification, linux training, rhce course"
+                    }
+                },
+                "kubernetes-containers": {
+                    "name": "Kubernetes & Containers",
+                    "slug": "kubernetes-containers",
+                    "description": "Container orchestration, Kubernetes administration, OpenShift, and cloud-native applications",
+                    "icon": "container",
+                    "color": "#8B5CF6", 
+                    "gradient": "from-purple-500 to-purple-600",
+                    "featured": True,
+                    "courses": ["cka-kubernetes", "cks-kubernetes-security", "openshift-do280"],
+                    "seo": {
+                        "title": "Kubernetes & Container Training - CKA, CKS Certification Jaipur",
+                        "description": "Master Kubernetes with CKA, CKS, CKAD certifications. OpenShift training with hands-on projects in Jaipur's premier institute.",
+                        "keywords": "kubernetes training jaipur, cka certification, openshift course, container orchestration"
+                    }
+                },
+                "cybersecurity": {
+                    "name": "Cybersecurity",
+                    "slug": "cybersecurity",
+                    "description": "Ethical hacking, penetration testing, security analysis, and cyber defense strategies",
+                    "icon": "shield",
+                    "color": "#10B981",
+                    "gradient": "from-green-500 to-green-600", 
+                    "featured": True,
+                    "courses": ["cyber-security", "ethical-hacking", "penetration-testing"],
+                    "seo": {
+                        "title": "Cybersecurity & Ethical Hacking Training - GRRAS Jaipur",
+                        "description": "Professional cybersecurity training in Jaipur. Learn ethical hacking, penetration testing, and security analysis with industry experts.",
+                        "keywords": "cybersecurity training jaipur, ethical hacking course, penetration testing, security certification"
+                    }
+                },
+                "programming": {
+                    "name": "Programming & Development", 
+                    "slug": "programming",
+                    "description": "Software development, data structures, algorithms, and programming languages",
+                    "icon": "code",
+                    "color": "#6366F1",
+                    "gradient": "from-indigo-500 to-indigo-600",
+                    "featured": False,
+                    "courses": ["c-cpp-dsa", "python-programming", "full-stack-development"],
+                    "seo": {
+                        "title": "Programming & Software Development Courses - GRRAS Jaipur", 
+                        "description": "Learn programming languages, data structures, algorithms, and software development. C/C++, Python, full-stack development courses in Jaipur.",
+                        "keywords": "programming courses jaipur, c++ training, python course, software development"
+                    }
+                },
+                "degree-programs": {
+                    "name": "Degree Programs",
+                    "slug": "degree-programs",
+                    "description": "Industry-integrated degree programs with specializations in emerging technologies",
+                    "icon": "graduation-cap",
+                    "color": "#F59E0B",
+                    "gradient": "from-amber-500 to-amber-600",
+                    "featured": True,
+                    "courses": ["bca-degree", "mca-program", "diploma-it"],
+                    "seo": {
+                        "title": "IT Degree Programs - BCA, MCA with Industry Integration - GRRAS Jaipur",
+                        "description": "Industry-integrated BCA, MCA degree programs with cloud computing, AI/ML specializations. Guaranteed placement assistance in Jaipur.",
+                        "keywords": "bca degree jaipur, mca program, it degree courses, industry integrated education"
+                    }
+                }
+            },
+            "learningPaths": {
+                "cloud-engineer": {
+                    "title": "Cloud Engineer Career Path",
+                    "slug": "cloud-engineer-path", 
+                    "description": "Complete roadmap to become a certified cloud engineer with hands-on experience in AWS, Azure, and DevOps practices",
+                    "duration": "6-8 months",
+                    "level": "Beginner to Advanced",
+                    "totalCourses": 4,
+                    "estimatedHours": 480,
+                    "featured": True,
+                    "courses": [
+                        {
+                            "courseSlug": "linux-fundamentals",
+                            "order": 1,
+                            "title": "Linux Fundamentals",
+                            "duration": "4 weeks",
+                            "prerequisite": false
+                        },
+                        {
+                            "courseSlug": "aws-solutions-architect", 
+                            "order": 2,
+                            "title": "AWS Solutions Architect",
+                            "duration": "8 weeks",
+                            "prerequisite": true
+                        },
+                        {
+                            "courseSlug": "devops-training",
+                            "order": 3, 
+                            "title": "DevOps Engineering",
+                            "duration": "12 weeks",
+                            "prerequisite": true
+                        },
+                        {
+                            "courseSlug": "kubernetes-administrator",
+                            "order": 4,
+                            "title": "Kubernetes Administration",
+                            "duration": "6 weeks", 
+                            "prerequisite": true
+                        }
+                    ],
+                    "outcomes": [
+                        "Design and deploy scalable cloud infrastructures",
+                        "Implement CI/CD pipelines and DevOps practices", 
+                        "Manage containerized applications with Kubernetes",
+                        "Optimize cloud costs and security configurations"
+                    ],
+                    "careerRoles": [
+                        "Cloud Engineer",
+                        "DevOps Engineer", 
+                        "Solutions Architect",
+                        "Infrastructure Engineer"
+                    ],
+                    "averageSalary": "₹8-15 LPA",
+                    "seo": {
+                        "title": "Cloud Engineer Career Path - Complete Training Program - GRRAS",
+                        "description": "Comprehensive cloud engineer career path with AWS, DevOps, Kubernetes training. 6-8 months program with guaranteed placement in Jaipur.",
+                        "keywords": "cloud engineer career path, aws devops training, kubernetes course jaipur"
+                    }
+                },
+                "redhat-specialist": {
+                    "title": "Red Hat Specialist Path",
+                    "slug": "redhat-specialist-path",
+                    "description": "Comprehensive Red Hat certification journey from system administration to enterprise solutions",
+                    "duration": "4-6 months",
+                    "level": "Beginner to Expert", 
+                    "totalCourses": 3,
+                    "estimatedHours": 360,
+                    "featured": True,
+                    "courses": [
+                        {
+                            "courseSlug": "rhcsa-certification",
+                            "order": 1,
+                            "title": "RHCSA Certification",
+                            "duration": "6 weeks",
+                            "prerequisite": false
+                        },
+                        {
+                            "courseSlug": "rhce-advanced", 
+                            "order": 2,
+                            "title": "RHCE Advanced",
+                            "duration": "8 weeks",
+                            "prerequisite": true
+                        },
+                        {
+                            "courseSlug": "openshift-do280",
+                            "order": 3,
+                            "title": "OpenShift Administration",
+                            "duration": "6 weeks",
+                            "prerequisite": true
+                        }
+                    ],
+                    "outcomes": [
+                        "Master Red Hat Enterprise Linux administration",
+                        "Implement enterprise automation solutions",
+                        "Deploy and manage OpenShift clusters", 
+                        "Design scalable enterprise infrastructures"
+                    ],
+                    "careerRoles": [
+                        "Linux System Administrator",
+                        "Red Hat Solutions Architect",
+                        "OpenShift Administrator",
+                        "Enterprise Infrastructure Engineer"
+                    ],
+                    "averageSalary": "₹6-12 LPA",
+                    "seo": {
+                        "title": "Red Hat Certification Path - RHCSA to OpenShift Expert - GRRAS",
+                        "description": "Complete Red Hat specialist path with RHCSA, RHCE, OpenShift certifications. Industry-focused training with placement assistance in Jaipur.",
+                        "keywords": "red hat certification path, rhcsa rhce training, openshift course jaipur"
+                    }
+                },
+                "kubernetes-expert": {
+                    "title": "Kubernetes Expert Path",
+                    "slug": "kubernetes-expert-path",
+                    "description": "Master container orchestration from basics to advanced Kubernetes security and management",
+                    "duration": "3-4 months",
+                    "level": "Intermediate to Expert",
+                    "totalCourses": 3,
+                    "estimatedHours": 240,
+                    "featured": False,
+                    "courses": [
+                        {
+                            "courseSlug": "docker-fundamentals",
+                            "order": 1, 
+                            "title": "Docker Fundamentals",
+                            "duration": "3 weeks",
+                            "prerequisite": false
+                        },
+                        {
+                            "courseSlug": "cka-kubernetes",
+                            "order": 2,
+                            "title": "CKA - Certified Kubernetes Administrator", 
+                            "duration": "6 weeks",
+                            "prerequisite": true
+                        },
+                        {
+                            "courseSlug": "cks-kubernetes-security",
+                            "order": 3,
+                            "title": "CKS - Certified Kubernetes Security",
+                            "duration": "4 weeks",
+                            "prerequisite": true
+                        }
+                    ],
+                    "outcomes": [
+                        "Deploy and manage production Kubernetes clusters",
+                        "Implement advanced security practices",
+                        "Troubleshoot complex containerized applications",
+                        "Design cloud-native architectures"
+                    ],
+                    "careerRoles": [
+                        "Kubernetes Administrator", 
+                        "Container Platform Engineer",
+                        "Cloud Native Developer",
+                        "DevOps Security Engineer"
+                    ],
+                    "averageSalary": "₹10-18 LPA",
+                    "seo": {
+                        "title": "Kubernetes Expert Certification Path - CKA, CKS Training - GRRAS",
+                        "description": "Master Kubernetes with CKA and CKS certifications. Advanced container orchestration and security training with hands-on projects.",
+                        "keywords": "kubernetes certification path, cka cks training, container orchestration jaipur"
+                    }
+                }
+            },
             "pages": {
                 "home": {
                     "seo": {

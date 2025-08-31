@@ -114,17 +114,14 @@ def cleanup_backend_data():
             if course['missing_optional']:
                 print(f"     Missing optional: {', '.join(course['missing_optional'])}")
     
-    # Ask for confirmation
+    # Show proposed changes
     print(f"\n🔧 Proposed changes:")
     print(f"   1. Remove {len(test_courses)} test courses")
     print(f"   2. Keep {len(production_courses)} production courses")
     if courses_needing_updates:
         print(f"   3. Fix missing fields in {len(courses_needing_updates)} courses")
     
-    confirm = input("\nProceed with cleanup? (y/N): ").strip().lower()
-    if confirm != 'y':
-        print("❌ Cleanup cancelled")
-        return
+    print("\n✅ Proceeding with cleanup automatically...")
     
     # Perform cleanup
     print("\n🔧 Processing course updates...")

@@ -763,7 +763,7 @@ async def delete_multiple_leads(request: BulkDeleteRequest, admin_verified: bool
         
         # Validate all ObjectId formats
         object_ids = []
-        for lead_id in lead_ids:
+        for lead_id in request.lead_ids:
             try:
                 object_ids.append(ObjectId(lead_id))
             except InvalidId:

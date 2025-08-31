@@ -67,7 +67,7 @@ const CertificationCoursesPage = () => {
   const courseVendors = {
     redhat: {
       name: 'Red Hat Technologies',
-      icon: '🔴',
+      icon: 'https://logos-world.net/wp-content/uploads/2020/08/Red-Hat-Logo.png',
       color: 'red',
       description: 'Industry-leading Linux and OpenShift certifications',
       keywords: ['red hat', 'rhcsa', 'rhce', 'do188', 'openshift', 'linux', 'ansible', 'redhat'],
@@ -79,7 +79,7 @@ const CertificationCoursesPage = () => {
     },
     aws: {
       name: 'AWS Cloud Platform',
-      icon: '☁️',
+      icon: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg',
       color: 'orange',
       description: 'Amazon Web Services cloud computing certifications',
       keywords: ['aws', 'cloud', 'amazon', 'practitioner', 'solutions architect', 'developer'],
@@ -91,7 +91,7 @@ const CertificationCoursesPage = () => {
     },
     kubernetes: {
       name: 'Kubernetes Ecosystem',
-      icon: '⚙️',
+      icon: 'https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg',
       color: 'blue',
       description: 'Container orchestration and cloud-native technologies',
       keywords: ['kubernetes', 'cka', 'cks', 'ckad', 'container', 'docker', 'cloud native'],

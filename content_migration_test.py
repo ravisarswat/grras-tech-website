@@ -222,10 +222,13 @@ class ContentMigrationTester:
                         logger.info("✅ courseCategories successfully added by migration")
                         
                         # Log structure of courseCategories
-                        categories = self.content_after_migration.get("courseCategories", [])
-                        logger.info(f"  - Found {len(categories)} course categories")
-                        for cat in categories[:3]:  # Show first 3
-                            logger.info(f"    • {cat.get('name', 'Unknown')}: {cat.get('description', 'No description')}")
+                        categories = self.content_after_migration.get("courseCategories", {})
+                        if isinstance(categories, dict):
+                            logger.info(f"  - Found {len(categories)} course categories")
+                            for key, cat in list(categories.items())[:3]:  # Show first 3
+                                logger.info(f"    • {cat.get('name', 'Unknown')}: {cat.get('description', 'No description')}")
+                        else:
+                            logger.info(f"  - courseCategories structure: {type(categories)}")
                     else:
                         self.errors.append("courseCategories not found after migration")
                     

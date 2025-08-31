@@ -226,6 +226,14 @@ const CertificationCoursesPage = () => {
         });
         categorizedFlag = true;
       }
+      else if (category === 'security' || category === 'cybersecurity') {
+        result.cybersecurity.push({
+          ...course,
+          vendor: 'cybersecurity',
+          level: determineLevel(course, 'cybersecurity')
+        });
+        categorizedFlag = true;
+      }
       else if (category === 'degree' || title.includes('bca') || title.includes('degree')) {
         result.degree.push({
           ...course,

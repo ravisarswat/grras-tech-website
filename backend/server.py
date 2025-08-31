@@ -236,9 +236,8 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         if not isinstance(career_roles, list):
             career_roles = []
         
-        # Create temporary PDF file
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp_file:
-            pdf_path = tmp_file.name
+        # Generate PDF IN MEMORY
+        pdf_buffer = BytesIO()
         
         # Professional PDF Template Class
         class GRRASPDFTemplate:

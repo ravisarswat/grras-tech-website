@@ -47,7 +47,9 @@ class BackendTester:
             "syllabus_generation": False,
             "leads_management": False,
             "new_courses_addition": False,
-            "new_courses_verification": False
+            "new_courses_verification": False,
+            "new_learning_paths_addition": False,
+            "new_learning_paths_verification": False
         }
         
         self.errors = []

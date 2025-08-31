@@ -265,12 +265,14 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden lg:flex items-center space-x-4">
-            <Link
-              to="/admissions"
+            <a
+              href="https://www.grras.tech/admissions"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-primary"
             >
               Apply Now
-            </Link>
+            </a>
           </div>
 
           {/* Mobile menu button */}

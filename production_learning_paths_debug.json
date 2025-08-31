@@ -1,0 +1,189 @@
+{
+  "timestamp": "2025-08-31T10:45:48.166644",
+  "backend_url": "https://grras-tech-website-production.up.railway.app",
+  "test_results": {
+    "production_backend_accessible": true,
+    "content_endpoint_working": true,
+    "learning_paths_section_exists": true,
+    "learning_paths_data_populated": true,
+    "learning_paths_structure_valid": true,
+    "frontend_data_format_compatible": true
+  },
+  "errors": [],
+  "learning_paths_data": {
+    "cloud-engineer": {
+      "title": "Cloud Engineer Career Path",
+      "slug": "cloud-engineer-path",
+      "description": "Complete roadmap to become a certified cloud engineer with hands-on experience in AWS, Azure, and DevOps practices",
+      "duration": "6-8 months",
+      "level": "Beginner to Advanced",
+      "totalCourses": 4,
+      "estimatedHours": 480,
+      "featured": true,
+      "courses": [
+        {
+          "courseSlug": "linux-fundamentals",
+          "order": 1,
+          "title": "Linux Fundamentals",
+          "duration": "4 weeks",
+          "prerequisite": false
+        },
+        {
+          "courseSlug": "aws-solutions-architect",
+          "order": 2,
+          "title": "AWS Solutions Architect",
+          "duration": "8 weeks",
+          "prerequisite": true
+        },
+        {
+          "courseSlug": "devops-training",
+          "order": 3,
+          "title": "DevOps Engineering",
+          "duration": "12 weeks",
+          "prerequisite": true
+        },
+        {
+          "courseSlug": "kubernetes-administrator",
+          "order": 4,
+          "title": "Kubernetes Administration",
+          "duration": "6 weeks",
+          "prerequisite": true
+        }
+      ],
+      "outcomes": [
+        "Design and deploy scalable cloud infrastructures",
+        "Implement CI/CD pipelines and DevOps practices",
+        "Manage containerized applications with Kubernetes",
+        "Optimize cloud costs and security configurations"
+      ],
+      "careerRoles": [
+        "Cloud Engineer",
+        "DevOps Engineer",
+        "Solutions Architect",
+        "Infrastructure Engineer"
+      ],
+      "averageSalary": "\u20b98-15 LPA",
+      "seo": {
+        "title": "Cloud Engineer Career Path - Complete Training Program - GRRAS",
+        "description": "Comprehensive cloud engineer career path with AWS, DevOps, Kubernetes training. 6-8 months program with guaranteed placement in Jaipur.",
+        "keywords": "cloud engineer career path, aws devops training, kubernetes course jaipur"
+      }
+    },
+    "redhat-specialist": {
+      "title": "Red Hat Specialist Path",
+      "slug": "redhat-specialist-path",
+      "description": "Comprehensive Red Hat certification journey from system administration to enterprise solutions",
+      "duration": "4-6 months",
+      "level": "Beginner to Expert",
+      "totalCourses": 3,
+      "estimatedHours": 360,
+      "featured": true,
+      "courses": [
+        {
+          "courseSlug": "rhcsa-certification",
+          "order": 1,
+          "title": "RHCSA Certification",
+          "duration": "6 weeks",
+          "prerequisite": false
+        },
+        {
+          "courseSlug": "rhce-advanced",
+          "order": 2,
+          "title": "RHCE Advanced",
+          "duration": "8 weeks",
+          "prerequisite": true
+        },
+        {
+          "courseSlug": "openshift-do280",
+          "order": 3,
+          "title": "OpenShift Administration",
+          "duration": "6 weeks",
+          "prerequisite": true
+        }
+      ],
+      "outcomes": [
+        "Master Red Hat Enterprise Linux administration",
+        "Implement enterprise automation solutions",
+        "Deploy and manage OpenShift clusters",
+        "Design scalable enterprise infrastructures"
+      ],
+      "careerRoles": [
+        "Linux System Administrator",
+        "Red Hat Solutions Architect",
+        "OpenShift Administrator",
+        "Enterprise Infrastructure Engineer"
+      ],
+      "averageSalary": "\u20b96-12 LPA",
+      "seo": {
+        "title": "Red Hat Certification Path - RHCSA to OpenShift Expert - GRRAS",
+        "description": "Complete Red Hat specialist path with RHCSA, RHCE, OpenShift certifications. Industry-focused training with placement assistance in Jaipur.",
+        "keywords": "red hat certification path, rhcsa rhce training, openshift course jaipur"
+      }
+    },
+    "kubernetes-expert": {
+      "title": "Kubernetes Expert Path",
+      "slug": "kubernetes-expert-path",
+      "description": "Master container orchestration from basics to advanced Kubernetes security and management",
+      "duration": "3-4 months",
+      "level": "Intermediate to Expert",
+      "totalCourses": 3,
+      "estimatedHours": 240,
+      "featured": false,
+      "courses": [
+        {
+          "courseSlug": "docker-fundamentals",
+          "order": 1,
+          "title": "Docker Fundamentals",
+          "duration": "3 weeks",
+          "prerequisite": false
+        },
+        {
+          "courseSlug": "cka-kubernetes",
+          "order": 2,
+          "title": "CKA - Certified Kubernetes Administrator",
+          "duration": "6 weeks",
+          "prerequisite": true
+        },
+        {
+          "courseSlug": "cks-kubernetes-security",
+          "order": 3,
+          "title": "CKS - Certified Kubernetes Security",
+          "duration": "4 weeks",
+          "prerequisite": true
+        }
+      ],
+      "outcomes": [
+        "Deploy and manage production Kubernetes clusters",
+        "Implement advanced security practices",
+        "Troubleshoot complex containerized applications",
+        "Design cloud-native architectures"
+      ],
+      "careerRoles": [
+        "Kubernetes Administrator",
+        "Container Platform Engineer",
+        "Cloud Native Developer",
+        "DevOps Security Engineer"
+      ],
+      "averageSalary": "\u20b910-18 LPA",
+      "seo": {
+        "title": "Kubernetes Expert Certification Path - CKA, CKS Training - GRRAS",
+        "description": "Master Kubernetes with CKA and CKS certifications. Advanced container orchestration and security training with hands-on projects.",
+        "keywords": "kubernetes certification path, cka cks training, container orchestration jaipur"
+      }
+    }
+  },
+  "issue_analysis": {
+    "issue_location": "frontend_integration",
+    "root_cause": "Backend data is correct, issue is in frontend rendering",
+    "data_availability": true,
+    "structure_issues": [],
+    "frontend_compatibility": true,
+    "recommended_actions": [
+      "Check frontend learning paths components",
+      "Verify frontend API data fetching",
+      "Debug frontend state management for learning paths",
+      "Check frontend routing for learning paths page"
+    ]
+  },
+  "debugging_complete": true
+}

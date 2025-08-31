@@ -13,6 +13,9 @@ import {
   GraduationCap
 } from 'lucide-react';
 import SEO from '../components/SEO';
+import CourseSearchBar from '../components/CourseSearchBar';
+import CourseCategoriesGrid from '../components/CourseCategoriesGrid';
+import LearningPathsPreview from '../components/LearningPathsPreview';
 import { useContent } from '../contexts/ContentContext';
 
 

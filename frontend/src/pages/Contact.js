@@ -232,8 +232,8 @@ const Contact = () => {
                   
                   <a
                     href={info.action.href}
-                    target={info.action.href.startsWith('http') ? '_blank' : undefined}
-                    rel={info.action.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    target={info.action.href && info.action.href.startsWith('http') ? '_blank' : undefined}
+                    rel={info.action.href && info.action.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     className="inline-flex items-center text-red-600 hover:text-red-700 font-medium text-sm transition-colors"
                   >
                     {info.action.text}

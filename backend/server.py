@@ -28,6 +28,8 @@ import aiofiles
 import requests
 from io import BytesIO
 import base64
+from bson import ObjectId
+from bson.errors import InvalidId
 
 # Load environment variables
 load_dotenv()

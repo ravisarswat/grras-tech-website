@@ -86,7 +86,10 @@ const CategoryManager = ({ content, updateContent }) => {
     updateCategory(categorySlug, 'courses', newCourses);
   };
 
-  const availableCourses = courses.filter(course => course.visible !== false);
+  // Safe check for available courses to prevent undefined errors
+  const availableCourses = courses.filter(course => 
+    course && course.visible !== false && course.slug && course.title
+  );
 
   const iconOptions = [
     'folder', 'code', 'server', 'shield', 'cloud', 'container', 

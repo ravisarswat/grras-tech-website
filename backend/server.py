@@ -866,8 +866,11 @@ async def get_blog_posts(
         blog_section = content.get("blog", {})
         blog_posts = blog_section.get("posts", []) if isinstance(blog_section, dict) else []
         
-        # Filter published posts only for public API
-        published_posts = [post for post in blog_posts if post.get("published", True)]
+        # Filter published posts only for public API (check status field for existing posts)
+        published_posts = [
+            post for post in blog_posts 
+            if post.get("published", True) or post.get("status") == "published"
+        ]
         
         # Apply filters
         if category:

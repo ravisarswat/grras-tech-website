@@ -164,7 +164,7 @@ const HeroSlider = () => {
               
               <Link
                 to="/admissions"
-                className="inline-flex items-center justify-center gap-2 lg:gap-3 border-2 border-white text-white px-6 lg:px-8 py-3 lg:py-4 rounded-xl font-bold text-base lg:text-lg hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105"
+                className="inline-flex items-center justify-center gap-2 lg:gap-3 border-2 border-white text-white px-4 lg:px-6 py-2 lg:py-3 rounded-xl font-bold text-sm lg:text-base hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105"
               >
                 Apply Now
                 <Award className="h-4 w-4 lg:h-5 lg:w-5" />

@@ -60,6 +60,34 @@ const EligibilityWidget = () => {
     }
   }, [searchParams, availableCourses]);
 
+  // Initial course selection from URL parameter
+  const handleInitialCourseSelection = (courseSlug) => {
+    if (!courseSlug) return;
+
+    setIsLoading(true);
+    setError(null);
+    
+    // Find the course
+    const course = availableCourses.find(c => c.slug === courseSlug);
+    
+    if (!course) {
+      console.error('Course not found for slug:', courseSlug);
+      setIsLoading(false);
+      setError(`Course "${courseSlug}" not found. Please select a different course or contact our admission counselors for assistance.`);
+      return;
+    }
+    
+    // Process immediately for URL parameters (no artificial delay)
+    let eligibility = course.eligibility;
+    
+    if (!eligibility || eligibility.trim() === '') {
+      eligibility = `For ${course.title || course.name || 'this course'}, please contact our admission counselors for detailed eligibility criteria and personalized guidance. Our team will help you determine if you meet the requirements and guide you through the admission process.`;
+    }
+    
+    setEligibilityText(eligibility);
+    setIsLoading(false);
+  };
+
   const handleCourseSelection = (courseSlug) => {
     if (!courseSlug) {
       setEligibilityText('');

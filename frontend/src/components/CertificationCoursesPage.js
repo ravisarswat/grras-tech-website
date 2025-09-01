@@ -44,7 +44,7 @@ const CertificationCoursesPage = () => {
 
     if (vendor === 'redhat') {
       if (title.includes('rhcsa') || title.includes('basics') || title.includes('foundation') || level.includes('beginner')) return 'foundation';
-      if (title.includes('rhce') || title.includes('do188') || title.includes('engineer') || level.includes('advanced')) return 'professional';
+      if (title.includes('rhce') || title.includes('do188') || title.includes('engineer') || level.includes('advanced') || level.toLowerCase().includes('professional')) return 'professional';
       return 'specialist';
     }
 

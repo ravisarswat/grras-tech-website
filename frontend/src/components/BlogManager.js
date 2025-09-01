@@ -129,25 +129,56 @@ const BlogManager = () => {
   const openEditor = (post = null) => {
     if (post) {
       setEditingPost(post);
+      
+      // Convert date to YYYY-MM-DD format for date input
+      let publishDate = new Date().toISOString().split('T')[0];
+      if (post.publishAt) {
+        publishDate = new Date(post.publishAt).toISOString().split('T')[0];
+      } else if (post.date) {
+        publishDate = new Date(post.date).toISOString().split('T')[0];
+      } else if (post.published_date) {
+        publishDate = new Date(post.published_date).toISOString().split('T')[0];
+      }
+      
       setFormData({
         title: post.title || '',
         slug: post.slug || '',
         content: post.content || post.body || '',
         excerpt: post.excerpt || post.summary || '',
-        featured_image: post.featured_image || post.coverImage || '',
+        featured_image: post.featured_image || post.coverImage || post.image || '',
         category: post.category || 'general',
         tags: post.tags || [],
         author: post.author || 'GRRAS Team',
-        published: post.published !== false,
-        meta_title: post.meta_title || post.title || '',
-        meta_description: post.meta_description || post.excerpt || post.summary || '',
-        meta_keywords: post.meta_keywords || (post.tags ? post.tags.join(', ') : '')
+        published: post.published !== false && post.status !== 'draft',
+        meta_title: post.meta_title || post.metaTitle || post.title || '',
+        meta_description: post.meta_description || post.metaDescription || post.excerpt || post.summary || '',
+        meta_keywords: post.meta_keywords || post.keywords || (post.tags ? post.tags.join(', ') : ''),
+        publishAt: publishDate,
+        readTime: post.readTime || '5 min read',
+        featured: post.featured || false
       });
     } else {
       setEditingPost(null);
       setFormData({
         title: '',
         slug: '',
+        content: '',
+        excerpt: '',
+        featured_image: '',
+        category: 'general',
+        tags: [],
+        author: 'GRRAS Team',
+        published: true,
+        meta_title: '',
+        meta_description: '',
+        meta_keywords: '',
+        publishAt: new Date().toISOString().split('T')[0],
+        readTime: '5 min read',
+        featured: false
+      });
+    }
+    setShowEditor(true);
+  };
         content: '',
         excerpt: '',
         featured_image: '',

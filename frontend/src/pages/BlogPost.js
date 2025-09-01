@@ -272,7 +272,7 @@ const BlogPost = () => {
     }
   };
 
-  const currentPost = blogPosts[slug];
+  const currentPost = post || blogPosts[slug];
 
   if (!currentPost) {
     return (

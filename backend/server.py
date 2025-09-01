@@ -1,3 +1,4 @@
+# FastAPI Server with Enhanced Blog Date Management and Newsletter Subscription
 from fastapi import FastAPI, APIRouter, HTTPException, Depends, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse, Response

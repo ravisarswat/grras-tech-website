@@ -5,7 +5,7 @@ import SEO from '../components/SEO';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-// BlogPost SEO Component
+// BlogPost SEO Component - Updated for Railway deployment
 const BlogPostSEO = ({ post }) => (
   <SEO
     title={`${post.title} | GRRAS Solutions Blog`}

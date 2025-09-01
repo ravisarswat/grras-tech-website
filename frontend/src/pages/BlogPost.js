@@ -1,19 +1,138 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { 
-  ArrowLeft, 
-  Calendar, 
-  Clock, 
-  User, 
-  Share2, 
-  BookOpen, 
-  Tag,
-  ArrowRight
-} from 'lucide-react';
-import SEO, { BlogPostSEO } from '../components/SEO';
+import { Calendar, Clock, User, Tag, ArrowLeft, Share2, Facebook, Twitter, Linkedin } from 'lucide-react';
+import SEO from '../components/SEO';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const BlogPost = () => {
   const { slug } = useParams();
+  const [post, setPost] = useState(null);
+  const [relatedPosts, setRelatedPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (slug) {
+      loadBlogPost();
+    }
+  }, [slug]);
+
+  const loadBlogPost = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const response = await fetch(`${BACKEND_URL}/api/blog/${slug}`);
+      
+      if (!response.ok) {
+        if (response.status === 404) {
+          setError('Blog post not found');
+        } else {
+          setError('Failed to load blog post');
+        }
+        return;
+      }
+      
+      const data = await response.json();
+      setPost(data.post);
+      setRelatedPosts(data.related_posts || []);
+    } catch (error) {
+      console.error('Error loading blog post:', error);
+      setError('Failed to load blog post');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  const getContent = (post) => {
+    return post.content || post.body || '';
+  };
+
+  const getFeaturedImage = (post) => {
+    return post.featured_image || post.coverImage || '/api/placeholder/800/400';
+  };
+
+  const getExcerpt = (post) => {
+    return post.excerpt || post.summary || post.content?.substring(0, 200) + '...';
+  };
+
+  const sharePost = (platform) => {
+    const url = window.location.href;
+    const title = post?.title || '';
+    
+    let shareUrl = '';
+    
+    switch (platform) {
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+        break;
+      case 'twitter':
+        shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
+        break;
+      case 'linkedin':
+        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+        break;
+      default:
+        return;
+    }
+    
+    window.open(shareUrl, '_blank', 'width=600,height=400');
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      alert('Link copied to clipboard!');
+    });
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-200 rounded mb-4"></div>
+            <div className="h-64 bg-gray-200 rounded mb-6"></div>
+            <div className="space-y-3">
+              <div className="h-4 bg-gray-200 rounded"></div>
+              <div className="h-4 bg-gray-200 rounded"></div>
+              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="max-w-md mx-auto text-center">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">404</h1>
+          <h2 className="text-xl font-semibold text-gray-700 mb-4">{error}</h2>
+          <p className="text-gray-600 mb-6">
+            The blog post you're looking for doesn't exist or has been moved.
+          </p>
+          <Link to="/blog" className="btn-primary">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Blog
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (!post) {
+    return null;
+  }
 
   // Sample blog posts data (in real app, this would come from API/CMS)
   const blogPosts = {

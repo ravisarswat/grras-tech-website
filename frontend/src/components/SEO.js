@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 const SEO = ({ 
-  title = "GRRAS Solutions Training Institute - IT & Cloud Education in Jaipur",
+  title = "GRRAS Solutions - IT & Cloud Education in Jaipur",
   description = "Premier IT training institute in Jaipur offering BCA degree, DevOps, Red Hat certifications, Data Science, Python, Java & Salesforce courses with placement assistance.",
   keywords = "IT training Jaipur, BCA degree, DevOps training, Red Hat certification, Data Science course, Python training, Java Salesforce, computer courses Jaipur",
   image = "https://customer-assets.emergentagent.com/job_training-hub-29/artifacts/gl3ldkmg_white%20logo.png",

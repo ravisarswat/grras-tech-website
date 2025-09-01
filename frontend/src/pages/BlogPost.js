@@ -69,7 +69,7 @@ const BlogPost = () => {
   };
 
   const getFeaturedImage = (post) => {
-    return post.featured_image || post.coverImage || '/api/placeholder/800/400';
+    return post.featured_image || post.coverImage || post.image || 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg';
   };
 
   const getExcerpt = (post) => {

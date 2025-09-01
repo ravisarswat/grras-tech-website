@@ -156,7 +156,7 @@ const HeroSlider = () => {
             <div className="flex flex-col sm:flex-row gap-2 lg:gap-3 justify-center lg:justify-start">
               <Link
                 to={currentSlideData.ctaLink}
-                className="inline-flex items-center justify-center gap-2 lg:gap-3 bg-white text-gray-900 px-6 lg:px-8 py-3 lg:py-4 rounded-xl font-bold text-base lg:text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-xl"
+                className="inline-flex items-center justify-center gap-2 lg:gap-3 bg-white text-gray-900 px-4 lg:px-6 py-2 lg:py-3 rounded-xl font-bold text-sm lg:text-base hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-xl"
               >
                 {currentSlideData.cta}
                 <ArrowRight className="h-4 w-4 lg:h-5 lg:w-5" />

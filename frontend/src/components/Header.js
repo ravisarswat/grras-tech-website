@@ -137,13 +137,12 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 -ml-2 lg:-ml-4">
             <img
-              src="https://customer-assets.emergentagent.com/job_training-hub-29/artifacts/gl3ldkmg_white%20logo.png"
+              src="https://grras.com/wp-content/uploads/2024/03/Logo-1.png"
               alt="GRRAS Solutions"
-              className="h-12 sm:h-16 w-auto bg-gray-900 rounded-lg p-2 hover:scale-105 transition-transform"
+              className="h-12 sm:h-16 w-auto hover:scale-105 transition-transform"
             />
             <div className="hidden sm:block">
               <h1 className="text-lg sm:text-xl font-bold text-gray-900">GRRAS Solutions</h1>
-              <p className="text-xs sm:text-sm text-gray-600">Training Institute</p>
             </div>
           </Link>
 

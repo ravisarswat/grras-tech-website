@@ -390,25 +390,38 @@ const Header = () => {
               <div className="p-4 space-y-3">
                 {mobileNavigationItems.map((item, index) => (
                   <div key={item.name} className="animate-slideInUp" style={{animationDelay: `${index * 50}ms`}}>
-                    <Link
-                      to={item.path}
-                      className={`block px-4 py-3 mx-2 rounded-xl text-base font-medium transition-all duration-300 ${
-                        isActivePath(item.path)
-                          ? 'text-white bg-gradient-to-r from-red-600 to-orange-500 shadow-lg'
-                          : 'text-gray-700 hover:text-red-600 hover:bg-gradient-to-r hover:from-red-50 hover:to-orange-50 hover:shadow-md'
-                      }`}
-                      onClick={() => !item.hasDropdown && setIsMenuOpen(false)}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span>{item.name}</span>
-                        {item.hasDropdown && (
-                          <ChevronDown className="h-4 w-4 text-gray-400" />
-                        )}
-                      </div>
-                    </Link>
+                    {item.hasDropdown ? (
+                      <button
+                        onClick={() => setIsMobileCoursesOpen(!isMobileCoursesOpen)}
+                        className={`block w-full px-4 py-3 mx-2 rounded-xl text-base font-medium transition-all duration-300 text-left ${
+                          isActivePath(item.path)
+                            ? 'text-white bg-gradient-to-r from-red-600 to-orange-500 shadow-lg'
+                            : 'text-gray-700 hover:text-red-600 hover:bg-gradient-to-r hover:from-red-50 hover:to-orange-50 hover:shadow-md'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span>{item.name}</span>
+                          <ChevronDown className={`h-4 w-4 text-gray-400 transform transition-transform ${isMobileCoursesOpen ? 'rotate-180' : ''}`} />
+                        </div>
+                      </button>
+                    ) : (
+                      <Link
+                        to={item.path}
+                        className={`block px-4 py-3 mx-2 rounded-xl text-base font-medium transition-all duration-300 ${
+                          isActivePath(item.path)
+                            ? 'text-white bg-gradient-to-r from-red-600 to-orange-500 shadow-lg'
+                            : 'text-gray-700 hover:text-red-600 hover:bg-gradient-to-r hover:from-red-50 hover:to-orange-50 hover:shadow-md'
+                        }`}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span>{item.name}</span>
+                        </div>
+                      </Link>
+                    )}
                     
                     {/* Mobile Courses Submenu */}
-                    {item.hasDropdown && (
+                    {item.hasDropdown && isMobileCoursesOpen && (
                       <div className="pl-2 space-y-2 mt-3 mx-2">
                         <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3 px-3">
                           🎓 Course Categories

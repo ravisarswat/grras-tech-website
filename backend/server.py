@@ -13,6 +13,7 @@ from typing import Dict, Any, Optional, List
 import hashlib
 import uuid
 from pydantic import BaseModel
+from typing import Optional
 from reportlab.lib.pagesizes import A4
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle, KeepTogether
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle

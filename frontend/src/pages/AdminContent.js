@@ -583,6 +583,7 @@ const AdminContent = () => {
     { id: 'home', name: 'Home Page', icon: <Home className="h-5 w-5" /> },
     { id: 'about', name: 'About', icon: <Info className="h-5 w-5" /> },
     { id: 'courses', name: 'Courses', icon: <BookOpen className="h-5 w-5" /> },
+    { id: 'blog', name: 'Blog', icon: <MessageSquare className="h-5 w-5" /> },
     { id: 'categories', name: 'Categories', icon: <Tag className="h-5 w-5" /> },
     { id: 'paths', name: 'Learning Paths', icon: <Route className="h-5 w-5" /> },
     { id: 'footer', name: 'Footer', icon: <MessageSquare className="h-5 w-5" /> },

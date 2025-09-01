@@ -346,13 +346,15 @@ const Header = () => {
           <div className="lg:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-md text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors"
+              className="relative p-3 rounded-xl text-gray-700 hover:text-red-600 hover:bg-red-50 transition-all duration-300 border border-transparent hover:border-red-100 hover:shadow-md group"
             >
-              {isMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
+              <div className="relative w-6 h-6">
+                {isMenuOpen ? (
+                  <X className="h-6 w-6 transform transition-transform duration-300 rotate-0 group-hover:rotate-90" />
+                ) : (
+                  <Menu className="h-6 w-6 transform transition-transform duration-300 group-hover:scale-110" />
+                )}
+              </div>
             </button>
           </div>
         </div>

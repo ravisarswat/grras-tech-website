@@ -432,8 +432,15 @@ const BlogPost = () => {
                     to={`/blog/${post.slug}`}
                     className="block group hover:shadow-lg transition-shadow rounded-lg overflow-hidden border border-gray-100"
                   >
-                    <div className="bg-gray-100 p-6 text-center">
-                      <div className="text-3xl">{post.image}</div>
+                    <div className="relative h-32 overflow-hidden bg-gray-100">
+                      <img 
+                        src={getFeaturedImage(post)} 
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          e.target.src = 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg';
+                        }}
+                      />
                     </div>
                     
                     <div className="p-4">

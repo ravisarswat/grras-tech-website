@@ -361,10 +361,10 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="lg:hidden pb-6 border-t border-gray-100 bg-gradient-to-br from-white to-gray-50">
+          <div className="lg:hidden pb-6 border-t border-gray-100 bg-gradient-to-br from-white to-gray-50 animate-fadeIn">
             <div className="pt-6 space-y-3">
-              {navigationItems.map((item) => (
-                <div key={item.name}>
+              {navigationItems.map((item, index) => (
+                <div key={item.name} className="animate-slideInUp" style={{animationDelay: `${index * 50}ms`}}>
                   <Link
                     to={item.path}
                     className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 mx-4 ${
@@ -381,7 +381,7 @@ const Header = () => {
                   {item.hasDropdown && (
                     <div className="pl-2 space-y-1 mt-3 mx-4">
                       {/* Company Logos Section */}
-                      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4">
+                      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4 animate-slideInUp" style={{animationDelay: '200ms'}}>
                         <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3 text-center">
                           Our Technology Partners
                         </div>
@@ -591,7 +591,7 @@ const Header = () => {
                 </div>
               ))}
               
-              <div className="pt-6 border-t border-gray-200 mx-4">
+              <div className="pt-6 border-t border-gray-200 mx-4 animate-slideInUp" style={{animationDelay: '400ms'}}>
                 <a
                   href="https://www.grras.tech/admissions"
                   target="_blank"

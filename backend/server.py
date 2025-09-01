@@ -1054,7 +1054,8 @@ async def update_blog_post(post_id: str, post: BlogPostRequest, admin_verified: 
     """Update blog post (Admin only)"""
     try:
         content = await content_manager.get_content()
-        blog_posts = content.get("blog", [])
+        blog_section = content.get("blog", {})
+        blog_posts = blog_section.get("posts", []) if isinstance(blog_section, dict) else []
         
         # Find post by ID
         post_index = next((i for i, p in enumerate(blog_posts) if p.get("id") == post_id), None)
@@ -1072,13 +1073,17 @@ async def update_blog_post(post_id: str, post: BlogPostRequest, admin_verified: 
             **existing_post,
             "slug": post.slug,
             "title": post.title,
+            "body": post.content,
             "content": post.content,
+            "summary": post.excerpt or post.content[:200] + "...",
             "excerpt": post.excerpt or post.content[:200] + "...",
+            "coverImage": post.featured_image or "",
             "featured_image": post.featured_image,
             "category": post.category,
             "tags": post.tags,
             "author": post.author,
             "published": post.published,
+            "updatedAt": datetime.utcnow().isoformat(),
             "updated_at": datetime.utcnow().isoformat(),
             "meta_title": post.meta_title or post.title,
             "meta_description": post.meta_description or (post.excerpt or post.content[:160]),
@@ -1086,7 +1091,7 @@ async def update_blog_post(post_id: str, post: BlogPostRequest, admin_verified: 
         }
         
         blog_posts[post_index] = updated_post
-        content["blog"] = blog_posts
+        content["blog"]["posts"] = blog_posts
         
         # Save content
         await content_manager.save_content(content, user="admin", is_draft=False)

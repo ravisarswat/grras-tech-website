@@ -192,19 +192,60 @@ async def migrate_content(admin_verified: bool = Depends(verify_admin_token)):
 async def save_content(request: ContentRequest, admin_verified: bool = Depends(verify_admin_token)):
     """Save CMS content (Admin only)"""
     try:
+        # Add timestamp to force cache refresh
+        request.content['lastUpdated'] = datetime.utcnow().isoformat()
+        request.content['adminSyncId'] = str(uuid.uuid4())[:8]
+        
         updated_content = await content_manager.save_content(
             request.content, 
             user="admin", 
             is_draft=request.isDraft
         )
+        
+        logging.info(f"✅ Content saved successfully - AdminSyncId: {request.content.get('adminSyncId', 'N/A')}")
+        
         return {
             "message": "Content saved successfully", 
             "content": updated_content,
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.utcnow().isoformat(),
+            "adminSyncId": request.content.get('adminSyncId'),
+            "coursesCount": len(updated_content.get('courses', []))
         }
     except Exception as e:
         logging.error(f"Error saving content: {e}")
         raise HTTPException(status_code=500, detail="Failed to save content")
+
+@api_router.post("/admin/force-sync")
+async def force_sync(admin_verified: bool = Depends(verify_admin_token)):
+    """Force synchronization between admin panel and website (Admin only)"""
+    try:
+        # Get current content
+        current_content = await content_manager.get_content()
+        
+        # Add force sync markers
+        current_content['lastForceSync'] = datetime.utcnow().isoformat()
+        current_content['forceSyncId'] = str(uuid.uuid4())[:8]
+        
+        # Save back to force database refresh
+        updated_content = await content_manager.save_content(
+            current_content, 
+            user="admin-force-sync", 
+            is_draft=False
+        )
+        
+        courses_count = len(updated_content.get('courses', []))
+        logging.info(f"✅ Force sync completed - {courses_count} courses synchronized")
+        
+        return {
+            "message": "Force synchronization completed successfully",
+            "timestamp": datetime.utcnow().isoformat(),
+            "forceSyncId": current_content.get('forceSyncId'),
+            "coursesCount": courses_count,
+            "lastSync": current_content.get('lastForceSync')
+        }
+    except Exception as e:
+        logging.error(f"Error in force sync: {e}")
+        raise HTTPException(status_code=500, detail="Failed to force synchronization")
 
 @api_router.get("/courses")
 async def get_courses():

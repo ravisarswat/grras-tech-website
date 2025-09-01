@@ -919,7 +919,8 @@ async def get_blog_post(slug: str):
     """Get individual blog post by slug"""
     try:
         content = await content_manager.get_content()
-        blog_posts = content.get("blog", [])
+        blog_section = content.get("blog", {})
+        blog_posts = blog_section.get("posts", []) if isinstance(blog_section, dict) else []
         
         # Find post by slug
         post = next((p for p in blog_posts if p.get("slug") == slug and p.get("published", True)), None)
@@ -928,7 +929,7 @@ async def get_blog_post(slug: str):
             raise HTTPException(status_code=404, detail="Blog post not found")
         
         # Calculate reading time
-        word_count = len(post.get("content", "").split())
+        word_count = len(post.get("body", post.get("content", "")).split())
         reading_time = max(1, round(word_count / 200))
         post["reading_time"] = reading_time
         

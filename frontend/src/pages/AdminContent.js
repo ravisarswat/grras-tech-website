@@ -918,6 +918,11 @@ const AdminContent = () => {
             />
           )}
 
+          {/* Blog Tab */}
+          {activeTab === 'blog' && (
+            <BlogManager />
+          )}
+
           {/* Learning Paths Tab */}
           {activeTab === 'paths' && (
             <LearningPathManager 

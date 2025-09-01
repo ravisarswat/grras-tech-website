@@ -1,3 +1,4 @@
+// Footer Component - Optimized for Mobile Responsiveness
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { 

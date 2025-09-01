@@ -26,7 +26,7 @@ const HeroSlider = () => {
       cta: "Start Your Red Hat Journey",
       ctaLink: "/courses?category=redhat",
       background: "bg-gradient-to-br from-red-600 via-red-500 to-orange-500",
-      icon: <img src="https://logos-world.net/wp-content/uploads/2021/02/Red-Hat-Logo.png" alt="Red Hat" className="w-full h-full object-contain" />,
+      icon: <img src="https://www.redhat.com/cms/managed-files/Logo-Red_Hat-Hat_Only-A-Standard-RGB.svg" alt="Red Hat" className="w-full h-full object-contain" />,
       stats: ["100% Certified Trainers", "Real Lab Environment", "Job-Ready Skills"]
     },
     {

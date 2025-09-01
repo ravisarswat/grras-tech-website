@@ -994,7 +994,7 @@ async def get_blog_tags():
         # Count tags usage
         tag_counts = {}
         for post in blog_posts:
-            if post.get("published", True):
+            if post.get("published", True) or post.get("status") == "published":
                 for tag in post.get("tags", []):
                     tag_counts[tag] = tag_counts.get(tag, 0) + 1
         

@@ -105,7 +105,7 @@ const HeroSlider = () => {
   const currentSlideData = slides[currentSlide];
 
   return (
-    <section className="relative min-h-[350px] md:min-h-[400px] lg:min-h-[380px] overflow-hidden">
+    <section className="relative min-h-[400px] sm:min-h-[450px] md:min-h-[400px] lg:min-h-[380px] overflow-hidden">
       {/* Background Slide */}
       <div className={`absolute inset-0 transition-all duration-1000 ${currentSlideData.background}`}>
         <div className="absolute inset-0 bg-black bg-opacity-30"></div>

@@ -230,7 +230,7 @@ const EligibilityWidget = () => {
         )}
 
         {/* Empty State */}
-        {!selectedCourse && !isLoading && (
+        {!selectedCourse && !isLoading && !error && (
           <div className="text-center py-8 text-gray-500">
             <BookOpen className="h-12 w-12 text-gray-300 mx-auto mb-3" />
             <p className="text-sm">Select a course to check eligibility requirements</p>

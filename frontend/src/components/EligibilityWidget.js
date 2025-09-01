@@ -160,7 +160,7 @@ const EligibilityWidget = () => {
           <CheckCircle className="h-6 w-6 text-blue-600" />
         </div>
         <div>
-          <h3 className="text-xl font-bold text-gray-900">Check Your Eligibility</h3>
+          <h3 className="text-xl font-bold text-gray-900">✅ Check Your Eligibility</h3>
           <p className="text-sm text-gray-600">Find out if you meet the requirements for your chosen course</p>
         </div>
       </div>

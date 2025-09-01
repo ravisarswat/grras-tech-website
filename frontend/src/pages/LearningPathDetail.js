@@ -275,42 +275,47 @@ const LearningPathDetail = () => {
                   <div className="space-y-6">
                     {pathCourses.map((course, index) => (
                       <div key={course.slug} className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-                        <div className="p-8">
-                          <div className="flex items-start gap-6">
+                        <div className="p-4 md:p-8">
+                          {/* Mobile-First Layout */}
+                          <div className="flex flex-col lg:flex-row items-start gap-4 lg:gap-6">
                             {/* Course Number */}
-                            <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-pink-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg shrink-0">
+                            <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-pink-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg shrink-0 mx-auto lg:mx-0">
                               {course.order || index + 1}
                             </div>
                             
                             {/* Course Info */}
-                            <div className="flex-1">
-                              <div className="flex items-start justify-between mb-4">
-                                <div>
-                                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{course.title}</h3>
-                                  <p className="text-gray-600 mb-4">{course.oneLiner}</p>
-                                  
-                                  <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-                                    <div className="flex items-center gap-1">
-                                      <Clock className="h-4 w-4" />
-                                      <span>{course.duration}</span>
-                                    </div>
-                                    <div className="flex items-center gap-1">
-                                      <User className="h-4 w-4" />
-                                      <span>{course.level}</span>
-                                    </div>
-                                    {course.prerequisite && (
-                                      <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">
-                                        Prerequisite Required
-                                      </span>
-                                    )}
+                            <div className="flex-1 w-full">
+                              {/* Mobile Course Header */}
+                              <div className="text-center lg:text-left mb-4">
+                                <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">{course.title}</h3>
+                                <p className="text-gray-600 mb-4 text-sm md:text-base">{course.oneLiner}</p>
+                              </div>
+                              
+                              {/* Course Details - Mobile Stacked */}
+                              <div className="space-y-4 mb-4">
+                                {/* Course Meta Info */}
+                                <div className="flex flex-wrap justify-center lg:justify-start gap-4 text-sm text-gray-600">
+                                  <div className="flex items-center gap-1 bg-gray-50 px-3 py-1 rounded-lg">
+                                    <Clock className="h-4 w-4" />
+                                    <span>{course.duration}</span>
                                   </div>
+                                  <div className="flex items-center gap-1 bg-gray-50 px-3 py-1 rounded-lg">
+                                    <User className="h-4 w-4" />
+                                    <span>{course.level}</span>
+                                  </div>
+                                  {course.prerequisite && (
+                                    <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-lg text-xs">
+                                      Prerequisite Required
+                                    </span>
+                                  )}
                                 </div>
                                 
-                                <div className="text-right">
-                                  <p className="text-2xl font-bold text-red-600 mb-2">{course.fees}</p>
+                                {/* Price and Action - Mobile Centered */}
+                                <div className="text-center lg:text-right">
+                                  <p className="text-2xl md:text-3xl font-bold text-red-600 mb-3">{course.fees}</p>
                                   <Link
                                     to={`/courses/${course.slug}`}
-                                    className="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                                    className="inline-flex items-center gap-2 bg-red-600 text-white px-6 py-3 rounded-xl hover:bg-red-700 transition-colors font-medium"
                                   >
                                     View Course
                                     <ArrowRight className="h-4 w-4" />
@@ -318,15 +323,15 @@ const LearningPathDetail = () => {
                                 </div>
                               </div>
                               
-                              {/* Course Highlights */}
+                              {/* Course Highlights - Mobile Optimized */}
                               {course.highlights && course.highlights.length > 0 && (
-                                <div>
-                                  <h4 className="font-semibold text-gray-900 mb-3">What You'll Learn:</h4>
-                                  <div className="grid md:grid-cols-2 gap-2">
+                                <div className="border-t border-gray-100 pt-4">
+                                  <h4 className="font-semibold text-gray-900 mb-3 text-center lg:text-left">What You'll Learn:</h4>
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     {course.highlights.slice(0, 4).map((highlight, idx) => (
-                                      <div key={idx} className="flex items-center gap-2 text-sm text-gray-600">
-                                        <CheckCircle className="h-4 w-4 text-green-500 shrink-0" />
-                                        <span>{highlight}</span>
+                                      <div key={idx} className="flex items-start gap-3 text-sm text-gray-600 p-2 bg-gray-50 rounded-lg">
+                                        <CheckCircle className="h-4 w-4 text-green-500 shrink-0 mt-0.5" />
+                                        <span className="leading-relaxed">{highlight}</span>
                                       </div>
                                     ))}
                                   </div>
@@ -336,16 +341,37 @@ const LearningPathDetail = () => {
                           </div>
                         </div>
                         
-                        {/* Progress Arrow */}
+                        {/* Progress Arrow - Mobile Centered */}
                         {index < pathCourses.length - 1 && (
-                          <div className="flex justify-center pb-4">
-                            <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
-                              <ArrowRight className="h-4 w-4 text-gray-400" />
+                          <div className="flex justify-center pb-6">
+                            <div className="w-10 h-10 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center shadow-sm">
+                              <ArrowRight className="h-5 w-5 text-gray-500" />
                             </div>
                           </div>
                         )}
                       </div>
                     ))}
+                    
+                    {/* Path Completion Summary */}
+                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 md:p-8 border border-green-100">
+                      <div className="text-center">
+                        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                          <Award className="h-8 w-8 text-green-600" />
+                        </div>
+                        <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Path Completion</h3>
+                        <p className="text-gray-600 mb-4">
+                          Upon completing all courses, you'll receive industry-recognized certifications and comprehensive placement support.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                          <Link to="/admissions" className="btn-primary">
+                            Start Your Journey
+                          </Link>
+                          <button className="btn-outline">
+                            Download Full Syllabus
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>

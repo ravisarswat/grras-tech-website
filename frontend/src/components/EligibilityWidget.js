@@ -141,6 +141,28 @@ const EligibilityWidget = () => {
           </div>
         )}
 
+        {/* Error State */}
+        {error && !isLoading && (
+          <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
+              <div>
+                <h4 className="font-medium text-red-900 mb-2">Unable to Check Eligibility</h4>
+                <p className="text-red-700 text-sm leading-relaxed">{error}</p>
+                <button
+                  onClick={() => {
+                    setError(null);
+                    resetWidget();
+                  }}
+                  className="mt-3 text-sm text-red-600 hover:text-red-700 font-medium"
+                >
+                  Try Again
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Eligibility Result */}
         {eligibilityText && !isLoading && (
           <div className="mt-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg">

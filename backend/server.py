@@ -1146,6 +1146,100 @@ async def delete_blog_post(post_id: str, admin_verified: bool = Depends(verify_a
         logging.error(f"Error deleting blog post: {e}")
         raise HTTPException(status_code=500, detail="Failed to delete blog post")
 
+# Newsletter Subscription Routes
+@api_router.post("/newsletter/subscribe")
+async def subscribe_to_newsletter(request: dict):
+    """Subscribe to newsletter"""
+    try:
+        email = request.get("email", "").strip().lower()
+        
+        if not email:
+            raise HTTPException(status_code=400, detail="Email is required")
+        
+        # Basic email validation
+        import re
+        email_pattern = r'^[^\s@]+@[^\s@]+\.[^\s@]+$'
+        if not re.match(email_pattern, email):
+            raise HTTPException(status_code=400, detail="Invalid email format")
+        
+        content = await content_manager.get_content()
+        
+        # Initialize newsletter subscribers if not exists
+        if "newsletter" not in content:
+            content["newsletter"] = {
+                "subscribers": [],
+                "settings": {
+                    "enabled": True,
+                    "send_welcome_email": True
+                }
+            }
+        
+        subscribers = content["newsletter"].get("subscribers", [])
+        
+        # Check if already subscribed
+        existing_subscriber = next((s for s in subscribers if s.get("email") == email), None)
+        if existing_subscriber:
+            if existing_subscriber.get("status") == "active":
+                return {"message": "You are already subscribed to our newsletter"}
+            else:
+                # Reactivate subscription
+                existing_subscriber["status"] = "active"
+                existing_subscriber["resubscribed_at"] = datetime.utcnow().isoformat()
+        else:
+            # Add new subscriber
+            new_subscriber = {
+                "id": str(uuid.uuid4()),
+                "email": email,
+                "status": "active",
+                "source": request.get("source", "blog_page"),
+                "subscribed_at": request.get("subscribed_at", datetime.utcnow().isoformat()),
+                "preferences": {
+                    "tech_updates": True,
+                    "career_guidance": True,
+                    "course_updates": True
+                }
+            }
+            subscribers.append(new_subscriber)
+        
+        content["newsletter"]["subscribers"] = subscribers
+        
+        # Save updated content
+        await content_manager.save_content(content, user="system", is_draft=False)
+        
+        logging.info(f"✅ Newsletter subscription: {email}")
+        return {"message": "Successfully subscribed to our newsletter!"}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error subscribing to newsletter: {e}")
+        raise HTTPException(status_code=500, detail="Failed to subscribe to newsletter")
+
+@api_router.get("/admin/newsletter/subscribers")
+async def get_newsletter_subscribers(admin_verified: bool = Depends(verify_admin_token)):
+    """Get all newsletter subscribers (Admin only)"""
+    try:
+        content = await content_manager.get_content()
+        newsletter_data = content.get("newsletter", {})
+        subscribers = newsletter_data.get("subscribers", [])
+        
+        # Return stats and recent subscribers
+        active_subscribers = [s for s in subscribers if s.get("status") == "active"]
+        
+        return {
+            "total_subscribers": len(subscribers),
+            "active_subscribers": len(active_subscribers),
+            "subscribers": active_subscribers[-50:],  # Last 50 subscribers
+            "stats": {
+                "today": len([s for s in active_subscribers if s.get("subscribed_at", "").startswith(datetime.utcnow().strftime("%Y-%m-%d"))]),
+                "this_month": len([s for s in active_subscribers if s.get("subscribed_at", "").startswith(datetime.utcnow().strftime("%Y-%m"))])
+            }
+        }
+        
+    except Exception as e:
+        logging.error(f"Error fetching newsletter subscribers: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch newsletter subscribers")
+
 @api_router.get("/admin/blog")
 async def get_all_blog_posts_admin(admin_verified: bool = Depends(verify_admin_token)):
     """Get all blog posts including drafts (Admin only)"""

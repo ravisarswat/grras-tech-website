@@ -37,7 +37,7 @@ const HeroSlider = () => {
       cta: "Launch Your Cloud Career",
       ctaLink: "/courses?category=aws",
       background: "bg-gradient-to-br from-orange-600 via-yellow-500 to-orange-400",
-      icon: <Cloud className="w-16 h-16 text-white" />,
+      icon: <Cloud className="w-full h-full text-white" />,
       stats: ["AWS Certified Instructors", "Real Projects", "Industry Placement"]
     },
     {

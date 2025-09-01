@@ -202,7 +202,8 @@ const BlogPost = () => {
       readTime: '8 min read',
       category: 'DevOps',
       tags: ['DevOps', 'Career', 'Technology', 'AWS', 'Cloud'],
-      image: '🚀'
+      image: 'https://images.pexels.com/photos/8728559/pexels-photo-8728559.jpeg',
+      featured_image: 'https://images.pexels.com/photos/8728559/pexels-photo-8728559.jpeg'
     },
     'why-bca-industry-training-future': {
       title: 'Why BCA with Industry Training is the Future',
@@ -237,7 +238,8 @@ const BlogPost = () => {
       readTime: '6 min read',
       category: 'Education',
       tags: ['BCA', 'Education', 'Career', 'Industry Training'],
-      image: '🎓'
+      image: 'https://images.pexels.com/photos/7789851/pexels-photo-7789851.jpeg',
+      featured_image: 'https://images.pexels.com/photos/7789851/pexels-photo-7789851.jpeg'
     },
     'top-5-skills-data-science-careers-india': {
       title: 'Top 5 Skills for Data Science Careers in India',
@@ -265,7 +267,8 @@ const BlogPost = () => {
       readTime: '7 min read',
       category: 'Data Science',
       tags: ['Data Science', 'Python', 'Machine Learning', 'Career'],
-      image: '📊'
+      image: 'https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg',
+      featured_image: 'https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg'
     }
   };
 

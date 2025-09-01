@@ -223,94 +223,11 @@ const Home = () => {
     <>
       <SEO />
       
-      {/* Hero Section */}
-      <section className="relative min-h-[600px] flex items-center hero-bg">
-        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center animate-fade-in-up">
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 text-white max-w-5xl mx-auto">
-              Empowering Students with{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-400">
-                World-Class
-              </span>{' '}
-              IT & Cloud Education
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-gray-100 mb-8 leading-relaxed max-w-4xl mx-auto">
-              From Degree Programs to Cutting-Edge Certifications
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link
-                to="/courses"
-                className="btn-primary text-center animate-pulse-hover"
-              >
-                Explore Courses
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-              
-              <Link
-                to="/admissions"
-                className="btn-outline bg-white bg-opacity-10 backdrop-blur-sm border-white text-white hover:bg-white hover:text-gray-900 text-center"
-              >
-                Apply Now
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Highlights Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 animate-fade-in-up">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose GRRAS Solutions?
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We're committed to providing world-class IT education with industry relevance
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {highlights.map((highlight, index) => (
-              <div 
-                key={index}
-                className="text-center p-8 rounded-xl bg-gradient-to-br from-red-50 to-orange-50 hover:shadow-lg transition-all duration-300 animate-fade-in-up card-hover"
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
-                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-red-500 to-orange-500 rounded-full flex items-center justify-center text-white">
-                  {highlight.icon}
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                  {highlight.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {highlight.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Course Discovery Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 animate-fade-in-up">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Find Your Perfect Course
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              Discover courses that match your career goals with our smart search and category-based navigation
-            </p>
-            
-            {/* Course Search Bar */}
-            <CourseSearchBar />
-          </div>
-        </div>
-      </section>
+      {/* Hero Slider Section */}
+      <HeroSlider />
+      
+      {/* Course Search Bar */}
+      <CourseSearchBar />
 
       {/* Course Categories Grid */}
       <CourseCategoriesGrid />

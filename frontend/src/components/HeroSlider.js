@@ -70,7 +70,7 @@ const HeroSlider = () => {
       cta: "Secure Your Future",
       ctaLink: "/courses?category=degree",
       background: "bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600",
-      icon: <GraduationCap className="w-16 h-16 text-white" />,
+      icon: <GraduationCap className="w-full h-full text-white" />,
       stats: ["Industry Curriculum", "100% Placement", "Modern Skills"]
     }
   ];

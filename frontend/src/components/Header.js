@@ -15,6 +15,20 @@ const Header = () => {
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const location = useLocation();
 
+  // Handle body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.classList.add('menu-open');
+    } else {
+      document.body.classList.remove('menu-open');
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.classList.remove('menu-open');
+    };
+  }, [isMenuOpen]);
+
   // Technology tracks with company logos
   const technologyTracks = [
     {

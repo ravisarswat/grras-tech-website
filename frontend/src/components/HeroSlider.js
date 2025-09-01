@@ -20,14 +20,14 @@ const HeroSlider = () => {
   const slides = [
     {
       id: 1,
-      title: "Master Red Hat Technologies",
-      subtitle: "RHCSA, RHCE & OpenShift Certifications",
-      description: "Industry-leading Linux and container technologies with hands-on labs",
-      cta: "Start Your Red Hat Journey",
-      ctaLink: "/courses?category=redhat",
-      background: "bg-gradient-to-br from-red-600 via-red-500 to-orange-500",
-      icon: <img src="https://www.redhat.com/cms/managed-files/Logo-Red_Hat-Hat_Only-A-Standard-RGB.svg" alt="Red Hat" className="w-full h-full object-contain" />,
-      stats: ["100% Certified Trainers", "Real Lab Environment", "Job-Ready Skills"]
+      title: "Industry-Ready Degree Programs",
+      subtitle: "BCA, MCA with 100% Placement Support",
+      description: "Get your degree with modern tech skills and guaranteed placement assistance",
+      cta: "Secure Your Future",
+      ctaLink: "/courses?category=degree",
+      background: "bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600",
+      icon: <GraduationCap className="w-full h-full text-white" />,
+      stats: ["Industry Curriculum", "100% Placement", "Modern Skills"]
     },
     {
       id: 2,
@@ -42,6 +42,17 @@ const HeroSlider = () => {
     },
     {
       id: 3,
+      title: "Master Red Hat Technologies",
+      subtitle: "RHCSA, RHCE & OpenShift Certifications",
+      description: "Industry-leading Linux and container technologies with hands-on labs",
+      cta: "Start Your Red Hat Journey",
+      ctaLink: "/courses?category=redhat",
+      background: "bg-gradient-to-br from-red-600 via-red-500 to-orange-500",
+      icon: <img src="https://www.redhat.com/cms/managed-files/Logo-Red_Hat-Hat_Only-A-Standard-RGB.svg" alt="Red Hat" className="w-full h-full object-contain" />,
+      stats: ["100% Certified Trainers", "Real Lab Environment", "Job-Ready Skills"]
+    },
+    {
+      id: 4,
       title: "DevOps Mastery Program",
       subtitle: "Docker, Kubernetes, CI/CD Pipeline",
       description: "Transform your career with modern DevOps practices and automation tools",
@@ -52,7 +63,7 @@ const HeroSlider = () => {
       stats: ["Industry Tools", "Real Pipelines", "Expert Mentorship"]
     },
     {
-      id: 4,
+      id: 5,
       title: "Cybersecurity & Ethical Hacking",
       subtitle: "Protect Digital Assets, Secure the Future",
       description: "Learn cutting-edge security techniques and ethical hacking methodologies",
@@ -61,17 +72,6 @@ const HeroSlider = () => {
       background: "bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-600",
       icon: <Shield className="w-full h-full text-white" />,
       stats: ["Certified Trainers", "Real Attack Scenarios", "Hands-on Labs"]
-    },
-    {
-      id: 5,
-      title: "Industry-Ready Degree Programs",
-      subtitle: "BCA, MCA with 100% Placement Support",
-      description: "Get your degree with modern tech skills and guaranteed placement assistance",
-      cta: "Secure Your Future",
-      ctaLink: "/courses?category=degree",
-      background: "bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600",
-      icon: <GraduationCap className="w-full h-full text-white" />,
-      stats: ["Industry Curriculum", "100% Placement", "Modern Skills"]
     }
   ];
 

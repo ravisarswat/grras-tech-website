@@ -104,6 +104,51 @@ const Blog = () => {
     setSearchParams(newParams);
   };
 
+  const handleNewsletterSubscription = async (e) => {
+    e.preventDefault();
+    
+    if (!newsletterEmail) {
+      toast.error('Please enter your email address');
+      return;
+    }
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(newsletterEmail)) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+    
+    setSubscribing(true);
+    
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/newsletter/subscribe`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          email: newsletterEmail,
+          source: 'blog_page',
+          subscribed_at: new Date().toISOString()
+        })
+      });
+      
+      if (response.ok) {
+        toast.success('Successfully subscribed to our newsletter!');
+        setNewsletterEmail('');
+      } else {
+        const error = await response.json();
+        toast.error(error.detail || 'Failed to subscribe. Please try again.');
+      }
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      toast.error('Network error. Please check your connection and try again.');
+    } finally {
+      setSubscribing(false);
+    }
+  };
+
   const clearFilters = () => {
     setSearchParams({});
   };

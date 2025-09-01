@@ -383,7 +383,7 @@ const HeroSlider = () => {
       </div>
 
       {/* Navigation Controls */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-4">
+      <div className="absolute bottom-4 lg:bottom-6 left-1/2 transform -translate-x-1/2 flex items-center gap-3">
         {/* Previous Button */}
         <button
           onClick={goToPrevious}

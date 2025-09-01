@@ -79,21 +79,11 @@ const Footer = () => {
             
             {/* Company Info - Optimized for Mobile */}
             <div className="md:col-span-2 lg:col-span-1">
-              {/* Logo and Company Name - Mobile Optimized */}
+              {/* Company Name Only - No Logo */}
               <div className="mb-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <img 
-                    src={instituteLogo} 
-                    alt={instituteName}
-                    className="h-12 w-12 lg:h-16 lg:w-16 object-contain bg-white p-1.5 lg:p-2 rounded-lg flex-shrink-0"
-                    onError={(e) => {
-                      e.target.outerHTML = `<div class="h-12 w-12 lg:h-16 lg:w-16 bg-red-600 rounded-lg flex items-center justify-center text-white font-bold text-lg lg:text-xl">G</div>`;
-                    }}
-                  />
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-lg lg:text-xl font-bold text-white leading-tight">{instituteName}</h3>
-                    <p className="text-gray-300 text-xs lg:text-sm">Training Institute</p>
-                  </div>
+                <div className="mb-3">
+                  <h3 className="text-xl lg:text-2xl font-bold text-white leading-tight">{instituteName}</h3>
+                  <p className="text-gray-300 text-sm lg:text-base">Training Institute</p>
                 </div>
                 
                 {footerBranding.tagline && (

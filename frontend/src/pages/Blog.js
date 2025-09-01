@@ -1,338 +1,445 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Calendar, Clock, ArrowRight, Tag, User } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { Calendar, Clock, User, Tag, Search, Filter } from 'lucide-react';
 import SEO from '../components/SEO';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 const Blog = () => {
-  const featuredPost = {
-    slug: 'what-is-devops-beginners-guide-2025',
-    title: 'What is DevOps? A Beginner\'s Guide (2025)',
-    excerpt: 'DevOps is revolutionizing software development. Learn what DevOps is, why it matters, and how to start your DevOps career in 2025 with comprehensive training.',
-    image: '🚀',
-    category: 'DevOps',
-    date: '2025-01-15',
-    readTime: '8 min read',
-    author: 'GRRAS Team',
-    featured: true
+  const [posts, setPosts] = useState([]);
+  const [categories, setCategories] = useState({});
+  const [tags, setTags] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [pagination, setPagination] = useState({});
+  const [searchParams, setSearchParams] = useSearchParams();
+  
+  // URL params
+  const currentPage = parseInt(searchParams.get('page')) || 1;
+  const selectedCategory = searchParams.get('category') || '';
+  const selectedTag = searchParams.get('tag') || '';
+  const searchQuery = searchParams.get('search') || '';
+
+  useEffect(() => {
+    loadBlogData();
+  }, [currentPage, selectedCategory, selectedTag, searchQuery]);
+
+  const loadBlogData = async () => {
+    try {
+      setLoading(true);
+      
+      // Load blog posts
+      const params = new URLSearchParams({
+        page: currentPage.toString(),
+        limit: '12'
+      });
+      
+      if (selectedCategory) params.append('category', selectedCategory);
+      if (selectedTag) params.append('tag', selectedTag);
+      if (searchQuery) params.append('search', searchQuery);
+
+      const postsResponse = await fetch(`${BACKEND_URL}/api/blog?${params}`);
+      const postsData = await postsResponse.json();
+      
+      setPosts(postsData.posts || []);
+      setPagination(postsData.pagination || {});
+
+      // Load categories and tags (only on first load)
+      if (currentPage === 1 && !selectedCategory && !selectedTag && !searchQuery) {
+        const [categoriesResponse, tagsResponse] = await Promise.all([
+          fetch(`${BACKEND_URL}/api/blog/categories`),
+          fetch(`${BACKEND_URL}/api/blog/tags`)
+        ]);
+        
+        const categoriesData = await categoriesResponse.json();
+        const tagsData = await tagsResponse.json();
+        
+        setCategories(categoriesData.categories || {});
+        setTags(tagsData.tags || {});
+      }
+    } catch (error) {
+      console.error('Error loading blog data:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const blogPosts = [
-    {
-      slug: 'why-bca-industry-training-future',
-      title: 'Why BCA with Industry Training is the Future',
-      excerpt: 'Traditional BCA programs are evolving. Discover how industry-integrated BCA degrees prepare you for modern tech careers with hands-on cloud and DevOps training.',
-      image: '🎓',
-      category: 'Education',
-      date: '2025-01-12',
-      readTime: '6 min read',
-      author: 'Dr. Rajesh Sharma'
-    },
-    {
-      slug: 'top-5-skills-data-science-careers-india',
-      title: 'Top 5 Skills for Data Science Careers in India',
-      excerpt: 'Master these essential data science skills to land high-paying jobs in India\'s booming tech market. From Python to machine learning, here\'s your roadmap.',
-      image: '📊',
-      category: 'Data Science',
-      date: '2025-01-10',
-      readTime: '7 min read',
-      author: 'Prof. Priya Agarwal'
-    },
-    {
-      slug: 'aws-certification-guide-2025',
-      title: 'Complete AWS Certification Guide for 2025',
-      excerpt: 'Navigate the AWS certification landscape with our comprehensive guide. Choose the right certification path and accelerate your cloud career.',
-      image: '☁️',
-      category: 'Cloud Computing',
-      date: '2025-01-08',
-      readTime: '10 min read',
-      author: 'Amit Kumar'
-    },
-    {
-      slug: 'python-vs-java-career-prospects',
-      title: 'Python vs Java: Which Programming Language to Choose?',
-      excerpt: 'Confused between Python and Java? Compare career prospects, salary potential, and learning curves to make the right choice for your programming journey.',
-      image: '💻',
-      category: 'Programming',
-      date: '2025-01-05',
-      readTime: '5 min read',
-      author: 'GRRAS Team'
-    },
-    {
-      slug: 'machine-learning-trends-2025',
-      title: 'Machine Learning Trends to Watch in 2025',
-      excerpt: 'Stay ahead with the latest ML trends. From generative AI to edge computing, explore technologies shaping the future of machine learning.',
-      image: '🤖',
-      category: 'Machine Learning',
-      date: '2025-01-03',
-      readTime: '9 min read',
-      author: 'Prof. Priya Agarwal'
-    },
-    {
-      slug: 'red-hat-certification-worth-it',
-      title: 'Is Red Hat Certification Worth It in 2025?',
-      excerpt: 'Analyze the ROI of Red Hat certifications. Discover salary benefits, career opportunities, and why Linux skills are in high demand.',
-      image: '🐧',
-      category: 'Certifications',
-      date: '2025-01-01',
-      readTime: '6 min read',
-      author: 'Amit Kumar'
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const search = formData.get('search');
+    
+    const newParams = new URLSearchParams(searchParams);
+    if (search) {
+      newParams.set('search', search);
+    } else {
+      newParams.delete('search');
     }
-  ];
+    newParams.delete('page'); // Reset to first page
+    setSearchParams(newParams);
+  };
 
-  const categories = [
-    { name: 'All', count: 7, active: true },
-    { name: 'DevOps', count: 2 },
-    { name: 'Data Science', count: 2 },
-    { name: 'Programming', count: 1 },
-    { name: 'Cloud Computing', count: 1 },
-    { name: 'Certifications', count: 1 }
-  ];
+  const handleCategoryFilter = (category) => {
+    const newParams = new URLSearchParams(searchParams);
+    if (category && category !== selectedCategory) {
+      newParams.set('category', category);
+    } else {
+      newParams.delete('category');
+    }
+    newParams.delete('page'); // Reset to first page
+    setSearchParams(newParams);
+  };
+
+  const handleTagFilter = (tag) => {
+    const newParams = new URLSearchParams(searchParams);
+    if (tag && tag !== selectedTag) {
+      newParams.set('tag', tag);
+    } else {
+      newParams.delete('tag');
+    }
+    newParams.delete('page'); // Reset to first page
+    setSearchParams(newParams);
+  };
+
+  const clearFilters = () => {
+    setSearchParams({});
+  };
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-IN', {
+    return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     });
   };
 
+  const getExcerpt = (post) => {
+    return post.excerpt || post.summary || post.content?.substring(0, 200) + '...';
+  };
+
+  const getFeaturedImage = (post) => {
+    return post.featured_image || post.coverImage || '/api/placeholder/400/240';
+  };
+
   return (
     <>
-      <SEO
-        title="IT Training Blog - Tips, Guides & Industry Insights | GRRAS Solutions"
-        description="Stay updated with the latest IT industry trends, career guidance, and technical tutorials. Expert insights on DevOps, Data Science, Cloud Computing, and more."
-        keywords="IT blog, DevOps tutorials, data science tips, programming guides, career advice, technology trends, cloud computing blog"
+      <SEO 
+        title="Blog - Latest Tech Insights & Career Guidance"
+        description="Stay updated with latest technology trends, career guidance, course updates, and success stories from GRRAS Solutions."
+        keywords="technology blog, IT careers, cloud computing, DevOps, cybersecurity, programming, certifications"
       />
       
       <div className="min-h-screen bg-gray-50">
         {/* Hero Section */}
-        <section className="py-20 gradient-bg-primary text-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="animate-fade-in-up">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                GRRAS Tech Blog
+        <div className="bg-gradient-to-r from-red-600 to-orange-600">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div className="text-center">
+              <h1 className="text-4xl font-bold text-white mb-4">
+                Tech Insights & Career Guidance
               </h1>
-              <p className="text-xl md:text-2xl text-gray-100 mb-8 max-w-3xl mx-auto">
-                Stay ahead with the latest insights, tutorials, and career guidance in IT and technology
+              <p className="text-xl text-red-100 mb-8 max-w-3xl mx-auto">
+                Stay updated with the latest technology trends, career advice, course updates, 
+                and success stories from the world of IT and cloud computing.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/courses" className="btn-secondary">
-                  Explore Our Courses
-                </Link>
-                <Link to="/contact" className="btn-outline border-white text-white hover:bg-white hover:text-red-600">
-                  Subscribe to Updates
-                </Link>
-              </div>
+              {/* Search Bar */}
+              <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="search"
+                    defaultValue={searchQuery}
+                    placeholder="Search articles..."
+                    className="w-full pl-12 pr-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-white/50 text-gray-900"
+                  />
+                  <Search className="absolute left-4 top-3.5 h-5 w-5 text-gray-400" />
+                  <button
+                    type="submit"
+                    className="absolute right-2 top-2 bg-red-600 text-white px-4 py-1.5 rounded-md hover:bg-red-700 transition-colors"
+                  >
+                    Search
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
-        </section>
+        </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          {/* Featured Post */}
-          <section className="mb-16">
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden animate-fade-in-up">
-              <div className="md:flex">
-                <div className="md:w-1/3 bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center p-12">
-                  <div className="text-6xl">{featuredPost.image}</div>
-                </div>
-                
-                <div className="md:w-2/3 p-8">
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-medium">
-                      Featured
-                    </span>
-                    <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
-                      {featuredPost.category}
-                    </span>
-                  </div>
-                  
-                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-                    {featuredPost.title}
-                  </h2>
-                  
-                  <p className="text-gray-600 mb-6 leading-relaxed">
-                    {featuredPost.excerpt}
-                  </p>
-                  
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Main Content */}
+            <div className="lg:w-3/4">
+              {/* Active Filters */}
+              {(selectedCategory || selectedTag || searchQuery) && (
+                <div className="mb-6 p-4 bg-white rounded-lg shadow-sm">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 text-sm text-gray-500">
-                      <div className="flex items-center gap-1">
-                        <User className="h-4 w-4" />
-                        <span>{featuredPost.author}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
-                        <span>{formatDate(featuredPost.date)}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        <span>{featuredPost.readTime}</span>
-                      </div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <Filter className="h-4 w-4 text-gray-500" />
+                      <span className="text-sm text-gray-600">Active filters:</span>
+                      
+                      {selectedCategory && (
+                        <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">
+                          Category: {selectedCategory}
+                        </span>
+                      )}
+                      
+                      {selectedTag && (
+                        <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                          Tag: {selectedTag}
+                        </span>
+                      )}
+                      
+                      {searchQuery && (
+                        <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                          Search: "{searchQuery}"
+                        </span>
+                      )}
                     </div>
                     
-                    <Link
-                      to={`/blog/${featuredPost.slug}`}
-                      className="btn-primary"
+                    <button
+                      onClick={clearFilters}
+                      className="text-sm text-red-600 hover:text-red-800"
                     >
-                      Read More
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
+                      Clear all
+                    </button>
                   </div>
                 </div>
-              </div>
-            </div>
-          </section>
-
-          <div className="grid lg:grid-cols-4 gap-8">
-            {/* Main Content */}
-            <div className="lg:col-span-3">
-              {/* Categories Filter */}
-              <div className="flex flex-wrap gap-2 mb-8 animate-fade-in-up">
-                {categories.map((category, index) => (
-                  <button
-                    key={index}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      category.active
-                        ? 'bg-red-600 text-white'
-                        : 'bg-white text-gray-700 hover:bg-red-100 hover:text-red-700 border border-gray-200'
-                    }`}
-                  >
-                    {category.name} ({category.count})
-                  </button>
-                ))}
-              </div>
+              )}
 
               {/* Blog Posts Grid */}
-              <div className="grid md:grid-cols-2 gap-8">
-                {blogPosts.map((post, index) => (
-                  <article 
-                    key={index}
-                    className="blog-card animate-fade-in-up"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <div className="bg-gradient-to-br from-gray-100 to-gray-200 h-48 flex items-center justify-center text-4xl">
-                      {post.image}
+              {loading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                  {[...Array(6)].map((_, i) => (
+                    <div key={i} className="bg-white rounded-lg shadow-sm animate-pulse">
+                      <div className="h-48 bg-gray-200 rounded-t-lg"></div>
+                      <div className="p-6">
+                        <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                        <div className="h-6 bg-gray-200 rounded mb-3"></div>
+                        <div className="h-3 bg-gray-200 rounded mb-1"></div>
+                        <div className="h-3 bg-gray-200 rounded mb-4"></div>
+                        <div className="flex justify-between">
+                          <div className="h-3 bg-gray-200 rounded w-20"></div>
+                          <div className="h-3 bg-gray-200 rounded w-16"></div>
+                        </div>
+                      </div>
                     </div>
-                    
-                    <div className="p-6">
-                      <div className="flex items-center gap-2 mb-3">
-                        <Tag className="h-4 w-4 text-gray-400" />
-                        <span className="text-sm text-blue-600 font-medium">
-                          {post.category}
-                        </span>
-                      </div>
-                      
-                      <h2 className="text-xl font-bold text-gray-900 mb-3 hover:text-red-600 transition-colors">
-                        <Link to={`/blog/${post.slug}`}>
-                          {post.title}
-                        </Link>
-                      </h2>
-                      
-                      <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-                        {post.excerpt}
-                      </p>
-                      
-                      <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center gap-1">
-                            <User className="h-3 w-3" />
-                            <span>{post.author}</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Calendar className="h-3 w-3" />
-                            <span>{formatDate(post.date)}</span>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          <span>{post.readTime}</span>
-                        </div>
-                      </div>
-                      
-                      <Link
-                        to={`/blog/${post.slug}`}
-                        className="text-red-600 hover:text-red-700 font-medium text-sm inline-flex items-center gap-1 transition-colors"
-                      >
-                        Read Full Article
-                        <ArrowRight className="h-3 w-3" />
+                  ))}
+                </div>
+              ) : posts.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                  {posts.map((post) => (
+                    <article key={post.slug} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                      <Link to={`/blog/${post.slug}`}>
+                        <img
+                          src={getFeaturedImage(post)}
+                          alt={post.title}
+                          className="w-full h-48 object-cover rounded-t-lg"
+                          onError={(e) => {
+                            e.target.src = '/api/placeholder/400/240';
+                          }}
+                        />
                       </Link>
-                    </div>
-                  </article>
-                ))}
-              </div>
+                      
+                      <div className="p-6">
+                        {post.category && (
+                          <button
+                            onClick={() => handleCategoryFilter(post.category)}
+                            className="inline-block px-3 py-1 bg-red-100 text-red-800 text-xs font-medium rounded-full mb-3 hover:bg-red-200 transition-colors"
+                          >
+                            {post.category}
+                          </button>
+                        )}
+                        
+                        <Link to={`/blog/${post.slug}`}>
+                          <h3 className="text-lg font-semibold text-gray-900 mb-2 hover:text-red-600 transition-colors">
+                            {post.title}
+                          </h3>
+                        </Link>
+                        
+                        <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                          {getExcerpt(post)}
+                        </p>
+                        
+                        <div className="flex items-center justify-between text-sm text-gray-500">
+                          <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-1">
+                              <User className="h-4 w-4" />
+                              <span>{post.author || 'GRRAS Team'}</span>
+                            </div>
+                            
+                            <div className="flex items-center gap-1">
+                              <Clock className="h-4 w-4" />
+                              <span>{post.reading_time} min read</span>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-center gap-1">
+                            <Calendar className="h-4 w-4" />
+                            <span>{formatDate(post.created_at || post.createdAt)}</span>
+                          </div>
+                        </div>
+                        
+                        {post.tags && post.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mt-4">
+                            {post.tags.slice(0, 3).map((tag) => (
+                              <button
+                                key={tag}
+                                onClick={() => handleTagFilter(tag)}
+                                className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded hover:bg-gray-200 transition-colors"
+                              >
+                                #{tag}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <div className="max-w-md mx-auto">
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">No articles found</h3>
+                    <p className="text-gray-600 mb-4">
+                      {searchQuery || selectedCategory || selectedTag 
+                        ? "Try adjusting your filters or search terms."
+                        : "Check back soon for new articles and insights."}
+                    </p>
+                    {(searchQuery || selectedCategory || selectedTag) && (
+                      <button
+                        onClick={clearFilters}
+                        className="btn-primary"
+                      >
+                        View All Articles
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Pagination */}
+              {pagination.total_pages > 1 && (
+                <div className="mt-8 flex justify-center">
+                  <nav className="flex items-center gap-1">
+                    {pagination.has_prev && (
+                      <Link
+                        to={`?${new URLSearchParams({...Object.fromEntries(searchParams), page: (currentPage - 1).toString()})}`}
+                        className="px-3 py-2 rounded-md bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
+                      >
+                        Previous
+                      </Link>
+                    )}
+                    
+                    {[...Array(pagination.total_pages)].map((_, i) => {
+                      const page = i + 1;
+                      if (
+                        page === 1 ||
+                        page === pagination.total_pages ||
+                        (page >= currentPage - 2 && page <= currentPage + 2)
+                      ) {
+                        return (
+                          <Link
+                            key={page}
+                            to={`?${new URLSearchParams({...Object.fromEntries(searchParams), page: page.toString()})}`}
+                            className={`px-3 py-2 rounded-md ${
+                              page === currentPage
+                                ? 'bg-red-600 text-white'
+                                : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                            }`}
+                          >
+                            {page}
+                          </Link>
+                        );
+                      } else if (
+                        page === currentPage - 3 ||
+                        page === currentPage + 3
+                      ) {
+                        return <span key={page} className="px-2">...</span>;
+                      }
+                      return null;
+                    })}
+                    
+                    {pagination.has_next && (
+                      <Link
+                        to={`?${new URLSearchParams({...Object.fromEntries(searchParams), page: (currentPage + 1).toString()})}`}
+                        className="px-3 py-2 rounded-md bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
+                      >
+                        Next
+                      </Link>
+                    )}
+                  </nav>
+                </div>
+              )}
             </div>
 
             {/* Sidebar */}
-            <div className="space-y-8">
-              {/* Newsletter Signup */}
-              <div className="bg-white rounded-xl p-6 shadow-sm animate-fade-in-up">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">
-                  Stay Updated
-                </h3>
-                <p className="text-gray-600 text-sm mb-4">
-                  Get the latest tech insights and career tips delivered to your inbox.
-                </p>
-                
-                <div className="space-y-3">
-                  <input
-                    type="email"
-                    placeholder="Your email address"
-                    className="form-input w-full"
-                  />
-                  <button className="btn-primary w-full text-sm">
-                    Subscribe Now
-                  </button>
-                </div>
-              </div>
+            <div className="lg:w-1/4">
+              <div className="space-y-6">
+                {/* Categories */}
+                {Object.keys(categories).length > 0 && (
+                  <div className="bg-white rounded-lg p-6 shadow-sm">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Categories</h3>
+                    <div className="space-y-2">
+                      {Object.entries(categories).map(([category, count]) => (
+                        <button
+                          key={category}
+                          onClick={() => handleCategoryFilter(category)}
+                          className={`w-full text-left px-3 py-2 rounded-md transition-colors ${
+                            selectedCategory === category
+                              ? 'bg-red-100 text-red-800'
+                              : 'hover:bg-gray-100 text-gray-700'
+                          }`}
+                        >
+                          <div className="flex justify-between items-center">
+                            <span className="capitalize">{category}</span>
+                            <span className="text-sm text-gray-500">({count})</span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-              {/* Popular Posts */}
-              <div className="bg-white rounded-xl p-6 shadow-sm animate-fade-in-up">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">
-                  Popular Posts
-                </h3>
-                
-                <div className="space-y-4">
-                  {blogPosts.slice(0, 3).map((post, index) => (
-                    <Link
-                      key={index}
-                      to={`/blog/${post.slug}`}
-                      className="block hover:bg-gray-50 p-2 rounded transition-colors"
-                    >
-                      <h4 className="text-sm font-medium text-gray-900 mb-1 line-clamp-2">
-                        {post.title}
-                      </h4>
-                      <div className="flex items-center gap-2 text-xs text-gray-500">
-                        <Calendar className="h-3 w-3" />
-                        <span>{formatDate(post.date)}</span>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
+                {/* Popular Tags */}
+                {Object.keys(tags).length > 0 && (
+                  <div className="bg-white rounded-lg p-6 shadow-sm">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Popular Tags</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {Object.entries(tags)
+                        .sort(([,a], [,b]) => b - a)
+                        .slice(0, 20)
+                        .map(([tag, count]) => (
+                          <button
+                            key={tag}
+                            onClick={() => handleTagFilter(tag)}
+                            className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                              selectedTag === tag
+                                ? 'bg-red-600 text-white'
+                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                          >
+                            #{tag} ({count})
+                          </button>
+                        ))}
+                    </div>
+                  </div>
+                )}
 
-              {/* Course Promotion */}
-              <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-6 border border-red-100 animate-fade-in-up">
-                <h3 className="text-lg font-bold text-gray-900 mb-3">
-                  Ready to Start Learning?
-                </h3>
-                <p className="text-gray-600 text-sm mb-4">
-                  Transform your career with industry-relevant IT training programs.
-                </p>
-                
-                <div className="space-y-2">
-                  <Link
-                    to="/courses"
-                    className="btn-primary w-full text-center text-sm"
-                  >
-                    Explore Courses
-                  </Link>
-                  <Link
-                    to="/contact"
-                    className="btn-outline w-full text-center text-sm"
-                  >
-                    Talk to Counselor
-                  </Link>
+                {/* Newsletter Signup */}
+                <div className="bg-gradient-to-br from-red-600 to-orange-600 rounded-lg p-6 text-white">
+                  <h3 className="text-lg font-semibold mb-2">Stay Updated</h3>
+                  <p className="text-red-100 mb-4 text-sm">
+                    Get the latest tech insights and career guidance delivered to your inbox.
+                  </p>
+                  <div className="space-y-3">
+                    <input
+                      type="email"
+                      placeholder="Your email address"
+                      className="w-full px-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    />
+                    <button className="w-full bg-white text-red-600 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                      Subscribe
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

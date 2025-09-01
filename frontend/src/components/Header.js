@@ -22,6 +22,8 @@ const Header = () => {
       document.body.classList.add('menu-open');
     } else {
       document.body.classList.remove('menu-open');
+      // Reset mobile courses dropdown when mobile menu closes
+      setIsMobileCoursesOpen(false);
     }
     
     // Cleanup on unmount

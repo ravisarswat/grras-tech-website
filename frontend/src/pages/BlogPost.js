@@ -319,10 +319,21 @@ const BlogPost = () => {
         <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Hero Section */}
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-8 animate-fade-in-up">
-            <div className="bg-gradient-to-br from-red-500 to-orange-500 p-8 text-center">
-              <div className="text-6xl mb-4">{currentPost.image}</div>
-              <div className="inline-block bg-white bg-opacity-20 px-3 py-1 rounded-full text-white text-sm font-medium mb-4">
-                {currentPost.category}
+            {/* Featured Image */}
+            <div className="relative h-64 md:h-80 overflow-hidden">
+              <img 
+                src={getFeaturedImage(currentPost)} 
+                alt={currentPost.title}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.src = 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg';
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+              <div className="absolute bottom-4 left-4">
+                <div className="inline-block bg-white bg-opacity-20 backdrop-blur-sm px-3 py-1 rounded-full text-white text-sm font-medium">
+                  {currentPost.category}
+                </div>
               </div>
             </div>
             

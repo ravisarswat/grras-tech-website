@@ -173,48 +173,48 @@ const HeroSlider = () => {
           </div>
 
           {/* Right Content Card */}
-          <div className="hidden xl:block animate-fade-in-right">
-            <div className="bg-white bg-opacity-15 backdrop-blur-lg rounded-2xl p-8 border border-white border-opacity-20 shadow-2xl">
+          <div className="hidden xl:flex animate-fade-in-right">
+            <div className="bg-white bg-opacity-15 backdrop-blur-lg rounded-2xl p-6 lg:p-8 border border-white border-opacity-20 shadow-2xl w-full self-center">
               {/* Dynamic Content Based on Slide */}
               {currentSlide === 0 && (
                 <div>
-                  <h3 className="text-2xl font-bold text-white mb-6">Red Hat Excellence</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold text-lg">95%</span>
+                  <h3 className="text-xl lg:text-2xl font-bold text-white mb-4 lg:mb-6">Red Hat Excellence</h3>
+                  <div className="space-y-3 lg:space-y-4">
+                    <div className="flex items-center gap-3 lg:gap-4">
+                      <div className="w-10 h-10 lg:w-12 lg:h-12 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-white font-bold text-sm lg:text-lg">95%</span>
                       </div>
-                      <div>
-                        <div className="text-white font-semibold">Success Rate</div>
-                        <div className="text-gray-200 text-sm">Red Hat Certified</div>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold text-lg">500+</span>
-                      </div>
-                      <div>
-                        <div className="text-white font-semibold">Students Certified</div>
-                        <div className="text-gray-200 text-sm">RHCSA & RHCE</div>
+                      <div className="min-w-0">
+                        <div className="text-white font-semibold text-sm lg:text-base">Success Rate</div>
+                        <div className="text-gray-200 text-xs lg:text-sm">Red Hat Certified</div>
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold text-lg">18+</span>
+                    <div className="flex items-center gap-3 lg:gap-4">
+                      <div className="w-10 h-10 lg:w-12 lg:h-12 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-white font-bold text-sm lg:text-lg">500+</span>
                       </div>
-                      <div>
-                        <div className="text-white font-semibold">Years Experience</div>
-                        <div className="text-gray-200 text-sm">Linux Training</div>
+                      <div className="min-w-0">
+                        <div className="text-white font-semibold text-sm lg:text-base">Students Certified</div>
+                        <div className="text-gray-200 text-xs lg:text-sm">RHCSA & RHCE</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-3 lg:gap-4">
+                      <div className="w-10 h-10 lg:w-12 lg:h-12 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-white font-bold text-sm lg:text-lg">18+</span>
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-white font-semibold text-sm lg:text-base">Years Experience</div>
+                        <div className="text-gray-200 text-xs lg:text-sm">Linux Training</div>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="mt-6 p-4 bg-black bg-opacity-30 rounded-xl">
+                  <div className="mt-4 lg:mt-6 p-3 lg:p-4 bg-black bg-opacity-30 rounded-xl">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-white mb-1">₹8-15 LPA</div>
-                      <div className="text-gray-200 text-sm">Average Package</div>
+                      <div className="text-xl lg:text-2xl font-bold text-white mb-1">₹8-15 LPA</div>
+                      <div className="text-gray-200 text-xs lg:text-sm">Average Package</div>
                     </div>
                   </div>
                 </div>

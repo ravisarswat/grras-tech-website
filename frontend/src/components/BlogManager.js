@@ -349,7 +349,7 @@ const BlogManager = () => {
                       
                       <div className="flex items-center gap-1">
                         <Calendar className="h-4 w-4" />
-                        <span>{formatDate(post.created_at || post.createdAt)}</span>
+                        <span>{formatDate(post.publishAt || post.date || post.published_date || post.created_at || post.createdAt)}</span>
                       </div>
                       
                       {post.tags && post.tags.length > 0 && (

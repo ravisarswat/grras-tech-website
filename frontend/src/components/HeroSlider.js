@@ -222,36 +222,36 @@ const HeroSlider = () => {
               
               {currentSlide === 1 && (
                 <div>
-                  <h3 className="text-2xl font-bold text-white mb-6">AWS Cloud Journey</h3>
-                  <div className="space-y-4">
-                    <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                      <div className="flex items-center gap-3 mb-3">
-                        <Award className="h-6 w-6 text-yellow-400" />
-                        <span className="text-white font-semibold">Solutions Architect</span>
+                  <h3 className="text-xl lg:text-2xl font-bold text-white mb-4 lg:mb-6">AWS Cloud Journey</h3>
+                  <div className="space-y-3 lg:space-y-4">
+                    <div className="bg-white bg-opacity-20 rounded-lg p-3 lg:p-4">
+                      <div className="flex items-center gap-2 lg:gap-3 mb-2 lg:mb-3">
+                        <Award className="h-5 w-5 lg:h-6 lg:w-6 text-yellow-400 flex-shrink-0" />
+                        <span className="text-white font-semibold text-sm lg:text-base">Solutions Architect</span>
                       </div>
-                      <div className="text-gray-200 text-sm">Design scalable cloud solutions</div>
+                      <div className="text-gray-200 text-xs lg:text-sm">Design scalable cloud solutions</div>
                     </div>
                     
-                    <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                      <div className="flex items-center gap-3 mb-3">
-                        <Settings className="h-6 w-6 text-blue-400" />
-                        <span className="text-white font-semibold">DevOps Engineer</span>
+                    <div className="bg-white bg-opacity-20 rounded-lg p-3 lg:p-4">
+                      <div className="flex items-center gap-2 lg:gap-3 mb-2 lg:mb-3">
+                        <Settings className="h-5 w-5 lg:h-6 lg:w-6 text-blue-400 flex-shrink-0" />
+                        <span className="text-white font-semibold text-sm lg:text-base">DevOps Engineer</span>
                       </div>
-                      <div className="text-gray-200 text-sm">Automate cloud infrastructure</div>
+                      <div className="text-gray-200 text-xs lg:text-sm">Automate cloud infrastructure</div>
                     </div>
                     
-                    <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                      <div className="flex items-center gap-3 mb-3">
-                        <Shield className="h-6 w-6 text-green-400" />
-                        <span className="text-white font-semibold">SysOps Admin</span>
+                    <div className="bg-white bg-opacity-20 rounded-lg p-3 lg:p-4">
+                      <div className="flex items-center gap-2 lg:gap-3 mb-2 lg:mb-3">
+                        <Shield className="h-5 w-5 lg:h-6 lg:w-6 text-green-400 flex-shrink-0" />
+                        <span className="text-white font-semibold text-sm lg:text-base">SysOps Admin</span>
                       </div>
-                      <div className="text-gray-200 text-sm">Manage cloud operations</div>
+                      <div className="text-gray-200 text-xs lg:text-sm">Manage cloud operations</div>
                     </div>
                   </div>
                   
-                  <div className="mt-6 p-4 bg-black bg-opacity-30 rounded-xl text-center">
-                    <div className="text-xl font-bold text-white mb-1">₹12-25 LPA</div>
-                    <div className="text-gray-200 text-sm">Cloud Engineer Salary</div>
+                  <div className="mt-4 lg:mt-6 p-3 lg:p-4 bg-black bg-opacity-30 rounded-xl text-center">
+                    <div className="text-lg lg:text-xl font-bold text-white mb-1">₹12-25 LPA</div>
+                    <div className="text-gray-200 text-xs lg:text-sm">Cloud Engineer Salary</div>
                   </div>
                 </div>
               )}

@@ -361,9 +361,9 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="lg:hidden pb-6 border-t border-gray-100 bg-gradient-to-br from-white to-gray-50 animate-fadeIn">
+          <div className="lg:hidden pb-6 border-t border-gray-100 bg-gradient-to-b from-white to-gray-50 animate-fadeIn">
             <div className="pt-6 space-y-3">
-              {navigationItems.map((item, index) => (
+              {navigationItems.filter(item => item.name !== 'Blog').map((item, index) => (
                 <div key={item.name} className="animate-slideInUp" style={{animationDelay: `${index * 50}ms`}}>
                   <Link
                     to={item.path}
@@ -380,65 +380,12 @@ const Header = () => {
                   {/* Mobile Courses Submenu */}
                   {item.hasDropdown && (
                     <div className="pl-2 space-y-1 mt-3 mx-4">
-                      {/* Company Logos Section */}
-                      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4 animate-slideInUp" style={{animationDelay: '200ms'}}>
-                        <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3 text-center">
-                          Our Technology Partners
-                        </div>
-                        <div className="grid grid-cols-4 gap-3">
-                          <div className="flex flex-col items-center p-2 bg-gray-50 rounded-lg hover:bg-red-50 transition-colors">
-                            <img 
-                              src="https://images.unsplash.com/photo-1662052955098-042b46e60c2b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwyfHxjb21wYW55JTIwbG9nb3N8ZW58MHx8fHwxNzU2NjY5MTM2fDA&ixlib=rb-4.1.0&q=85"
-                              alt="Microsoft" 
-                              className="w-8 h-8 object-contain rounded"
-                              onError={(e) => {
-                                e.target.src = 'https://cdn-icons-png.flaticon.com/512/732/732076.png';
-                              }}
-                            />
-                            <span className="text-xs font-medium text-gray-600 mt-1">Microsoft</span>
-                          </div>
-                          <div className="flex flex-col items-center p-2 bg-gray-50 rounded-lg hover:bg-red-50 transition-colors">
-                            <img 
-                              src="https://images.unsplash.com/photo-1662052955282-da15376f3919?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwzfHxjb21wYW55JTIwbG9nb3N8ZW58MHx8fHwxNzU2NjY5MTM2fDA&ixlib=rb-4.1.0&q=85"
-                              alt="Azure" 
-                              className="w-8 h-8 object-contain rounded"
-                              onError={(e) => {
-                                e.target.src = 'https://cdn-icons-png.flaticon.com/512/873/873120.png';
-                              }}
-                            />
-                            <span className="text-xs font-medium text-gray-600 mt-1">Azure</span>
-                          </div>
-                          <div className="flex flex-col items-center p-2 bg-gray-50 rounded-lg hover:bg-red-50 transition-colors">
-                            <img 
-                              src="https://images.unsplash.com/photo-1496200186974-4293800e2c20?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwxfHxjb21wYW55JTIwbG9nb3N8ZW58MHx8fHwxNzU2NjY5MTM2fDA&ixlib=rb-4.1.0&q=85"
-                              alt="Slack" 
-                              className="w-8 h-8 object-contain rounded"
-                              onError={(e) => {
-                                e.target.src = 'https://cdn-icons-png.flaticon.com/512/2111/2111615.png';
-                              }}
-                            />
-                            <span className="text-xs font-medium text-gray-600 mt-1">Slack</span>
-                          </div>
-                          <div className="flex flex-col items-center p-2 bg-gray-50 rounded-lg hover:bg-red-50 transition-colors">
-                            <img 
-                              src="https://images.unsplash.com/photo-1662057168154-89300791ad6e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODF8MHwxfHNlYXJjaHwzfHx0ZWNobm9sb2d5JTIwbG9nb3N8ZW58MHx8fHwxNzU2NzE2MjA0fDA&ixlib=rb-4.1.0&q=85"
-                              alt="Google" 
-                              className="w-8 h-8 object-contain rounded"
-                              onError={(e) => {
-                                e.target.src = 'https://cdn-icons-png.flaticon.com/512/2875/2875404.png';
-                              }}
-                            />
-                            <span className="text-xs font-medium text-gray-600 mt-1">Google</span>
-                          </div>
-                        </div>
-                      </div>
-
                       <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3 px-3">
-                        Technology Tracks
+                        Course Categories
                       </div>
                       
                       <Link
-                        to="/courses?tab=redhat"
+                        to="/courses?category=redhat"
                         className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
                         onClick={() => setIsMenuOpen(false)}
                       >
@@ -461,7 +408,7 @@ const Header = () => {
                       </Link>
                       
                       <Link
-                        to="/courses?tab=aws"
+                        to="/courses?category=aws"
                         className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
                         onClick={() => setIsMenuOpen(false)}
                       >
@@ -484,7 +431,7 @@ const Header = () => {
                       </Link>
                       
                       <Link
-                        to="/courses?tab=kubernetes"
+                        to="/courses?category=kubernetes"
                         className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
                         onClick={() => setIsMenuOpen(false)}
                       >
@@ -507,21 +454,12 @@ const Header = () => {
                       </Link>
                       
                       <Link
-                        to="/courses?tab=devops"
+                        to="/courses?category=devops"
                         className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-3">
-                          <img 
-                            src="https://images.unsplash.com/photo-1662027044921-6febc57a0c53?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHw0fHxjb21wYW55JTIwbG9nb3N8ZW58MHx8fHwxNzU2NjY5MTM2fDA&ixlib=rb-4.1.0&q=85"
-                            alt="DevOps" 
-                            className="w-5 h-5 object-contain"
-                            onError={(e) => {
-                              e.target.style.display = 'none';
-                              e.target.nextSibling.style.display = 'block';
-                            }}
-                          />
-                          <div className="w-2 h-2 bg-green-500 rounded-full" style={{display: 'none'}}></div>
+                          <div className="w-5 h-5 flex items-center justify-center text-green-600 text-lg">🔧</div>
                         </div>
                         <div>
                           <div className="font-medium">DevOps Engineering</div>
@@ -530,7 +468,7 @@ const Header = () => {
                       </Link>
                       
                       <Link
-                        to="/courses?tab=cybersecurity"
+                        to="/courses?category=cybersecurity"
                         className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
                         onClick={() => setIsMenuOpen(false)}
                       >
@@ -544,7 +482,7 @@ const Header = () => {
                       </Link>
                       
                       <Link
-                        to="/courses?tab=programming"
+                        to="/courses?category=programming"
                         className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
                         onClick={() => setIsMenuOpen(false)}
                       >
@@ -558,7 +496,7 @@ const Header = () => {
                       </Link>
                       
                       <Link
-                        to="/courses?tab=degree"
+                        to="/courses?category=degree"
                         className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
                         onClick={() => setIsMenuOpen(false)}
                       >
@@ -586,6 +524,68 @@ const Header = () => {
                           <div className="text-xs text-gray-500">Browse complete catalog</div>
                         </div>
                       </Link>
+
+                      {/* Popular Courses Section */}
+                      <div className="border-t border-gray-200 my-4"></div>
+                      <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3 px-3">
+                        Popular Courses
+                      </div>
+                      
+                      <Link
+                        to="/courses/devops-training"
+                        className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                          <div className="w-5 h-5 flex items-center justify-center text-green-600 text-sm font-bold">DO</div>
+                        </div>
+                        <div>
+                          <div className="font-medium">DevOps Training</div>
+                          <div className="text-xs text-gray-500">Comprehensive DevOps Program</div>
+                        </div>
+                      </Link>
+                      
+                      <Link
+                        to="/courses/bca-degree"
+                        className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                          <div className="w-5 h-5 flex items-center justify-center text-blue-600 text-lg">🎓</div>
+                        </div>
+                        <div>
+                          <div className="font-medium">BCA Degree Program</div>
+                          <div className="text-xs text-gray-500">Bachelor's in Computer Applications</div>
+                        </div>
+                      </Link>
+                      
+                      <Link
+                        to="/courses/redhat-certifications"
+                        className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center mr-3">
+                          <div className="w-5 h-5 flex items-center justify-center text-red-600 text-sm font-bold">RH</div>
+                        </div>
+                        <div>
+                          <div className="font-medium">Red Hat Certifications</div>
+                          <div className="text-xs text-gray-500">RHCSA, RHCE & More</div>
+                        </div>
+                      </Link>
+                      
+                      <Link
+                        to="/courses/cyber-security"
+                        className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
+                          <div className="w-5 h-5 flex items-center justify-center text-purple-600 text-lg">🛡️</div>
+                        </div>
+                        <div>
+                          <div className="font-medium">Cyber Security</div>
+                          <div className="text-xs text-gray-500">Ethical Hacking & Security</div>
+                        </div>
+                      </Link>
                     </div>
                   )}
                 </div>
@@ -596,7 +596,7 @@ const Header = () => {
                   href="https://www.grras.tech/admissions"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full text-center btn-primary shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
+                  className="block w-full text-center btn-primary shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] py-4 text-lg font-semibold"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Apply Now

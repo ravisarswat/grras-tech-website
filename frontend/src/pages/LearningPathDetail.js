@@ -209,48 +209,48 @@ const LearningPathDetail = () => {
         </section>
 
         {/* Tab Content */}
-        <section className="py-16">
+        <section className="py-8 md:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Overview Tab */}
             {activeTab === 'overview' && (
-              <div className="space-y-12">
+              <div className="space-y-8 md:space-y-12">
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-8">Learning Path Overview</h2>
-                  <div className="prose prose-lg max-w-4xl">
-                    <p className="text-gray-600 leading-relaxed">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 md:mb-8 text-center lg:text-left">Learning Path Overview</h2>
+                  <div className="prose prose-lg max-w-4xl mx-auto lg:mx-0">
+                    <p className="text-gray-600 leading-relaxed text-center lg:text-left">
                       {learningPath.description}
                     </p>
                   </div>
                 </div>
 
-                {/* Why This Path */}
-                <div className="grid md:grid-cols-3 gap-8">
-                  <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
+                {/* Why This Path - Mobile Optimized */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                  <div className="text-center p-6 md:p-8 bg-white rounded-2xl shadow-lg">
                     <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
                       <TrendingUp className="h-8 w-8 text-blue-600" />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">High-Growth Field</h3>
-                    <p className="text-gray-600">
+                    <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4">High-Growth Field</h3>
+                    <p className="text-gray-600 text-sm md:text-base">
                       Enter one of the fastest-growing technology sectors with excellent career prospects.
                     </p>
                   </div>
                   
-                  <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
+                  <div className="text-center p-6 md:p-8 bg-white rounded-2xl shadow-lg">
                     <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
                       <Route className="h-8 w-8 text-green-600" />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">Structured Learning</h3>
-                    <p className="text-gray-600">
+                    <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4">Structured Learning</h3>
+                    <p className="text-gray-600 text-sm md:text-base">
                       Follow a carefully designed progression that builds skills systematically.
                     </p>
                   </div>
                   
-                  <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
+                  <div className="text-center p-6 md:p-8 bg-white rounded-2xl shadow-lg">
                     <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
                       <Award className="h-8 w-8 text-purple-600" />
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">Industry Recognition</h3>
-                    <p className="text-gray-600">
+                    <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4">Industry Recognition</h3>
+                    <p className="text-gray-600 text-sm md:text-base">
                       Gain certifications and skills that are highly valued by employers.
                     </p>
                   </div>

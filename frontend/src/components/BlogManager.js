@@ -194,12 +194,28 @@ const BlogManager = () => {
         toast.error('Title and content are required');
         return;
       }
-
+      
+      // Prepare data with proper date formatting
+      const blogData = {
+        ...formData,
+        // Format date properly for backend
+        date: formData.publishAt,
+        publishAt: formData.publishAt,
+        published_date: new Date(formData.publishAt).toISOString(),
+        // Ensure status field based on published checkbox
+        status: formData.published ? 'published' : 'draft',
+        // Add additional date formats for compatibility
+        created_at: editingPost ? editingPost.created_at : new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+      
       const endpoint = editingPost 
-        ? `${BACKEND_URL}/api/admin/blog/${editingPost.id}`
+        ? `${BACKEND_URL}/api/admin/blog/${editingPost.id || editingPost.slug}`
         : `${BACKEND_URL}/api/admin/blog`;
       
       const method = editingPost ? 'PUT' : 'POST';
+      
+      console.log('Saving blog post with data:', blogData); // Debug log
       
       const response = await fetch(endpoint, {
         method,
@@ -207,7 +223,7 @@ const BlogManager = () => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(blogData)
       });
       
       if (response.ok) {
@@ -216,6 +232,7 @@ const BlogManager = () => {
         loadBlogPosts();
       } else {
         const error = await response.json();
+        console.error('Backend error:', error); // Debug log
         toast.error(error.detail || 'Failed to save blog post');
       }
     } catch (error) {

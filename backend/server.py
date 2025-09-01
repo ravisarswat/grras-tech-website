@@ -1139,10 +1139,11 @@ async def get_all_blog_posts_admin(admin_verified: bool = Depends(verify_admin_t
     """Get all blog posts including drafts (Admin only)"""
     try:
         content = await content_manager.get_content()
-        blog_posts = content.get("blog", [])
+        blog_section = content.get("blog", {})
+        blog_posts = blog_section.get("posts", []) if isinstance(blog_section, dict) else []
         
         # Sort by updated date (newest first)
-        blog_posts.sort(key=lambda x: x.get("updated_at", x.get("created_at", "")), reverse=True)
+        blog_posts.sort(key=lambda x: x.get("updatedAt", x.get("updated_at", x.get("createdAt", x.get("created_at", "")))), reverse=True)
         
         return {
             "posts": blog_posts,

@@ -35,7 +35,10 @@ const BlogManager = () => {
     published: true,
     meta_title: '',
     meta_description: '',
-    meta_keywords: ''
+    meta_keywords: '',
+    publishAt: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
+    readTime: '5 min read',
+    featured: false
   });
 
   const categories = [

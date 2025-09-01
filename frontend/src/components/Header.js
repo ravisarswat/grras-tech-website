@@ -104,7 +104,7 @@ const Header = () => {
     { name: 'Contact', path: '/contact' }
   ];
 
-  // Mobile navigation items (without Blog as requested by user)
+  // Mobile navigation items (simplified for mobile UX - removed Blog and Testimonials)
   const mobileNavigationItems = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },

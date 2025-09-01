@@ -164,7 +164,6 @@ const EligibilityWidget = () => {
     setSelectedCourse('');
     setEligibilityText('');
     setError(null);
-    setIsLoading(false);
     const newParams = new URLSearchParams(searchParams);
     newParams.delete('course');
     setSearchParams(newParams);

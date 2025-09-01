@@ -27,8 +27,7 @@ const HeroSlider = () => {
       ctaLink: "/courses?category=redhat",
       background: "bg-gradient-to-br from-red-600 via-red-500 to-orange-500",
       icon: <img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg" alt="Red Hat" className="w-16 h-16 text-white" />,
-      stats: ["100% Certified Trainers", "Real Lab Environment", "Job-Ready Skills"],
-      image: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwxfHxyZWQlMjBoYXQlMjBsaW51eHxlbnwwfHx8fDE3NTY2OTUwNjV8MA&ixlib=rb-4.1.0&q=85"
+      stats: ["100% Certified Trainers", "Real Lab Environment", "Job-Ready Skills"]
     },
     {
       id: 2,
@@ -39,8 +38,7 @@ const HeroSlider = () => {
       ctaLink: "/courses?category=aws",
       background: "bg-gradient-to-br from-orange-600 via-yellow-500 to-orange-400",
       icon: <Cloud className="w-16 h-16 text-white" />,
-      stats: ["AWS Certified Instructors", "Real Projects", "Industry Placement"],
-      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwxfHxjbG91ZCUyMGNvbXB1dGluZ3xlbnwwfHx8fDE3NTY2OTUwNjV8MA&ixlib=rb-4.1.0&q=85"
+      stats: ["AWS Certified Instructors", "Real Projects", "Industry Placement"]
     },
     {
       id: 3,
@@ -51,8 +49,7 @@ const HeroSlider = () => {
       ctaLink: "/courses?category=devops",
       background: "bg-gradient-to-br from-blue-600 via-cyan-500 to-green-500",
       icon: <Settings className="w-16 h-16 text-white" />,
-      stats: ["Industry Tools", "Real Pipelines", "Expert Mentorship"],
-      image: "https://images.unsplash.com/photo-1667372393086-9d4001d51cf1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwxfHxkZXZvcHN8ZW58MHx8fHwxNzU2Njk1MDY1fDA&ixlib=rb-4.1.0&q=85"
+      stats: ["Industry Tools", "Real Pipelines", "Expert Mentorship"]
     },
     {
       id: 4,
@@ -63,8 +60,7 @@ const HeroSlider = () => {
       ctaLink: "/courses?category=cybersecurity",
       background: "bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-600",
       icon: <Shield className="w-16 h-16 text-white" />,
-      stats: ["Certified Trainers", "Real Attack Scenarios", "Hands-on Labs"],
-      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f058?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwxfHxjeWJlciUyMHNlY3VyaXR5fGVufDB8fHx8MTc1NjY5NTA2NXww&ixlib=rb-4.1.0&q=85"
+      stats: ["Certified Trainers", "Real Attack Scenarios", "Hands-on Labs"]
     },
     {
       id: 5,
@@ -75,8 +71,7 @@ const HeroSlider = () => {
       ctaLink: "/courses?category=degree",
       background: "bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600",
       icon: <GraduationCap className="w-16 h-16 text-white" />,
-      stats: ["Industry Curriculum", "100% Placement", "Modern Skills"],
-      image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwxfHxlZHVjYXRpb258ZW58MHx8fHwxNzU2Njk1MDY1fDA&ixlib=rb-4.1.0&q=85"
+      stats: ["Industry Curriculum", "100% Placement", "Modern Skills"]
     }
   ];
 

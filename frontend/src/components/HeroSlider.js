@@ -122,7 +122,7 @@ const HeroSlider = () => {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 lg:py-16 h-full">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start lg:items-center w-full min-h-full">
           {/* Left Content */}
-          <div className="text-center xl:text-left animate-fade-in-up flex flex-col justify-center">
+          <div className="text-center lg:text-left animate-fade-in-up flex flex-col justify-center">
             {/* Icon */}
             <div className="flex justify-center xl:justify-start mb-4 lg:mb-6">
               <div className="w-16 h-16 lg:w-20 lg:h-20 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center backdrop-blur-sm p-3">

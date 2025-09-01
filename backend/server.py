@@ -819,29 +819,317 @@ async def delete_lead(lead_id: str, admin_verified: bool = Depends(verify_admin_
         raise HTTPException(status_code=500, detail="Failed to delete lead")
 
 @api_router.post("/contact")
-async def submit_contact(request: LeadRequest):
+async def submit_contact(
+    name: str = Form(...),
+    email: str = Form(...),
+    phone: str = Form(...),
+    message: str = Form(...),
+    course: str = Form(None)
+):
     """Submit contact form"""
     try:
+        # Store in leads collection
         lead_data = {
-            "name": request.name,
-            "email": request.email,
-            "phone": request.phone,
-            "course": request.course,
-            "message": request.message,
+            "id": str(uuid.uuid4()),
+            "name": name,
+            "email": email,
+            "phone": phone,
+            "message": message,
+            "course": course,
             "type": "contact_form",
-            "timestamp": datetime.utcnow().isoformat(),
-            "ip": "Railway-Server"
+            "timestamp": datetime.utcnow(),
+            "source": "website"
         }
         
-        # Save to MongoDB
         collection = db.leads
         await collection.insert_one(lead_data)
         
-        return {"message": "Contact form submitted successfully"}
-        
+        logging.info(f"✅ Contact form submitted: {name} ({email})")
+        return {"message": "Contact form submitted successfully", "lead_id": lead_data["id"]}
     except Exception as e:
         logging.error(f"Error submitting contact form: {e}")
         raise HTTPException(status_code=500, detail="Failed to submit contact form")
+
+# Blog API Endpoints
+
+@api_router.get("/blog")
+async def get_blog_posts(
+    page: int = 1,
+    limit: int = 12,
+    category: Optional[str] = None,
+    tag: Optional[str] = None,
+    search: Optional[str] = None
+):
+    """Get paginated blog posts"""
+    try:
+        content = await content_manager.get_content()
+        blog_posts = content.get("blog", [])
+        
+        # Filter published posts only for public API
+        published_posts = [post for post in blog_posts if post.get("published", True)]
+        
+        # Apply filters
+        if category:
+            published_posts = [post for post in published_posts if post.get("category", "").lower() == category.lower()]
+        
+        if tag:
+            published_posts = [post for post in published_posts if tag.lower() in [t.lower() for t in post.get("tags", [])]]
+        
+        if search:
+            search_lower = search.lower()
+            published_posts = [
+                post for post in published_posts 
+                if search_lower in post.get("title", "").lower() 
+                or search_lower in post.get("content", "").lower()
+                or search_lower in post.get("excerpt", "").lower()
+            ]
+        
+        # Sort by created date (newest first)
+        published_posts.sort(key=lambda x: x.get("created_at", ""), reverse=True)
+        
+        # Pagination
+        total = len(published_posts)
+        start = (page - 1) * limit
+        end = start + limit
+        paginated_posts = published_posts[start:end]
+        
+        # Calculate reading time for each post
+        for post in paginated_posts:
+            word_count = len(post.get("content", "").split())
+            reading_time = max(1, round(word_count / 200))  # 200 words per minute
+            post["reading_time"] = reading_time
+        
+        return {
+            "posts": paginated_posts,
+            "pagination": {
+                "current_page": page,
+                "total_pages": (total + limit - 1) // limit,
+                "total_posts": total,
+                "has_next": end < total,
+                "has_prev": page > 1
+            }
+        }
+    except Exception as e:
+        logging.error(f"Error fetching blog posts: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch blog posts")
+
+@api_router.get("/blog/{slug}")
+async def get_blog_post(slug: str):
+    """Get individual blog post by slug"""
+    try:
+        content = await content_manager.get_content()
+        blog_posts = content.get("blog", [])
+        
+        # Find post by slug
+        post = next((p for p in blog_posts if p.get("slug") == slug and p.get("published", True)), None)
+        
+        if not post:
+            raise HTTPException(status_code=404, detail="Blog post not found")
+        
+        # Calculate reading time
+        word_count = len(post.get("content", "").split())
+        reading_time = max(1, round(word_count / 200))
+        post["reading_time"] = reading_time
+        
+        # Get related posts (same category, different slug)
+        related_posts = [
+            p for p in blog_posts 
+            if p.get("category") == post.get("category") 
+            and p.get("slug") != slug 
+            and p.get("published", True)
+        ][:3]  # Limit to 3 related posts
+        
+        return {
+            "post": post,
+            "related_posts": related_posts
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error fetching blog post {slug}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch blog post")
+
+@api_router.get("/blog/categories")
+async def get_blog_categories():
+    """Get all blog categories with post counts"""
+    try:
+        content = await content_manager.get_content()
+        blog_posts = content.get("blog", [])
+        
+        # Count posts by category
+        category_counts = {}
+        for post in blog_posts:
+            if post.get("published", True):
+                category = post.get("category", "general")
+                category_counts[category] = category_counts.get(category, 0) + 1
+        
+        return {"categories": category_counts}
+    except Exception as e:
+        logging.error(f"Error fetching blog categories: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch blog categories")
+
+@api_router.get("/blog/tags")
+async def get_blog_tags():
+    """Get all blog tags with usage counts"""
+    try:
+        content = await content_manager.get_content()
+        blog_posts = content.get("blog", [])
+        
+        # Count tags usage
+        tag_counts = {}
+        for post in blog_posts:
+            if post.get("published", True):
+                for tag in post.get("tags", []):
+                    tag_counts[tag] = tag_counts.get(tag, 0) + 1
+        
+        return {"tags": tag_counts}
+    except Exception as e:
+        logging.error(f"Error fetching blog tags: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch blog tags")
+
+@api_router.post("/admin/blog")
+async def create_blog_post(post: BlogPostRequest, admin_verified: bool = Depends(verify_admin_token)):
+    """Create new blog post (Admin only)"""
+    try:
+        content = await content_manager.get_content()
+        
+        # Initialize blog array if it doesn't exist
+        if "blog" not in content:
+            content["blog"] = []
+        
+        # Create new post
+        new_post = {
+            "id": str(uuid.uuid4()),
+            "slug": post.slug,
+            "title": post.title,
+            "content": post.content,
+            "excerpt": post.excerpt or post.content[:200] + "...",
+            "featured_image": post.featured_image,
+            "category": post.category,
+            "tags": post.tags,
+            "author": post.author,
+            "published": post.published,
+            "created_at": datetime.utcnow().isoformat(),
+            "updated_at": datetime.utcnow().isoformat(),
+            "meta_title": post.meta_title or post.title,
+            "meta_description": post.meta_description or (post.excerpt or post.content[:160]),
+            "meta_keywords": post.meta_keywords or ", ".join(post.tags)
+        }
+        
+        # Check for duplicate slug
+        if any(p.get("slug") == post.slug for p in content["blog"]):
+            raise HTTPException(status_code=400, detail="Blog post with this slug already exists")
+        
+        content["blog"].append(new_post)
+        
+        # Save content
+        await content_manager.save_content(content, user="admin", is_draft=False)
+        
+        logging.info(f"✅ Blog post created: {post.title} ({post.slug})")
+        return {"message": "Blog post created successfully", "post": new_post}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error creating blog post: {e}")
+        raise HTTPException(status_code=500, detail="Failed to create blog post")
+
+@api_router.put("/admin/blog/{post_id}")
+async def update_blog_post(post_id: str, post: BlogPostRequest, admin_verified: bool = Depends(verify_admin_token)):
+    """Update blog post (Admin only)"""
+    try:
+        content = await content_manager.get_content()
+        blog_posts = content.get("blog", [])
+        
+        # Find post by ID
+        post_index = next((i for i, p in enumerate(blog_posts) if p.get("id") == post_id), None)
+        
+        if post_index is None:
+            raise HTTPException(status_code=404, detail="Blog post not found")
+        
+        # Check for duplicate slug (excluding current post)
+        if any(p.get("slug") == post.slug and p.get("id") != post_id for p in blog_posts):
+            raise HTTPException(status_code=400, detail="Blog post with this slug already exists")
+        
+        # Update post
+        existing_post = blog_posts[post_index]
+        updated_post = {
+            **existing_post,
+            "slug": post.slug,
+            "title": post.title,
+            "content": post.content,
+            "excerpt": post.excerpt or post.content[:200] + "...",
+            "featured_image": post.featured_image,
+            "category": post.category,
+            "tags": post.tags,
+            "author": post.author,
+            "published": post.published,
+            "updated_at": datetime.utcnow().isoformat(),
+            "meta_title": post.meta_title or post.title,
+            "meta_description": post.meta_description or (post.excerpt or post.content[:160]),
+            "meta_keywords": post.meta_keywords or ", ".join(post.tags)
+        }
+        
+        blog_posts[post_index] = updated_post
+        content["blog"] = blog_posts
+        
+        # Save content
+        await content_manager.save_content(content, user="admin", is_draft=False)
+        
+        logging.info(f"✅ Blog post updated: {post.title} ({post.slug})")
+        return {"message": "Blog post updated successfully", "post": updated_post}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error updating blog post: {e}")
+        raise HTTPException(status_code=500, detail="Failed to update blog post")
+
+@api_router.delete("/admin/blog/{post_id}")
+async def delete_blog_post(post_id: str, admin_verified: bool = Depends(verify_admin_token)):
+    """Delete blog post (Admin only)"""
+    try:
+        content = await content_manager.get_content()
+        blog_posts = content.get("blog", [])
+        
+        # Find and remove post
+        initial_count = len(blog_posts)
+        blog_posts = [p for p in blog_posts if p.get("id") != post_id]
+        
+        if len(blog_posts) == initial_count:
+            raise HTTPException(status_code=404, detail="Blog post not found")
+        
+        content["blog"] = blog_posts
+        
+        # Save content
+        await content_manager.save_content(content, user="admin", is_draft=False)
+        
+        logging.info(f"✅ Blog post deleted: {post_id}")
+        return {"message": "Blog post deleted successfully"}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error deleting blog post: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete blog post")
+
+@api_router.get("/admin/blog")
+async def get_all_blog_posts_admin(admin_verified: bool = Depends(verify_admin_token)):
+    """Get all blog posts including drafts (Admin only)"""
+    try:
+        content = await content_manager.get_content()
+        blog_posts = content.get("blog", [])
+        
+        # Sort by updated date (newest first)
+        blog_posts.sort(key=lambda x: x.get("updated_at", x.get("created_at", "")), reverse=True)
+        
+        return {
+            "posts": blog_posts,
+            "total": len(blog_posts)
+        }
+    except Exception as e:
+        logging.error(f"Error fetching admin blog posts: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch blog posts")
 
 # Include API router
 app.include_router(api_router)

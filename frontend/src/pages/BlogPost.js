@@ -394,14 +394,14 @@ const BlogPost = () => {
           </div>
 
           {/* Related Posts */}
-          {relatedPosts.length > 0 && (
+          {localRelatedPosts.length > 0 && (
             <div className="bg-white rounded-2xl shadow-lg p-8 animate-fade-in-up">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
                 Related Articles
               </h3>
               
               <div className="grid md:grid-cols-3 gap-6">
-                {relatedPosts.map((post, index) => (
+                {localRelatedPosts.map((post, index) => (
                   <Link
                     key={index}
                     to={`/blog/${post.slug}`}

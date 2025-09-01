@@ -15,6 +15,73 @@ const Header = () => {
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const location = useLocation();
 
+  // Technology tracks with company logos
+  const technologyTracks = [
+    {
+      id: 'redhat',
+      name: 'Red Hat Technologies',
+      path: '/courses/redhat',
+      logo: 'https://logos-world.net/wp-content/uploads/2021/02/Red-Hat-Logo.png',
+      bgColor: 'bg-red-50',
+      textColor: 'text-red-700',
+      hoverColor: 'hover:bg-red-100'
+    },
+    {
+      id: 'aws',
+      name: 'AWS Cloud Platform',
+      path: '/courses/aws',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg',
+      bgColor: 'bg-orange-50',
+      textColor: 'text-orange-700',
+      hoverColor: 'hover:bg-orange-100'
+    },
+    {
+      id: 'kubernetes',
+      name: 'Kubernetes Ecosystem',
+      path: '/courses/kubernetes',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg',
+      bgColor: 'bg-blue-50',
+      textColor: 'text-blue-700',
+      hoverColor: 'hover:bg-blue-100'
+    },
+    {
+      id: 'devops',
+      name: 'DevOps Engineering',
+      path: '/courses/devops',
+      logo: 'https://cdn-icons-png.flaticon.com/512/919/919853.png',
+      bgColor: 'bg-green-50',
+      textColor: 'text-green-700',
+      hoverColor: 'hover:bg-green-100'
+    },
+    {
+      id: 'cybersecurity',
+      name: 'Cybersecurity & Ethical Hacking',
+      path: '/courses/cybersecurity',
+      logo: 'https://cdn-icons-png.flaticon.com/512/2092/2092063.png',
+      bgColor: 'bg-purple-50',
+      textColor: 'text-purple-700',
+      hoverColor: 'hover:bg-purple-100'
+    },
+    {
+      id: 'programming',
+      name: 'Programming & Development',
+      path: '/courses/programming',
+      logo: 'https://cdn-icons-png.flaticon.com/512/1005/1005141.png',
+      bgColor: 'bg-indigo-50',
+      textColor: 'text-indigo-700',
+      hoverColor: 'hover:bg-indigo-100'
+    },
+    {
+      id: 'degree',
+      name: 'Degree Programs',
+      path: '/courses/degree',
+      logo: 'https://cdn-icons-png.flaticon.com/512/3595/3595030.png',
+      bgColor: 'bg-yellow-50',
+      textColor: 'text-yellow-700',
+      hoverColor: 'hover:bg-yellow-100'
+    }
+  ];
+
   const courses = [
     { slug: 'bca-degree', name: 'BCA Degree Program' },
     { slug: 'devops-training', name: 'DevOps Training' },

@@ -48,7 +48,7 @@ export const ContentProvider = ({ children }) => {
           }
         },
         institute: {
-          name: "GRRAS Solutions Training Institute",
+          name: "GRRAS Solutions",
           address: "A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012",
           phone: "090019 91227",
           email: "info@grrassolutions.com",

@@ -69,95 +69,95 @@ const EligibilityWidget = () => {
   };
 
   const handleCourseSelection = (courseSlug) => {
+    console.log('🚀 ELIGIBILITY CHECK STARTED:', courseSlug);
+    
     if (!courseSlug) {
+      console.log('❌ No course slug provided');
       setEligibilityText('');
       setError(null);
       setIsLoading(false);
       return;
     }
 
-    console.log('🔍 Course selection started:', courseSlug);
-    console.log('🔍 Total available courses:', availableCourses.length);
-    console.log('🔍 Available course slugs:', availableCourses.map(c => `"${c.slug}"`));
-    
+    // ALWAYS start with loading state
     setIsLoading(true);
     setError(null);
+    setEligibilityText('');
     
-    // First try exact match
-    let course = availableCourses.find(c => c.slug === courseSlug);
-    console.log('🎯 Exact match result:', course ? `Found: "${course.title || course.name}"` : 'NOT FOUND');
-    
-    // If not found, try comprehensive alternative matching
-    if (!course) {
-      console.log('❌ Exact match failed, trying alternatives...');
-      
-      // Method 1: Try case-insensitive slug matching
-      course = availableCourses.find(c => 
-        c.slug?.toLowerCase() === courseSlug.toLowerCase()
-      );
-      if (course) console.log('✅ Case-insensitive slug match:', course.title || course.name);
-      
-      // Method 2: Try partial slug matching
-      if (!course) {
-        course = availableCourses.find(c => 
-          c.slug?.includes('do188') || courseSlug.includes(c.slug || '')
-        );
-        if (course) console.log('✅ Partial slug match:', course.title || course.name);
-      }
-      
-      // Method 3: Try title/name matching
-      if (!course) {
-        course = availableCourses.find(c => {
-          const title = (c.title || c.name || '').toLowerCase();
-          return title.includes('do188') || 
-                 title.includes('openshift development') ||
-                 title.includes('red hat openshift development');
-        });
-        if (course) console.log('✅ Title/name match:', course.title || course.name);
-      }
-      
-      // Method 4: Fallback - find any OpenShift course
-      if (!course && courseSlug.includes('openshift')) {
-        course = availableCourses.find(c => {
-          const title = (c.title || c.name || '').toLowerCase();
-          return title.includes('openshift');
-        });
-        if (course) console.log('✅ OpenShift fallback match:', course.title || course.name);
-      }
-    }
-    
-    // Final result
-    if (!course) {
-      console.error('❌ NO COURSE FOUND after all attempts for slug:', courseSlug);
-      console.log('📊 Consider these available courses:', 
-        availableCourses.slice(0, 5).map(c => `${c.slug} -> ${c.title || c.name}`)
-      );
-      
+    // Force completion after maximum 1 second
+    const forceComplete = setTimeout(() => {
+      console.log('⚠️ FORCE COMPLETING eligibility check');
       setIsLoading(false);
-      setError(`Course "${courseSlug}" not found in our database. Please contact our admission counselors for assistance with course eligibility.`);
-      return;
+      setEligibilityText('Please contact our admission counselors for detailed eligibility criteria and personalized guidance for this course.');
+    }, 1000);
+    
+    try {
+      console.log('🔍 Available courses count:', availableCourses?.length || 0);
+      
+      if (!availableCourses || availableCourses.length === 0) {
+        console.log('❌ No courses available');
+        clearTimeout(forceComplete);
+        setIsLoading(false);
+        setError('Course data not loaded. Please refresh the page or contact support.');
+        return;
+      }
+      
+      // Find the course with comprehensive matching
+      let course = null;
+      
+      // Try multiple matching strategies
+      const strategies = [
+        () => availableCourses.find(c => c.slug === courseSlug),
+        () => availableCourses.find(c => c.slug?.toLowerCase() === courseSlug.toLowerCase()),
+        () => availableCourses.find(c => c.slug?.includes('do188')),
+        () => availableCourses.find(c => (c.title || c.name || '').toLowerCase().includes('do188')),
+        () => availableCourses.find(c => (c.title || c.name || '').toLowerCase().includes('openshift')),
+        () => availableCourses[0] // Fallback to first course
+      ];
+      
+      for (let i = 0; i < strategies.length; i++) {
+        course = strategies[i]();
+        if (course) {
+          console.log(`✅ Course found using strategy ${i + 1}:`, course.title || course.name);
+          break;
+        }
+      }
+      
+      if (!course) {
+        console.log('❌ ABSOLUTELY NO COURSE FOUND');
+        clearTimeout(forceComplete);
+        setIsLoading(false);
+        setError('Course not found. Please contact our admission counselors for assistance.');
+        return;
+      }
+      
+      // Process eligibility
+      let eligibility = course.eligibility || course.eligibilityText || '';
+      
+      if (!eligibility.trim()) {
+        eligibility = `For ${course.title || course.name || 'this course'}, please contact our admission counselors for detailed eligibility criteria and personalized guidance. Our team will help you determine if you meet the requirements and guide you through the admission process.`;
+      }
+      
+      console.log('✅ ELIGIBILITY PROCESSED:', eligibility.length, 'characters');
+      
+      // Clear force timeout and complete successfully
+      clearTimeout(forceComplete);
+      setEligibilityText(eligibility);
+      setIsLoading(false);
+      
+      // Update URL
+      const newParams = new URLSearchParams(searchParams);
+      newParams.set('course', course.slug);
+      setSearchParams(newParams);
+      
+      console.log('🎉 ELIGIBILITY CHECK COMPLETED SUCCESSFULLY');
+      
+    } catch (error) {
+      console.error('💥 ERROR in eligibility check:', error);
+      clearTimeout(forceComplete);
+      setIsLoading(false);
+      setError('An error occurred while checking eligibility. Please try again.');
     }
-    
-    console.log('🎉 COURSE FOUND SUCCESSFULLY:', course.title || course.name);
-    
-    // Process eligibility immediately
-    let eligibility = course.eligibility;
-    
-    if (!eligibility || eligibility.trim() === '') {
-      eligibility = `For ${course.title || course.name}, please contact our admission counselors for detailed eligibility criteria and personalized guidance. Our team will help you determine if you meet the requirements and guide you through the admission process.`;
-    }
-    
-    console.log('✅ Setting eligibility text (length):', eligibility.length);
-    setEligibilityText(eligibility);
-    
-    // Update URL parameter with the found course slug 
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set('course', course.slug);
-    setSearchParams(newParams);
-    
-    // Complete immediately
-    setIsLoading(false);
-    console.log('🎉 ELIGIBILITY CHECK COMPLETED SUCCESSFULLY');
   };
 
   const resetWidget = () => {

@@ -1110,7 +1110,8 @@ async def delete_blog_post(post_id: str, admin_verified: bool = Depends(verify_a
     """Delete blog post (Admin only)"""
     try:
         content = await content_manager.get_content()
-        blog_posts = content.get("blog", [])
+        blog_section = content.get("blog", {})
+        blog_posts = blog_section.get("posts", []) if isinstance(blog_section, dict) else []
         
         # Find and remove post
         initial_count = len(blog_posts)
@@ -1119,7 +1120,7 @@ async def delete_blog_post(post_id: str, admin_verified: bool = Depends(verify_a
         if len(blog_posts) == initial_count:
             raise HTTPException(status_code=404, detail="Blog post not found")
         
-        content["blog"] = blog_posts
+        content["blog"]["posts"] = blog_posts
         
         # Save content
         await content_manager.save_content(content, user="admin", is_draft=False)

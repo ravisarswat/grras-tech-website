@@ -8,7 +8,7 @@ import aiohttp
 import json
 
 async def debug_bulk_delete():
-    backend_url = 'https://responsive-nav-3.preview.emergentagent.com'
+    backend_url = 'https://grras-ui-revamp.preview.emergentagent.com'
     
     async with aiohttp.ClientSession() as session:
         # Get admin token

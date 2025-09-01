@@ -6,7 +6,7 @@ import requests
 import json
 
 # Backend URL
-BACKEND_URL = "https://responsive-nav-3.preview.emergentagent.com"
+BACKEND_URL = "https://grras-ui-revamp.preview.emergentagent.com"
 
 # Admin credentials
 ADMIN_PASSWORD = "grras@admin2024"

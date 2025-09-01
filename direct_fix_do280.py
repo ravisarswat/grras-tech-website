@@ -1,7 +1,7 @@
 import requests
 import json
 
-BASE_URL = "https://responsive-nav-3.preview.emergentagent.com/api"
+BASE_URL = "https://grras-ui-revamp.preview.emergentagent.com/api"
 
 # Get admin token
 response = requests.post(f"{BASE_URL}/admin/login", json={"password": "grras@admin2024"})

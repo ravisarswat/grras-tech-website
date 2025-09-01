@@ -606,6 +606,15 @@ const AdminContent = () => {
               
               <div className="flex items-center gap-3">
                 <button
+                  onClick={forceSyncWithWebsite}
+                  className="btn-outline flex items-center gap-2 text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white"
+                  title="Force sync admin changes with website"
+                >
+                  <RefreshCw className="h-4 w-4" />
+                  Force Sync
+                </button>
+                
+                <button
                   onClick={loadAuditLogs}
                   className="btn-outline flex items-center gap-2"
                 >

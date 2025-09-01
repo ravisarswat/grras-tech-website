@@ -50,10 +50,12 @@ const EligibilityWidget = () => {
   const handleCourseSelection = (courseSlug) => {
     if (!courseSlug) {
       setEligibilityText('');
+      setError(null);
       return;
     }
 
     setIsLoading(true);
+    setError(null);
     
     // Debug logging
     console.log('Selected course slug:', courseSlug);
@@ -66,12 +68,20 @@ const EligibilityWidget = () => {
     if (!course) {
       console.error('Course not found for slug:', courseSlug);
       setIsLoading(false);
-      setEligibilityText('Course not found. Please contact our admission counselors for assistance.');
+      setError(`Course "${courseSlug}" not found. Please select a different course or contact our admission counselors for assistance.`);
       return;
     }
     
+    // Add timeout to prevent stuck loading state
+    const loadingTimeout = setTimeout(() => {
+      setIsLoading(false);
+      setError('Unable to load eligibility information. Please try again or contact our admission counselors.');
+    }, 5000);
+    
     // Simulate loading for UX (since data is already available)
     setTimeout(() => {
+      clearTimeout(loadingTimeout);
+      
       let eligibility = course.eligibility;
       
       // Enhanced fallback with more helpful information

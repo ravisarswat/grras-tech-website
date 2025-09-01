@@ -479,16 +479,24 @@ const Blog = () => {
                   <p className="text-red-100 mb-4 text-sm">
                     Get the latest tech insights and career guidance delivered to your inbox.
                   </p>
-                  <div className="space-y-3">
+                  <form onSubmit={handleNewsletterSubscription} className="space-y-3">
                     <input
                       type="email"
                       placeholder="Your email address"
-                      className="w-full px-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50"
+                      value={newsletterEmail}
+                      onChange={(e) => setNewsletterEmail(e.target.value)}
+                      disabled={subscribing}
+                      className="w-full px-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50 disabled:opacity-50"
+                      required
                     />
-                    <button className="w-full bg-white text-red-600 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
-                      Subscribe
+                    <button 
+                      type="submit"
+                      disabled={subscribing}
+                      className="w-full bg-white text-red-600 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {subscribing ? 'Subscribing...' : 'Subscribe'}
                     </button>
-                  </div>
+                  </form>
                 </div>
               </div>
             </div>

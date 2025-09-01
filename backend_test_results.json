@@ -1,6 +1,6 @@
 {
   "timestamp": "2025-08-31T17:46:31.595928",
-  "backend_url": "https://edutech-platform.preview.emergentagent.com",
+  "backend_url": "https://grras-cms-1.preview.emergentagent.com",
   "total_tests": 12,
   "passed_tests": 7,
   "failed_tests": 5,

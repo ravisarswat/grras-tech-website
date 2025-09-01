@@ -10,7 +10,7 @@ import requests
 import json
 import sys
 
-BASE_URL = "https://edutech-platform.preview.emergentagent.com/api"
+BASE_URL = "https://grras-cms-1.preview.emergentagent.com/api"
 ADMIN_TOKEN = "eeafa5d3a4b8422554501ab77d5bb114c4fe6515d6b25c877b65b1e395e1ca20"
 
 def get_admin_headers():

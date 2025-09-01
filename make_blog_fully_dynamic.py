@@ -81,7 +81,7 @@ COMPLETE_DYNAMIC_BLOGS = [
         "metaTitle": "Why BCA with Industry Training is the Future | GRRAS Solutions",
         "metaDescription": "Traditional BCA programs are evolving. Discover how industry-integrated BCA degrees prepare you for modern tech careers.",
         "keywords": "BCA, Education, Career, Industry Training, Degree"
-    }
+    },
     # Continue with other 8 blog posts from previous data...
 ]
 

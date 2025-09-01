@@ -276,13 +276,7 @@ const BlogPost = () => {
     );
   }
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-IN', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
+
 
   const relatedPosts = Object.entries(blogPosts)
     .filter(([postSlug, _]) => postSlug !== slug)

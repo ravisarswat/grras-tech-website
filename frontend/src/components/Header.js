@@ -373,7 +373,7 @@ const Header = () => {
         {isMenuOpen && (
           <div className="lg:hidden pb-6 border-t border-gray-100 bg-gradient-to-b from-white to-gray-50 animate-fadeIn">
             <div className="pt-6 space-y-3">
-              {navigationItems.filter(item => item.name !== 'Blog').map((item, index) => (
+              {mobileNavigationItems.map((item, index) => (
                 <div key={item.name} className="animate-slideInUp" style={{animationDelay: `${index * 50}ms`}}>
                   <Link
                     to={item.path}

@@ -9,6 +9,7 @@ const EligibilityWidget = () => {
   const [selectedCourse, setSelectedCourse] = useState('');
   const [eligibilityText, setEligibilityText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // Get visible courses ordered by their order field
   const availableCourses = (content?.courses || [])

@@ -292,10 +292,11 @@ const BlogPost = () => {
 
 
 
-  const localRelatedPosts = Object.entries(blogPosts)
-    .filter(([postSlug, _]) => postSlug !== slug)
-    .slice(0, 3)
-    .map(([postSlug, post]) => ({ slug: postSlug, ...post }));
+  const localRelatedPosts = relatedPosts.length > 0 ? relatedPosts : 
+    Object.entries(blogPosts)
+      .filter(([postSlug, _]) => postSlug !== slug)
+      .slice(0, 3)
+      .map(([postSlug, post]) => ({ slug: postSlug, ...post }));
 
   return (
     <>

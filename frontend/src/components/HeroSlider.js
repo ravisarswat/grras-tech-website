@@ -173,7 +173,7 @@ const HeroSlider = () => {
           </div>
 
           {/* Right Content Card */}
-          <div className="hidden lg:block animate-fade-in-right">
+          <div className="hidden xl:block animate-fade-in-right">
             <div className="bg-white bg-opacity-15 backdrop-blur-lg rounded-2xl p-8 border border-white border-opacity-20 shadow-2xl">
               {/* Dynamic Content Based on Slide */}
               {currentSlide === 0 && (

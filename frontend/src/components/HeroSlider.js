@@ -138,7 +138,7 @@ const HeroSlider = () => {
               {currentSlideData.subtitle}
             </h2>
             
-            <p className="text-base lg:text-lg text-gray-200 mb-6 lg:mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+            <p className="text-sm lg:text-base text-gray-200 mb-4 lg:mb-6 leading-relaxed max-w-2xl mx-auto lg:mx-0">
               {currentSlideData.description}
             </p>
 

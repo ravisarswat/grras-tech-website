@@ -35,26 +35,38 @@ const EligibilityWidget = () => {
 
     setIsLoading(true);
     
+    // Debug logging
+    console.log('Selected course slug:', courseSlug);
+    console.log('Available courses:', availableCourses.map(c => ({ slug: c.slug, title: c.title || c.name })));
+    
+    // Find the course
+    const course = availableCourses.find(c => c.slug === courseSlug);
+    console.log('Found course:', course);
+    
+    if (!course) {
+      console.error('Course not found for slug:', courseSlug);
+      setIsLoading(false);
+      setEligibilityText('Course not found. Please contact our admission counselors for assistance.');
+      return;
+    }
+    
     // Simulate loading for UX (since data is already available)
     setTimeout(() => {
-      const course = availableCourses.find(c => c.slug === courseSlug);
-      if (course) {
-        let eligibility = course.eligibility;
-        
-        // Friendly fallback if eligibility text is missing or empty
-        if (!eligibility || eligibility.trim() === '') {
-          eligibility = `For ${course.title || 'this course'}, please contact our admission counselors for detailed eligibility criteria and personalized guidance. Our team will help you determine if you meet the requirements and guide you through the admission process.`;
-        }
-        
-        setEligibilityText(eligibility);
-        
-        // Update URL parameter
-        const newParams = new URLSearchParams(searchParams);
-        newParams.set('course', courseSlug);
-        setSearchParams(newParams);
+      let eligibility = course.eligibility;
+      
+      // Enhanced fallback with more helpful information
+      if (!eligibility || eligibility.trim() === '') {
+        eligibility = `For ${course.title || course.name || 'this course'}, please contact our admission counselors for detailed eligibility criteria and personalized guidance. Our team will help you determine if you meet the requirements and guide you through the admission process.`;
       }
+      
+      setEligibilityText(eligibility);
+      
+      // Update URL parameter
+      const newParams = new URLSearchParams(searchParams);
+      newParams.set('course', courseSlug);
+      setSearchParams(newParams);
       setIsLoading(false);
-    }, 300);
+    }, 800); // Reduced timeout for better UX
   };
 
   const resetWidget = () => {

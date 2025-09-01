@@ -73,31 +73,198 @@ const Footer = () => {
     <>
       <footer className="bg-gray-900 text-white">
         {/* Main Footer Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6">
-            {/* Company Info */}
-            <div className="lg:col-span-1 md:col-span-2 lg:col-span-1">
-              {/* Logo and Company Name */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            
+            {/* Company Info - Optimized for Mobile */}
+            <div className="md:col-span-2 lg:col-span-1">
+              {/* Logo and Company Name - Mobile Optimized */}
               <div className="mb-6">
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3 mb-3">
                   <img 
                     src={instituteLogo} 
                     alt={instituteName}
-                    className="h-16 w-16 object-contain bg-white p-2 rounded-lg"
+                    className="h-12 w-12 lg:h-16 lg:w-16 object-contain bg-white p-1.5 lg:p-2 rounded-lg flex-shrink-0"
                     onError={(e) => {
-                      // If logo fails to load, show a placeholder
-                      e.target.outerHTML = `<div class="h-16 w-16 bg-red-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">G</div>`;
+                      e.target.outerHTML = `<div class="h-12 w-12 lg:h-16 lg:w-16 bg-red-600 rounded-lg flex items-center justify-center text-white font-bold text-lg lg:text-xl">G</div>`;
                     }}
                   />
-                  <div>
-                    <h3 className="text-xl font-bold text-white leading-tight">{instituteName}</h3>
-                    <p className="text-gray-300 text-sm">Training Institute</p>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-lg lg:text-xl font-bold text-white leading-tight">{instituteName}</h3>
+                    <p className="text-gray-300 text-xs lg:text-sm">Training Institute</p>
                   </div>
                 </div>
                 
                 {footerBranding.tagline && (
-                  <p className="text-gray-300 text-sm leading-relaxed mb-6">
+                  <p className="text-gray-300 text-sm lg:text-base leading-relaxed mb-4 lg:mb-6">
                     {footerBranding.tagline}
+                  </p>
+                )}
+              </div>
+
+              {/* Contact Info - Mobile Optimized */}
+              <div className="space-y-3 mb-6">
+                {/* Address */}
+                <div className="flex items-start gap-3">
+                  <MapPin className="h-4 w-4 lg:h-5 lg:w-5 text-red-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-gray-300 text-sm lg:text-base leading-relaxed">
+                      {address}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Phone */}
+                <div className="flex items-center gap-3">
+                  <Phone className="h-4 w-4 lg:h-5 lg:w-5 text-red-500 flex-shrink-0" />
+                  <div className="flex flex-wrap gap-2">
+                    {phones.map((phone, index) => (
+                      <a 
+                        key={index}
+                        href={`tel:${phone.replace(/\s/g, '')}`}
+                        className="text-gray-300 hover:text-white text-sm lg:text-base transition-colors"
+                      >
+                        {phone}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Email */}
+                <div className="flex items-center gap-3">
+                  <Mail className="h-4 w-4 lg:h-5 lg:w-5 text-red-500 flex-shrink-0" />
+                  <div className="flex flex-wrap gap-2">
+                    {emails.map((email, index) => (
+                      <a 
+                        key={index}
+                        href={`mailto:${email}`}
+                        className="text-gray-300 hover:text-white text-sm lg:text-base transition-colors break-all"
+                      >
+                        {email}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Social Media - Mobile Optimized */}
+              <div className="flex gap-3">
+                {social.instagram && (
+                  <a 
+                    href={social.instagram} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-gray-800 hover:bg-pink-600 p-2 rounded-lg transition-colors"
+                    aria-label="Follow us on Instagram"
+                  >
+                    <Instagram className="h-5 w-5" />
+                  </a>
+                )}
+                {social.youtube && (
+                  <a 
+                    href={social.youtube} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-gray-800 hover:bg-red-600 p-2 rounded-lg transition-colors"
+                    aria-label="Subscribe to our YouTube channel"
+                  >
+                    <Youtube className="h-5 w-5" />
+                  </a>
+                )}
+                {phones[0] && (
+                  <a 
+                    href={`https://wa.me/${phones[0].replace(/\D/g, '')}`}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-gray-800 hover:bg-green-600 p-2 rounded-lg transition-colors"
+                    aria-label="Chat on WhatsApp"
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                  </a>
+                )}
+              </div>
+            </div>
+
+            {/* Quick Links - Mobile Optimized */}
+            <div className="md:col-span-1 lg:col-span-1">
+              <h4 className="text-lg font-semibold mb-4 text-white">Quick Links</h4>
+              <ul className="space-y-2">
+                {footerColumns[0]?.links?.map((link, index) => (
+                  <li key={index}>
+                    {link.target === '_blank' ? (
+                      <a 
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-300 hover:text-white text-sm lg:text-base transition-colors flex items-center gap-1"
+                      >
+                        {link.label}
+                        <ExternalLink className="h-3 w-3" />
+                      </a>
+                    ) : (
+                      <Link 
+                        to={link.href}
+                        className="text-gray-300 hover:text-white text-sm lg:text-base transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Popular Courses - Mobile Optimized */}
+            <div className="md:col-span-2 lg:col-span-2">
+              <h4 className="text-lg font-semibold mb-4 text-white">Popular Courses</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+                {popularCourses.map((course, index) => (
+                  <div key={index} className="bg-gray-800 rounded-lg p-3 lg:p-4 hover:bg-gray-700 transition-colors">
+                    <h5 className="font-medium text-white text-sm lg:text-base mb-1 line-clamp-2">
+                      {course.title}
+                    </h5>
+                    <div className="flex items-center justify-between">
+                      <p className="text-red-400 font-semibold text-sm lg:text-base">
+                        {course.price}
+                        {course.hasEMI && (
+                          <span className="text-gray-400 text-xs lg:text-sm ml-2">(EMI Available)</span>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Footer - Mobile Optimized */}
+        <div className="border-t border-gray-800">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-6">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+              <p className="text-gray-400 text-xs lg:text-sm text-center sm:text-left">
+                {legalConfig.copyright}
+              </p>
+              <div className="flex flex-wrap justify-center sm:justify-end gap-4 lg:gap-6">
+                <Link 
+                  to={legalConfig.privacyPolicy}
+                  className="text-gray-400 hover:text-white text-xs lg:text-sm transition-colors"
+                >
+                  Privacy Policy
+                </Link>
+                <Link 
+                  to={legalConfig.terms}
+                  className="text-gray-400 hover:text-white text-xs lg:text-sm transition-colors"
+                >
+                  Terms of Service
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </>
+  );
                   </p>
                 )}
               </div>

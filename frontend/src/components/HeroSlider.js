@@ -145,7 +145,7 @@ const HeroSlider = () => {
             {/* Stats */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-2 lg:gap-3 mb-4 lg:mb-6">
               {currentSlideData.stats.map((stat, index) => (
-                <div key={index} className="flex items-center gap-2 bg-white bg-opacity-20 rounded-full px-3 lg:px-4 py-2 backdrop-blur-sm">
+                <div key={index} className="flex items-center gap-1 lg:gap-2 bg-white bg-opacity-20 rounded-full px-2 lg:px-3 py-1 lg:py-2 backdrop-blur-sm">
                   <Star className="h-3 w-3 lg:h-4 lg:w-4 text-yellow-400 fill-current" />
                   <span className="text-white text-xs lg:text-sm font-medium">{stat}</span>
                 </div>

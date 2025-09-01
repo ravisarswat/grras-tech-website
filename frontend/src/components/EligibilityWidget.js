@@ -30,7 +30,7 @@ const EligibilityWidget = () => {
         
         if (course) {
           setSelectedCourse(courseParam);
-          handleCourseSelection(courseParam);
+          handleInitialCourseSelection(courseParam);
         } else {
           console.warn('Course not found for URL parameter:', courseParam);
           console.log('Available course slugs:', availableCourses.map(c => c.slug));
@@ -46,7 +46,7 @@ const EligibilityWidget = () => {
           if (similarCourse) {
             console.log('Found similar course:', similarCourse);
             setSelectedCourse(similarCourse.slug);
-            handleCourseSelection(similarCourse.slug);
+            handleInitialCourseSelection(similarCourse.slug);
           } else {
             // Clear the URL parameter if course not found
             const newParams = new URLSearchParams(searchParams);

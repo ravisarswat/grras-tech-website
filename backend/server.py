@@ -925,8 +925,11 @@ async def get_blog_post(slug: str):
         blog_section = content.get("blog", {})
         blog_posts = blog_section.get("posts", []) if isinstance(blog_section, dict) else []
         
-        # Find post by slug
-        post = next((p for p in blog_posts if p.get("slug") == slug and p.get("published", True)), None)
+        # Find post by slug (check both published field and status)
+        post = next((
+            p for p in blog_posts 
+            if p.get("slug") == slug and (p.get("published", True) or p.get("status") == "published")
+        ), None)
         
         if not post:
             raise HTTPException(status_code=404, detail="Blog post not found")

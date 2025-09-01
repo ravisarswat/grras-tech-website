@@ -145,6 +145,17 @@ const Footer = () => {
 
               {/* Social Media - Mobile Optimized */}
               <div className="flex gap-3">
+                {social.facebook && (
+                  <a 
+                    href={social.facebook} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-gray-800 hover:bg-blue-600 p-2 rounded-lg transition-colors"
+                    aria-label="Follow us on Facebook"
+                  >
+                    <Facebook className="h-5 w-5" />
+                  </a>
+                )}
                 {social.instagram && (
                   <a 
                     href={social.instagram} 

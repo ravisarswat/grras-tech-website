@@ -956,7 +956,8 @@ async def get_blog_categories():
     """Get all blog categories with post counts"""
     try:
         content = await content_manager.get_content()
-        blog_posts = content.get("blog", [])
+        blog_section = content.get("blog", {})
+        blog_posts = blog_section.get("posts", []) if isinstance(blog_section, dict) else []
         
         # Count posts by category
         category_counts = {}

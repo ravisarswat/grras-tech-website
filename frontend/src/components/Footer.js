@@ -27,7 +27,11 @@ const Footer = () => {
   const address = institute.address || 'A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012';
   const phones = institute.phones || ['090019 91227'];
   const emails = institute.emails || ['info@grrassolutions.com'];
-  const social = institute.social || {};
+  const social = institute.social || {
+    facebook: 'https://www.facebook.com/grrassolutionss',
+    instagram: 'https://www.instagram.com/grrassolutionss/',
+    youtube: 'https://www.youtube.com/@grrassolutions'
+  };
   
   // Footer configuration with fallbacks
   const footerColumns = footer.columns || [

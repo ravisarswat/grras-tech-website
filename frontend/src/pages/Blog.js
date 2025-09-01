@@ -5,6 +5,7 @@ import SEO from '../components/SEO';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
+// Force refresh blog data - Updated for Railway deployment
 const Blog = () => {
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState({});

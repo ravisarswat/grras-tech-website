@@ -997,23 +997,34 @@ async def create_blog_post(post: BlogPostRequest, admin_verified: bool = Depends
     try:
         content = await content_manager.get_content()
         
-        # Initialize blog array if it doesn't exist
+        # Initialize blog structure if it doesn't exist
         if "blog" not in content:
-            content["blog"] = []
+            content["blog"] = {"settings": {"postsPerPage": 6, "enableComments": False, "moderateComments": True}, "posts": []}
+        elif not isinstance(content["blog"], dict):
+            content["blog"] = {"settings": {"postsPerPage": 6, "enableComments": False, "moderateComments": True}, "posts": []}
+        elif "posts" not in content["blog"]:
+            content["blog"]["posts"] = []
+        
+        blog_posts = content["blog"]["posts"]
         
         # Create new post
         new_post = {
             "id": str(uuid.uuid4()),
             "slug": post.slug,
             "title": post.title,
-            "content": post.content,
+            "body": post.content,  # Use 'body' to match existing structure
+            "content": post.content,  # Keep both for compatibility
+            "summary": post.excerpt or post.content[:200] + "...",
             "excerpt": post.excerpt or post.content[:200] + "...",
+            "coverImage": post.featured_image or "",
             "featured_image": post.featured_image,
             "category": post.category,
             "tags": post.tags,
             "author": post.author,
             "published": post.published,
+            "createdAt": datetime.utcnow().isoformat(),
             "created_at": datetime.utcnow().isoformat(),
+            "updatedAt": datetime.utcnow().isoformat(),
             "updated_at": datetime.utcnow().isoformat(),
             "meta_title": post.meta_title or post.title,
             "meta_description": post.meta_description or (post.excerpt or post.content[:160]),
@@ -1021,10 +1032,10 @@ async def create_blog_post(post: BlogPostRequest, admin_verified: bool = Depends
         }
         
         # Check for duplicate slug
-        if any(p.get("slug") == post.slug for p in content["blog"]):
+        if any(p.get("slug") == post.slug for p in blog_posts):
             raise HTTPException(status_code=400, detail="Blog post with this slug already exists")
         
-        content["blog"].append(new_post)
+        blog_posts.append(new_post)
         
         # Save content
         await content_manager.save_content(content, user="admin", is_draft=False)

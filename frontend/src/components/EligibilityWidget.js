@@ -239,16 +239,10 @@ const EligibilityWidget = () => {
           </select>
         </div>
 
-        {/* Loading State */}
-        {isLoading && (
-          <div className="flex items-center justify-center py-6">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600"></div>
-            <span className="ml-3 text-gray-600">Checking eligibility...</span>
-          </div>
-        )}
-
+        {/* No loading state - immediate results */}
+        
         {/* Error State */}
-        {error && !isLoading && (
+        {error && (
           <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
             <div className="flex items-start gap-3">
               <AlertCircle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />

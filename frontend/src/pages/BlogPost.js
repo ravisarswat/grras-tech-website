@@ -274,6 +274,9 @@ const BlogPost = () => {
 
   const currentPost = post || blogPosts[slug];
 
+  // Debug logging
+  console.log('BlogPost Debug:', { slug, post, currentPost, relatedPosts });
+
   if (!currentPost) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">

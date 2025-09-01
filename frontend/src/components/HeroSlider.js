@@ -177,18 +177,211 @@ const HeroSlider = () => {
             </div>
           </div>
 
-          {/* Right Image */}
+          {/* Right Content Card */}
           <div className="hidden lg:block animate-fade-in-right">
-            <div className="relative">
-              <img 
-                src={currentSlideData.image} 
-                alt={currentSlideData.title}
-                className="w-full h-96 object-cover rounded-2xl shadow-2xl"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-2xl"></div>
+            <div className="bg-white bg-opacity-15 backdrop-blur-lg rounded-2xl p-8 border border-white border-opacity-20 shadow-2xl">
+              {/* Dynamic Content Based on Slide */}
+              {currentSlide === 0 && (
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-6">Red Hat Excellence</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-lg">95%</span>
+                      </div>
+                      <div>
+                        <div className="text-white font-semibold">Success Rate</div>
+                        <div className="text-gray-200 text-sm">Red Hat Certified</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-lg">500+</span>
+                      </div>
+                      <div>
+                        <div className="text-white font-semibold">Students Certified</div>
+                        <div className="text-gray-200 text-sm">RHCSA & RHCE</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-lg">18+</span>
+                      </div>
+                      <div>
+                        <div className="text-white font-semibold">Years Experience</div>
+                        <div className="text-gray-200 text-sm">Linux Training</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 p-4 bg-black bg-opacity-30 rounded-xl">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-white mb-1">₹8-15 LPA</div>
+                      <div className="text-gray-200 text-sm">Average Package</div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {currentSlide === 1 && (
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-6">AWS Cloud Journey</h3>
+                  <div className="space-y-4">
+                    <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                      <div className="flex items-center gap-3 mb-3">
+                        <Award className="h-6 w-6 text-yellow-400" />
+                        <span className="text-white font-semibold">Solutions Architect</span>
+                      </div>
+                      <div className="text-gray-200 text-sm">Design scalable cloud solutions</div>
+                    </div>
+                    
+                    <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                      <div className="flex items-center gap-3 mb-3">
+                        <Settings className="h-6 w-6 text-blue-400" />
+                        <span className="text-white font-semibold">DevOps Engineer</span>
+                      </div>
+                      <div className="text-gray-200 text-sm">Automate cloud infrastructure</div>
+                    </div>
+                    
+                    <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                      <div className="flex items-center gap-3 mb-3">
+                        <Shield className="h-6 w-6 text-green-400" />
+                        <span className="text-white font-semibold">SysOps Admin</span>
+                      </div>
+                      <div className="text-gray-200 text-sm">Manage cloud operations</div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 p-4 bg-black bg-opacity-30 rounded-xl text-center">
+                    <div className="text-xl font-bold text-white mb-1">₹12-25 LPA</div>
+                    <div className="text-gray-200 text-sm">Cloud Engineer Salary</div>
+                  </div>
+                </div>
+              )}
+              
+              {currentSlide === 2 && (
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-6">DevOps Tools Mastery</h3>
+                  <div className="grid grid-cols-2 gap-3 mb-6">
+                    <div className="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+                      <div className="text-white font-semibold text-sm mb-1">Docker</div>
+                      <div className="text-gray-200 text-xs">Containerization</div>
+                    </div>
+                    <div className="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+                      <div className="text-white font-semibold text-sm mb-1">Kubernetes</div>
+                      <div className="text-gray-200 text-xs">Orchestration</div>
+                    </div>
+                    <div className="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+                      <div className="text-white font-semibold text-sm mb-1">Jenkins</div>
+                      <div className="text-gray-200 text-xs">CI/CD</div>
+                    </div>
+                    <div className="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+                      <div className="text-white font-semibold text-sm mb-1">Ansible</div>
+                      <div className="text-gray-200 text-xs">Automation</div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-white text-sm">Course Completion</span>
+                      <span className="text-green-400 font-semibold">92%</span>
+                    </div>
+                    <div className="w-full bg-white bg-opacity-20 rounded-full h-2">
+                      <div className="bg-green-400 h-2 rounded-full" style={{width: '92%'}}></div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 p-4 bg-black bg-opacity-30 rounded-xl text-center">
+                    <div className="text-xl font-bold text-white mb-1">₹10-20 LPA</div>
+                    <div className="text-gray-200 text-sm">DevOps Engineer Salary</div>
+                  </div>
+                </div>
+              )}
+              
+              {currentSlide === 3 && (
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-6">Security Skills</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
+                        <Shield className="h-5 w-5 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-white font-semibold">Penetration Testing</div>
+                        <div className="text-gray-200 text-sm">Find vulnerabilities</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
+                        <Settings className="h-5 w-5 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-white font-semibold">Network Security</div>
+                        <div className="text-gray-200 text-sm">Secure infrastructure</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                        <Award className="h-5 w-5 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-white font-semibold">Ethical Hacking</div>
+                        <div className="text-gray-200 text-sm">Legal security testing</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 bg-white bg-opacity-20 rounded-xl p-4">
+                    <div className="text-center mb-3">
+                      <div className="text-white font-semibold">High Demand Field</div>
+                    </div>
+                    <div className="text-2xl font-bold text-center text-white mb-1">₹15-30 LPA</div>
+                    <div className="text-gray-200 text-sm text-center">Security Expert Salary</div>
+                  </div>
+                </div>
+              )}
+              
+              {currentSlide === 4 && (
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-6">Degree Benefits</h3>
+                  <div className="space-y-4">
+                    <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                      <div className="flex items-center gap-3 mb-2">
+                        <GraduationCap className="h-5 w-5 text-yellow-400" />
+                        <span className="text-white font-semibold">BCA Program</span>
+                      </div>
+                      <div className="text-gray-200 text-sm">3-year industry-ready degree</div>
+                    </div>
+                    
+                    <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                      <div className="flex items-center gap-3 mb-2">
+                        <Award className="h-5 w-5 text-green-400" />
+                        <span className="text-white font-semibold">100% Placement</span>
+                      </div>
+                      <div className="text-gray-200 text-sm">Guaranteed job assistance</div>
+                    </div>
+                    
+                    <div className="bg-white bg-opacity-20 rounded-lg p-4">
+                      <div className="flex items-center gap-3 mb-2">
+                        <Star className="h-5 w-5 text-blue-400 fill-current" />
+                        <span className="text-white font-semibold">Industry Skills</span>
+                      </div>
+                      <div className="text-gray-200 text-sm">Modern tech curriculum</div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 p-4 bg-black bg-opacity-30 rounded-xl">
+                    <div className="text-center">
+                      <div className="text-xl font-bold text-white mb-1">₹6-12 LPA</div>
+                      <div className="text-gray-200 text-sm">Fresher Package</div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

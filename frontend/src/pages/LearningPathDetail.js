@@ -68,7 +68,7 @@ const LearningPathDetail = () => {
       
       <div className="min-h-screen bg-gray-50">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-24 overflow-hidden">
+        <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-12 md:py-24 overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
           
           {/* Background Pattern */}
@@ -79,9 +79,9 @@ const LearningPathDetail = () => {
           </div>
           
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
               {/* Content */}
-              <div className="animate-fade-in-up">
+              <div className="animate-fade-in-up text-center lg:text-left">
                 <div className="inline-flex items-center gap-2 bg-green-500 bg-opacity-20 text-green-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
                   <Route className="h-4 w-4" />
                   Structured Learning Journey
@@ -94,31 +94,31 @@ const LearningPathDetail = () => {
                   )}
                 </div>
                 
-                <h1 className="text-4xl md:text-6xl font-bold mb-6">
+                <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold mb-6">
                   {learningPath.title}
                 </h1>
                 
-                <p className="text-xl text-gray-100 mb-8 leading-relaxed">
+                <p className="text-lg md:text-xl text-gray-100 mb-8 leading-relaxed">
                   {learningPath.description}
                 </p>
 
-                {/* Path Stats */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold mb-1">{learningPath.totalCourses || pathCourses.length}</div>
-                    <div className="text-sm text-gray-200">Courses</div>
+                {/* Path Stats - Mobile Optimized */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
+                  <div className="text-center bg-white bg-opacity-10 rounded-xl p-3 md:p-4">
+                    <div className="text-xl md:text-2xl font-bold mb-1">{learningPath.totalCourses || pathCourses.length}</div>
+                    <div className="text-xs md:text-sm text-gray-200">Courses</div>
                   </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold mb-1">{learningPath.duration}</div>
-                    <div className="text-sm text-gray-200">Duration</div>
+                  <div className="text-center bg-white bg-opacity-10 rounded-xl p-3 md:p-4">
+                    <div className="text-xl md:text-2xl font-bold mb-1">{learningPath.duration}</div>
+                    <div className="text-xs md:text-sm text-gray-200">Duration</div>
                   </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold mb-1">{learningPath.estimatedHours || 400}+</div>
-                    <div className="text-sm text-gray-200">Hours</div>
+                  <div className="text-center bg-white bg-opacity-10 rounded-xl p-3 md:p-4">
+                    <div className="text-xl md:text-2xl font-bold mb-1">{learningPath.estimatedHours || 400}+</div>
+                    <div className="text-xs md:text-sm text-gray-200">Hours</div>
                   </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold mb-1">{learningPath.averageSalary}</div>
-                    <div className="text-sm text-gray-200">Avg Salary</div>
+                  <div className="text-center bg-white bg-opacity-10 rounded-xl p-3 md:p-4">
+                    <div className="text-xl md:text-2xl font-bold mb-1">{learningPath.averageSalary}</div>
+                    <div className="text-xs md:text-sm text-gray-200">Avg Salary</div>
                   </div>
                 </div>
 
@@ -136,36 +136,36 @@ const LearningPathDetail = () => {
 
               {/* Path Info Card */}
               <div className="animate-fade-in-right">
-                <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-8 border border-white border-opacity-20">
-                  <h3 className="text-2xl font-bold text-white mb-6">Path Highlights</h3>
+                <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white border-opacity-20">
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-6 text-center lg:text-left">Path Highlights</h3>
                   
                   <div className="space-y-4 mb-8">
-                    <div className="flex items-center gap-3">
-                      <Clock className="h-5 w-5 text-blue-400" />
+                    <div className="flex items-center gap-3 bg-white bg-opacity-10 rounded-lg p-3">
+                      <Clock className="h-5 w-5 text-blue-400 shrink-0" />
                       <div>
                         <div className="text-white font-medium">Duration</div>
                         <div className="text-gray-300 text-sm">{learningPath.duration}</div>
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-3">
-                      <User className="h-5 w-5 text-purple-400" />
+                    <div className="flex items-center gap-3 bg-white bg-opacity-10 rounded-lg p-3">
+                      <User className="h-5 w-5 text-purple-400 shrink-0" />
                       <div>
                         <div className="text-white font-medium">Skill Level</div>
                         <div className="text-gray-300 text-sm">{learningPath.level}</div>
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-3">
-                      <Award className="h-5 w-5 text-yellow-400" />
+                    <div className="flex items-center gap-3 bg-white bg-opacity-10 rounded-lg p-3">
+                      <Award className="h-5 w-5 text-yellow-400 shrink-0" />
                       <div>
                         <div className="text-white font-medium">Certifications</div>
                         <div className="text-gray-300 text-sm">Industry-recognized</div>
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-3">
-                      <Users className="h-5 w-5 text-green-400" />
+                    <div className="flex items-center gap-3 bg-white bg-opacity-10 rounded-lg p-3">
+                      <Users className="h-5 w-5 text-green-400 shrink-0" />
                       <div>
                         <div className="text-white font-medium">Support</div>
                         <div className="text-gray-300 text-sm">Mentorship & Placement</div>
@@ -173,11 +173,9 @@ const LearningPathDetail = () => {
                     </div>
                   </div>
                   
-                  <div className="bg-black bg-opacity-20 rounded-xl p-4">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-white mb-1">95%</div>
-                      <div className="text-gray-300 text-sm">Job Placement Rate</div>
-                    </div>
+                  <div className="bg-black bg-opacity-20 rounded-xl p-4 text-center">
+                    <div className="text-2xl md:text-3xl font-bold text-white mb-1">95%</div>
+                    <div className="text-gray-300 text-sm">Job Placement Rate</div>
                   </div>
                 </div>
               </div>
@@ -188,21 +186,21 @@ const LearningPathDetail = () => {
         {/* Navigation Tabs */}
         <section className="bg-white border-b sticky top-0 z-40 shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex space-x-8 overflow-x-auto py-4">
+            <div className="flex space-x-2 md:space-x-8 overflow-x-auto py-4 scrollbar-hide">
               {tabs.map((tab) => {
                 const IconComponent = tab.icon;
                 return (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors ${
+                    className={`flex items-center gap-2 px-3 md:px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors flex-shrink-0 ${
                       activeTab === tab.id
                         ? 'bg-red-100 text-red-700'
                         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                     }`}
                   >
                     <IconComponent className="h-4 w-4" />
-                    {tab.name}
+                    <span className="text-sm md:text-base">{tab.name}</span>
                   </button>
                 );
               })}

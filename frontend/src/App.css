@@ -217,6 +217,39 @@ body {
   background: var(--primary-orange);
 }
 
+/* Scrollbar styling */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Admin panel tab container */
+.admin-tabs-container {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.admin-tabs-container::-webkit-scrollbar {
+  height: 4px;
+}
+
+.admin-tabs-container::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.admin-tabs-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 2px;
+}
+
+.admin-tabs-container::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
 /* Responsive Text */
 @media (max-width: 640px) {
   .text-responsive-xl {

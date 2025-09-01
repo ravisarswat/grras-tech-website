@@ -234,7 +234,7 @@ const Blog = () => {
                           alt={post.title}
                           className="w-full h-48 object-cover rounded-t-lg"
                           onError={(e) => {
-                            e.target.src = '/api/placeholder/400/240';
+                            e.target.src = 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg';
                           }}
                         />
                       </Link>

@@ -48,7 +48,7 @@ const HeroSlider = () => {
       cta: "Transform Your Career",
       ctaLink: "/courses?category=devops",
       background: "bg-gradient-to-br from-blue-600 via-cyan-500 to-green-500",
-      icon: <Settings className="w-16 h-16 text-white" />,
+      icon: <Settings className="w-full h-full text-white" />,
       stats: ["Industry Tools", "Real Pipelines", "Expert Mentorship"]
     },
     {

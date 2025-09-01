@@ -18,11 +18,30 @@ const EligibilityWidget = () => {
   useEffect(() => {
     // Check for URL parameter to preselect course
     const courseParam = searchParams.get('course');
+    console.log('URL course parameter:', courseParam);
+    console.log('Available courses count:', availableCourses.length);
+    
     if (courseParam && availableCourses.length > 0) {
       const course = availableCourses.find(c => c.slug === courseParam);
+      console.log('Course found for URL param:', course);
+      
       if (course) {
         setSelectedCourse(courseParam);
         handleCourseSelection(courseParam);
+      } else {
+        console.warn('Course not found for URL parameter:', courseParam);
+        // Try to find a similar course by name matching
+        const similarCourse = availableCourses.find(c => 
+          c.title?.toLowerCase().includes('openshift') || 
+          c.name?.toLowerCase().includes('openshift') ||
+          c.slug?.includes('do188')
+        );
+        
+        if (similarCourse) {
+          console.log('Found similar course:', similarCourse);
+          setSelectedCourse(similarCourse.slug);
+          handleCourseSelection(similarCourse.slug);
+        }
       }
     }
   }, [searchParams, availableCourses]);

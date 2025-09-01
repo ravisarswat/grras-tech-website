@@ -976,7 +976,8 @@ async def get_blog_tags():
     """Get all blog tags with usage counts"""
     try:
         content = await content_manager.get_content()
-        blog_posts = content.get("blog", [])
+        blog_section = content.get("blog", {})
+        blog_posts = blog_section.get("posts", []) if isinstance(blog_section, dict) else []
         
         # Count tags usage
         tag_counts = {}

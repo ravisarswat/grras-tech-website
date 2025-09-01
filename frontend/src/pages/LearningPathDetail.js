@@ -378,35 +378,35 @@ const LearningPathDetail = () => {
             {/* Outcomes Tab */}
             {activeTab === 'outcomes' && (
               <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-8">Learning Outcomes</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 md:mb-8 text-center lg:text-left">Learning Outcomes</h2>
                 
                 {learningPath.outcomes && learningPath.outcomes.length > 0 ? (
-                  <div className="grid md:grid-cols-2 gap-6 mb-12">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12">
                     {learningPath.outcomes.map((outcome, index) => (
-                      <div key={index} className="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-lg">
+                      <div key={index} className="flex items-start gap-4 p-4 md:p-6 bg-white rounded-2xl shadow-lg">
                         <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center shrink-0">
                           <CheckCircle className="h-5 w-5 text-green-600" />
                         </div>
-                        <p className="text-gray-700 leading-relaxed">{outcome}</p>
+                        <p className="text-gray-700 leading-relaxed text-sm md:text-base">{outcome}</p>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-12 mb-12">
+                  <div className="text-center py-12 mb-8 md:mb-12">
                     <Target className="h-16 w-16 text-gray-300 mx-auto mb-4" />
                     <p className="text-gray-600">Learning outcomes are being updated for this path.</p>
                   </div>
                 )}
 
-                {/* Skills You'll Gain */}
-                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Skills You'll Master</h3>
-                  <div className="grid md:grid-cols-3 gap-4">
+                {/* Skills You'll Gain - Mobile Optimized */}
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 md:p-8">
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-6 text-center lg:text-left">Skills You'll Master</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                     {pathCourses.flatMap(course => course.tools || [])
                       .filter((tool, index, array) => array.indexOf(tool) === index)
                       .slice(0, 12)
                       .map((skill, index) => (
-                        <div key={index} className="bg-white px-4 py-2 rounded-lg text-center font-medium text-gray-700">
+                        <div key={index} className="bg-white px-3 md:px-4 py-2 rounded-lg text-center font-medium text-gray-700 text-sm md:text-base">
                           {skill}
                         </div>
                       ))
@@ -419,47 +419,47 @@ const LearningPathDetail = () => {
             {/* Careers Tab */}
             {activeTab === 'careers' && (
               <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-8">Career Opportunities</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 md:mb-8 text-center lg:text-left">Career Opportunities</h2>
                 
                 {learningPath.careerRoles && learningPath.careerRoles.length > 0 ? (
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
                     {learningPath.careerRoles.map((role, index) => (
-                      <div key={index} className="bg-white rounded-2xl shadow-lg p-8 text-center">
+                      <div key={index} className="bg-white rounded-2xl shadow-lg p-6 md:p-8 text-center">
                         <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
                           <Briefcase className="h-8 w-8 text-white" />
                         </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-4">{role}</h3>
-                        <p className="text-gray-600 mb-4">High-demand role with excellent growth prospects</p>
-                        <div className="text-2xl font-bold text-green-600">{learningPath.averageSalary}</div>
+                        <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4">{role}</h3>
+                        <p className="text-gray-600 mb-4 text-sm md:text-base">High-demand role with excellent growth prospects</p>
+                        <div className="text-xl md:text-2xl font-bold text-green-600">{learningPath.averageSalary}</div>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-12 mb-12">
+                  <div className="text-center py-12 mb-8 md:mb-12">
                     <Briefcase className="h-16 w-16 text-gray-300 mx-auto mb-4" />
                     <p className="text-gray-600">Career information is being updated for this path.</p>
                   </div>
                 )}
 
-                {/* Success Stats */}
-                <div className="bg-gray-900 text-white rounded-2xl p-8">
-                  <h3 className="text-2xl font-bold mb-8 text-center">Success Statistics</h3>
-                  <div className="grid md:grid-cols-4 gap-8 text-center">
+                {/* Success Stats - Mobile Optimized */}
+                <div className="bg-gray-900 text-white rounded-2xl p-6 md:p-8">
+                  <h3 className="text-xl md:text-2xl font-bold mb-6 md:mb-8 text-center">Success Statistics</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center">
                     <div>
-                      <div className="text-3xl font-bold text-green-400 mb-2">95%</div>
-                      <div className="text-gray-300">Job Placement Rate</div>
+                      <div className="text-2xl md:text-3xl font-bold text-green-400 mb-2">95%</div>
+                      <div className="text-gray-300 text-sm md:text-base">Job Placement Rate</div>
                     </div>
                     <div>
-                      <div className="text-3xl font-bold text-blue-400 mb-2">40%</div>
-                      <div className="text-gray-300">Average Salary Increase</div>
+                      <div className="text-2xl md:text-3xl font-bold text-blue-400 mb-2">40%</div>
+                      <div className="text-gray-300 text-sm md:text-base">Average Salary Increase</div>
                     </div>
                     <div>
-                      <div className="text-3xl font-bold text-purple-400 mb-2">6</div>
-                      <div className="text-gray-300">Months Average Time</div>
+                      <div className="text-2xl md:text-3xl font-bold text-purple-400 mb-2">6</div>
+                      <div className="text-gray-300 text-sm md:text-base">Months Average Time</div>
                     </div>
                     <div>
-                      <div className="text-3xl font-bold text-yellow-400 mb-2">500+</div>
-                      <div className="text-gray-300">Successful Graduates</div>    
+                      <div className="text-2xl md:text-3xl font-bold text-yellow-400 mb-2">500+</div>
+                      <div className="text-gray-300 text-sm md:text-base">Successful Graduates</div>    
                     </div>
                   </div>
                 </div>

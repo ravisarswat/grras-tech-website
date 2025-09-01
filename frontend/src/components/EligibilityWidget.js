@@ -92,52 +92,43 @@ const EligibilityWidget = () => {
     if (!courseSlug) {
       setEligibilityText('');
       setError(null);
+      setIsLoading(false);
       return;
     }
 
+    console.log('🔍 Course selection started:', courseSlug);
     setIsLoading(true);
     setError(null);
     
-    // Debug logging
-    console.log('Selected course slug:', courseSlug);
-    console.log('Available courses:', availableCourses.map(c => ({ slug: c.slug, title: c.title || c.name })));
-    
-    // Find the course
+    // Find the course immediately
     const course = availableCourses.find(c => c.slug === courseSlug);
-    console.log('Found course:', course);
+    console.log('🎯 Found course:', course ? course.title || course.name : 'NOT FOUND');
     
     if (!course) {
-      console.error('Course not found for slug:', courseSlug);
+      console.error('❌ Course not found for slug:', courseSlug);
       setIsLoading(false);
       setError(`Course "${courseSlug}" not found. Please select a different course or contact our admission counselors for assistance.`);
       return;
     }
     
-    // Add timeout to prevent stuck loading state
-    const loadingTimeout = setTimeout(() => {
-      setIsLoading(false);
-      setError('Unable to load eligibility information. Please try again or contact our admission counselors.');
-    }, 5000);
+    // Process eligibility immediately - no timeout needed
+    let eligibility = course.eligibility;
     
-    // Simulate loading for UX (since data is already available)
-    setTimeout(() => {
-      clearTimeout(loadingTimeout);
-      
-      let eligibility = course.eligibility;
-      
-      // Enhanced fallback with more helpful information
-      if (!eligibility || eligibility.trim() === '') {
-        eligibility = `For ${course.title || course.name || 'this course'}, please contact our admission counselors for detailed eligibility criteria and personalized guidance. Our team will help you determine if you meet the requirements and guide you through the admission process.`;
-      }
-      
-      setEligibilityText(eligibility);
-      
-      // Update URL parameter
-      const newParams = new URLSearchParams(searchParams);
-      newParams.set('course', courseSlug);
-      setSearchParams(newParams);
-      setIsLoading(false);
-    }, 800); // Reduced timeout for better UX
+    if (!eligibility || eligibility.trim() === '') {
+      eligibility = `For ${course.title || course.name || 'this course'}, please contact our admission counselors for detailed eligibility criteria and personalized guidance. Our team will help you determine if you meet the requirements and guide you through the admission process.`;
+    }
+    
+    console.log('✅ Setting eligibility text:', eligibility.substring(0, 100) + '...');
+    setEligibilityText(eligibility);
+    
+    // Update URL parameter
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('course', courseSlug);
+    setSearchParams(newParams);
+    
+    // Set loading to false immediately
+    setIsLoading(false);
+    console.log('✅ Course selection completed');
   };
 
   const resetWidget = () => {

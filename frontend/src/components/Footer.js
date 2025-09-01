@@ -220,8 +220,12 @@ const Footer = () => {
               <h4 className="text-lg font-semibold mb-4 text-white">Popular Courses</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
                 {popularCourses.map((course, index) => (
-                  <div key={index} className="bg-gray-800 rounded-lg p-3 lg:p-4 hover:bg-gray-700 transition-colors">
-                    <h5 className="font-medium text-white text-sm lg:text-base mb-1 line-clamp-2">
+                  <Link 
+                    key={index} 
+                    to={`/courses/${course.slug}`}
+                    className="bg-gray-800 rounded-lg p-3 lg:p-4 hover:bg-gray-700 transition-colors block group"
+                  >
+                    <h5 className="font-medium text-white text-sm lg:text-base mb-1 line-clamp-2 group-hover:text-red-400 transition-colors">
                       {course.title}
                     </h5>
                     <div className="flex items-center justify-between">
@@ -231,8 +235,9 @@ const Footer = () => {
                           <span className="text-gray-400 text-xs lg:text-sm ml-2">(EMI Available)</span>
                         )}
                       </p>
+                      <ExternalLink className="h-3 w-3 text-gray-400 group-hover:text-red-400 transition-colors" />
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>

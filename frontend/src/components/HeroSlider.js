@@ -105,44 +105,39 @@ const HeroSlider = () => {
   const currentSlideData = slides[currentSlide];
 
   return (
-    <>
     <section className="relative min-h-[400px] sm:min-h-[450px] md:min-h-[400px] lg:min-h-[380px] overflow-hidden">
       {/* Background with current slide gradient */}
       <div className={`absolute inset-0 ${currentSlideData.background} transition-all duration-1000`}>
         <div className="absolute inset-0 bg-black bg-opacity-20"></div>
       </div>
 
-      {/* Content - Fixed max-width 1200px container */}
-      <div className="relative max-w-[1200px] mx-auto px-4 md:px-6 py-12 md:py-16 lg:py-20 h-full">
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center w-full min-h-full">
+      {/* Content */}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 lg:py-16 h-full">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full min-h-full">
           
-          {/* Left Content Column */}
-          <div className="text-center lg:text-left animate-fade-in-up flex flex-col justify-center order-2 lg:order-1">
-            
-            {/* Icon - Fixed 64×64 (80×80 on md+) */}
+          {/* Left Content */}
+          <div className="text-center lg:text-left animate-fade-in-up flex flex-col justify-center">
+            {/* Icon */}
             <div className="flex justify-center lg:justify-start mb-4 lg:mb-6">
-              <div className="w-16 h-16 md:w-20 md:h-20 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center backdrop-blur-sm p-2">
+              <div className="w-16 h-16 lg:w-20 lg:h-20 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center backdrop-blur-sm p-3">
                 {currentSlideData.icon}
               </div>
             </div>
 
-            {/* Headline - wraps within container, no overlap */}
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold leading-tight mb-3 lg:mb-4 text-white max-w-full">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold leading-tight mb-3 lg:mb-4 text-white">
               {currentSlideData.title}
             </h1>
             
-            {/* Subtitle */}
             <h2 className="text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl text-gray-100 mb-3 lg:mb-4 leading-relaxed font-medium">
               {currentSlideData.subtitle}
             </h2>
             
-            {/* Description */}
             <p className="text-xs sm:text-sm md:text-base lg:text-base text-gray-200 mb-4 lg:mb-6 leading-relaxed max-w-2xl mx-auto lg:mx-0">
               {currentSlideData.description}
             </p>
 
-            {/* Stats Badges - wrap with consistent 12px gap */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-3 mb-4 lg:mb-6">
+            {/* Stats */}
+            <div className="flex flex-wrap justify-center lg:justify-start gap-2 lg:gap-3 mb-4 lg:mb-6">
               {currentSlideData.stats.map((stat, index) => (
                 <div key={index} className="flex items-center gap-1 lg:gap-2 bg-white bg-opacity-20 rounded-full px-2 sm:px-3 py-1 lg:py-2 backdrop-blur-sm">
                   <Star className="h-3 w-3 lg:h-4 lg:w-4 text-yellow-400 fill-current flex-shrink-0" />
@@ -152,7 +147,7 @@ const HeroSlider = () => {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start max-w-md mx-auto lg:max-w-none lg:mx-0 pb-16 sm:pb-8">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start max-w-md mx-auto lg:max-w-none lg:mx-0">
               <Link
                 to={currentSlideData.ctaLink}
                 className="inline-flex items-center justify-center gap-2 bg-white text-gray-900 px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-bold text-sm sm:text-base hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-xl whitespace-nowrap"
@@ -171,50 +166,49 @@ const HeroSlider = () => {
             </div>
           </div>
 
-          {/* Right Content Card - order-first on mobile, normal on lg+ */}
-          <div className="order-1 lg:order-2 animate-fade-in-right">
-            <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-5 md:p-6 lg:p-8 border border-white border-opacity-15 shadow-2xl w-full max-w-md mx-auto">
-              
-              {/* Dynamic Content Based on First Two Slides */}
+          {/* Right Content Card */}
+          <div className="hidden lg:flex animate-fade-in-right">
+            <div className="bg-white bg-opacity-15 backdrop-blur-lg rounded-2xl p-6 lg:p-8 border border-white border-opacity-20 shadow-2xl w-full self-center">
+              {/* Dynamic Content Based on Slide */}
               {currentSlide === 0 && (
                 <div>
-                  <h3 className="text-xl lg:text-2xl font-bold text-white mb-4 lg:mb-6">Degree Benefits</h3>
+                  <h3 className="text-xl lg:text-2xl font-bold text-white mb-4 lg:mb-6">Red Hat Excellence</h3>
                   <div className="space-y-3 lg:space-y-4">
                     <div className="flex items-center gap-3 lg:gap-4">
-                      <div className="w-10 h-10 lg:w-12 lg:h-12 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
-                        <GraduationCap className="h-4 w-4 lg:h-5 lg:w-5 text-white" />
+                      <div className="w-10 h-10 lg:w-12 lg:h-12 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-white font-bold text-sm lg:text-lg">95%</span>
                       </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="text-white font-semibold text-sm lg:text-base">BCA Program</div>
-                        <div className="text-gray-200 text-xs lg:text-sm">3-year industry-ready degree</div>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center gap-3 lg:gap-4">
-                      <div className="w-10 h-10 lg:w-12 lg:h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                        <Award className="h-4 w-4 lg:h-5 lg:w-5 text-white" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="text-white font-semibold text-sm lg:text-base">100% Placement</div>
-                        <div className="text-gray-200 text-xs lg:text-sm">Guaranteed job assistance</div>
+                      <div className="min-w-0">
+                        <div className="text-white font-semibold text-sm lg:text-base">Success Rate</div>
+                        <div className="text-gray-200 text-xs lg:text-sm">Red Hat Certified</div>
                       </div>
                     </div>
                     
                     <div className="flex items-center gap-3 lg:gap-4">
-                      <div className="w-10 h-10 lg:w-12 lg:h-12 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
-                        <Star className="h-4 w-4 lg:h-5 lg:w-5 text-white fill-current" />
+                      <div className="w-10 h-10 lg:w-12 lg:h-12 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-white font-bold text-sm lg:text-lg">500+</span>
                       </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="text-white font-semibold text-sm lg:text-base">Industry Skills</div>
-                        <div className="text-gray-200 text-xs lg:text-sm">Modern tech curriculum</div>
+                      <div className="min-w-0">
+                        <div className="text-white font-semibold text-sm lg:text-base">Students Certified</div>
+                        <div className="text-gray-200 text-xs lg:text-sm">RHCSA & RHCE</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-3 lg:gap-4">
+                      <div className="w-10 h-10 lg:w-12 lg:h-12 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-white font-bold text-sm lg:text-lg">18+</span>
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-white font-semibold text-sm lg:text-base">Years Experience</div>
+                        <div className="text-gray-200 text-xs lg:text-sm">Linux Training</div>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="mt-4 lg:mt-6 p-3 lg:p-4 bg-black bg-opacity-30 rounded-xl w-full">
+                  <div className="mt-4 lg:mt-6 p-3 lg:p-4 bg-black bg-opacity-30 rounded-xl">
                     <div className="text-center">
-                      <div className="text-lg lg:text-xl font-bold text-white mb-1">₹6-12 LPA</div>
-                      <div className="text-gray-200 text-xs lg:text-sm">Fresher Package</div>
+                      <div className="text-xl lg:text-2xl font-bold text-white mb-1">₹8-15 LPA</div>
+                      <div className="text-gray-200 text-xs lg:text-sm">Average Package</div>
                     </div>
                   </div>
                 </div>
@@ -228,7 +222,7 @@ const HeroSlider = () => {
                       <div className="w-10 h-10 lg:w-12 lg:h-12 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0">
                         <Award className="h-4 w-4 lg:h-5 lg:w-5 text-white" />
                       </div>
-                      <div className="min-w-0 flex-1">
+                      <div className="min-w-0">
                         <div className="text-white font-semibold text-sm lg:text-base">Solutions Architect</div>
                         <div className="text-gray-200 text-xs lg:text-sm">Design scalable cloud solutions</div>
                       </div>
@@ -238,7 +232,7 @@ const HeroSlider = () => {
                       <div className="w-10 h-10 lg:w-12 lg:h-12 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
                         <Settings className="h-4 w-4 lg:h-5 lg:w-5 text-white" />
                       </div>
-                      <div className="min-w-0 flex-1">
+                      <div className="min-w-0">
                         <div className="text-white font-semibold text-sm lg:text-base">DevOps Engineer</div>
                         <div className="text-gray-200 text-xs lg:text-sm">Automate cloud infrastructure</div>
                       </div>
@@ -248,105 +242,189 @@ const HeroSlider = () => {
                       <div className="w-10 h-10 lg:w-12 lg:h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                         <Shield className="h-4 w-4 lg:h-5 lg:w-5 text-white" />
                       </div>
-                      <div className="min-w-0 flex-1">
+                      <div className="min-w-0">
                         <div className="text-white font-semibold text-sm lg:text-base">SysOps Admin</div>
                         <div className="text-gray-200 text-xs lg:text-sm">Manage cloud operations</div>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="mt-4 lg:mt-6 p-3 lg:p-4 bg-black bg-opacity-30 rounded-xl w-full">
-                    <div className="text-center">
-                      <div className="text-lg lg:text-xl font-bold text-white mb-1">₹12-25 LPA</div>
-                      <div className="text-gray-200 text-xs lg:text-sm">Cloud Engineer Salary</div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Remaining slides content for other slides */}
-              {currentSlide > 1 && (
-                <div>
-                  <h3 className="text-xl lg:text-2xl font-bold text-white mb-4 lg:mb-6">Course Excellence</h3>
-                  <div className="space-y-3 lg:space-y-4">
-                    <div className="bg-white bg-opacity-20 rounded-lg p-3 lg:p-4">
-                      <div className="text-white font-semibold text-sm lg:text-base mb-2">Expert Training</div>
-                      <div className="text-gray-200 text-xs lg:text-sm">Industry-certified instructors with real-world experience</div>
-                    </div>
-                    
-                    <div className="bg-white bg-opacity-20 rounded-lg p-3 lg:p-4">
-                      <div className="text-white font-semibold text-sm lg:text-base mb-2">Hands-on Practice</div>
-                      <div className="text-gray-200 text-xs lg:text-sm">Real projects and lab environments</div>
-                    </div>
-                    
-                    <div className="bg-white bg-opacity-20 rounded-lg p-3 lg:p-4">
-                      <div className="text-white font-semibold text-sm lg:text-base mb-2">Career Support</div>
-                      <div className="text-gray-200 text-xs lg:text-sm">Job placement assistance and guidance</div>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-4 lg:mt-6 p-3 lg:p-4 bg-black bg-opacity-30 rounded-xl w-full">
-                    <div className="text-center">
-                      <div className="text-lg lg:text-xl font-bold text-white mb-1">High Growth</div>
-                      <div className="text-gray-200 text-xs lg:text-sm">Career Opportunities</div>
-                    </div>
+                  <div className="mt-4 lg:mt-6 p-3 lg:p-4 bg-black bg-opacity-30 rounded-xl text-center">
+                    <div className="text-lg lg:text-xl font-bold text-white mb-1">₹12-25 LPA</div>
+                    <div className="text-gray-200 text-xs lg:text-sm">Cloud Engineer Salary</div>
                   </div>
                 </div>
               )}
               
+              {currentSlide === 2 && (
+                <div>
+                  <h3 className="text-xl lg:text-2xl font-bold text-white mb-4 lg:mb-6">DevOps Tools Mastery</h3>
+                  <div className="grid grid-cols-2 gap-2 lg:gap-3 mb-4 lg:mb-6">
+                    <div className="bg-white bg-opacity-20 rounded-lg p-2 lg:p-3 text-center">
+                      <div className="text-white font-semibold text-xs lg:text-sm mb-1">Docker</div>
+                      <div className="text-gray-200 text-xs">Containerization</div>
+                    </div>
+                    <div className="bg-white bg-opacity-20 rounded-lg p-2 lg:p-3 text-center">
+                      <div className="text-white font-semibold text-xs lg:text-sm mb-1">Kubernetes</div>
+                      <div className="text-gray-200 text-xs">Orchestration</div>
+                    </div>
+                    <div className="bg-white bg-opacity-20 rounded-lg p-2 lg:p-3 text-center">
+                      <div className="text-white font-semibold text-xs lg:text-sm mb-1">Jenkins</div>
+                      <div className="text-gray-200 text-xs">CI/CD</div>
+                    </div>
+                    <div className="bg-white bg-opacity-20 rounded-lg p-2 lg:p-3 text-center">
+                      <div className="text-white font-semibold text-xs lg:text-sm mb-1">Ansible</div>
+                      <div className="text-gray-200 text-xs">Automation</div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2 lg:space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-white text-xs lg:text-sm">Course Completion</span>
+                      <span className="text-green-400 font-semibold text-xs lg:text-sm">92%</span>
+                    </div>
+                    <div className="w-full bg-white bg-opacity-20 rounded-full h-2">
+                      <div className="bg-green-400 h-2 rounded-full" style={{width: '92%'}}></div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4 lg:mt-6 p-3 lg:p-4 bg-black bg-opacity-30 rounded-xl text-center">
+                    <div className="text-lg lg:text-xl font-bold text-white mb-1">₹10-20 LPA</div>
+                    <div className="text-gray-200 text-xs lg:text-sm">DevOps Engineer Salary</div>
+                  </div>
+                </div>
+              )}
+              
+              {currentSlide === 3 && (
+                <div>
+                  <h3 className="text-xl lg:text-2xl font-bold text-white mb-4 lg:mb-6">Security Skills</h3>
+                  <div className="space-y-3 lg:space-y-4">
+                    <div className="flex items-center gap-3 lg:gap-4">
+                      <div className="w-8 h-8 lg:w-10 lg:h-10 bg-red-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Shield className="h-4 w-4 lg:h-5 lg:w-5 text-white" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-white font-semibold text-sm lg:text-base">Penetration Testing</div>
+                        <div className="text-gray-200 text-xs lg:text-sm">Find vulnerabilities</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-3 lg:gap-4">
+                      <div className="w-8 h-8 lg:w-10 lg:h-10 bg-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Settings className="h-4 w-4 lg:h-5 lg:w-5 text-white" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-white font-semibold text-sm lg:text-base">Network Security</div>
+                        <div className="text-gray-200 text-xs lg:text-sm">Secure infrastructure</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-3 lg:gap-4">
+                      <div className="w-8 h-8 lg:w-10 lg:h-10 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Award className="h-4 w-4 lg:h-5 lg:w-5 text-white" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-white font-semibold text-sm lg:text-base">Ethical Hacking</div>
+                        <div className="text-gray-200 text-xs lg:text-sm">Legal security testing</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4 lg:mt-6 bg-white bg-opacity-20 rounded-xl p-3 lg:p-4">
+                    <div className="text-center mb-2 lg:mb-3">
+                      <div className="text-white font-semibold text-sm lg:text-base">High Demand Field</div>
+                    </div>
+                    <div className="text-lg lg:text-2xl font-bold text-center text-white mb-1">₹15-30 LPA</div>
+                    <div className="text-gray-200 text-xs lg:text-sm text-center">Security Expert Salary</div>
+                  </div>
+                </div>
+              )}
+              
+              {currentSlide === 4 && (
+                <div>
+                  <h3 className="text-xl lg:text-2xl font-bold text-white mb-4 lg:mb-6">Degree Benefits</h3>
+                  <div className="space-y-3 lg:space-y-4">
+                    <div className="bg-white bg-opacity-20 rounded-lg p-3 lg:p-4">
+                      <div className="flex items-center gap-2 lg:gap-3 mb-2">
+                        <GraduationCap className="h-4 w-4 lg:h-5 lg:w-5 text-yellow-400 flex-shrink-0" />
+                        <span className="text-white font-semibold text-sm lg:text-base">BCA Program</span>
+                      </div>
+                      <div className="text-gray-200 text-xs lg:text-sm">3-year industry-ready degree</div>
+                    </div>
+                    
+                    <div className="bg-white bg-opacity-20 rounded-lg p-3 lg:p-4">
+                      <div className="flex items-center gap-2 lg:gap-3 mb-2">
+                        <Award className="h-4 w-4 lg:h-5 lg:w-5 text-green-400 flex-shrink-0" />
+                        <span className="text-white font-semibold text-sm lg:text-base">100% Placement</span>
+                      </div>
+                      <div className="text-gray-200 text-xs lg:text-sm">Guaranteed job assistance</div>
+                    </div>
+                    
+                    <div className="bg-white bg-opacity-20 rounded-lg p-3 lg:p-4">
+                      <div className="flex items-center gap-2 lg:gap-3 mb-2">
+                        <Star className="h-4 w-4 lg:h-5 lg:w-5 text-blue-400 fill-current flex-shrink-0" />
+                        <span className="text-white font-semibold text-sm lg:text-base">Industry Skills</span>
+                      </div>
+                      <div className="text-gray-200 text-xs lg:text-sm">Modern tech curriculum</div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4 lg:mt-6 p-3 lg:p-4 bg-black bg-opacity-30 rounded-xl">
+                    <div className="text-center">
+                      <div className="text-lg lg:text-xl font-bold text-white mb-1">₹6-12 LPA</div>
+                      <div className="text-gray-200 text-xs lg:text-sm">Fresher Package</div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
-    </section>
 
-    {/* Navigation Controls - Outside content area with 16-24px margin */}
-    <div className="relative bg-transparent py-4 md:py-6">
-      <div className="max-w-[1200px] mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-center gap-4">
-          {/* Previous Button */}
-          <button
-            onClick={goToPrevious}
-            className="w-10 h-10 lg:w-12 lg:h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all backdrop-blur-sm"
-          >
-            <ChevronLeft className="h-5 w-5 lg:h-6 lg:w-6 text-gray-700" />
-          </button>
+      {/* Navigation Controls */}
+      <div className="absolute bottom-4 lg:bottom-6 left-1/2 transform -translate-x-1/2 flex items-center gap-3 z-10">
+        {/* Previous Button */}
+        <button
+          onClick={goToPrevious}
+          className="w-10 h-10 lg:w-12 lg:h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all backdrop-blur-sm"
+        >
+          <ChevronLeft className="h-5 w-5 lg:h-6 lg:w-6 text-white" />
+        </button>
 
-          {/* Dots Indicator - Clickable pagination */}
-          <div className="flex items-center gap-2">
-            {slides.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`w-2 h-2 lg:w-3 lg:h-3 rounded-full transition-all duration-300 ${
-                  index === currentSlide 
-                    ? 'bg-gray-700 w-6 lg:w-8' 
-                    : 'bg-gray-400 hover:bg-gray-600'
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Next Button */}
-          <button
-            onClick={goToNext}
-            className="w-10 h-10 lg:w-12 lg:h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all backdrop-blur-sm"
-          >
-            <ChevronRight className="h-5 w-5 lg:h-6 lg:w-6 text-gray-700" />
-          </button>
-
-          {/* Play/Pause Button */}
-          <button
-            onClick={toggleAutoPlay}
-            className="w-10 h-10 lg:w-12 lg:h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all backdrop-blur-sm ml-2"
-          >
-            <Play className={`h-4 w-4 lg:h-5 lg:w-5 text-gray-700 ${isPlaying ? 'hidden' : 'block'}`} />
-            <div className={`w-2 h-2 bg-gray-700 ${isPlaying ? 'block' : 'hidden'}`}></div>
-          </button>
+        {/* Dots Indicator */}
+        <div className="flex items-center gap-2">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-2 h-2 lg:w-3 lg:h-3 rounded-full transition-all duration-300 ${
+                index === currentSlide 
+                  ? 'bg-white w-6 lg:w-8' 
+                  : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+              }`}
+            />
+          ))}
         </div>
+
+        {/* Next Button */}
+        <button
+          onClick={goToNext}
+          className="w-10 h-10 lg:w-12 lg:h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all backdrop-blur-sm"
+        >
+          <ChevronRight className="h-5 w-5 lg:h-6 lg:w-6 text-white" />
+        </button>
+
+        {/* Play/Pause Button */}
+        <button
+          onClick={toggleAutoPlay}
+          className="w-10 h-10 lg:w-12 lg:h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all backdrop-blur-sm ml-2"
+        >
+          <Play className={`h-4 w-4 lg:h-5 lg:w-5 text-white ${isPlaying ? 'hidden' : 'block'}`} />
+          <div className={`w-2 h-2 bg-white ${isPlaying ? 'block' : 'hidden'}`}></div>
+        </button>
       </div>
-    </div>
-    </>
+    </section>
   );
 };
 

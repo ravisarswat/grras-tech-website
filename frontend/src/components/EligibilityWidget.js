@@ -23,27 +23,40 @@ const EligibilityWidget = () => {
     console.log('Available courses count:', availableCourses.length);
     
     if (courseParam && availableCourses.length > 0) {
-      const course = availableCourses.find(c => c.slug === courseParam);
-      console.log('Course found for URL param:', course);
-      
-      if (course) {
-        setSelectedCourse(courseParam);
-        handleCourseSelection(courseParam);
-      } else {
-        console.warn('Course not found for URL parameter:', courseParam);
-        // Try to find a similar course by name matching
-        const similarCourse = availableCourses.find(c => 
-          c.title?.toLowerCase().includes('openshift') || 
-          c.name?.toLowerCase().includes('openshift') ||
-          c.slug?.includes('do188')
-        );
+      // Wait a bit for content to fully load
+      const timer = setTimeout(() => {
+        const course = availableCourses.find(c => c.slug === courseParam);
+        console.log('Course found for URL param:', course);
         
-        if (similarCourse) {
-          console.log('Found similar course:', similarCourse);
-          setSelectedCourse(similarCourse.slug);
-          handleCourseSelection(similarCourse.slug);
+        if (course) {
+          setSelectedCourse(courseParam);
+          handleCourseSelection(courseParam);
+        } else {
+          console.warn('Course not found for URL parameter:', courseParam);
+          console.log('Available course slugs:', availableCourses.map(c => c.slug));
+          
+          // Try to find a similar course by name matching
+          const similarCourse = availableCourses.find(c => 
+            c.title?.toLowerCase().includes('openshift') || 
+            c.name?.toLowerCase().includes('openshift') ||
+            c.slug?.includes('do188') ||
+            c.slug?.includes('do280')
+          );
+          
+          if (similarCourse) {
+            console.log('Found similar course:', similarCourse);
+            setSelectedCourse(similarCourse.slug);
+            handleCourseSelection(similarCourse.slug);
+          } else {
+            // Clear the URL parameter if course not found
+            const newParams = new URLSearchParams(searchParams);
+            newParams.delete('course');
+            setSearchParams(newParams);
+          }
         }
-      }
+      }, 500); // Wait for content to load
+      
+      return () => clearTimeout(timer);
     }
   }, [searchParams, availableCourses]);
 

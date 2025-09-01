@@ -147,7 +147,7 @@ const HeroSlider = () => {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start max-w-md mx-auto lg:max-w-none lg:mx-0 pb-4 sm:pb-2">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start max-w-md mx-auto lg:max-w-none lg:mx-0 mt-2 mb-2">
               <Link
                 to={currentSlideData.ctaLink}
                 className="inline-flex items-center justify-center gap-2 bg-white text-gray-900 px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-bold text-sm sm:text-base hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-xl whitespace-nowrap"

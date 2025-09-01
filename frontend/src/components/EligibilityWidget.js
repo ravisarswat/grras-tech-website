@@ -75,29 +75,18 @@ const EligibilityWidget = () => {
       console.log('❌ No course slug provided');
       setEligibilityText('');
       setError(null);
-      setIsLoading(false);
       return;
     }
 
-    // ALWAYS start with loading state
-    setIsLoading(true);
+    // Clear previous state
     setError(null);
     setEligibilityText('');
-    
-    // Force completion after maximum 1 second
-    const forceComplete = setTimeout(() => {
-      console.log('⚠️ FORCE COMPLETING eligibility check');
-      setIsLoading(false);
-      setEligibilityText('Please contact our admission counselors for detailed eligibility criteria and personalized guidance for this course.');
-    }, 1000);
     
     try {
       console.log('🔍 Available courses count:', availableCourses?.length || 0);
       
       if (!availableCourses || availableCourses.length === 0) {
         console.log('❌ No courses available');
-        clearTimeout(forceComplete);
-        setIsLoading(false);
         setError('Course data not loaded. Please refresh the page or contact support.');
         return;
       }
@@ -125,8 +114,6 @@ const EligibilityWidget = () => {
       
       if (!course) {
         console.log('❌ ABSOLUTELY NO COURSE FOUND');
-        clearTimeout(forceComplete);
-        setIsLoading(false);
         setError('Course not found. Please contact our admission counselors for assistance.');
         return;
       }
@@ -140,10 +127,8 @@ const EligibilityWidget = () => {
       
       console.log('✅ ELIGIBILITY PROCESSED:', eligibility.length, 'characters');
       
-      // Clear force timeout and complete successfully
-      clearTimeout(forceComplete);
+      // Complete successfully
       setEligibilityText(eligibility);
-      setIsLoading(false);
       
       // Update URL
       const newParams = new URLSearchParams(searchParams);
@@ -154,8 +139,6 @@ const EligibilityWidget = () => {
       
     } catch (error) {
       console.error('💥 ERROR in eligibility check:', error);
-      clearTimeout(forceComplete);
-      setIsLoading(false);
       setError('An error occurred while checking eligibility. Please try again.');
     }
   };

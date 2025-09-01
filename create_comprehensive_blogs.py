@@ -2510,7 +2510,8 @@ def create_comprehensive_blog_content(token):
         }
     
     # Replace existing posts with comprehensive ones
-    content["blog"]["posts"] = COMPREHENSIVE_BLOGS[:5]  # First 5 blogs
+    all_blogs = COMPREHENSIVE_BLOGS + REMAINING_BLOGS
+    content["blog"]["posts"] = all_blogs
     
     # Save updated content
     save_response = requests.post(f"{BACKEND_URL}/api/content", 
@@ -2518,7 +2519,7 @@ def create_comprehensive_blog_content(token):
                                 json={"content": content})
     
     if save_response.status_code == 200:
-        print(f"✅ Successfully created {len(COMPREHENSIVE_BLOGS[:5])} comprehensive blog posts!")
+        print(f"✅ Successfully created {len(all_blogs)} comprehensive blog posts!")
         return True
     else:
         print(f"❌ Failed to save blog content: {save_response.status_code}")

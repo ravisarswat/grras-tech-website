@@ -1,10 +1,10 @@
 {
-  "timestamp": "2025-08-31T17:46:31.595928",
+  "timestamp": "2025-09-01T05:07:53.497486",
   "backend_url": "https://grras-cms-1.preview.emergentagent.com",
   "total_tests": 12,
-  "passed_tests": 7,
-  "failed_tests": 5,
-  "success_rate": "58.3%",
+  "passed_tests": 6,
+  "failed_tests": 6,
+  "success_rate": "50.0%",
   "test_results": {
     "server_health": true,
     "mongodb_connection": true,
@@ -13,7 +13,7 @@
     "course_data_structure": false,
     "eligibility_widget_data": false,
     "admin_authentication": false,
-    "contact_form": true,
+    "contact_form": false,
     "syllabus_generation": true,
     "leads_management": false,
     "new_courses_addition": false,
@@ -23,7 +23,8 @@
   },
   "errors": [
     "Some courses missing required fields for EligibilityWidget",
-    "Admin login failed with status 401"
+    "Admin login failed with status 401",
+    "Contact form submission failed with status 422"
   ],
   "critical_issues": [
     "Course data missing required fields for EligibilityWidget",

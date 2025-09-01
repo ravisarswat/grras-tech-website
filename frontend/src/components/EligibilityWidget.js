@@ -208,7 +208,6 @@ const EligibilityWidget = () => {
                   }
                   
                   setEligibilityText(eligibility);
-                  setIsLoading(false);
                   setError(null);
                   
                   // Update URL
@@ -219,12 +218,10 @@ const EligibilityWidget = () => {
                   console.log('✅ COURSE PROCESSED IMMEDIATELY');
                 } else {
                   setError('Course not found. Please contact our admission counselors.');
-                  setIsLoading(false);
                 }
               } else {
                 setEligibilityText('');
                 setError(null);
-                setIsLoading(false);
               }
             }}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-700"

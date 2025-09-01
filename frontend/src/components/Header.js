@@ -104,6 +104,16 @@ const Header = () => {
     { name: 'Contact', path: '/contact' }
   ];
 
+  // Mobile navigation items (without Blog as requested by user)
+  const mobileNavigationItems = [
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+    { name: 'Courses', path: '/courses', hasDropdown: true },
+    { name: 'Learning Paths', path: '/learning-paths' },
+    { name: 'Admissions', path: '/admissions' },
+    { name: 'Contact', path: '/contact' }
+  ];
+
   const isActivePath = (path) => location.pathname === path;
 
   return (

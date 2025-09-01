@@ -243,21 +243,38 @@ const AdminContent = () => {
         }) || []
       };
       
-      await axios.post(`${API}/content`, { content: cleanedContent }, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
+      // Use enhanced save with sync
+      const saveResult = await adminSyncUtils.saveContentWithSync(cleanedContent, token, false);
       
-      setOriginalContent(JSON.parse(JSON.stringify(cleanedContent)));
-      setContent(cleanedContent);
+      if (saveResult.success) {
+        setOriginalContent(JSON.parse(JSON.stringify(cleanedContent)));
+        setContent(cleanedContent);
+        
+        // Show sync notification  
+        adminSyncUtils.showSyncNotification('Content saved! Syncing with website...', 'info');
+        
+        // Wait for sync and verify
+        await adminSyncUtils.waitForSync(2000);
+        
+        // Verify sync status
+        const syncStatus = await adminSyncUtils.verifySyncStatus(cleanedContent.courses?.length);
+        
+        if (syncStatus.synced) {
+          toast.success('✅ Content saved and synced successfully! Changes are now live on website.');
+        } else {
+          toast.warning('⚠️ Content saved but sync verification failed. Please refresh website to see changes.');
+        }
+        
+        // Force reload content from server to ensure sync
+        setTimeout(() => {
+          loadContent();
+        }, 1000);
+      } else {
+        throw new Error(saveResult.error || 'Save failed');
+      }
       
-      // Force reload content from server to ensure sync
-      setTimeout(() => {
-        loadContent();
-      }, 1000);
-      
-      toast.success('Content saved successfully! Changes are now live.');
     } catch (error) {
-      const errorMessage = error.response?.data?.detail || 'Failed to save content. Please try again.';
+      const errorMessage = error.response?.data?.detail || error.message || 'Failed to save content. Please try again.';
       toast.error(errorMessage);
       console.error('Error saving content:', error);
     } finally {

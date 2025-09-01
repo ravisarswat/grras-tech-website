@@ -141,8 +141,8 @@ const Header = () => {
               alt="GRRAS Solutions"
               className="h-16 sm:h-20 w-auto hover:scale-105 transition-transform"
             />
-            <div className="text-center -mt-1">
-              <h1 className="text-sm sm:text-base font-bold text-gray-900">Solutions</h1>
+            <div className="text-center -mt-3 sm:-mt-2">
+              <h1 className="text-xs sm:text-sm font-bold text-gray-900">Solutions</h1>
             </div>
           </Link>
 

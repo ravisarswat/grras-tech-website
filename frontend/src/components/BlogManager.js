@@ -179,20 +179,6 @@ const BlogManager = () => {
     }
     setShowEditor(true);
   };
-        content: '',
-        excerpt: '',
-        featured_image: '',
-        category: 'general',
-        tags: [],
-        author: 'GRRAS Team',
-        published: true,
-        meta_title: '',
-        meta_description: '',
-        meta_keywords: ''
-      });
-    }
-    setShowEditor(true);
-  };
 
   const closeEditor = () => {
     setShowEditor(false);

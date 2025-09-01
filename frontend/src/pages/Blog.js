@@ -117,7 +117,7 @@ const Blog = () => {
   };
 
   const getFeaturedImage = (post) => {
-    return post.featured_image || post.coverImage || '/api/placeholder/400/240';
+    return post.featured_image || post.coverImage || 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg';
   };
 
   return (

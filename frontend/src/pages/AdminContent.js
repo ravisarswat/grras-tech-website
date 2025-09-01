@@ -25,6 +25,7 @@ import CourseEditor from '../components/CourseEditor';
 import FooterTab from '../components/FooterTab';
 import CategoryManager from '../components/CategoryManager';
 import LearningPathManager from '../components/LearningPathManager';
+import BlogManager from '../components/BlogManager';
 import adminSyncUtils from '../utils/adminSync';
 import axios from 'axios';
 

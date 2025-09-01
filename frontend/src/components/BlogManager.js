@@ -566,18 +566,79 @@ const BlogManager = () => {
                   
                   {/* Publish Settings */}
                   <div className="border-t pt-6">
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="checkbox"
-                        id="published"
-                        checked={formData.published}
-                        onChange={(e) => handleInputChange('published', e.target.checked)}
-                        className="form-checkbox"
-                      />
-                      <label htmlFor="published" className="text-sm font-medium text-gray-700">
-                        Publish immediately
-                      </label>
+                    <h4 className="text-lg font-medium text-gray-900 mb-4">Publishing Settings</h4>
+                    
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Publication Date
+                        </label>
+                        <input
+                          type="date"
+                          value={formData.publishAt}
+                          onChange={(e) => handleInputChange('publishAt', e.target.value)}
+                          className="form-input"
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Select when this blog post should be published
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Read Time
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.readTime}
+                          onChange={(e) => handleInputChange('readTime', e.target.value)}
+                          className="form-input"
+                          placeholder="5 min read"
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Estimated reading time (e.g., "5 min read")
+                        </p>
+                      </div>
                     </div>
+                    
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="checkbox"
+                          id="published"
+                          checked={formData.published}
+                          onChange={(e) => handleInputChange('published', e.target.checked)}
+                          className="form-checkbox"
+                        />
+                        <label htmlFor="published" className="text-sm font-medium text-gray-700">
+                          Publish immediately
+                        </label>
+                      </div>
+                      
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="checkbox"
+                          id="featured"
+                          checked={formData.featured}
+                          onChange={(e) => handleInputChange('featured', e.target.checked)}
+                          className="form-checkbox"
+                        />
+                        <label htmlFor="featured" className="text-sm font-medium text-gray-700">
+                          Mark as featured post
+                        </label>
+                      </div>
+                    </div>
+                    
+                    {!formData.published && (
+                      <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="h-4 w-4 text-yellow-600" />
+                          <p className="text-sm text-yellow-800">
+                            This post will be saved as a draft and can be published later.
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

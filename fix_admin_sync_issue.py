@@ -8,7 +8,7 @@ import requests
 import json
 import time
 
-BASE_URL = "https://grras-ui-revamp.preview.emergentagent.com/api"
+BASE_URL = "https://responsive-edu-site.preview.emergentagent.com/api"
 
 def get_admin_token():
     """Get admin authentication token"""

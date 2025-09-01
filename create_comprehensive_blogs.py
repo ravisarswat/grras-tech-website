@@ -8,7 +8,7 @@ import uuid
 from datetime import datetime, timedelta
 
 # Backend URL
-BACKEND_URL = "https://grras-ui-revamp.preview.emergentagent.com"
+BACKEND_URL = "https://responsive-edu-site.preview.emergentagent.com"
 
 # Admin credentials
 ADMIN_PASSWORD = "grras@admin2024"

@@ -968,8 +968,14 @@ async def get_blog_categories():
         # Count posts by category
         category_counts = {}
         for post in blog_posts:
-            if post.get("published", True):
-                category = post.get("category", "general")
+            if post.get("published", True) or post.get("status") == "published":
+                # Use category field or derive from tags
+                category = post.get("category")
+                if not category and post.get("tags"):
+                    # Use first tag as category if no category field
+                    category = post.get("tags", ["general"])[0]
+                else:
+                    category = category or "general"
                 category_counts[category] = category_counts.get(category, 0) + 1
         
         return {"categories": category_counts}

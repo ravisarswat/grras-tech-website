@@ -135,13 +135,13 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <Link to="/" className="flex flex-col items-center space-y-1 -ml-2 lg:-ml-4">
+          <Link to="/" className="flex flex-col items-center -ml-2 lg:-ml-4">
             <img
               src="https://customer-assets.emergentagent.com/job_db8831d9-1fc7-46ac-b819-59bb9fafe1eb/artifacts/lu0elrou_black%20logo.jpg"
               alt="GRRAS Solutions"
-              className="h-12 sm:h-16 w-auto hover:scale-105 transition-transform"
+              className="h-16 sm:h-20 w-auto hover:scale-105 transition-transform"
             />
-            <div className="text-center">
+            <div className="text-center -mt-1">
               <h1 className="text-sm sm:text-base font-bold text-gray-900">Solutions</h1>
             </div>
           </Link>

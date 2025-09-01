@@ -917,46 +917,6 @@ async def get_blog_posts(
         logging.error(f"Error fetching blog posts: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch blog posts")
 
-@api_router.get("/blog/{slug}")
-async def get_blog_post(slug: str):
-    """Get individual blog post by slug"""
-    try:
-        content = await content_manager.get_content()
-        blog_section = content.get("blog", {})
-        blog_posts = blog_section.get("posts", []) if isinstance(blog_section, dict) else []
-        
-        # Find post by slug (check both published field and status)
-        post = next((
-            p for p in blog_posts 
-            if p.get("slug") == slug and (p.get("published", True) or p.get("status") == "published")
-        ), None)
-        
-        if not post:
-            raise HTTPException(status_code=404, detail="Blog post not found")
-        
-        # Calculate reading time
-        word_count = len(post.get("body", post.get("content", "")).split())
-        reading_time = max(1, round(word_count / 200))
-        post["reading_time"] = reading_time
-        
-        # Get related posts (same category, different slug)
-        related_posts = [
-            p for p in blog_posts 
-            if p.get("category") == post.get("category") 
-            and p.get("slug") != slug 
-            and p.get("published", True)
-        ][:3]  # Limit to 3 related posts
-        
-        return {
-            "post": post,
-            "related_posts": related_posts
-        }
-    except HTTPException:
-        raise
-    except Exception as e:
-        logging.error(f"Error fetching blog post {slug}: {e}")
-        raise HTTPException(status_code=500, detail="Failed to fetch blog post")
-
 @api_router.get("/blog/categories")
 async def get_blog_categories():
     """Get all blog categories with post counts"""
@@ -1002,6 +962,46 @@ async def get_blog_tags():
     except Exception as e:
         logging.error(f"Error fetching blog tags: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch blog tags")
+
+@api_router.get("/blog/{slug}")
+async def get_blog_post(slug: str):
+    """Get individual blog post by slug"""
+    try:
+        content = await content_manager.get_content()
+        blog_section = content.get("blog", {})
+        blog_posts = blog_section.get("posts", []) if isinstance(blog_section, dict) else []
+        
+        # Find post by slug (check both published field and status)
+        post = next((
+            p for p in blog_posts 
+            if p.get("slug") == slug and (p.get("published", True) or p.get("status") == "published")
+        ), None)
+        
+        if not post:
+            raise HTTPException(status_code=404, detail="Blog post not found")
+        
+        # Calculate reading time
+        word_count = len(post.get("body", post.get("content", "")).split())
+        reading_time = max(1, round(word_count / 200))
+        post["reading_time"] = reading_time
+        
+        # Get related posts (same category, different slug)
+        related_posts = [
+            p for p in blog_posts 
+            if p.get("category") == post.get("category") 
+            and p.get("slug") != slug 
+            and p.get("published", True)
+        ][:3]  # Limit to 3 related posts
+        
+        return {
+            "post": post,
+            "related_posts": related_posts
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error fetching blog post {slug}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch blog post")
 
 @api_router.post("/admin/blog")
 async def create_blog_post(post: BlogPostRequest, admin_verified: bool = Depends(verify_admin_token)):

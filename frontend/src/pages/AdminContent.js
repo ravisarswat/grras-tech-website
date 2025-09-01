@@ -324,6 +324,40 @@ const AdminContent = () => {
     setContent(newContent);
   };
 
+  const forceSyncWithWebsite = async () => {
+    try {
+      const token = localStorage.getItem('admin_token');
+      if (!token) {
+        toast.error('No authentication token found');
+        return;
+      }
+
+      toast.info('🔄 Force syncing with website...');
+      
+      const syncResult = await adminSyncUtils.forceAdminSync(token);
+      
+      if (syncResult.success) {
+        toast.success('✅ Force sync completed! Website updated successfully.');
+        
+        // Verify sync status
+        setTimeout(async () => {
+          const verification = await adminSyncUtils.verifySyncStatus();
+          if (verification.synced) {
+            toast.success(`✅ Sync verified: ${verification.coursesCount} courses live on website`);
+          }
+        }, 2000);
+        
+        // Reload content to ensure consistency
+        loadContent();
+      } else {
+        toast.error(`❌ Force sync failed: ${syncResult.error}`);
+      }
+    } catch (error) {
+      toast.error('❌ Force sync error: ' + error.message);
+      console.error('Force sync error:', error);
+    }
+  };
+
   const getContentValue = (path) => {
     if (!content) return '';
     

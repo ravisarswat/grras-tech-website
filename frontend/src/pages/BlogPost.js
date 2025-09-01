@@ -272,7 +272,8 @@ const BlogPost = () => {
     }
   };
 
-  const currentPost = post || blogPosts[slug];
+  // Force use of API data when available, fallback to hardcoded only if API fails
+  const currentPost = post ? post : (error ? blogPosts[slug] : null);
 
   if (!currentPost) {
     return (

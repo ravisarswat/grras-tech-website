@@ -740,6 +740,20 @@ class BulkDeleteRequest(BaseModel):
             }
         }
 
+class BlogPostRequest(BaseModel):
+    title: str
+    slug: str
+    content: str
+    excerpt: Optional[str] = None
+    featured_image: Optional[str] = None
+    category: Optional[str] = "general"
+    tags: Optional[List[str]] = []
+    author: Optional[str] = "GRRAS Team"
+    published: Optional[bool] = True
+    meta_title: Optional[str] = None
+    meta_description: Optional[str] = None
+    meta_keywords: Optional[str] = None
+
 @api_router.delete("/leads/bulk")
 async def delete_multiple_leads(request: BulkDeleteRequest, admin_verified: bool = Depends(verify_admin_token)):
     """Delete multiple leads (Admin only)"""

@@ -77,12 +77,41 @@ const EligibilityWidget = () => {
     }
 
     console.log('🔍 Course selection started:', courseSlug);
+    console.log('🔍 Available course slugs:', availableCourses.map(c => c.slug));
+    
     setIsLoading(true);
     setError(null);
     
     // Find the course immediately
-    const course = availableCourses.find(c => c.slug === courseSlug);
-    console.log('🎯 Found course:', course ? course.title || course.name : 'NOT FOUND');
+    let course = availableCourses.find(c => c.slug === courseSlug);
+    
+    // If not found, try alternative matching
+    if (!course) {
+      console.log('❌ Exact match not found, trying alternatives...');
+      
+      // Try different variations for DO188
+      if (courseSlug.includes('do188')) {
+        course = availableCourses.find(c => 
+          c.slug?.includes('do188') || 
+          c.title?.toLowerCase().includes('do188') ||
+          c.name?.toLowerCase().includes('do188') ||
+          c.title?.toLowerCase().includes('openshift development') ||
+          c.name?.toLowerCase().includes('openshift development')
+        );
+        console.log('🔍 DO188 alternative match:', course);
+      }
+      
+      // General course matching
+      if (!course) {
+        course = availableCourses.find(c => 
+          c.slug?.toLowerCase().includes(courseSlug.toLowerCase()) ||
+          courseSlug.toLowerCase().includes(c.slug?.toLowerCase())
+        );
+        console.log('🔍 General alternative match:', course);
+      }
+    }
+    
+    console.log('🎯 Final course found:', course ? course.title || course.name : 'NOT FOUND');
     
     if (!course) {
       console.error('❌ Course not found for slug:', courseSlug);
@@ -101,14 +130,14 @@ const EligibilityWidget = () => {
     console.log('✅ Setting eligibility text:', eligibility.substring(0, 100) + '...');
     setEligibilityText(eligibility);
     
-    // Update URL parameter
+    // Update URL parameter with the found course slug (might be different from input)
     const newParams = new URLSearchParams(searchParams);
-    newParams.set('course', courseSlug);
+    newParams.set('course', course.slug);
     setSearchParams(newParams);
     
     // Set loading to false immediately
     setIsLoading(false);
-    console.log('✅ Course selection completed');
+    console.log('✅ Course selection completed successfully');
   };
 
   const resetWidget = () => {

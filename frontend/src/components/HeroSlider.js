@@ -124,7 +124,7 @@ const HeroSlider = () => {
           {/* Left Content */}
           <div className="text-center lg:text-left animate-fade-in-up flex flex-col justify-center">
             {/* Icon */}
-            <div className="flex justify-center xl:justify-start mb-4 lg:mb-6">
+            <div className="flex justify-center lg:justify-start mb-4 lg:mb-6">
               <div className="w-16 h-16 lg:w-20 lg:h-20 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center backdrop-blur-sm p-3">
                 {currentSlideData.icon}
               </div>

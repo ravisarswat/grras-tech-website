@@ -105,7 +105,7 @@ const HeroSlider = () => {
   const currentSlideData = slides[currentSlide];
 
   return (
-    <section className="relative min-h-[700px] overflow-hidden">
+    <section className="relative min-h-[500px] md:min-h-[550px] lg:min-h-[600px] overflow-hidden">
       {/* Background Slide */}
       <div className={`absolute inset-0 transition-all duration-1000 ${currentSlideData.background}`}>
         <div className="absolute inset-0 bg-black bg-opacity-30"></div>
@@ -119,55 +119,55 @@ const HeroSlider = () => {
       </div>
 
       {/* Content */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 h-full flex items-center">
-        <div className="grid lg:grid-cols-2 gap-12 items-center w-full">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-20 h-full flex items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full">
           {/* Left Content */}
           <div className="text-center lg:text-left animate-fade-in-up">
             {/* Icon */}
-            <div className="flex justify-center lg:justify-start mb-6">
-              <div className="w-20 h-20 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+            <div className="flex justify-center lg:justify-start mb-4 lg:mb-6">
+              <div className="w-16 h-16 lg:w-20 lg:h-20 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
                 {currentSlideData.icon}
               </div>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 lg:mb-6 text-white">
               {currentSlideData.title}
             </h1>
             
-            <h2 className="text-xl md:text-2xl text-gray-100 mb-6 leading-relaxed font-medium">
+            <h2 className="text-lg md:text-xl lg:text-2xl text-gray-100 mb-4 lg:mb-6 leading-relaxed font-medium">
               {currentSlideData.subtitle}
             </h2>
             
-            <p className="text-lg text-gray-200 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+            <p className="text-base lg:text-lg text-gray-200 mb-6 lg:mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
               {currentSlideData.description}
             </p>
 
             {/* Stats */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-8">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-3 lg:gap-4 mb-6 lg:mb-8">
               {currentSlideData.stats.map((stat, index) => (
-                <div key={index} className="flex items-center gap-2 bg-white bg-opacity-20 rounded-full px-4 py-2 backdrop-blur-sm">
-                  <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                  <span className="text-white text-sm font-medium">{stat}</span>
+                <div key={index} className="flex items-center gap-2 bg-white bg-opacity-20 rounded-full px-3 lg:px-4 py-2 backdrop-blur-sm">
+                  <Star className="h-3 w-3 lg:h-4 lg:w-4 text-yellow-400 fill-current" />
+                  <span className="text-white text-xs lg:text-sm font-medium">{stat}</span>
                 </div>
               ))}
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 justify-center lg:justify-start">
               <Link
                 to={currentSlideData.ctaLink}
-                className="inline-flex items-center justify-center gap-3 bg-white text-gray-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-xl"
+                className="inline-flex items-center justify-center gap-2 lg:gap-3 bg-white text-gray-900 px-6 lg:px-8 py-3 lg:py-4 rounded-xl font-bold text-base lg:text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-xl"
               >
                 {currentSlideData.cta}
-                <ArrowRight className="h-5 w-5" />
+                <ArrowRight className="h-4 w-4 lg:h-5 lg:w-5" />
               </Link>
               
               <Link
                 to="/admissions"
-                className="inline-flex items-center justify-center gap-3 border-2 border-white text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105"
+                className="inline-flex items-center justify-center gap-2 lg:gap-3 border-2 border-white text-white px-6 lg:px-8 py-3 lg:py-4 rounded-xl font-bold text-base lg:text-lg hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105"
               >
                 Apply Now
-                <Award className="h-5 w-5" />
+                <Award className="h-4 w-4 lg:h-5 lg:w-5" />
               </Link>
             </div>
           </div>

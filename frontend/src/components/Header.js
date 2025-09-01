@@ -155,7 +155,7 @@ const Header = () => {
                       <ChevronDown className={`h-4 w-4 transition-transform ${isCoursesOpen ? 'rotate-180' : ''}`} />
                     </button>
                     
-                    {/* Dropdown */}
+                    {/* Desktop Dropdown - keeping original */}
                     {isCoursesOpen && (
                       <div 
                         className="absolute top-full left-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-100 py-3 z-[9999]"
@@ -369,191 +369,193 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation - FIXED POSITIONING AND SCROLLING */}
         {isMenuOpen && (
-          <div className="lg:hidden pb-6 border-t border-gray-100 bg-gradient-to-b from-white via-gray-50 to-white animate-fadeIn shadow-lg">
-            <div className="pt-6 space-y-2">
-              {mobileNavigationItems.map((item, index) => (
-                <div key={item.name} className="animate-slideInUp" style={{animationDelay: `${index * 50}ms`}}>
-                  <Link
-                    to={item.path}
-                    className={`block px-4 py-3 mx-4 rounded-xl text-base font-medium transition-all duration-300 ${
-                      isActivePath(item.path)
-                        ? 'text-white bg-gradient-to-r from-red-600 to-orange-500 shadow-lg'
-                        : 'text-gray-700 hover:text-red-600 hover:bg-gradient-to-r hover:from-red-50 hover:to-orange-50 hover:shadow-md'
-                    }`}
-                    onClick={() => !item.hasDropdown && setIsMenuOpen(false)}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span>{item.name}</span>
-                      {item.hasDropdown && (
-                        <ChevronDown className="h-4 w-4 text-gray-400" />
-                      )}
-                    </div>
-                  </Link>
-                  
-                  {/* Mobile Courses Submenu */}
-                  {item.hasDropdown && (
-                    <div className="pl-2 space-y-2 mt-3 mx-4">
-                      <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3 px-3">
-                        🎓 Course Categories
+          <div className="fixed inset-0 top-[88px] lg:hidden bg-white z-40 overflow-y-auto" style={{height: 'calc(100vh - 88px)'}}>
+            <div className="bg-gradient-to-b from-white via-gray-50 to-white min-h-full">
+              <div className="p-4 space-y-3">
+                {mobileNavigationItems.map((item, index) => (
+                  <div key={item.name} className="animate-slideInUp" style={{animationDelay: `${index * 50}ms`}}>
+                    <Link
+                      to={item.path}
+                      className={`block px-4 py-3 mx-2 rounded-xl text-base font-medium transition-all duration-300 ${
+                        isActivePath(item.path)
+                          ? 'text-white bg-gradient-to-r from-red-600 to-orange-500 shadow-lg'
+                          : 'text-gray-700 hover:text-red-600 hover:bg-gradient-to-r hover:from-red-50 hover:to-orange-50 hover:shadow-md'
+                      }`}
+                      onClick={() => !item.hasDropdown && setIsMenuOpen(false)}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span>{item.name}</span>
+                        {item.hasDropdown && (
+                          <ChevronDown className="h-4 w-4 text-gray-400" />
+                        )}
                       </div>
-                      
-                      <Link
-                        to="/courses?category=redhat"
-                        className="flex items-center px-4 py-3 rounded-xl text-sm text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-red-500 hover:to-red-600 transition-all duration-200 border border-transparent hover:shadow-lg group"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <div className="w-10 h-10 bg-red-100 group-hover:bg-white rounded-xl flex items-center justify-center mr-3 transition-colors">
-                          <img 
-                            src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg"
-                            alt="Red Hat" 
-                            className="w-6 h-6 object-contain"
-                            onError={(e) => {
-                              e.target.style.display = 'none';
-                              e.target.nextSibling.style.display = 'block';
-                            }}
-                          />
-                          <div className="w-3 h-3 bg-red-500 rounded-full" style={{display: 'none'}}></div>
+                    </Link>
+                    
+                    {/* Mobile Courses Submenu */}
+                    {item.hasDropdown && (
+                      <div className="pl-2 space-y-2 mt-3 mx-2">
+                        <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3 px-3">
+                          🎓 Course Categories
                         </div>
-                        <div>
-                          <div className="font-semibold">Red Hat Technologies</div>
-                          <div className="text-xs opacity-80">Enterprise Linux & OpenShift</div>
-                        </div>
-                      </Link>
-                      
-                      <Link
-                        to="/courses?category=aws"
-                        className="flex items-center px-4 py-3 rounded-xl text-sm text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-orange-500 hover:to-yellow-500 transition-all duration-200 border border-transparent hover:shadow-lg group"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <div className="w-10 h-10 bg-orange-100 group-hover:bg-white rounded-xl flex items-center justify-center mr-3 transition-colors">
-                          <img 
-                            src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
-                            alt="AWS" 
-                            className="w-6 h-6 object-contain"
-                            onError={(e) => {
-                              e.target.style.display = 'none';
-                              e.target.nextSibling.style.display = 'block';
-                            }}
-                          />
-                          <div className="w-3 h-3 bg-orange-500 rounded-full" style={{display: 'none'}}></div>
-                        </div>
-                        <div>
-                          <div className="font-semibold">AWS Cloud Platform</div>
-                          <div className="text-xs opacity-80">Cloud Computing & DevOps</div>
-                        </div>
-                      </Link>
-                      
-                      <Link
-                        to="/courses?category=kubernetes"
-                        className="flex items-center px-4 py-3 rounded-xl text-sm text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 transition-all duration-200 border border-transparent hover:shadow-lg group"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <div className="w-10 h-10 bg-blue-100 group-hover:bg-white rounded-xl flex items-center justify-center mr-3 transition-colors">
-                          <img 
-                            src="https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg"
-                            alt="Kubernetes" 
-                            className="w-6 h-6 object-contain"
-                            onError={(e) => {
-                              e.target.style.display = 'none';
-                              e.target.nextSibling.style.display = 'block';
-                            }}
-                          />
-                          <div className="w-3 h-3 bg-blue-500 rounded-full" style={{display: 'none'}}></div>
-                        </div>
-                        <div>
-                          <div className="font-semibold">Kubernetes Ecosystem</div>
-                          <div className="text-xs opacity-80">Container Orchestration</div>
-                        </div>
-                      </Link>
-                      
-                      <Link
-                        to="/courses?category=devops"
-                        className="flex items-center px-4 py-3 rounded-xl text-sm text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-green-500 hover:to-green-600 transition-all duration-200 border border-transparent hover:shadow-lg group"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <div className="w-10 h-10 bg-green-100 group-hover:bg-white rounded-xl flex items-center justify-center mr-3 transition-colors">
-                          <div className="w-6 h-6 flex items-center justify-center text-green-600 text-xl">🔧</div>
-                        </div>
-                        <div>
-                          <div className="font-semibold">DevOps Engineering</div>
-                          <div className="text-xs opacity-80">CI/CD & Infrastructure</div>
-                        </div>
-                      </Link>
-                      
-                      <Link
-                        to="/courses?category=cybersecurity"
-                        className="flex items-center px-4 py-3 rounded-xl text-sm text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-600 transition-all duration-200 border border-transparent hover:shadow-lg group"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <div className="w-10 h-10 bg-purple-100 group-hover:bg-white rounded-xl flex items-center justify-center mr-3 transition-colors">
-                          <div className="w-6 h-6 flex items-center justify-center text-purple-600 text-xl">🛡️</div>
-                        </div>
-                        <div>
-                          <div className="font-semibold">Cybersecurity & Ethical Hacking</div>
-                          <div className="text-xs opacity-80">Security & Penetration Testing</div>
-                        </div>
-                      </Link>
-                      
-                      <Link
-                        to="/courses?category=programming"
-                        className="flex items-center px-4 py-3 rounded-xl text-sm text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-indigo-500 hover:to-indigo-600 transition-all duration-200 border border-transparent hover:shadow-lg group"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <div className="w-10 h-10 bg-indigo-100 group-hover:bg-white rounded-xl flex items-center justify-center mr-3 transition-colors">
-                          <div className="w-6 h-6 flex items-center justify-center text-indigo-600 text-xl">💻</div>
-                        </div>
-                        <div>
-                          <div className="font-semibold">Programming & Development</div>
-                          <div className="text-xs opacity-80">Full Stack Development</div>
-                        </div>
-                      </Link>
-                      
-                      <Link
-                        to="/courses?category=degree"
-                        className="flex items-center px-4 py-3 rounded-xl text-sm text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-yellow-500 hover:to-yellow-600 transition-all duration-200 border border-transparent hover:shadow-lg group"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <div className="w-10 h-10 bg-yellow-100 group-hover:bg-white rounded-xl flex items-center justify-center mr-3 transition-colors">
-                          <div className="w-6 h-6 flex items-center justify-center text-yellow-600 text-xl">🎓</div>
-                        </div>
-                        <div>
-                          <div className="font-semibold">Degree Programs</div>
-                          <div className="text-xs opacity-80">Bachelor's & Master's</div>
-                        </div>
-                      </Link>
-                      
-                      <div className="border-t border-gray-200 my-4"></div>
-                      
-                      <Link
-                        to="/courses"
-                        className="flex items-center px-4 py-3 rounded-xl text-sm text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-gray-600 hover:to-gray-700 transition-all duration-200 border border-transparent hover:shadow-lg group"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <div className="w-10 h-10 bg-gray-100 group-hover:bg-white rounded-xl flex items-center justify-center mr-3 transition-colors">
-                          <BookOpen className="h-6 w-6 text-gray-500" />
-                        </div>
-                        <div>
-                          <div className="font-semibold">All Courses</div>
-                          <div className="text-xs opacity-80">Browse complete catalog</div>
-                        </div>
-                      </Link>
-                    </div>
-                  )}
+                        
+                        <Link
+                          to="/courses?tab=redhat"
+                          className="flex items-center px-4 py-3 rounded-xl text-sm text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-red-500 hover:to-red-600 transition-all duration-200 border border-transparent hover:shadow-lg group"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          <div className="w-10 h-10 bg-red-100 group-hover:bg-white rounded-xl flex items-center justify-center mr-3 transition-colors">
+                            <img 
+                              src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg"
+                              alt="Red Hat" 
+                              className="w-6 h-6 object-contain"
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                                e.target.nextSibling.style.display = 'block';
+                              }}
+                            />
+                            <div className="w-3 h-3 bg-red-500 rounded-full" style={{display: 'none'}}></div>
+                          </div>
+                          <div>
+                            <div className="font-semibold">Red Hat Technologies</div>
+                            <div className="text-xs opacity-80">Enterprise Linux & OpenShift</div>
+                          </div>
+                        </Link>
+                        
+                        <Link
+                          to="/courses?tab=aws"
+                          className="flex items-center px-4 py-3 rounded-xl text-sm text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-orange-500 hover:to-yellow-500 transition-all duration-200 border border-transparent hover:shadow-lg group"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          <div className="w-10 h-10 bg-orange-100 group-hover:bg-white rounded-xl flex items-center justify-center mr-3 transition-colors">
+                            <img 
+                              src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
+                              alt="AWS" 
+                              className="w-6 h-6 object-contain"
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                                e.target.nextSibling.style.display = 'block';
+                              }}
+                            />
+                            <div className="w-3 h-3 bg-orange-500 rounded-full" style={{display: 'none'}}></div>
+                          </div>
+                          <div>
+                            <div className="font-semibold">AWS Cloud Platform</div>
+                            <div className="text-xs opacity-80">Cloud Computing & DevOps</div>
+                          </div>
+                        </Link>
+                        
+                        <Link
+                          to="/courses?tab=kubernetes"
+                          className="flex items-center px-4 py-3 rounded-xl text-sm text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 transition-all duration-200 border border-transparent hover:shadow-lg group"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          <div className="w-10 h-10 bg-blue-100 group-hover:bg-white rounded-xl flex items-center justify-center mr-3 transition-colors">
+                            <img 
+                              src="https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg"
+                              alt="Kubernetes" 
+                              className="w-6 h-6 object-contain"
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                                e.target.nextSibling.style.display = 'block';
+                              }}
+                            />
+                            <div className="w-3 h-3 bg-blue-500 rounded-full" style={{display: 'none'}}></div>
+                          </div>
+                          <div>
+                            <div className="font-semibold">Kubernetes Ecosystem</div>
+                            <div className="text-xs opacity-80">Container Orchestration</div>
+                          </div>
+                        </Link>
+                        
+                        <Link
+                          to="/courses?tab=devops"
+                          className="flex items-center px-4 py-3 rounded-xl text-sm text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-green-500 hover:to-green-600 transition-all duration-200 border border-transparent hover:shadow-lg group"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          <div className="w-10 h-10 bg-green-100 group-hover:bg-white rounded-xl flex items-center justify-center mr-3 transition-colors">
+                            <div className="w-6 h-6 flex items-center justify-center text-green-600 text-xl">🔧</div>
+                          </div>
+                          <div>
+                            <div className="font-semibold">DevOps Engineering</div>
+                            <div className="text-xs opacity-80">CI/CD & Infrastructure</div>
+                          </div>
+                        </Link>
+                        
+                        <Link
+                          to="/courses?tab=cybersecurity"
+                          className="flex items-center px-4 py-3 rounded-xl text-sm text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-600 transition-all duration-200 border border-transparent hover:shadow-lg group"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          <div className="w-10 h-10 bg-purple-100 group-hover:bg-white rounded-xl flex items-center justify-center mr-3 transition-colors">
+                            <div className="w-6 h-6 flex items-center justify-center text-purple-600 text-xl">🛡️</div>
+                          </div>
+                          <div>
+                            <div className="font-semibold">Cybersecurity & Ethical Hacking</div>
+                            <div className="text-xs opacity-80">Security & Penetration Testing</div>
+                          </div>
+                        </Link>
+                        
+                        <Link
+                          to="/courses?tab=programming"
+                          className="flex items-center px-4 py-3 rounded-xl text-sm text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-indigo-500 hover:to-indigo-600 transition-all duration-200 border border-transparent hover:shadow-lg group"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          <div className="w-10 h-10 bg-indigo-100 group-hover:bg-white rounded-xl flex items-center justify-center mr-3 transition-colors">
+                            <div className="w-6 h-6 flex items-center justify-center text-indigo-600 text-xl">💻</div>
+                          </div>
+                          <div>
+                            <div className="font-semibold">Programming & Development</div>
+                            <div className="text-xs opacity-80">Full Stack Development</div>
+                          </div>
+                        </Link>
+                        
+                        <Link
+                          to="/courses?tab=degree"
+                          className="flex items-center px-4 py-3 rounded-xl text-sm text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-yellow-500 hover:to-yellow-600 transition-all duration-200 border border-transparent hover:shadow-lg group"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          <div className="w-10 h-10 bg-yellow-100 group-hover:bg-white rounded-xl flex items-center justify-center mr-3 transition-colors">
+                            <div className="w-6 h-6 flex items-center justify-center text-yellow-600 text-xl">🎓</div>
+                          </div>
+                          <div>
+                            <div className="font-semibold">Degree Programs</div>
+                            <div className="text-xs opacity-80">Bachelor's & Master's</div>
+                          </div>
+                        </Link>
+                        
+                        <div className="border-t border-gray-300 my-4"></div>
+                        
+                        <Link
+                          to="/courses"
+                          className="flex items-center px-4 py-3 rounded-xl text-sm text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-gray-600 hover:to-gray-700 transition-all duration-200 border border-transparent hover:shadow-lg group"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          <div className="w-10 h-10 bg-gray-100 group-hover:bg-white rounded-xl flex items-center justify-center mr-3 transition-colors">
+                            <BookOpen className="h-6 w-6 text-gray-500" />
+                          </div>
+                          <div>
+                            <div className="font-semibold">All Courses</div>
+                            <div className="text-xs opacity-80">Browse complete catalog</div>
+                          </div>
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                ))}
+                
+                <div className="pt-6 border-t border-gray-300 mx-2 animate-slideInUp" style={{animationDelay: '400ms'}}>
+                  <a
+                    href="https://www.grras.tech/admissions"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full text-center py-4 text-lg font-bold text-white bg-gradient-to-r from-red-600 via-red-500 to-orange-500 hover:from-red-700 hover:via-red-600 hover:to-orange-600 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    🚀 Apply Now
+                  </a>
                 </div>
-              ))}
-              
-              <div className="pt-6 border-t border-gray-200 mx-4 animate-slideInUp" style={{animationDelay: '400ms'}}>
-                <a
-                  href="https://www.grras.tech/admissions"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full text-center py-4 text-lg font-bold text-white bg-gradient-to-r from-red-600 via-red-500 to-orange-500 hover:from-red-700 hover:via-red-600 hover:to-orange-600 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  🚀 Apply Now
-                </a>
               </div>
             </div>
           </div>

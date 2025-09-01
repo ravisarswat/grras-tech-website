@@ -12,6 +12,8 @@ const Blog = () => {
   const [categories, setCategories] = useState({});
   const [tags, setTags] = useState({});
   const [loading, setLoading] = useState(true);
+  const [subscribing, setSubscribing] = useState(false);
+  const [newsletterEmail, setNewsletterEmail] = useState('');
   const [pagination, setPagination] = useState({});
   const [searchParams, setSearchParams] = useSearchParams();
   

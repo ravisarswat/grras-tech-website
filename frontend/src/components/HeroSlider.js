@@ -258,121 +258,121 @@ const HeroSlider = () => {
               
               {currentSlide === 2 && (
                 <div>
-                  <h3 className="text-2xl font-bold text-white mb-6">DevOps Tools Mastery</h3>
-                  <div className="grid grid-cols-2 gap-3 mb-6">
-                    <div className="bg-white bg-opacity-20 rounded-lg p-3 text-center">
-                      <div className="text-white font-semibold text-sm mb-1">Docker</div>
+                  <h3 className="text-xl lg:text-2xl font-bold text-white mb-4 lg:mb-6">DevOps Tools Mastery</h3>
+                  <div className="grid grid-cols-2 gap-2 lg:gap-3 mb-4 lg:mb-6">
+                    <div className="bg-white bg-opacity-20 rounded-lg p-2 lg:p-3 text-center">
+                      <div className="text-white font-semibold text-xs lg:text-sm mb-1">Docker</div>
                       <div className="text-gray-200 text-xs">Containerization</div>
                     </div>
-                    <div className="bg-white bg-opacity-20 rounded-lg p-3 text-center">
-                      <div className="text-white font-semibold text-sm mb-1">Kubernetes</div>
+                    <div className="bg-white bg-opacity-20 rounded-lg p-2 lg:p-3 text-center">
+                      <div className="text-white font-semibold text-xs lg:text-sm mb-1">Kubernetes</div>
                       <div className="text-gray-200 text-xs">Orchestration</div>
                     </div>
-                    <div className="bg-white bg-opacity-20 rounded-lg p-3 text-center">
-                      <div className="text-white font-semibold text-sm mb-1">Jenkins</div>
+                    <div className="bg-white bg-opacity-20 rounded-lg p-2 lg:p-3 text-center">
+                      <div className="text-white font-semibold text-xs lg:text-sm mb-1">Jenkins</div>
                       <div className="text-gray-200 text-xs">CI/CD</div>
                     </div>
-                    <div className="bg-white bg-opacity-20 rounded-lg p-3 text-center">
-                      <div className="text-white font-semibold text-sm mb-1">Ansible</div>
+                    <div className="bg-white bg-opacity-20 rounded-lg p-2 lg:p-3 text-center">
+                      <div className="text-white font-semibold text-xs lg:text-sm mb-1">Ansible</div>
                       <div className="text-gray-200 text-xs">Automation</div>
                     </div>
                   </div>
                   
-                  <div className="space-y-3">
+                  <div className="space-y-2 lg:space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-white text-sm">Course Completion</span>
-                      <span className="text-green-400 font-semibold">92%</span>
+                      <span className="text-white text-xs lg:text-sm">Course Completion</span>
+                      <span className="text-green-400 font-semibold text-xs lg:text-sm">92%</span>
                     </div>
                     <div className="w-full bg-white bg-opacity-20 rounded-full h-2">
                       <div className="bg-green-400 h-2 rounded-full" style={{width: '92%'}}></div>
                     </div>
                   </div>
                   
-                  <div className="mt-6 p-4 bg-black bg-opacity-30 rounded-xl text-center">
-                    <div className="text-xl font-bold text-white mb-1">₹10-20 LPA</div>
-                    <div className="text-gray-200 text-sm">DevOps Engineer Salary</div>
+                  <div className="mt-4 lg:mt-6 p-3 lg:p-4 bg-black bg-opacity-30 rounded-xl text-center">
+                    <div className="text-lg lg:text-xl font-bold text-white mb-1">₹10-20 LPA</div>
+                    <div className="text-gray-200 text-xs lg:text-sm">DevOps Engineer Salary</div>
                   </div>
                 </div>
               )}
               
               {currentSlide === 3 && (
                 <div>
-                  <h3 className="text-2xl font-bold text-white mb-6">Security Skills</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
-                        <Shield className="h-5 w-5 text-white" />
+                  <h3 className="text-xl lg:text-2xl font-bold text-white mb-4 lg:mb-6">Security Skills</h3>
+                  <div className="space-y-3 lg:space-y-4">
+                    <div className="flex items-center gap-3 lg:gap-4">
+                      <div className="w-8 h-8 lg:w-10 lg:h-10 bg-red-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Shield className="h-4 w-4 lg:h-5 lg:w-5 text-white" />
                       </div>
-                      <div>
-                        <div className="text-white font-semibold">Penetration Testing</div>
-                        <div className="text-gray-200 text-sm">Find vulnerabilities</div>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
-                        <Settings className="h-5 w-5 text-white" />
-                      </div>
-                      <div>
-                        <div className="text-white font-semibold">Network Security</div>
-                        <div className="text-gray-200 text-sm">Secure infrastructure</div>
+                      <div className="min-w-0">
+                        <div className="text-white font-semibold text-sm lg:text-base">Penetration Testing</div>
+                        <div className="text-gray-200 text-xs lg:text-sm">Find vulnerabilities</div>
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
-                        <Award className="h-5 w-5 text-white" />
+                    <div className="flex items-center gap-3 lg:gap-4">
+                      <div className="w-8 h-8 lg:w-10 lg:h-10 bg-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Settings className="h-4 w-4 lg:h-5 lg:w-5 text-white" />
                       </div>
-                      <div>
-                        <div className="text-white font-semibold">Ethical Hacking</div>
-                        <div className="text-gray-200 text-sm">Legal security testing</div>
+                      <div className="min-w-0">
+                        <div className="text-white font-semibold text-sm lg:text-base">Network Security</div>
+                        <div className="text-gray-200 text-xs lg:text-sm">Secure infrastructure</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-3 lg:gap-4">
+                      <div className="w-8 h-8 lg:w-10 lg:h-10 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Award className="h-4 w-4 lg:h-5 lg:w-5 text-white" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-white font-semibold text-sm lg:text-base">Ethical Hacking</div>
+                        <div className="text-gray-200 text-xs lg:text-sm">Legal security testing</div>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="mt-6 bg-white bg-opacity-20 rounded-xl p-4">
-                    <div className="text-center mb-3">
-                      <div className="text-white font-semibold">High Demand Field</div>
+                  <div className="mt-4 lg:mt-6 bg-white bg-opacity-20 rounded-xl p-3 lg:p-4">
+                    <div className="text-center mb-2 lg:mb-3">
+                      <div className="text-white font-semibold text-sm lg:text-base">High Demand Field</div>
                     </div>
-                    <div className="text-2xl font-bold text-center text-white mb-1">₹15-30 LPA</div>
-                    <div className="text-gray-200 text-sm text-center">Security Expert Salary</div>
+                    <div className="text-lg lg:text-2xl font-bold text-center text-white mb-1">₹15-30 LPA</div>
+                    <div className="text-gray-200 text-xs lg:text-sm text-center">Security Expert Salary</div>
                   </div>
                 </div>
               )}
               
               {currentSlide === 4 && (
                 <div>
-                  <h3 className="text-2xl font-bold text-white mb-6">Degree Benefits</h3>
-                  <div className="space-y-4">
-                    <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                      <div className="flex items-center gap-3 mb-2">
-                        <GraduationCap className="h-5 w-5 text-yellow-400" />
-                        <span className="text-white font-semibold">BCA Program</span>
+                  <h3 className="text-xl lg:text-2xl font-bold text-white mb-4 lg:mb-6">Degree Benefits</h3>
+                  <div className="space-y-3 lg:space-y-4">
+                    <div className="bg-white bg-opacity-20 rounded-lg p-3 lg:p-4">
+                      <div className="flex items-center gap-2 lg:gap-3 mb-2">
+                        <GraduationCap className="h-4 w-4 lg:h-5 lg:w-5 text-yellow-400 flex-shrink-0" />
+                        <span className="text-white font-semibold text-sm lg:text-base">BCA Program</span>
                       </div>
-                      <div className="text-gray-200 text-sm">3-year industry-ready degree</div>
+                      <div className="text-gray-200 text-xs lg:text-sm">3-year industry-ready degree</div>
                     </div>
                     
-                    <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                      <div className="flex items-center gap-3 mb-2">
-                        <Award className="h-5 w-5 text-green-400" />
-                        <span className="text-white font-semibold">100% Placement</span>
+                    <div className="bg-white bg-opacity-20 rounded-lg p-3 lg:p-4">
+                      <div className="flex items-center gap-2 lg:gap-3 mb-2">
+                        <Award className="h-4 w-4 lg:h-5 lg:w-5 text-green-400 flex-shrink-0" />
+                        <span className="text-white font-semibold text-sm lg:text-base">100% Placement</span>
                       </div>
-                      <div className="text-gray-200 text-sm">Guaranteed job assistance</div>
+                      <div className="text-gray-200 text-xs lg:text-sm">Guaranteed job assistance</div>
                     </div>
                     
-                    <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                      <div className="flex items-center gap-3 mb-2">
-                        <Star className="h-5 w-5 text-blue-400 fill-current" />
-                        <span className="text-white font-semibold">Industry Skills</span>
+                    <div className="bg-white bg-opacity-20 rounded-lg p-3 lg:p-4">
+                      <div className="flex items-center gap-2 lg:gap-3 mb-2">
+                        <Star className="h-4 w-4 lg:h-5 lg:w-5 text-blue-400 fill-current flex-shrink-0" />
+                        <span className="text-white font-semibold text-sm lg:text-base">Industry Skills</span>
                       </div>
-                      <div className="text-gray-200 text-sm">Modern tech curriculum</div>
+                      <div className="text-gray-200 text-xs lg:text-sm">Modern tech curriculum</div>
                     </div>
                   </div>
                   
-                  <div className="mt-6 p-4 bg-black bg-opacity-30 rounded-xl">
+                  <div className="mt-4 lg:mt-6 p-3 lg:p-4 bg-black bg-opacity-30 rounded-xl">
                     <div className="text-center">
-                      <div className="text-xl font-bold text-white mb-1">₹6-12 LPA</div>
-                      <div className="text-gray-200 text-sm">Fresher Package</div>
+                      <div className="text-lg lg:text-xl font-bold text-white mb-1">₹6-12 LPA</div>
+                      <div className="text-gray-200 text-xs lg:text-sm">Fresher Package</div>
                     </div>
                   </div>
                 </div>

@@ -8,8 +8,8 @@ const EligibilityWidget = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedCourse, setSelectedCourse] = useState('');
   const [eligibilityText, setEligibilityText] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  // Removed isLoading state to eliminate loading issues
 
   // Get visible courses ordered by their order field
   const availableCourses = (content?.courses || [])

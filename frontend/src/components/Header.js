@@ -359,16 +359,16 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="lg:hidden pb-4 border-t border-gray-100">
-            <div className="pt-4 space-y-2">
+          <div className="lg:hidden pb-6 border-t border-gray-100 bg-gradient-to-br from-white to-gray-50">
+            <div className="pt-6 space-y-3">
               {navigationItems.map((item) => (
                 <div key={item.name}>
                   <Link
                     to={item.path}
-                    className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
+                    className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 mx-4 ${
                       isActivePath(item.path)
-                        ? 'text-red-600 bg-red-50'
-                        : 'text-gray-700 hover:text-red-600 hover:bg-red-50'
+                        ? 'text-red-600 bg-red-50 shadow-sm border border-red-100'
+                        : 'text-gray-700 hover:text-red-600 hover:bg-red-50 hover:shadow-sm'
                     }`}
                     onClick={() => !item.hasDropdown && setIsMenuOpen(false)}
                   >
@@ -377,82 +377,208 @@ const Header = () => {
                   
                   {/* Mobile Courses Submenu */}
                   {item.hasDropdown && (
-                    <div className="pl-6 space-y-1 mt-2">
-                      <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 px-3">
+                    <div className="pl-2 space-y-1 mt-3 mx-4">
+                      {/* Company Logos Section */}
+                      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4">
+                        <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3 text-center">
+                          Our Technology Partners
+                        </div>
+                        <div className="grid grid-cols-4 gap-3">
+                          <div className="flex flex-col items-center p-2 bg-gray-50 rounded-lg hover:bg-red-50 transition-colors">
+                            <img 
+                              src="https://images.unsplash.com/photo-1662052955098-042b46e60c2b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwyfHxjb21wYW55JTIwbG9nb3N8ZW58MHx8fHwxNzU2NjY5MTM2fDA&ixlib=rb-4.1.0&q=85"
+                              alt="Microsoft" 
+                              className="w-8 h-8 object-contain rounded"
+                              onError={(e) => {
+                                e.target.src = 'https://cdn-icons-png.flaticon.com/512/732/732076.png';
+                              }}
+                            />
+                            <span className="text-xs font-medium text-gray-600 mt-1">Microsoft</span>
+                          </div>
+                          <div className="flex flex-col items-center p-2 bg-gray-50 rounded-lg hover:bg-red-50 transition-colors">
+                            <img 
+                              src="https://images.unsplash.com/photo-1662052955282-da15376f3919?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwzfHxjb21wYW55JTIwbG9nb3N8ZW58MHx8fHwxNzU2NjY5MTM2fDA&ixlib=rb-4.1.0&q=85"
+                              alt="Azure" 
+                              className="w-8 h-8 object-contain rounded"
+                              onError={(e) => {
+                                e.target.src = 'https://cdn-icons-png.flaticon.com/512/873/873120.png';
+                              }}
+                            />
+                            <span className="text-xs font-medium text-gray-600 mt-1">Azure</span>
+                          </div>
+                          <div className="flex flex-col items-center p-2 bg-gray-50 rounded-lg hover:bg-red-50 transition-colors">
+                            <img 
+                              src="https://images.unsplash.com/photo-1496200186974-4293800e2c20?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwxfHxjb21wYW55JTIwbG9nb3N8ZW58MHx8fHwxNzU2NjY5MTM2fDA&ixlib=rb-4.1.0&q=85"
+                              alt="Slack" 
+                              className="w-8 h-8 object-contain rounded"
+                              onError={(e) => {
+                                e.target.src = 'https://cdn-icons-png.flaticon.com/512/2111/2111615.png';
+                              }}
+                            />
+                            <span className="text-xs font-medium text-gray-600 mt-1">Slack</span>
+                          </div>
+                          <div className="flex flex-col items-center p-2 bg-gray-50 rounded-lg hover:bg-red-50 transition-colors">
+                            <img 
+                              src="https://images.unsplash.com/photo-1662057168154-89300791ad6e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODF8MHwxfHNlYXJjaHwzfHx0ZWNobm9sb2d5JTIwbG9nb3N8ZW58MHx8fHwxNzU2NzE2MjA0fDA&ixlib=rb-4.1.0&q=85"
+                              alt="Google" 
+                              className="w-8 h-8 object-contain rounded"
+                              onError={(e) => {
+                                e.target.src = 'https://cdn-icons-png.flaticon.com/512/2875/2875404.png';
+                              }}
+                            />
+                            <span className="text-xs font-medium text-gray-600 mt-1">Google</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3 px-3">
                         Technology Tracks
                       </div>
                       
                       <Link
                         to="/courses?tab=redhat"
-                        className="flex items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        <span className="text-red-500 mr-2">🔴</span>
-                        Red Hat Technologies
+                        <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center mr-3">
+                          <img 
+                            src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg"
+                            alt="Red Hat" 
+                            className="w-5 h-5 object-contain"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                              e.target.nextSibling.style.display = 'block';
+                            }}
+                          />
+                          <div className="w-2 h-2 bg-red-500 rounded-full" style={{display: 'none'}}></div>
+                        </div>
+                        <div>
+                          <div className="font-medium">Red Hat Technologies</div>
+                          <div className="text-xs text-gray-500">Enterprise Linux & OpenShift</div>
+                        </div>
                       </Link>
                       
                       <Link
                         to="/courses?tab=aws"
-                        className="flex items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        <span className="text-orange-500 mr-2">☁️</span>
-                        AWS Cloud Platform
+                        <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
+                          <img 
+                            src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
+                            alt="AWS" 
+                            className="w-5 h-5 object-contain"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                              e.target.nextSibling.style.display = 'block';
+                            }}
+                          />
+                          <div className="w-2 h-2 bg-orange-500 rounded-full" style={{display: 'none'}}></div>
+                        </div>
+                        <div>
+                          <div className="font-medium">AWS Cloud Platform</div>
+                          <div className="text-xs text-gray-500">Cloud Computing & DevOps</div>
+                        </div>
                       </Link>
                       
                       <Link
                         to="/courses?tab=kubernetes"
-                        className="flex items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        <span className="text-blue-500 mr-2">⚙️</span>
-                        Kubernetes Ecosystem
+                        <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                          <img 
+                            src="https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg"
+                            alt="Kubernetes" 
+                            className="w-5 h-5 object-contain"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                              e.target.nextSibling.style.display = 'block';
+                            }}
+                          />
+                          <div className="w-2 h-2 bg-blue-500 rounded-full" style={{display: 'none'}}></div>
+                        </div>
+                        <div>
+                          <div className="font-medium">Kubernetes Ecosystem</div>
+                          <div className="text-xs text-gray-500">Container Orchestration</div>
+                        </div>
                       </Link>
                       
                       <Link
                         to="/courses?tab=devops"
-                        className="flex items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        <span className="text-green-500 mr-2">🔧</span>
-                        DevOps Engineering
+                        <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                          <img 
+                            src="https://images.unsplash.com/photo-1662027044921-6febc57a0c53?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHw0fHxjb21wYW55JTIwbG9nb3N8ZW58MHx8fHwxNzU2NjY5MTM2fDA&ixlib=rb-4.1.0&q=85"
+                            alt="DevOps" 
+                            className="w-5 h-5 object-contain"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                              e.target.nextSibling.style.display = 'block';
+                            }}
+                          />
+                          <div className="w-2 h-2 bg-green-500 rounded-full" style={{display: 'none'}}></div>
+                        </div>
+                        <div>
+                          <div className="font-medium">DevOps Engineering</div>
+                          <div className="text-xs text-gray-500">CI/CD & Infrastructure</div>
+                        </div>
                       </Link>
                       
                       <Link
                         to="/courses?tab=cybersecurity"
-                        className="flex items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        <span className="text-slate-500 mr-2">🛡️</span>
-                        Cybersecurity & Ethical Hacking
+                        <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
+                          <div className="w-5 h-5 flex items-center justify-center text-purple-600 text-lg">🛡️</div>
+                        </div>
+                        <div>
+                          <div className="font-medium">Cybersecurity & Ethical Hacking</div>
+                          <div className="text-xs text-gray-500">Security & Penetration Testing</div>
+                        </div>
                       </Link>
                       
                       <Link
                         to="/courses?tab=programming"
-                        className="flex items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        <span className="text-purple-500 mr-2">💻</span>
-                        Programming & Development
+                        <div className="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center mr-3">
+                          <div className="w-5 h-5 flex items-center justify-center text-indigo-600 text-lg">💻</div>
+                        </div>
+                        <div>
+                          <div className="font-medium">Programming & Development</div>
+                          <div className="text-xs text-gray-500">Full Stack Development</div>
+                        </div>
                       </Link>
                       
                       <Link
                         to="/courses?tab=degree"
-                        className="flex items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        <span className="text-indigo-500 mr-2">🎓</span>
-                        Degree Programs
+                        <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center mr-3">
+                          <div className="w-5 h-5 flex items-center justify-center text-yellow-600 text-lg">🎓</div>
+                        </div>
+                        <div>
+                          <div className="font-medium">Degree Programs</div>
+                          <div className="text-xs text-gray-500">Bachelor's & Master's</div>
+                        </div>
                       </Link>
                       
-                      <div className="border-t border-gray-100 my-2"></div>
+                      <div className="border-t border-gray-200 my-4"></div>
                       
                       <Link
                         to="/courses"
-                        className="flex items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        <BookOpen className="h-4 w-4 mr-2 text-gray-400" />
+                        <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
+                          <BookOpen className="h-5 w-5 text-gray-500" />
+                        </div>
                         <div>
                           <div className="font-medium">All Courses</div>
                           <div className="text-xs text-gray-500">Browse complete catalog</div>
@@ -463,12 +589,12 @@ const Header = () => {
                 </div>
               ))}
               
-              <div className="pt-4 border-t border-gray-100">
+              <div className="pt-6 border-t border-gray-200 mx-4">
                 <a
                   href="https://www.grras.tech/admissions"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full text-center btn-primary"
+                  className="block w-full text-center btn-primary shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Apply Now

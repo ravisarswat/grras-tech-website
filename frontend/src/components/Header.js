@@ -534,68 +534,6 @@ const Header = () => {
                           <div className="text-xs text-gray-500">Browse complete catalog</div>
                         </div>
                       </Link>
-
-                      {/* Popular Courses Section */}
-                      <div className="border-t border-gray-200 my-4"></div>
-                      <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3 px-3">
-                        Popular Courses
-                      </div>
-                      
-                      <Link
-                        to="/courses/devops-training"
-                        className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-3">
-                          <div className="w-5 h-5 flex items-center justify-center text-green-600 text-sm font-bold">DO</div>
-                        </div>
-                        <div>
-                          <div className="font-medium">DevOps Training</div>
-                          <div className="text-xs text-gray-500">Comprehensive DevOps Program</div>
-                        </div>
-                      </Link>
-                      
-                      <Link
-                        to="/courses/bca-degree"
-                        className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                          <div className="w-5 h-5 flex items-center justify-center text-blue-600 text-lg">🎓</div>
-                        </div>
-                        <div>
-                          <div className="font-medium">BCA Degree Program</div>
-                          <div className="text-xs text-gray-500">Bachelor's in Computer Applications</div>
-                        </div>
-                      </Link>
-                      
-                      <Link
-                        to="/courses/redhat-certifications"
-                        className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center mr-3">
-                          <div className="w-5 h-5 flex items-center justify-center text-red-600 text-sm font-bold">RH</div>
-                        </div>
-                        <div>
-                          <div className="font-medium">Red Hat Certifications</div>
-                          <div className="text-xs text-gray-500">RHCSA, RHCE & More</div>
-                        </div>
-                      </Link>
-                      
-                      <Link
-                        to="/courses/cyber-security"
-                        className="flex items-center px-4 py-3 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 border border-transparent hover:border-red-100 hover:shadow-sm"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
-                          <div className="w-5 h-5 flex items-center justify-center text-purple-600 text-lg">🛡️</div>
-                        </div>
-                        <div>
-                          <div className="font-medium">Cyber Security</div>
-                          <div className="text-xs text-gray-500">Ethical Hacking & Security</div>
-                        </div>
-                      </Link>
                     </div>
                   )}
                 </div>

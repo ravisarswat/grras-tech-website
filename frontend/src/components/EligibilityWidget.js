@@ -192,10 +192,43 @@ const EligibilityWidget = () => {
           <select
             value={selectedCourse}
             onChange={(e) => {
-              setSelectedCourse(e.target.value);
-              handleCourseSelection(e.target.value);
+              console.log('🔥 DROPDOWN CHANGED:', e.target.value);
+              const newCourse = e.target.value;
+              setSelectedCourse(newCourse);
+              
+              if (newCourse) {
+                // Handle course selection immediately in the onChange
+                console.log('🚀 PROCESSING COURSE IMMEDIATELY:', newCourse);
+                
+                const course = availableCourses.find(c => c.slug === newCourse);
+                
+                if (course) {
+                  let eligibility = course.eligibility || '';
+                  if (!eligibility.trim()) {
+                    eligibility = `For ${course.title || course.name}, please contact our admission counselors for detailed eligibility criteria and personalized guidance. Our team will help you determine if you meet the requirements and guide you through the admission process.`;
+                  }
+                  
+                  setEligibilityText(eligibility);
+                  setIsLoading(false);
+                  setError(null);
+                  
+                  // Update URL
+                  const newParams = new URLSearchParams(searchParams);
+                  newParams.set('course', newCourse);
+                  setSearchParams(newParams);
+                  
+                  console.log('✅ COURSE PROCESSED IMMEDIATELY');
+                } else {
+                  setError('Course not found. Please contact our admission counselors.');
+                  setIsLoading(false);
+                }
+              } else {
+                setEligibilityText('');
+                setError(null);
+                setIsLoading(false);
+              }
             }}
-            className="w-full form-input"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-700"
           >
             <option value="">Choose a course...</option>
             {availableCourses.map((course) => (

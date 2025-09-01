@@ -1,3 +1,4 @@
+// BlogManager.js - Enhanced with Date Management for Railway deployment
 import React, { useState, useEffect } from 'react';
 import { 
   Plus, 

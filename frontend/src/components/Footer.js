@@ -8,7 +8,8 @@ import {
   Instagram, 
   Youtube,
   MessageCircle,
-  ExternalLink
+  ExternalLink,
+  Facebook
 } from 'lucide-react';
 import { useContent } from '../contexts/ContentContext';
 

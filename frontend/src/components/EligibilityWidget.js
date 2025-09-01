@@ -264,7 +264,7 @@ const EligibilityWidget = () => {
         )}
 
         {/* Eligibility Result */}
-        {eligibilityText && !isLoading && !error && (
+        {eligibilityText && !error && (
           <div className="mt-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg">
             <div className="flex items-start gap-3">
               <AlertCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />

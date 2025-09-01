@@ -42,15 +42,29 @@ const CertificationCoursesPage = () => {
     const level = course.level?.toLowerCase() || '';
     const category = course.category?.toLowerCase() || '';
 
+    // PRIORITY 1: Always respect exact database level settings from admin panel
+    if (level.includes('professional level') || level === 'professional level' || level === 'professional') return 'professional';
+    if (level.includes('specialist level') || level === 'specialist level' || level === 'specialist') return 'specialist';
+    if (level.includes('foundation level') || level === 'foundation level' || level === 'foundation') return 'foundation';
+    if (level.includes('beginner level') || level === 'beginner level' || level === 'beginner') return 'beginner';
+    if (level.includes('intermediate level') || level === 'intermediate level' || level === 'intermediate') return 'intermediate';
+    if (level.includes('advanced level') || level === 'advanced level' || level === 'advanced') return 'advanced';
+    if (level.includes('associate level') || level === 'associate level' || level === 'associate') return 'associate';
+    if (level.includes('administrator level') || level === 'administrator level' || level === 'administrator') return 'administrator';
+    if (level.includes('security level') || level === 'security level' || level === 'security') return 'security';
+    if (level.includes('expert level') || level === 'expert level' || level === 'expert') return 'expert';
+    if (level.includes('developer level') || level === 'developer level' || level === 'developer') return 'developer';
+
+    // PRIORITY 2: Fallback to vendor-specific logic only if level is not set
     if (vendor === 'redhat') {
-      if (title.includes('rhcsa') || title.includes('basics') || title.includes('foundation') || level.includes('beginner')) return 'foundation';
-      if (title.includes('rhce') || title.includes('do188') || title.includes('engineer') || level.includes('advanced') || level.toLowerCase().includes('professional')) return 'professional';
+      if (title.includes('rhcsa') || title.includes('basics') || title.includes('foundation')) return 'foundation';
+      if (title.includes('rhce') || title.includes('do188') || title.includes('engineer')) return 'professional';
       return 'specialist';
     }
 
     if (vendor === 'aws') {
-      if (title.includes('practitioner') || title.includes('foundation') || level.includes('beginner')) return 'foundation';
-      if (title.includes('associate') || title.includes('developer') || level.includes('intermediate')) return 'associate';
+      if (title.includes('practitioner') || title.includes('foundation')) return 'foundation';
+      if (title.includes('associate') || title.includes('developer')) return 'associate';
       return 'professional';
     }
 
@@ -61,37 +75,25 @@ const CertificationCoursesPage = () => {
     }
 
     if (vendor === 'devops') {
-      if (level.includes('beginner') || title.includes('basics') || title.includes('foundation')) return 'foundation';
-      if (level.includes('advanced') || title.includes('advanced') || title.includes('expert')) return 'expert';
+      if (title.includes('basics') || title.includes('foundation')) return 'foundation';
+      if (title.includes('advanced') || title.includes('expert')) return 'expert';
       return 'professional';
     }
 
     if (vendor === 'cybersecurity') {
-      if (level.includes('beginner') || title.includes('basics') || title.includes('foundation')) return 'foundation';
-      if (level.includes('advanced') || title.includes('advanced') || title.includes('expert')) return 'expert';
+      if (title.includes('basics') || title.includes('foundation')) return 'foundation';
+      if (title.includes('advanced') || title.includes('expert')) return 'expert';
       return 'professional';
     }
 
     if (vendor === 'programming') {
-      // Check exact level matches first
-      if (level.includes('intermediate level') || level.includes('intermediate')) return 'intermediate';
-      if (level.includes('advanced') || level.includes('professional') || title.includes('machine learning') || title.includes('data science')) return 'professional';
-      if (level.includes('beginner') || title.includes('basics') || title.includes('foundation')) return 'beginner';
-      
-      // Default based on course complexity
-      if (title.includes('data science') || title.includes('machine learning')) return 'professional';
-      if (title.includes('c++') || title.includes('data structures')) return 'intermediate';
-      
-      return 'intermediate'; // Default for programming courses
+      if (title.includes('machine learning') || title.includes('data science')) return 'professional';
+      if (title.includes('basics') || title.includes('foundation')) return 'beginner';
+      return 'intermediate';
     }
 
-    if (vendor === 'degree') {
-      if (title.includes('bca') || title.includes('bachelor')) return 'undergraduate';
-      if (title.includes('diploma') || title.includes('certificate')) return 'diploma';
-      return 'certification';
-    }
-
-    return 'all';
+    // Default fallback
+    return 'intermediate';
   };
 
   // Vendor-based course organization

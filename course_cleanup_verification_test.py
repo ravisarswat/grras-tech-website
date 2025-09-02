@@ -239,7 +239,7 @@ class CourseCleanupVerificationTester:
             return False
     
     async def test_database_integrity(self) -> bool:
-        """Test 6: Verify other content (institute, branding, etc.) is still intact"""
+        """Test 6: Verify other content (institute, courseCategories, etc.) is still intact"""
         logger.info("🔍 Testing database integrity...")
         try:
             async with self.session.get(f"{self.api_base}/content") as response:
@@ -248,7 +248,7 @@ class CourseCleanupVerificationTester:
                     content = data.get("content", {})
                     
                     # Check essential sections are still present
-                    required_sections = ["institute", "branding", "pages"]
+                    required_sections = ["institute", "courseCategories", "learningPaths"]
                     intact_sections = []
                     missing_sections = []
                     
@@ -264,16 +264,17 @@ class CourseCleanupVerificationTester:
                     institute = content.get("institute", {})
                     if institute and institute.get("name"):
                         logger.info(f"   ✅ Institute name: {institute.get('name')}")
+                        logger.info(f"   ✅ Institute contact: {institute.get('contact', {}).get('email', 'N/A')}")
                     
-                    # Check branding data
-                    branding = content.get("branding", {})
-                    if branding:
-                        logger.info(f"   ✅ Branding data: Present")
+                    # Check courseCategories data
+                    course_categories = content.get("courseCategories", {})
+                    if course_categories:
+                        logger.info(f"   ✅ Course categories: {len(course_categories)} categories found")
                     
-                    # Check pages structure
-                    pages = content.get("pages", {})
-                    if pages:
-                        logger.info(f"   ✅ Pages structure: {len(pages)} pages found")
+                    # Check learningPaths structure
+                    learning_paths = content.get("learningPaths", {})
+                    if learning_paths is not None:  # Can be empty dict
+                        logger.info(f"   ✅ Learning paths structure: {len(learning_paths)} paths found")
                     
                     if not missing_sections:
                         logger.info("✅ DATABASE INTEGRITY VERIFIED: All core content intact")

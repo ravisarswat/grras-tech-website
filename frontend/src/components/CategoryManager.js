@@ -7,6 +7,11 @@ const CategoryManager = ({ content, updateContent }) => {
   const categories = content?.courseCategories || {};
   const courses = content?.courses || [];
 
+  // Debug: Log categories to console
+  console.log('CategoryManager - Categories:', categories);
+  console.log('CategoryManager - Categories count:', Object.keys(categories).length);
+  console.log('CategoryManager - Content:', content);
+
   const addCategory = () => {
     const timestamp = Date.now();
     const newCategory = {

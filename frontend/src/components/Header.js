@@ -61,7 +61,7 @@ const Header = () => {
   return (
     <>
       {!isAdminPage && (
-        <header className="bg-white/98 backdrop-blur-xl shadow-2xl border-b border-orange-100/50 sticky top-0 z-50 relative overflow-hidden">
+        <header className="bg-white/98 backdrop-blur-xl shadow-2xl border-b border-orange-100/50 sticky top-0 z-[9998] relative overflow-hidden">
           {/* Beautiful Background Effects */}
           <div className="absolute inset-0 bg-gradient-to-r from-orange-50/30 via-white to-red-50/30"></div>
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 via-red-500 to-orange-600"></div>

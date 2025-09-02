@@ -47,6 +47,9 @@ function AppContent() {
           <Route path="/courses/category/:categorySlug" element={<CategoryCoursePage />} />
           <Route path="/courses/:slug" element={<CourseDetail />} />
           
+          {/* Legacy course route for backward compatibility */}
+          <Route path="/course/:slug" element={<CourseDetail />} />
+          
           {/* Legacy course routes for backward compatibility */}
           <Route path="/enhanced-courses" element={<EnhancedCourses />} />
           <Route path="/old-courses" element={<Courses />} />

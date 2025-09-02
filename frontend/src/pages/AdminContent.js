@@ -919,6 +919,7 @@ const AdminContent = () => {
                       course={course}
                       index={index}
                       courses={content.courses}
+                      categories={categories}
                       onUpdate={updateCourse}
                       onDelete={deleteCourse}
                       onMove={moveCourse}

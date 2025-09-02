@@ -64,22 +64,16 @@ const Header = () => {
         <header className="bg-white/95 backdrop-blur-sm shadow-lg border-b border-gray-100 sticky top-0 z-50">
           <div className="container mx-auto px-4">
             <div className="flex justify-between items-center py-4">
-              {/* PREMIUM COMPANY LOGO */}
-              <Link to="/" className="flex items-center space-x-3 group">
-                <div className="relative">
+              {/* CLEAN COMPANY LOGO */}
+              <Link to="/" className="flex items-center group">
+                <div className="flex flex-col items-center">
                   <img 
                     src="https://customer-assets.emergentagent.com/job_db8831d9-1fc7-46ac-b819-59bb9fafe1eb/artifacts/lu0elrou_black%20logo.jpg" 
-                    alt="GRRAS Solutions - Training Institute" 
-                    className="h-12 w-auto transition-transform group-hover:scale-105" 
+                    alt="GRRAS Solutions" 
+                    className="h-14 w-auto transition-transform group-hover:scale-105" 
                   />
-                  <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    GRRAS
-                  </span>
-                  <span className="text-sm text-gray-600 font-medium -mt-1 tracking-wide">
-                    Training Institute
+                  <span className="text-sm font-semibold text-orange-600 -mt-1 tracking-wide">
+                    Solutions
                   </span>
                 </div>
               </Link>

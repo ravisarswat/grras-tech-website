@@ -175,8 +175,8 @@ const Courses = () => {
                     onClick={() => setSelectedCategory(category.id)}
                     className={`group relative px-6 py-4 rounded-xl font-semibold whitespace-nowrap transition-all duration-300 flex items-center gap-3 min-w-0 ${
                       selectedCategory === category.id
-                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-xl transform scale-105'
-                        : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:shadow-md hover:scale-102 border border-gray-200 hover:border-blue-200'
+                        ? 'bg-gradient-to-r from-orange-600 to-red-600 text-white shadow-xl transform scale-105'
+                        : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:shadow-md hover:scale-102 border border-gray-200 hover:border-orange-200'
                     }`}
                   >
                     {/* Logo/Icon */}

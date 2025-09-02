@@ -165,30 +165,69 @@ const Courses = () => {
         </div>
 
         <div className="container mx-auto px-4 py-12">
-          {/* DYNAMIC CATEGORY TABS - NO HARDCODE */}
-          <div className="mb-8">
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <button
-                  key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all flex items-center gap-2 ${
-                    selectedCategory === category.id
-                      ? 'bg-blue-600 text-white shadow-lg'
-                      : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-                  }`}
-                >
-                  {category.logo && (
-                    <img 
-                      src={category.logo} 
-                      alt={category.name}
-                      className="w-4 h-4 object-contain"
-                      onError={(e) => e.target.style.display = 'none'}
-                    />
-                  )}
-                  {category.name} ({category.count})
-                </button>
-              ))}
+          {/* Premium Dynamic Category Tabs */}
+          <div className="mb-12">
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-4 overflow-x-auto">
+              <div className="flex space-x-2 min-w-max">
+                {categories.map((category, index) => (
+                  <button
+                    key={category.id}
+                    onClick={() => setSelectedCategory(category.id)}
+                    className={`group relative px-6 py-4 rounded-xl font-semibold whitespace-nowrap transition-all duration-300 flex items-center gap-3 min-w-0 ${
+                      selectedCategory === category.id
+                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-xl transform scale-105'
+                        : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:shadow-md hover:scale-102 border border-gray-200 hover:border-blue-200'
+                    }`}
+                  >
+                    {/* Logo/Icon */}
+                    <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 ${
+                      selectedCategory === category.id 
+                        ? 'bg-white/20' 
+                        : 'bg-white group-hover:bg-blue-50'
+                    }`}>
+                      {category.logo ? (
+                        <img 
+                          src={category.logo} 
+                          alt={category.name}
+                          className="w-5 h-5 object-contain"
+                          onError={(e) => e.target.style.display = 'none'}
+                        />
+                      ) : (
+                        <BookOpen className={`w-5 h-5 ${
+                          selectedCategory === category.id 
+                            ? 'text-white' 
+                            : 'text-gray-500 group-hover:text-blue-600'
+                        }`} />
+                      )}
+                    </div>
+                    
+                    {/* Category Info */}
+                    <div className="flex flex-col items-start min-w-0">
+                      <span className="text-sm font-bold truncate">
+                        {category.name}
+                      </span>
+                      <span className={`text-xs ${
+                        selectedCategory === category.id 
+                          ? 'text-white/80' 
+                          : 'text-gray-500 group-hover:text-blue-600'
+                      }`}>
+                        {category.count} course{category.count !== 1 ? 's' : ''}
+                      </span>
+                    </div>
+                    
+                    {/* Active indicator */}
+                    {selectedCategory === category.id && (
+                      <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-white rounded-full shadow-md"></div>
+                    )}
+                    
+                    {/* Hover effect overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </button>
+                ))}
+              </div>
+              
+              {/* Tab indicator line */}
+              <div className="mt-4 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-20"></div>
             </div>
           </div>
 

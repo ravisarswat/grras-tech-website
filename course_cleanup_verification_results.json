@@ -1,23 +1,22 @@
 {
-  "timestamp": "2025-09-02T14:16:43.143728",
+  "timestamp": "2025-09-02T14:17:19.522958",
   "backend_url": "https://category-admin-5.preview.emergentagent.com",
   "total_tests": 7,
-  "passed_tests": 3,
-  "failed_tests": 4,
-  "success_rate": "42.9%",
+  "passed_tests": 4,
+  "failed_tests": 3,
+  "success_rate": "57.1%",
   "test_results": {
     "server_health": true,
     "courses_cleanup_verified": false,
     "cms_content_courses_empty": false,
     "admin_authentication": true,
     "categories_structure_intact": true,
-    "database_integrity": false,
+    "database_integrity": true,
     "system_ready_for_fresh_start": false
   },
   "errors": [
     "Course cleanup was not performed - 10 courses still present",
     "CMS content still has 10 courses",
-    "Missing essential sections: ['learningPaths']",
     "System not ready for fresh start - cleanup incomplete"
   ],
   "courses_found": 10,
@@ -317,7 +316,6 @@
   "categories_count": 8,
   "cleanup_status": "NOT PERFORMED",
   "critical_issues": [
-    "Course cleanup was not performed - courses still present",
-    "Database integrity compromised - core content missing"
+    "Course cleanup was not performed - courses still present"
   ]
 }

@@ -201,7 +201,7 @@ const CategoryManager = ({ content, updateContent }) => {
                     <div>
                       <h3 className="font-medium text-gray-900">{category.name}</h3>
                       <p className="text-sm text-gray-500">
-                        {category.courses?.length || 0} courses • {category.featured ? 'Featured' : 'Regular'}
+                        {getCoursesByCategory(categorySlug).length} courses • {category.featured ? 'Featured' : 'Regular'}
                       </p>
                     </div>
                   </div>

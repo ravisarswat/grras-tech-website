@@ -22,7 +22,7 @@ import LearningPathDetail from './pages/LearningPathDetail';
 import LearningPaths from './pages/LearningPaths';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
-import CertificationCoursesPage from './pages/CertificationCoursesPage';
+import CertificationCoursesPage from './components/CertificationCoursesPage';
 
 // 404 Page Component
 const NotFound = () => (

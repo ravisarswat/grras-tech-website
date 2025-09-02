@@ -16,7 +16,8 @@ logging.basicConfig(level=logging.INFO)
 async def create_dynamic_categories():
     """Create dynamic categories via admin API"""
     
-    backend_url = "https://category-admin-5.preview.emergentagent.com"
+    # Production backend URL - Railway deployment
+    backend_url = "https://grras-tech-website-production.up.railway.app"
     api_base = f"{backend_url}/api"
     
     # Categories to create (same as before but dynamic)

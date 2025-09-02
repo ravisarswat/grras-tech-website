@@ -402,7 +402,7 @@ const Header = () => {
           <div className="fixed inset-0 top-[88px] lg:hidden bg-white z-40 overflow-y-auto" style={{height: 'calc(100vh - 88px)'}}>
             <div className="bg-gradient-to-b from-white via-gray-50 to-white min-h-full">
               <div className="p-4 space-y-3">
-                {mobileNavigationItems.map((item, index) => (
+                {filteredMobileNavigationItems.map((item, index) => (
                   <div key={item.name} className="animate-slideInUp" style={{animationDelay: `${index * 50}ms`}}>
                     {item.hasDropdown ? (
                       <button

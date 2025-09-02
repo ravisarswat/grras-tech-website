@@ -294,16 +294,22 @@ const Header = () => {
                 ))}
               </nav>
 
-              {/* Premium Mobile Menu Button */}
+              {/* Enhanced Premium Mobile Menu Button */}
               <button
-                className="lg:hidden p-2 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 hover:from-blue-100 hover:to-purple-100 border border-blue-100 transition-all duration-300 hover:shadow-md"
+                className="lg:hidden p-3 rounded-2xl bg-gradient-to-br from-orange-50 via-white to-red-50 hover:from-orange-100 hover:to-red-100 border-2 border-orange-200 transition-all duration-500 hover:shadow-xl hover:scale-110 group relative overflow-hidden"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
+                {/* Button glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-400/20 to-red-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                
                 {isMenuOpen ? (
-                  <X className="h-5 w-5 text-blue-600" />
+                  <X className="h-6 w-6 text-orange-600 transition-all duration-300 group-hover:rotate-90 relative z-10" />
                 ) : (
-                  <Menu className="h-5 w-5 text-blue-600" />
+                  <Menu className="h-6 w-6 text-orange-600 transition-all duration-300 group-hover:scale-110 relative z-10" />
                 )}
+                
+                {/* Sparkle effect */}
+                <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-orange-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
               </button>
             </div>
           </div>

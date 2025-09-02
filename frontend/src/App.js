@@ -73,54 +73,59 @@ const Privacy = () => (
   </div>
 );
 
-function App() {
+// Component to handle scroll-to-top inside Router context
+const AppContent = () => {
   useScrollToTop();
+  
+  return (
+    <div className="App min-h-screen flex flex-col">
+      <SEO />
+      <Header />
+      <main className="flex-grow">
+        <Routes>
+          {/* Main Pages */}
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/admissions" element={<Admissions />} />
+          
+          {/* Course Routes - Dynamic Categories System */}  
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/courses/:categorySlug" element={<CategoryCoursePage />} />
+          <Route path="/course/:slug" element={<CourseDetail />} />
+          <Route path="/enhanced-courses" element={<EnhancedCourses />} />
+          <Route path="/certification-courses" element={<CertificationCoursesPage />} />
+          
+          {/* Learning Paths */}
+          <Route path="/learning-paths" element={<LearningPaths />} />
+          <Route path="/learning-path/:pathSlug" element={<LearningPathDetail />} />
+          
+          {/* Blog */}
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+          
+          {/* Admin Routes */}
+          <Route path="/admin/leads" element={<AdminLeads />} />
+          <Route path="/admin" element={<AdminContent />} />
+          
+          {/* Legal Pages */}
+          <Route path="/privacy" element={<Privacy />} />
+          
+          {/* 404 Page */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
+  );
+};
 
+function App() {
   return (
     <AuthProvider>
       <ContentProvider>
         <Router>
-          <div className="App min-h-screen flex flex-col">
-            <SEO />
-            <Header />
-            <main className="flex-grow">
-              <Routes>
-                {/* Main Pages */}
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/admissions" element={<Admissions />} />
-                
-                {/* Course Routes - Dynamic Categories System */}  
-                <Route path="/courses" element={<Courses />} />
-                <Route path="/courses/:categorySlug" element={<CategoryCoursePage />} />
-                <Route path="/course/:slug" element={<CourseDetail />} />
-                
-                {/* Legacy course routes for backward compatibility */}
-                <Route path="/enhanced-courses" element={<EnhancedCourses />} />
-                <Route path="/certification-courses" element={<CertificationCoursesPage />} />
-                
-                {/* Learning Path Routes */}
-                <Route path="/learning-paths" element={<LearningPaths />} />
-                <Route path="/learning-path/:slug" element={<LearningPathDetail />} />
-                
-                {/* Blog Routes */}
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/blog/:slug" element={<BlogPost />} />
-                
-                {/* Legal Pages */}
-                <Route path="/privacy" element={<Privacy />} />
-                
-                {/* Admin Routes */}
-                <Route path="/admin" element={<AdminContent />} />
-                <Route path="/admin/leads" element={<AdminLeads />} />
-                <Route path="/admin/content" element={<AdminContent />} />
-                
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <Footer />
-          </div>
+          <AppContent />
         </Router>
       </ContentProvider>
     </AuthProvider>

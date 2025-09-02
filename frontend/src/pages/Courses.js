@@ -248,7 +248,7 @@ const Courses = () => {
                         )}
                       </div>
                       <Link
-                        to={`/course/${course.slug}`}
+                        to={`/courses/${course.slug}`}
                         className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
                       >
                         Learn More

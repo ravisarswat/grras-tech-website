@@ -47,15 +47,47 @@ const Courses = () => {
       const categoriesData = contentData.courseCategories || {};
       
       // Process courses - completely dynamic
-      const processedCourses = coursesData.map(course => ({
-        ...course,
-        // Ensure required display fields have defaults
-        oneLiner: course.oneLiner || course.tagline || 'Professional Training Course',
-        overview: course.overview || course.description || '',
-        highlights: course.highlights || [],
-        level: course.level || 'All Levels',
-        categories: course.categories || [] // Array of category slugs
-      }));
+      const processedCourses = coursesData.map(course => {
+        // Get category info for styling
+        const courseCategories = course.categories || [];
+        const primaryCategorySlug = courseCategories[0]; // Use first category for styling
+        const primaryCategory = categoriesData[primaryCategorySlug];
+        
+        return {
+          ...course,
+          // Ensure required display fields have defaults
+          oneLiner: course.oneLiner || course.tagline || 'Professional Training Course',
+          overview: course.overview || course.description || '',
+          highlights: course.highlights || [],
+          level: course.level || 'All Levels',
+          categories: courseCategories,
+          // Dynamic styling from category
+          icon: course.icon || getCategoryIcon(primaryCategory),
+          color: course.color || getCategoryColor(primaryCategory)
+        };
+      });
+
+      const getCategoryIcon = (category) => {
+        if (!category) return '📚';
+        
+        const iconMap = {
+          'server': '🔴',
+          'cloud': '☁️', 
+          'container': '⚙️',
+          'terminal': '🔧',
+          'shield': '🛡️',
+          'code': '💻',
+          'graduation-cap': '🎓',
+          'database': '🖥️'
+        };
+        
+        return iconMap[category.icon] || category.icon || '📚';
+      };
+
+      const getCategoryColor = (category) => {
+        if (!category) return 'from-gray-500 to-gray-600';
+        return `from-${category.color.replace('#', '')}-500 to-${category.color.replace('#', '')}-600` || 'from-gray-500 to-gray-600';
+      };
       
       // Filter visible courses and sort by order
       const visibleCourses = processedCourses

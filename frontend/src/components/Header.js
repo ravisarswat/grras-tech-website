@@ -61,7 +61,7 @@ const Header = () => {
   return (
     <>
       {!isAdminPage && (
-        <header className="bg-white shadow-sm border-b sticky top-0 z-50">
+        <header className="bg-white/95 backdrop-blur-sm shadow-lg border-b border-gray-100 sticky top-0 z-50">
           <div className="container mx-auto px-4">
             <div className="flex justify-between items-center py-4">
               {/* PREMIUM COMPANY LOGO */}

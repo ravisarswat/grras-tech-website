@@ -320,17 +320,26 @@ const Courses = () => {
           </div>
 
           {filteredCourses.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="text-gray-400 mb-4">
-                <BookOpen className="h-16 w-16 mx-auto" />
+            <div className="text-center py-20">
+              <div className="bg-gradient-to-br from-orange-100 to-red-100 rounded-full w-32 h-32 mx-auto mb-8 flex items-center justify-center shadow-lg">
+                <BookOpen className="h-20 w-20 text-orange-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No courses found</h3>
-              <p className="text-gray-600">
+              <h3 className="text-3xl font-black text-gray-900 mb-4">No courses found</h3>
+              <p className="text-gray-600 text-lg max-w-md mx-auto leading-relaxed">
                 {selectedCategory === 'all' 
-                  ? 'No courses available yet.' 
-                  : 'This category has no courses assigned yet. Add courses from the admin panel.'
+                  ? '🚀 New courses are being added regularly. Check back soon!' 
+                  : '📚 This exciting category is ready for courses. Add some from the admin panel to get started!'
                 }
               </p>
+              <div className="mt-8">
+                <button 
+                  onClick={() => setSelectedCategory('all')}
+                  className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-600 to-red-600 text-white font-bold rounded-2xl hover:from-orange-700 hover:to-red-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                >
+                  <span>View All Courses</span>
+                  <ArrowRight className="ml-3 h-5 w-5" />
+                </button>
+              </div>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">

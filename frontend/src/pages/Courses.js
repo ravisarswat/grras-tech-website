@@ -196,7 +196,7 @@ const Courses = () => {
                         <BookOpen className={`w-5 h-5 ${
                           selectedCategory === category.id 
                             ? 'text-white' 
-                            : 'text-gray-500 group-hover:text-blue-600'
+                            : 'text-gray-500 group-hover:text-orange-600'
                         }`} />
                       )}
                     </div>

@@ -1,34 +1,29 @@
 {
-  "timestamp": "2025-09-01T12:09:08.565999",
+  "timestamp": "2025-09-02T14:26:06.447255",
   "backend_url": "https://category-admin-5.preview.emergentagent.com",
   "total_tests": 12,
-  "passed_tests": 6,
-  "failed_tests": 6,
-  "success_rate": "50.0%",
+  "passed_tests": 11,
+  "failed_tests": 1,
+  "success_rate": "91.7%",
   "test_results": {
     "server_health": true,
     "mongodb_connection": true,
     "cms_content_available": true,
     "courses_endpoint": true,
-    "course_data_structure": false,
-    "eligibility_widget_data": false,
-    "admin_authentication": false,
+    "course_data_structure": true,
+    "eligibility_widget_data": true,
+    "admin_authentication": true,
     "contact_form": false,
     "syllabus_generation": true,
-    "leads_management": false,
-    "new_courses_addition": false,
+    "leads_management": true,
+    "new_courses_addition": true,
     "new_courses_verification": true,
-    "new_learning_paths_addition": false,
+    "new_learning_paths_addition": true,
     "new_learning_paths_verification": true
   },
   "errors": [
-    "Some courses missing required fields for EligibilityWidget",
-    "Admin login failed with status 401",
     "Contact form submission failed with status 422"
   ],
-  "critical_issues": [
-    "Course data missing required fields for EligibilityWidget",
-    "Failed to add new certification courses to CMS"
-  ],
-  "eligibility_widget_ready": false
+  "critical_issues": [],
+  "eligibility_widget_ready": true
 }

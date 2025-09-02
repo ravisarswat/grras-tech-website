@@ -157,7 +157,7 @@ const Courses = () => {
               </div>
               
               <div className="flex flex-wrap gap-2">
-                {categories.map(category => (
+                {categoryTabs.map(category => (
                   <button
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}

@@ -331,25 +331,44 @@ const CourseEditor = ({
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Category
+                    Categories
                   </label>
-                  <select
-                    value={course.category || ''}
-                    onChange={(e) => handleFieldUpdate('category', e.target.value)}
-                    className="form-input"
-                  >
-                    <option value="">Select category</option>
-                    <option value="certification">🔴 Red Hat Technologies</option>
-                    <option value="cloud">☁️ AWS Cloud Platform</option>
-                    <option value="container">⚙️ Kubernetes Ecosystem</option>
-                    <option value="devops">🔧 DevOps Engineering</option>
-                    <option value="security">🛡️ Cybersecurity & Ethical Hacking</option>
-                    <option value="programming">💻 Programming & Development</option>
-                    <option value="degree">🎓 Degree Programs</option>
-                    <option value="other">📚 Other</option>
-                  </select>
+                  <div className="space-y-2">
+                    {Object.entries(categories).map(([slug, category]) => (
+                      <label key={slug} className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={course.categories?.includes(slug) || false}
+                          onChange={(e) => {
+                            const currentCategories = course.categories || [];
+                            let newCategories;
+                            
+                            if (e.target.checked) {
+                              // Add category if not already present
+                              newCategories = currentCategories.includes(slug) 
+                                ? currentCategories 
+                                : [...currentCategories, slug];
+                            } else {
+                              // Remove category
+                              newCategories = currentCategories.filter(cat => cat !== slug);
+                            }
+                            
+                            handleFieldUpdate('categories', newCategories);
+                          }}
+                          className="rounded text-red-600 focus:ring-red-500"
+                        />
+                        <div className="flex items-center gap-2">
+                          <div 
+                            className="w-3 h-3 rounded-full" 
+                            style={{ backgroundColor: category.color }}
+                          ></div>
+                          <span className="text-sm">{category.name}</span>
+                        </div>
+                      </label>
+                    ))}
+                  </div>
                   <div className="mt-1 text-xs text-gray-500">
-                    This determines which tab the course appears in on the Courses page
+                    Select one or more categories for this course. This determines where the course appears on the website.
                   </div>
                 </div>
                 

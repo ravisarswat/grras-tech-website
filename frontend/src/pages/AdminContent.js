@@ -918,6 +918,8 @@ const AdminContent = () => {
             <CategoryManager 
               content={content} 
               updateContent={updateContent}
+              saveContent={saveContent}
+              saving={saving}
             />
           )}
 

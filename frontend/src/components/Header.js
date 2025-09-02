@@ -158,7 +158,7 @@ const Header = () => {
                                             <BookOpen className="h-4 w-4 text-blue-600" />
                                           </div>
                                         </div>
-                                        <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xs font-bold transform group-hover:scale-110 transition-transform duration-300">
+                                        <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center text-white text-xs font-bold transform group-hover:scale-110 transition-transform duration-300">
                                           {track.courseCount}
                                         </div>
                                       </div>

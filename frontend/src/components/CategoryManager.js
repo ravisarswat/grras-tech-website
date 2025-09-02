@@ -59,11 +59,54 @@ const CategoryManager = ({ content, updateContent }) => {
     updateContent('courseCategories', newCategories);
   };
 
-  const deleteCategory = (categorySlug) => {
-    if (window.confirm('Are you sure you want to delete this category? This action cannot be undone.')) {
-      const newCategories = { ...categories };
-      delete newCategories[categorySlug];
-      updateContent('courseCategories', newCategories);
+  const deleteCategory = async (categorySlug) => {
+    const category = categories[categorySlug];
+    const categoryName = category?.name || categorySlug;
+    
+    // Count courses in this category
+    const coursesInCategory = courses.filter(course => 
+      course.categories && course.categories.includes(categorySlug)
+    );
+    
+    let confirmMessage = `Are you sure you want to delete the category "${categoryName}"?`;
+    if (coursesInCategory.length > 0) {
+      confirmMessage += `\n\n${coursesInCategory.length} course(s) will be automatically unassigned from this category:\n`;
+      confirmMessage += coursesInCategory.map(c => `• ${c.title}`).join('\n');
+    }
+    confirmMessage += '\n\nThis action cannot be undone.';
+    
+    if (window.confirm(confirmMessage)) {
+      try {
+        // Call backend API to delete category with proper course handling
+        const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+        const token = localStorage.getItem('adminToken');
+        
+        const response = await fetch(`${BACKEND_URL}/api/admin/categories/${categorySlug}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          
+          // Update local state
+          const newCategories = { ...categories };
+          delete newCategories[categorySlug];
+          updateContent('courseCategories', newCategories);
+          
+          // Show success message with details
+          alert(result.message);
+        } else {
+          const error = await response.json();
+          alert(`Failed to delete category: ${error.detail}`);
+        }
+      } catch (error) {
+        console.error('Error deleting category:', error);
+        alert('Error deleting category. Please try again.');
+      }
     }
   };
 

@@ -277,48 +277,56 @@ const Courses = () => {
                       </div>
                     </div>
 
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Clock className="h-4 w-4 mr-2" />
+                    {/* Course Meta */}
+                    <div className="flex items-center space-x-4 mb-4">
+                      <div className="flex items-center px-3 py-1 bg-blue-50 rounded-full text-sm text-blue-700 font-medium">
+                        <Clock className="h-3 w-3 mr-1" />
                         <span>{course.duration || 'Self-paced'}</span>
                       </div>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Users className="h-4 w-4 mr-2" />
+                      <div className="flex items-center px-3 py-1 bg-purple-50 rounded-full text-sm text-purple-700 font-medium">
+                        <Users className="h-3 w-3 mr-1" />
                         <span>{course.level}</span>
                       </div>
                     </div>
 
+                    {/* Key Highlights */}
                     {course.highlights && course.highlights.length > 0 && (
                       <div className="mb-6">
-                        <h4 className="font-semibold text-gray-900 mb-2">Key Highlights:</h4>
-                        <ul className="text-sm text-gray-600 space-y-1">
+                        <h4 className="font-semibold text-gray-900 mb-3 text-sm">What You'll Learn:</h4>
+                        <ul className="text-sm text-gray-600 space-y-2">
                           {course.highlights.slice(0, 3).map((highlight, index) => (
                             <li key={index} className="flex items-start">
-                              <span className="text-blue-600 mr-2">•</span>
-                              {highlight}
+                              <div className="w-1.5 h-1.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                              <span className="leading-relaxed">{highlight}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
                     )}
 
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm text-gray-500">
+                    {/* Footer */}
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                      {/* Categories */}
+                      <div className="flex flex-wrap gap-1">
                         {course.categories && course.categories.length > 0 && (
-                          <span>
-                            {course.categories.map(catSlug => {
-                              const category = categories.find(c => c.slug === catSlug);
-                              return category ? category.name : catSlug;
-                            }).join(' • ')}
-                          </span>
+                          course.categories.slice(0, 2).map(catSlug => {
+                            const category = categories.find(c => c.slug === catSlug);
+                            return category ? (
+                              <span key={catSlug} className="inline-flex items-center px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full font-medium">
+                                {category.name}
+                              </span>
+                            ) : null;
+                          })
                         )}
                       </div>
+                      
+                      {/* CTA Button */}
                       <Link
                         to={`/courses/${course.slug}`}
-                        className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
+                        className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                       >
-                        Learn More
-                        <ArrowRight className="h-4 w-4 ml-1" />
+                        <span>Learn More</span>
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
                       </Link>
                     </div>
                   </div>

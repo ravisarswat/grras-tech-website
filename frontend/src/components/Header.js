@@ -137,7 +137,7 @@ const Header = () => {
                                 <Link
                                   key={track.id}
                                   to={track.path}
-                                  className="group relative overflow-hidden rounded-xl border border-gray-100 bg-white hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:border-blue-200"
+                                  className="group relative overflow-hidden rounded-xl border border-gray-100 bg-white hover:bg-gradient-to-r hover:from-orange-50 hover:to-red-50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:border-orange-200"
                                   onClick={() => setIsCoursesOpen(false)}
                                 >
                                   <div className="p-4">

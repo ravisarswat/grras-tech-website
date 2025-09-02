@@ -130,27 +130,30 @@ const CourseCategoriesGrid = () => {
                 </p>
 
                 {/* Course Previews */}
-                {category.courses && category.courses.length > 0 && (
-                  <div className="mb-6">
-                    <div className="space-y-2">
-                      {category.courses.slice(0, 3).map((courseSlug) => {
-                        const course = courses.find(c => c.slug === courseSlug);
-                        return course ? (
-                          <div key={courseSlug} className="flex items-center text-sm text-gray-600">
+                {(() => {
+                  const categoryCourses = courses.filter(course => 
+                    course.categories && course.categories.includes(categorySlug)
+                  );
+                  
+                  return categoryCourses.length > 0 && (
+                    <div className="mb-6">
+                      <div className="space-y-2">
+                        {categoryCourses.slice(0, 3).map((course) => (
+                          <div key={course.slug} className="flex items-center text-sm text-gray-600">
                             <div className="w-2 h-2 bg-red-500 rounded-full mr-3"></div>
                             <span>{course.title}</span>
                           </div>
-                        ) : null;
-                      })}
-                      {category.courses.length > 3 && (
-                        <div className="flex items-center text-sm text-gray-400">
-                          <div className="w-2 h-2 bg-gray-300 rounded-full mr-3"></div>
-                          <span>+{category.courses.length - 3} more courses</span>
-                        </div>
-                      )}
+                        ))}
+                        {categoryCourses.length > 3 && (
+                          <div className="flex items-center text-sm text-gray-400">
+                            <div className="w-2 h-2 bg-gray-300 rounded-full mr-3"></div>
+                            <span>+{categoryCourses.length - 3} more courses</span>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  );
+                })()}
 
                 {/* View Category Link */}
                 <div className="flex items-center justify-between">

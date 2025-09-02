@@ -61,21 +61,32 @@ const Header = () => {
   return (
     <>
       {!isAdminPage && (
-        <header className="bg-white/95 backdrop-blur-sm shadow-lg border-b border-gray-100 sticky top-0 z-50">
-          <div className="container mx-auto px-4">
+        <header className="bg-white/98 backdrop-blur-xl shadow-2xl border-b border-orange-100/50 sticky top-0 z-50 relative overflow-hidden">
+          {/* Beautiful Background Effects */}
+          <div className="absolute inset-0 bg-gradient-to-r from-orange-50/30 via-white to-red-50/30"></div>
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 via-red-500 to-orange-600"></div>
+          
+          <div className="container mx-auto px-4 relative z-10">
             <div className="flex justify-between items-center py-4">
-              {/* CLEAN COMPANY LOGO */}
-              <Link to="/" className="flex items-center group">
+              {/* ENHANCED COMPANY LOGO */}
+              <Link to="/" className="flex items-center group relative">
                 <div className="flex flex-col items-center">
-                  <img 
-                    src="https://customer-assets.emergentagent.com/job_db8831d9-1fc7-46ac-b819-59bb9fafe1eb/artifacts/lu0elrou_black%20logo.jpg" 
-                    alt="GRRAS Solutions" 
-                    className="h-14 w-auto transition-transform group-hover:scale-105" 
-                  />
-                  <span className="text-sm font-semibold text-orange-600 -mt-1 tracking-wide">
+                  <div className="relative">
+                    <div className="absolute -inset-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl opacity-0 group-hover:opacity-20 transition-all duration-500 blur-sm"></div>
+                    <img 
+                      src="https://customer-assets.emergentagent.com/job_db8831d9-1fc7-46ac-b819-59bb9fafe1eb/artifacts/lu0elrou_black%20logo.jpg" 
+                      alt="GRRAS Solutions" 
+                      className="h-16 w-auto transition-all duration-500 group-hover:scale-110 group-hover:brightness-110 relative z-10 drop-shadow-lg" 
+                    />
+                  </div>
+                  <span className="text-sm font-black text-transparent bg-gradient-to-r from-orange-600 via-red-600 to-orange-700 bg-clip-text -mt-1 tracking-wide group-hover:scale-105 transition-all duration-300">
                     Solutions
                   </span>
                 </div>
+                
+                {/* Sparkle Effects */}
+                <div className="absolute top-1 right-1 w-2 h-2 bg-orange-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
+                <div className="absolute bottom-2 left-2 w-1.5 h-1.5 bg-red-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping animation-delay-200"></div>
               </Link>
 
               {/* Desktop Navigation */}

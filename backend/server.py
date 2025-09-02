@@ -122,6 +122,27 @@ async def admin_login(request: LoginRequest):
     else:
         raise HTTPException(status_code=401, detail="Invalid password")
 
+@api_router.get("/debug/refresh-content")
+async def debug_refresh_content():
+    """Debug endpoint to force refresh content from MongoDB"""
+    try:
+        # Force reload content from MongoDB
+        fresh_content = await content_manager._get_content_mongo()
+        if fresh_content:
+            categories = fresh_content.get("courseCategories", {})
+            courses = fresh_content.get("courses", [])
+            return {
+                "message": "Fresh content from MongoDB",
+                "categories_count": len(categories),
+                "courses_count": len(courses),
+                "category_keys": list(categories.keys()),
+                "sample_category": list(categories.values())[0] if categories else None
+            }
+        else:
+            return {"message": "No content found in MongoDB"}
+    except Exception as e:
+        return {"error": str(e)}
+
 @api_router.get("/content")
 async def get_content():
     """Get all CMS content"""

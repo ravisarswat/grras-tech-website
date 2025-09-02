@@ -63,11 +63,11 @@ const CategoryManager = ({ content, updateContent }) => {
       updateContent('courseCategories', newCategories);
       updateContent('courses', updatedCourses);
       
-      // Show success message
+      // Show success message with save reminder
       if (courseCount > 0) {
-        alert(`✅ Category "${categoryName}" deleted successfully!\n${courseCount} course(s) have been unassigned from this category.`);
+        alert(`✅ Category "${categoryName}" deleted locally!\n${courseCount} course(s) have been unassigned from this category.\n\n⚠️ IMPORTANT: Click "Save Changes" button at the top to save permanently!`);
       } else {
-        alert(`✅ Category "${categoryName}" deleted successfully!`);
+        alert(`✅ Category "${categoryName}" deleted locally!\n\n⚠️ IMPORTANT: Click "Save Changes" button at the top to save permanently!`);
       }
     }
   };

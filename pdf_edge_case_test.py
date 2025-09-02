@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class PDFEdgeCaseTester:
     def __init__(self):
-        self.backend_url = "https://category-admin-5.preview.emergentagent.com"
+        self.backend_url = "https://grras-course-manager.preview.emergentagent.com"
         self.api_base = f"{self.backend_url}/api"
         self.session = None
         self.results = []

@@ -17,7 +17,7 @@ async def cleanup_railway_courses():
     """Remove all courses from the production Railway database via API"""
     
     # Production backend URL
-    backend_url = "https://category-admin-5.preview.emergentagent.com"
+    backend_url = "https://grras-course-manager.preview.emergentagent.com"
     api_base = f"{backend_url}/api"
     
     logging.info(f"🔗 Connecting to production backend: {backend_url}")

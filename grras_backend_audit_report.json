@@ -1,6 +1,6 @@
 {
   "audit_timestamp": "2025-08-31T17:29:54.819098",
-  "backend_url": "https://category-admin-5.preview.emergentagent.com",
+  "backend_url": "https://grras-course-manager.preview.emergentagent.com",
   "audit_results": {
     "data_completeness": {
       "total_courses": 24,

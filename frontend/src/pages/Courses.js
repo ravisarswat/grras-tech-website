@@ -269,7 +269,7 @@ const Courses = () => {
                         </p>
                       </div>
                       <div className="ml-4 flex-shrink-0">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl flex items-center justify-center group-hover:from-blue-100 group-hover:to-purple-100 transition-all duration-300">
+                        <div className="w-12 h-12 bg-gradient-to-br from-orange-50 to-red-50 rounded-xl flex items-center justify-center group-hover:from-orange-100 group-hover:to-red-100 transition-all duration-300">
                           <span className="text-2xl group-hover:scale-110 transition-transform duration-300">
                             {course.icon || '📚'}
                           </span>

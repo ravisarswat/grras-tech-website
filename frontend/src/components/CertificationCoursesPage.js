@@ -17,6 +17,9 @@ import SEO from '../components/SEO';
 import { useContent } from '../contexts/ContentContext';
 
 const CertificationCoursesPage = () => {
+  const { content } = useContent();
+  const location = useLocation();
+  
   // Dynamic course categories from admin panel + fallback hardcoded
   const courseCategories = content?.courseCategories || {};
   

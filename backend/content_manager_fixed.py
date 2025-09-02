@@ -69,7 +69,7 @@ class ContentManager:
                     "facebook": "#"
                 },
                 "stats": {
-                    "yearsOfExcellence": "10+",
+                    "yearsOfExcellence": "18+",
                     "studentsTrained": "5000+", 
                     "placementRate": "95%",
                     "hiringPartners": "100+"

@@ -283,7 +283,7 @@ const SettingsTab = ({ content, updateContent, getContentValue }) => {
               value={getContentValue('institute.stats.yearsOfExcellence') || ''}
               onChange={(e) => updateContent('institute.stats.yearsOfExcellence', e.target.value)}
               className="form-input"
-              placeholder="10+"
+              placeholder="18+"
             />
           </div>
           

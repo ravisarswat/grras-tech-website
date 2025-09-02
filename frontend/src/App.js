@@ -43,7 +43,7 @@ function AppContent() {
           <Route path="/about" element={<About />} />
           
           {/* Course Routes - New Classic Certification Academy */}  
-          <Route path="/courses" element={<CertificationCoursesPage />} />
+          <Route path="/courses" element={<Courses />} />
           <Route path="/courses/category/:categorySlug" element={<CategoryCoursePage />} />
           <Route path="/courses/:slug" element={<CourseDetail />} />
           

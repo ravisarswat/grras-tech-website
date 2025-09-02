@@ -166,66 +166,91 @@ const Header = () => {
                             </div>
                           </div>
                           
-                          {/* Full Categories Grid */}
-                          <div className="p-6 max-h-96 overflow-y-auto">
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          {/* Enhanced Categories Grid */}
+                          <div className="p-8 max-h-96 overflow-y-auto">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {technologyTracks.length > 0 ? (
                               technologyTracks.map((track, index) => (
                                 <Link
                                   key={track.id}
                                   to={track.path}
-                                  className="group relative overflow-hidden rounded-xl border border-gray-100 bg-white hover:bg-gradient-to-r hover:from-orange-50 hover:to-red-50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:border-orange-200"
+                                  className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-white hover:bg-gradient-to-br hover:from-orange-50 hover:via-white hover:to-red-50 transition-all duration-500 hover:shadow-2xl hover:scale-[1.03] hover:border-orange-300 transform"
                                   onClick={() => setIsCoursesOpen(false)}
+                                  style={{
+                                    animationDelay: `${index * 100}ms`
+                                  }}
                                 >
-                                  <div className="p-4">
-                                    <div className="flex items-center space-x-4">
-                                      {/* Logo */}
+                                  <div className="p-6">
+                                    <div className="flex items-center space-x-5">
+                                      {/* Enhanced Logo */}
                                       <div className="relative">
-                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 group-hover:from-orange-100 group-hover:to-red-100 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
+                                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-gray-50 via-white to-gray-100 group-hover:from-orange-100 group-hover:via-red-50 group-hover:to-orange-100 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-lg group-hover:shadow-2xl border-2 border-gray-200 group-hover:border-orange-300">
                                           <img 
                                             src={track.logo} 
                                             alt={track.name}
-                                            className="w-7 h-7 object-contain group-hover:scale-110 transition-transform duration-300"
+                                            className="w-9 h-9 object-contain group-hover:scale-125 transition-all duration-500 filter group-hover:brightness-110"
                                             onError={(e) => {
                                               e.target.style.display = 'none';
                                               e.target.nextElementSibling.style.display = 'flex';
                                             }}
                                           />
-                                          <div className="hidden w-7 h-7 bg-blue-100 rounded flex items-center justify-center">
-                                            <BookOpen className="h-4 w-4 text-blue-600" />
+                                          <div className="hidden w-9 h-9 bg-gradient-to-br from-orange-100 to-red-100 rounded-xl flex items-center justify-center">
+                                            <BookOpen className="h-5 w-5 text-orange-600" />
                                           </div>
                                         </div>
-                                        <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center text-white text-xs font-bold transform group-hover:scale-110 transition-transform duration-300">
+                                        
+                                        {/* Enhanced Course Count Badge */}
+                                        <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-orange-500 via-red-500 to-orange-600 rounded-full flex items-center justify-center text-white text-sm font-black transform group-hover:scale-125 transition-all duration-300 shadow-xl group-hover:shadow-2xl border-2 border-white">
                                           {track.courseCount}
+                                          
+                                          {/* Sparkle effect */}
+                                          <div className="absolute top-0 right-0 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
                                         </div>
                                       </div>
                                       
-                                      {/* Content */}
+                                      {/* Enhanced Content */}
                                       <div className="flex-1 min-w-0">
-                                        <h4 className="font-semibold text-gray-900 group-hover:text-orange-700 transition-colors duration-300 truncate">
+                                        <h4 className="font-black text-lg text-gray-900 group-hover:text-orange-700 transition-colors duration-300 mb-2 line-clamp-1">
                                           {track.name}
                                         </h4>
-                                        <p className="text-sm text-gray-600 group-hover:text-orange-600 transition-colors duration-300">
-                                          {track.courseCount} professional course{track.courseCount !== 1 ? 's' : ''} available
+                                        <p className="text-sm text-gray-600 group-hover:text-orange-600 transition-colors duration-300 font-semibold">
+                                          🎯 {track.courseCount} professional course{track.courseCount !== 1 ? 's' : ''} available
                                         </p>
+                                        
+                                        {/* Progress indicator */}
+                                        <div className="mt-3 w-full h-1 bg-gray-200 rounded-full overflow-hidden">
+                                          <div 
+                                            className="h-full bg-gradient-to-r from-orange-500 to-red-500 rounded-full transform group-hover:scale-x-100 transition-transform duration-700 origin-left"
+                                            style={{ width: `${Math.min((track.courseCount / 10) * 100, 100)}%` }}
+                                          ></div>
+                                        </div>
                                       </div>
                                       
-                                      {/* Arrow */}
+                                      {/* Enhanced Arrow */}
                                       <div className="flex-shrink-0">
-                                        <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-orange-600 group-hover:translate-x-1 transition-all duration-300" />
+                                        <div className="w-10 h-10 rounded-xl bg-gray-100 group-hover:bg-gradient-to-br group-hover:from-orange-100 group-hover:to-red-100 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
+                                          <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-orange-600 group-hover:translate-x-1 transition-all duration-300" />
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
                                   
-                                  {/* Hover overlay */}
-                                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                  {/* Enhanced hover overlay */}
+                                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-red-500/5 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                  
+                                  {/* Shine effect */}
+                                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                                  </div>
                                 </Link>
                               ))
                             ) : (
-                              <div className="text-center py-8 text-gray-500">
-                                <BookOpen className="h-12 w-12 mx-auto mb-3 text-gray-300" />
-                                <p className="font-medium">No categories available</p>
-                                <p className="text-sm">Categories will appear here once added</p>
+                              <div className="col-span-2 text-center py-12 text-gray-500">
+                                <div className="w-20 h-20 bg-gradient-to-br from-orange-100 to-red-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                  <BookOpen className="h-10 w-10 text-orange-400" />
+                                </div>
+                                <p className="font-bold text-lg mb-2">No categories available</p>
+                                <p className="text-sm">Categories will appear here once added via admin panel</p>
                               </div>
                             )}
                           </div>

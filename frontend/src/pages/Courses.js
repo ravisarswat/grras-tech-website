@@ -15,7 +15,7 @@ const Courses = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   useEffect(() => {
-    fetchCourses();
+    fetchCoursesAndCategories();
   }, []);
 
   useEffect(() => {
@@ -23,38 +23,42 @@ const Courses = () => {
       setFilteredCourses(courses);
     } else {
       setFilteredCourses(courses.filter(course => 
-        course.category === selectedCategory
+        course.categories && course.categories.includes(selectedCategory)
       ));
     }
   }, [courses, selectedCategory]);
 
-  const fetchCourses = async () => {
+  const fetchCoursesAndCategories = async () => {
     try {
-      const response = await axios.get(`${API}/courses`);
-      const coursesData = response.data.courses || [];
+      // Fetch both courses and categories
+      const [coursesResponse, categoriesResponse] = await Promise.all([
+        axios.get(`${API}/courses`),
+        axios.get(`${API}/categories`)
+      ]);
       
-      // Use ONLY CMS data - no static fallbacks
+      const coursesData = coursesResponse.data.courses || [];
+      const categoriesData = categoriesResponse.data.categories || [];
+      
+      // Process courses data
       const coursesWithDefaults = coursesData.map(course => ({
         ...course,
-        // Ensure required display fields have defaults
         oneLiner: course.oneLiner || course.tagline || 'Professional Training Course',
         overview: course.overview || course.description || '',
-        icon: course.icon || getCategoryIcon(course.category),
-        color: course.color || getCategoryColor(course.category),
         highlights: course.highlights || [],
         level: course.level || 'All Levels',
-        category: course.category || 'other'
+        categories: course.categories || []
       }));
       
       // Filter only visible courses and sort by order
       const visibleCourses = coursesWithDefaults
         .filter(course => course.visible !== false)
-        .sort((a, b) => (a.order || 999) - (b.order || 999));
+        .sort((a, b) => (a.order || 0) - (b.order || 0));
       
       setCourses(visibleCourses);
+      setCategoryList(categoriesData);
       setFilteredCourses(visibleCourses);
     } catch (error) {
-      console.error('Error fetching courses:', error);
+      console.error('Error fetching data:', error);
       setCourses([]);
       setFilteredCourses([]);
     } finally {

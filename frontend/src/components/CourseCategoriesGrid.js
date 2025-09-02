@@ -61,7 +61,10 @@ const CourseCategoriesGrid = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {featuredCategories.map(([categorySlug, category]) => {
             const IconComponent = iconMap[category.icon] || BookOpen;
-            const categoryCoursesCount = category.courses?.length || 0;
+            // Calculate course count by checking which courses have this category assigned
+            const categoryCoursesCount = courses.filter(course => 
+              course.categories && course.categories.includes(categorySlug)
+            ).length;
             
             // Map category slugs to course tabs
             let courseTabLink = '/courses';

@@ -190,17 +190,27 @@ const CourseEditor = ({
         
         {/* Quick Actions */}
         <div className="flex items-center gap-2">
-          <span className="text-sm px-2 py-1 rounded-full bg-gray-100 text-gray-700">
-            {course.category === 'certification' && '🔴 Red Hat'}
-            {course.category === 'cloud' && '☁️ AWS'}
-            {course.category === 'container' && '⚙️ Kubernetes'}
-            {course.category === 'devops' && '🔧 DevOps'}
-            {course.category === 'security' && '🛡️ Cybersecurity'}
-            {course.category === 'programming' && '💻 Programming'}
-            {course.category === 'degree' && '🎓 Degree'}
-            {!course.category && '📚 Uncategorized'}
-            {course.category && !['certification', 'cloud', 'container', 'devops', 'security', 'programming', 'degree'].includes(course.category) && '📚 Other'}
-          </span>
+          <div className="flex items-center gap-2">
+            {/* Dynamic Category Icons */}
+            {course.categories && course.categories.length > 0 ? (
+              course.categories.map(categorySlug => {
+                const category = categories[categorySlug];
+                return category ? (
+                  <span key={categorySlug} className="text-xs font-medium px-2 py-1 rounded-full" style={{ backgroundColor: category.color + '20', color: category.color }}>
+                    {category.name}
+                  </span>
+                ) : (
+                  <span key={categorySlug} className="text-xs font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-600">
+                    {categorySlug}
+                  </span>
+                );
+              })
+            ) : (
+              <span className="text-xs font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-600">
+                📚 Uncategorized
+              </span>
+            )}
+          </div>
           
           <button
             onClick={() => onMove(index, 'up')}

@@ -16,23 +16,29 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
   const addCategory = () => {
     const timestamp = Date.now();
     const maxOrder = Math.max(0, ...Object.values(categories).map(c => c.order || 0));
+    const categoryName = 'New Category';
+    const categorySlug = `new-category-${timestamp}`;
     
     const newCategory = {
-      name: 'New Category',
-      slug: `category-${timestamp}`,
-      description: 'Category description',
+      name: categoryName,
+      slug: categorySlug,
+      description: 'Enter category description here',
       icon: 'folder',
       color: '#3B82F6',
-      logo: '', // Add logo field
+      logo: '', 
       visible: true,
       order: maxOrder + 1,
+      featured: true, // Make new categories featured by default
       seo: { title: '', description: '', keywords: '' }
     };
     
     updateContent('courseCategories', {
       ...categories,
-      [newCategory.slug]: newCategory
+      [categorySlug]: newCategory
     });
+    
+    // Expand the new category for immediate editing
+    setExpandedCategory(categorySlug);
   };
 
   // Helper function to generate slug from name

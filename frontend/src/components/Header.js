@@ -33,72 +33,75 @@ const Header = () => {
     };
   }, [isMenuOpen]);
 
-  // Technology tracks with company logos
-  const technologyTracks = [
-    {
-      id: 'redhat',
-      name: 'Red Hat Technologies',
-      path: '/courses/redhat',
-      logo: 'https://logos-world.net/wp-content/uploads/2021/02/Red-Hat-Logo.png',
-      bgColor: 'bg-red-50',
-      textColor: 'text-red-700',
-      hoverColor: 'hover:bg-red-100'
-    },
-    {
-      id: 'aws',
-      name: 'AWS Cloud Platform',
-      path: '/courses/aws',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg',
-      bgColor: 'bg-orange-50',
-      textColor: 'text-orange-700',
-      hoverColor: 'hover:bg-orange-100'
-    },
-    {
-      id: 'kubernetes',
-      name: 'Kubernetes Ecosystem',
-      path: '/courses/kubernetes',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg',
-      bgColor: 'bg-blue-50',
-      textColor: 'text-blue-700',
-      hoverColor: 'hover:bg-blue-100'
-    },
-    {
-      id: 'devops',
-      name: 'DevOps Engineering',
-      path: '/courses/devops',
-      logo: 'https://cdn-icons-png.flaticon.com/512/919/919853.png',
-      bgColor: 'bg-green-50',
-      textColor: 'text-green-700',
-      hoverColor: 'hover:bg-green-100'
-    },
-    {
-      id: 'cybersecurity',
-      name: 'Cybersecurity & Ethical Hacking',
-      path: '/courses/cybersecurity',
-      logo: 'https://cdn-icons-png.flaticon.com/512/2092/2092063.png',
-      bgColor: 'bg-purple-50',
-      textColor: 'text-purple-700',
-      hoverColor: 'hover:bg-purple-100'
-    },
-    {
-      id: 'programming',
-      name: 'Programming & Development',
-      path: '/courses/programming',
-      logo: 'https://cdn-icons-png.flaticon.com/512/1005/1005141.png',
-      bgColor: 'bg-indigo-50',
-      textColor: 'text-indigo-700',
-      hoverColor: 'hover:bg-indigo-100'
-    },
-    {
-      id: 'degree',
-      name: 'Degree Programs',
-      path: '/courses/degree',
-      logo: 'https://cdn-icons-png.flaticon.com/512/3595/3595030.png',
-      bgColor: 'bg-yellow-50',
-      textColor: 'text-yellow-700',
-      hoverColor: 'hover:bg-yellow-100'
-    }
-  ];
+  // Get dynamic categories from CMS
+  const dynamicCategories = content?.courseCategories || {};
+  
+  // Build technology tracks from dynamic categories
+  const technologyTracks = Object.entries(dynamicCategories)
+    .filter(([slug, category]) => category.visible !== false)
+    .sort(([, a], [, b]) => (a.order || 999) - (b.order || 999))
+    .map(([slug, category]) => ({
+      id: slug,
+      name: category.name,
+      path: `/courses?tab=${slug}`,
+      logo: getLogoForCategory(category.icon || 'default'),
+      bgColor: getBgColorForIcon(category.icon),
+      textColor: getTextColorForIcon(category.icon),
+      hoverColor: getHoverColorForIcon(category.icon)
+    }));
+
+  // Helper functions for styling based on category icon
+  const getLogoForCategory = (icon) => {
+    const logoMap = {
+      'server': 'https://logos-world.net/wp-content/uploads/2021/02/Red-Hat-Logo.png',
+      'cloud': 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg',
+      'container': 'https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg',
+      'terminal': 'https://www.vectorlogo.zone/logos/jenkins/jenkins-icon.svg',
+      'shield': 'https://www.vectorlogo.zone/logos/kalilinux/kalilinux-icon.svg',
+      'code': 'https://www.vectorlogo.zone/logos/python/python-icon.svg',
+      'graduation-cap': 'https://www.vectorlogo.zone/logos/java/java-icon.svg'
+    };
+    return logoMap[icon] || 'https://www.vectorlogo.zone/logos/java/java-icon.svg';
+  };
+
+  const getBgColorForIcon = (icon) => {
+    const colorMap = {
+      'server': 'bg-red-50',
+      'cloud': 'bg-orange-50', 
+      'container': 'bg-blue-50',
+      'terminal': 'bg-green-50',
+      'shield': 'bg-purple-50',
+      'code': 'bg-indigo-50',
+      'graduation-cap': 'bg-amber-50'
+    };
+    return colorMap[icon] || 'bg-gray-50';
+  };
+
+  const getTextColorForIcon = (icon) => {
+    const colorMap = {
+      'server': 'text-red-700',
+      'cloud': 'text-orange-700',
+      'container': 'text-blue-700', 
+      'terminal': 'text-green-700',
+      'shield': 'text-purple-700',
+      'code': 'text-indigo-700',
+      'graduation-cap': 'text-amber-700'
+    };
+    return colorMap[icon] || 'text-gray-700';
+  };
+
+  const getHoverColorForIcon = (icon) => {
+    const colorMap = {
+      'server': 'hover:bg-red-100',
+      'cloud': 'hover:bg-orange-100',
+      'container': 'hover:bg-blue-100',
+      'terminal': 'hover:bg-green-100', 
+      'shield': 'hover:bg-purple-100',
+      'code': 'hover:bg-indigo-100',
+      'graduation-cap': 'hover:bg-amber-100'
+    };
+    return colorMap[icon] || 'hover:bg-gray-100';
+  };
 
   const courses = [
     { slug: 'bca-degree', name: 'BCA Degree Program' },

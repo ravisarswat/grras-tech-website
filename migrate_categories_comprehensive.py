@@ -9,14 +9,16 @@ import json
 import sys
 import os
 from datetime import datetime
+import motor.motor_asyncio
+from urllib.parse import quote_plus
 
-# Add the backend directory to the Python path
-sys.path.append('/app/backend')
+# MongoDB configuration
+MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
+DB_NAME = os.environ.get('DB_NAME', 'grras_database')
 
-from content_manager import ContentManager
-
-# Initialize content manager
-content_manager = ContentManager()
+# MongoDB client setup
+client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URL)
+db = client[DB_NAME]
 
 # Define comprehensive category structure with official metadata
 COMPREHENSIVE_CATEGORIES = {
@@ -150,13 +152,44 @@ COMPREHENSIVE_CATEGORIES = {
     }
 }
 
+async def get_content():
+    """Get current content from MongoDB"""
+    try:
+        content_doc = await db.content.find_one({"type": "main"})
+        if content_doc:
+            return content_doc.get("data", {})
+        return {}
+    except Exception as e:
+        print(f"Error getting content: {e}")
+        return {}
+
+async def save_content(content_data):
+    """Save content to MongoDB"""
+    try:
+        await db.content.update_one(
+            {"type": "main"},
+            {
+                "$set": {
+                    "data": content_data,
+                    "updated_at": datetime.utcnow(),
+                    "user": "migration",
+                    "is_draft": False
+                }
+            },
+            upsert=True
+        )
+        return True
+    except Exception as e:
+        print(f"Error saving content: {e}")
+        return False
+
 async def migrate_categories_and_courses():
     """Migrate all categories and assign courses appropriately"""
     try:
         print("🚀 Starting comprehensive category and course migration...")
         
         # Get current content
-        content = await content_manager.get_content()
+        content = await get_content()
         courses = content.get("courses", [])
         
         print(f"📊 Found {len(courses)} existing courses")
@@ -234,7 +267,7 @@ async def migrate_categories_and_courses():
         content["courses"] = courses
         
         # Save updated content
-        await content_manager.save_content(content, user="migration", is_draft=False)
+        await save_content(content)
         
         # Print assignment statistics
         print("\n📊 CATEGORY ASSIGNMENT STATISTICS:")
@@ -264,7 +297,7 @@ async def verify_migration():
     try:
         print("\n🔍 Verifying migration results...")
         
-        content = await content_manager.get_content()
+        content = await get_content()
         categories = content.get("courseCategories", {})
         courses = content.get("courses", [])
         

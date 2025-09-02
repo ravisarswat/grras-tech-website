@@ -283,7 +283,7 @@ const Courses = () => {
                         <Clock className="h-3 w-3 mr-1" />
                         <span>{course.duration || 'Self-paced'}</span>
                       </div>
-                      <div className="flex items-center px-3 py-1 bg-purple-50 rounded-full text-sm text-purple-700 font-medium">
+                      <div className="flex items-center px-3 py-1 bg-red-50 rounded-full text-sm text-red-700 font-medium">
                         <Users className="h-3 w-3 mr-1" />
                         <span>{course.level}</span>
                       </div>

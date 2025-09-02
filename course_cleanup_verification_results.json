@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-09-02T14:15:40.904495",
+  "timestamp": "2025-09-02T14:16:43.143728",
   "backend_url": "https://category-admin-5.preview.emergentagent.com",
   "total_tests": 7,
   "passed_tests": 3,
@@ -17,7 +17,7 @@
   "errors": [
     "Course cleanup was not performed - 10 courses still present",
     "CMS content still has 10 courses",
-    "Missing essential sections: ['branding', 'pages']",
+    "Missing essential sections: ['learningPaths']",
     "System not ready for fresh start - cleanup incomplete"
   ],
   "courses_found": 10,

@@ -7,6 +7,11 @@ const CategoryManager = ({ content, updateContent }) => {
   const categories = content?.courseCategories || {};
   const courses = content?.courses || [];
 
+  // Sort categories by order field (lowest first)
+  const sortedCategoryEntries = Object.entries(categories).sort(([, a], [, b]) => {
+    return (a.order || 999) - (b.order || 999);
+  });
+
   // Debug: Log categories to console
   console.log('CategoryManager - Categories:', categories);
   console.log('CategoryManager - Categories count:', Object.keys(categories).length);

@@ -36,6 +36,7 @@ const AdminContent = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [content, setContent] = useState(null);
   const [originalContent, setOriginalContent] = useState(null);
+  const [categories, setCategories] = useState({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);

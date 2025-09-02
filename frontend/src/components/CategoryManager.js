@@ -12,16 +12,25 @@ const CategoryManager = ({ content, updateContent }) => {
     return (a.order || 999) - (b.order || 999);
   });
 
-  // Better debugging
-  console.log('CategoryManager - Categories:', categories);
-  console.log('CategoryManager - Categories count:', Object.keys(categories).length);
-  console.log('CategoryManager - Content:', content);
-  console.log('CategoryManager - Content type:', typeof content);
+  // Enhanced debugging
+  console.log('🔍 CategoryManager DEBUG:');
+  console.log('   - content:', content);
+  console.log('   - content type:', typeof content);
+  console.log('   - content keys:', content ? Object.keys(content) : 'null');
+  console.log('   - courseCategories:', content?.courseCategories);
+  console.log('   - categories count:', Object.keys(categories).length);
+  console.log('   - categories data:', categories);
+  console.log('   - courses count:', courses.length);
 
+  // Error states
   if (!content) {
-    console.warn('CategoryManager: Content is null/undefined');
-  } else if (!content.courseCategories) {
-    console.warn('CategoryManager: content.courseCategories is missing');
+    console.warn('❌ CategoryManager: Content is null/undefined');
+    return <div>Error: Content not loaded</div>;
+  }
+  
+  if (!content.courseCategories) {
+    console.warn('❌ CategoryManager: content.courseCategories is missing');
+    return <div>Error: courseCategories missing from content</div>;
   }
 
   const addCategory = () => {

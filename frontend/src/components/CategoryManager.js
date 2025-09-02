@@ -47,43 +47,103 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
     
     // Show confirmation dialog
     const confirmMessage = courseCount > 0 
-      ? `Are you sure you want to delete "${categoryName}"?\n\nThis will remove the category from ${courseCount} course(s). The courses will remain but will be unassigned from this category.\n\nChanges will be saved automatically.`
-      : `Are you sure you want to delete "${categoryName}"?\n\nChanges will be saved automatically.`;
+      ? `Are you sure you want to delete "${categoryName}"?\n\nThis will remove the category from ${courseCount} course(s). The courses will remain but will be unassigned from this category.\n\nThis will be saved directly to production database.`
+      : `Are you sure you want to delete "${categoryName}"?\n\nThis will be saved directly to production database.`;
     
     if (window.confirm(confirmMessage)) {
-      const newCategories = { ...categories };
-      delete newCategories[slug];
-      
-      // Remove category from all courses
-      const updatedCourses = courses.map(course => ({
-        ...course,
-        categories: (course.categories || []).filter(cat => cat !== slug)
-      }));
-      
-      // Update local state first
-      updateContent('courseCategories', newCategories);
-      updateContent('courses', updatedCourses);
-      
-      // Auto-save to backend if saveContent function is available
-      if (saveContent && !saving) {
-        try {
-          alert(`🔄 Saving deletion of "${categoryName}"...`);
-          await saveContent();
-          
-          if (courseCount > 0) {
-            alert(`✅ Category "${categoryName}" deleted successfully!\n${courseCount} course(s) have been unassigned and changes saved to database.`);
-          } else {
-            alert(`✅ Category "${categoryName}" deleted successfully and saved to database!`);
-          }
-        } catch (error) {
-          alert(`❌ Category deleted locally but failed to save to database!\nPlease click "Save Changes" button manually.\n\nError: ${error.message}`);
+      try {
+        // Show loading state
+        const deleteButton = document.querySelector(`button[onclick*="${slug}"]`);
+        if (deleteButton) {
+          deleteButton.disabled = true;
+          deleteButton.innerHTML = '🔄';
         }
-      } else {
-        // Fallback to manual save reminder
+        
+        // Make direct API call to delete category
+        const token = localStorage.getItem('admin_token');
+        const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://grras-tech-website-production.up.railway.app';
+        
+        if (!token) {
+          throw new Error('No admin token found. Please login again.');
+        }
+        
+        // Fetch current content from backend
+        const contentResponse = await fetch(`${BACKEND_URL}/api/content`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (!contentResponse.ok) {
+          throw new Error(`Failed to fetch content: ${contentResponse.status}`);
+        }
+        
+        const currentContent = await contentResponse.json();
+        const backendContent = currentContent.content;
+        
+        // Delete category from backend content
+        const updatedCategories = { ...backendContent.courseCategories };
+        delete updatedCategories[slug];
+        
+        // Remove category from all courses in backend content
+        const updatedCourses = (backendContent.courses || []).map(course => ({
+          ...course,
+          categories: (course.categories || []).filter(cat => cat !== slug)
+        }));
+        
+        // Prepare updated content
+        const updatedContent = {
+          ...backendContent,
+          courseCategories: updatedCategories,
+          courses: updatedCourses,
+          meta: {
+            ...backendContent.meta,
+            lastModified: new Date().toISOString(),
+            modifiedBy: 'category-delete-direct'
+          }
+        };
+        
+        // Save directly to backend
+        const saveResponse = await fetch(`${BACKEND_URL}/api/content`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            content: updatedContent,
+            isDraft: false
+          })
+        });
+        
+        if (!saveResponse.ok) {
+          const errorData = await saveResponse.json().catch(() => ({ detail: 'Unknown error' }));
+          throw new Error(`Save failed: ${errorData.detail || saveResponse.status}`);
+        }
+        
+        // Update local state to reflect backend changes
+        updateContent('courseCategories', updatedCategories);
+        updateContent('courses', updatedCourses);
+        
+        // Success message
         if (courseCount > 0) {
-          alert(`✅ Category "${categoryName}" deleted locally!\n${courseCount} course(s) have been unassigned from this category.\n\n⚠️ IMPORTANT: Click "Save Changes" button at the top to save permanently!`);
+          alert(`✅ SUCCESS!\n\nCategory "${categoryName}" permanently deleted from production database!\n\n${courseCount} course(s) have been unassigned.\n\nChanges are now live on website.`);
         } else {
-          alert(`✅ Category "${categoryName}" deleted locally!\n\n⚠️ IMPORTANT: Click "Save Changes" button at the top to save permanently!`);
+          alert(`✅ SUCCESS!\n\nCategory "${categoryName}" permanently deleted from production database!\n\nChanges are now live on website.`);
+        }
+        
+        // Force refresh to show updated state
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+        
+      } catch (error) {
+        console.error('Delete category error:', error);
+        alert(`❌ FAILED to delete category!\n\nError: ${error.message}\n\nPlease try again or contact support.`);
+        
+        // Re-enable button
+        const deleteButton = document.querySelector(`button[onclick*="${slug}"]`);
+        if (deleteButton) {
+          deleteButton.disabled = false;
+          deleteButton.innerHTML = '🗑️';
         }
       }
     }

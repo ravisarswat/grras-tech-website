@@ -523,7 +523,7 @@ const CertificationCoursesPage = () => {
 
               {/* Dynamic Stats from categories */}
               <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-12 max-w-4xl mx-auto">
-                {Object.entries(courseVendors).slice(0, 5).map(([key, vendor], index) => (
+                {sortedCourseVendorEntries.slice(0, 5).map(([key, vendor], index) => (
                   <div key={key} className="text-center">
                     <div className="text-2xl font-bold mb-2">{categorizedCourses[key]?.length || 0}</div>
                     <div className="text-sm text-gray-200">{vendor.name}</div>

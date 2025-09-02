@@ -111,41 +111,6 @@ const Courses = () => {
     }
   };
 
-  // Simple icon mapping based on category
-  const getCategoryIcon = (category) => {
-    const icons = {
-      'degree': '🎓',
-      'programming': '💻',
-      'cloud': '☁️',
-      'certification': '🏆',
-      'security': '🔒',
-      'other': '📚'
-    };
-    return icons[category] || '📚';
-  };
-
-  // Simple color mapping based on category  
-  const getCategoryColor = (category) => {
-    const colors = {
-      'degree': 'from-blue-500 to-indigo-600',
-      'programming': 'from-green-500 to-teal-600',
-      'cloud': 'from-purple-500 to-violet-600',
-      'certification': 'from-red-500 to-pink-600',
-      'security': 'from-red-600 to-red-800',
-      'other': 'from-gray-500 to-gray-600'
-    };
-    return colors[category] || 'from-gray-500 to-gray-600';
-  };
-
-  const categories = [
-    { id: 'all', name: 'All Courses', count: courses.length },
-    { id: 'degree', name: 'Degree Programs', count: courses.filter(c => c.category === 'degree').length },
-    { id: 'programming', name: 'Programming', count: courses.filter(c => c.category === 'programming').length },
-    { id: 'cloud', name: 'Cloud & DevOps', count: courses.filter(c => c.category === 'cloud').length },
-    { id: 'certification', name: 'Certifications', count: courses.filter(c => c.category === 'certification').length },
-    { id: 'security', name: 'Security', count: courses.filter(c => c.category === 'security').length }
-  ];
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">

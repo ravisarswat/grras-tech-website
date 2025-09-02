@@ -35,10 +35,53 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
     });
   };
 
+  // Helper function to generate slug from name
+  const generateSlug = (name) => {
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
+      .replace(/-+/g, '-') // Replace multiple hyphens with single
+      .trim('-'); // Remove leading/trailing hyphens
+  };
+
   const updateCategory = (slug, field, value) => {
+    let updatedCategory = { ...categories[slug], [field]: value };
+    
+    // If name is being updated, also update the slug
+    if (field === 'name') {
+      const newSlug = generateSlug(value);
+      updatedCategory.slug = newSlug;
+      
+      // If slug is changing, we need to update the category key
+      if (newSlug !== slug) {
+        const newCategories = { ...categories };
+        delete newCategories[slug]; // Remove old key
+        newCategories[newSlug] = updatedCategory; // Add with new key
+        
+        // Also update course references from old slug to new slug
+        const updatedCourses = courses.map(course => ({
+          ...course,
+          categories: (course.categories || []).map(catSlug => 
+            catSlug === slug ? newSlug : catSlug
+          )
+        }));
+        
+        updateContent('courseCategories', newCategories);
+        updateContent('courses', updatedCourses);
+        
+        // Update expanded category to new slug
+        if (expandedCategory === slug) {
+          setExpandedCategory(newSlug);
+        }
+        
+        return;
+      }
+    }
+    
     updateContent('courseCategories', {
       ...categories,
-      [slug]: { ...categories[slug], [field]: value }
+      [slug]: updatedCategory
     });
   };
 

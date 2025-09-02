@@ -256,7 +256,7 @@ const Courses = () => {
               {filteredCourses.map((course, index) => (
                 <div key={course.slug} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden hover:border-blue-200 transform hover:scale-[1.02]">
                   {/* Header with gradient */}
-                  <div className="h-2 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+                  <div className="h-2 bg-gradient-to-r from-orange-500 to-red-600"></div>
                   
                   <div className="p-6">
                     <div className="flex items-start justify-between mb-4">

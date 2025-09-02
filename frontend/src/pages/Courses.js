@@ -86,7 +86,8 @@ const Courses = () => {
           overview: course.overview || course.description || '',
           highlights: course.highlights || [],
           level: course.level || 'All Levels',
-          categories: course.categories || []
+          // Fix categories field - handle both singular 'category' and plural 'categories'
+          categories: course.categories || (course.category ? [course.category] : [])
         }))
         .sort((a, b) => (a.order || 999) - (b.order || 999));
 

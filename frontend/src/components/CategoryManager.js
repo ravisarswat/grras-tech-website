@@ -134,7 +134,11 @@ const CategoryManager = ({ content, updateContent }) => {
 
   const addCategory = () => {
     const timestamp = Date.now();
-    const existingCount = Object.keys(categories).length;
+    
+    // Find the highest existing order and add 1
+    const existingOrders = Object.values(categories).map(cat => cat.order || 0);
+    const maxOrder = existingOrders.length > 0 ? Math.max(...existingOrders) : 0;
+    
     const newCategory = {
       name: 'New Category',
       slug: `new-category-${timestamp}`,
@@ -144,7 +148,7 @@ const CategoryManager = ({ content, updateContent }) => {
       gradient: 'from-blue-500 to-blue-600',
       featured: false,
       visible: true,
-      order: existingCount + 1, // Add ordering
+      order: maxOrder + 1, // Set order after existing categories
       seo: {
         title: '',
         description: '',

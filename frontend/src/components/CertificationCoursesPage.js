@@ -97,7 +97,37 @@ const CertificationCoursesPage = () => {
   };
 
   // Vendor-based course organization
+  // Dynamic course categories from admin panel + fallback hardcoded
+  const courseCategories = content?.courseCategories || {};
+  
+  // Combine dynamic categories with hardcoded ones for backward compatibility
   const courseVendors = {
+    // Dynamic categories from admin panel
+    ...Object.keys(courseCategories).reduce((acc, slug) => {
+      const category = courseCategories[slug];
+      acc[slug] = {
+        name: category.name || slug,
+        icon: category.icon === 'server' ? '🔴' : 
+              category.icon === 'cloud' ? '☁️' : 
+              category.icon === 'container' ? '⚙️' :
+              category.icon === 'terminal' ? '🔧' :
+              category.icon === 'shield' ? '🛡️' :
+              category.icon === 'code' ? '💻' :
+              category.icon === 'graduation-cap' ? '🎓' :
+              category.icon === 'database' ? '🖥️' : '📚',
+        color: category.color || '#6366F1',
+        description: category.description || `${category.name} courses and certifications`,
+        keywords: [slug, category.name?.toLowerCase()],
+        levels: {
+          foundation: { name: 'Foundation Level', description: `Start your ${category.name} journey` },
+          professional: { name: 'Professional Level', description: `Advanced ${category.name} skills` },
+          specialist: { name: 'Specialist Level', description: `Expert-level ${category.name}` }
+        }
+      };
+      return acc;
+    }, {}),
+    
+    // Fallback hardcoded categories (if no dynamic categories available)
     redhat: {
       name: 'Red Hat Technologies',
       icon: 'https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg',

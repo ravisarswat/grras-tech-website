@@ -234,8 +234,8 @@ const CertificationCoursesPage = () => {
 
   // Sort courseVendors by order for display
   const sortedCourseVendorEntries = Object.entries(courseVendors).sort(([keyA, vendorA], [keyB, vendorB]) => {
-    const orderA = courseCategories[keyA]?.order || 999;
-    const orderB = courseCategories[keyB]?.order || 999;
+    const orderA = vendorA.order || courseCategories[keyA]?.order || 999;
+    const orderB = vendorB.order || courseCategories[keyB]?.order || 999;
     return orderA - orderB;
   });
 

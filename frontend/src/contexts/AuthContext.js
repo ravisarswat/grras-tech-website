@@ -7,14 +7,18 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [adminToken, setAdminToken] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Set to false initially to avoid loading issues
 
   // Check for existing token on mount
   useEffect(() => {
-    const token = localStorage.getItem('adminToken');
-    if (token) {
-      setAdminToken(token);
-      setIsAuthenticated(true);
+    try {
+      const token = localStorage.getItem('adminToken');
+      if (token) {
+        setAdminToken(token);
+        setIsAuthenticated(true);
+      }
+    } catch (error) {
+      console.error('Error accessing localStorage:', error);
     }
     setLoading(false);
   }, []);
@@ -53,7 +57,11 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setAdminToken(null);
     setIsAuthenticated(false);
-    localStorage.removeItem('adminToken');
+    try {
+      localStorage.removeItem('adminToken');
+    } catch (error) {
+      console.error('Error removing token from localStorage:', error);
+    }
   };
 
   // Get auth headers for API calls

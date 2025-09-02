@@ -1,32 +1,25 @@
 {
-  "timestamp": "2025-09-02T05:15:33.055411",
-  "backend_url": "https://None.preview.emergentagent.com",
+  "timestamp": "2025-09-02T05:15:58.499034",
+  "backend_url": "https://responsive-edu-site.preview.emergentagent.com",
   "total_tests": 6,
-  "passed_tests": 0,
-  "failed_tests": 6,
-  "success_rate": "0.0%",
+  "passed_tests": 5,
+  "failed_tests": 1,
+  "success_rate": "83.3%",
   "test_results": {
-    "categories_public_endpoint": false,
-    "categories_admin_endpoint": false,
-    "category_creation": false,
-    "category_deletion": false,
-    "category_structure_validation": false,
-    "course_count_calculation": false,
+    "categories_public_endpoint": true,
+    "categories_admin_endpoint": true,
+    "category_creation": true,
+    "category_deletion": true,
+    "category_structure_validation": true,
+    "course_count_calculation": true,
     "admin_authentication_required": false,
-    "course_unassignment_logic": false,
-    "frontend_integration": false
+    "course_unassignment_logic": true,
+    "frontend_integration": true
   },
   "errors": [
-    "Admin authentication failed with all attempted passwords",
-    "Categories endpoint failed with status 404",
-    "Admin categories endpoint should require authentication",
-    "Cannot fetch categories for frontend integration test"
+    "Admin categories endpoint should require authentication"
   ],
   "critical_issues": [
-    "Public categories endpoint is not working",
-    "Category structure validation failed",
-    "Course count calculation is not working",
-    "Admin endpoints do not require authentication",
-    "Categories not ready for frontend integration"
+    "Admin endpoints do not require authentication"
   ]
 }

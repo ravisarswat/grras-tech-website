@@ -227,7 +227,7 @@ const Courses = () => {
               </div>
               
               {/* Tab indicator line */}
-              <div className="mt-4 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-20"></div>
+              <div className="mt-4 h-0.5 bg-gradient-to-r from-orange-500 to-red-500 rounded-full opacity-20"></div>
             </div>
           </div>
 

@@ -17,12 +17,18 @@ import SEO from '../components/SEO';
 import { useContent } from '../contexts/ContentContext';
 
 const CertificationCoursesPage = () => {
-  const { content } = useContent();
-  const location = useLocation();
+  // Dynamic course categories from admin panel + fallback hardcoded
+  const courseCategories = content?.courseCategories || {};
   
-  // Get tab from URL parameter
+  // Get first available category as default
+  const getDefaultTab = () => {
+    const availableCategories = Object.keys(courseCategories);
+    return availableCategories.length > 0 ? availableCategories[0] : 'redhat';
+  };
+  
+  // Get tab from URL parameter with dynamic default
   const urlParams = new URLSearchParams(location.search);
-  const tabFromUrl = urlParams.get('tab') || 'redhat';
+  const tabFromUrl = urlParams.get('tab') || getDefaultTab();
   
   const [activeTab, setActiveTab] = useState(tabFromUrl);
   const [searchTerm, setSearchTerm] = useState('');
@@ -30,9 +36,9 @@ const CertificationCoursesPage = () => {
 
   // Update active tab when URL changes
   useEffect(() => {
-    const newTab = urlParams.get('tab') || 'redhat';
+    const newTab = urlParams.get('tab') || getDefaultTab();
     setActiveTab(newTab);
-  }, [location.search]);
+  }, [location.search, content]);
 
   const courses = content?.courses || [];
 

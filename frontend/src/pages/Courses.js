@@ -261,7 +261,7 @@ const Courses = () => {
                   <div className="p-6">
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-blue-700 transition-colors duration-300">
+                        <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-orange-700 transition-colors duration-300">
                           {course.title}
                         </h3>
                         <p className="text-gray-600 text-sm leading-relaxed line-clamp-2">

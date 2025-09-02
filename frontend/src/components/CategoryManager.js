@@ -16,6 +16,14 @@ const CategoryManager = ({ content, updateContent }) => {
   console.log('CategoryManager - Categories:', categories);
   console.log('CategoryManager - Categories count:', Object.keys(categories).length);
   console.log('CategoryManager - Content:', content);
+  console.log('CategoryManager - Content type:', typeof content);
+
+  // Better debugging
+  if (!content) {
+    console.warn('CategoryManager: Content is null/undefined');
+  } else if (!content.courseCategories) {
+    console.warn('CategoryManager: content.courseCategories is missing');
+  }
 
   const addCategory = () => {
     const timestamp = Date.now();

@@ -105,121 +105,41 @@ const CertificationCoursesPage = () => {
     return 'intermediate';
   };
 
-  // Vendor-based course organization
-  // Combine dynamic categories with hardcoded ones for backward compatibility
+  // Vendor-based course organization - ONLY DYNAMIC from admin panel
   const courseVendors = {
-    // Dynamic categories from admin panel
+    // Dynamic categories from admin panel ONLY
     ...Object.keys(courseCategories).reduce((acc, slug) => {
       const category = courseCategories[slug];
       acc[slug] = {
         name: category.name || slug,
-        slug: slug, // Add slug for reference
-        order: category.order || 999, // Include order from category
-        icon: category.icon === 'server' ? '🔴' : 
+        slug: slug,
+        order: category.order || 999,
+        icon: category.logo_url || category.logo || 
+              (category.icon === 'server' ? '🔴' : 
               category.icon === 'cloud' ? '☁️' : 
               category.icon === 'container' ? '⚙️' :
               category.icon === 'terminal' ? '🔧' :
               category.icon === 'shield' ? '🛡️' :
               category.icon === 'code' ? '💻' :
               category.icon === 'graduation-cap' ? '🎓' :
-              category.icon === 'database' ? '🖥️' : '📚',
+              category.icon === 'database' ? '🖥️' : '📚'),
         color: category.color || '#6366F1',
         description: category.description || `${category.name} courses and certifications`,
         keywords: [slug, category.name?.toLowerCase()],
         levels: {
           foundation: { name: 'Foundation Level', description: `Start your ${category.name} journey` },
           professional: { name: 'Professional Level', description: `Advanced ${category.name} skills` },
-          specialist: { name: 'Specialist Level', description: `Expert-level ${category.name}` }
+          specialist: { name: 'Specialist Level', description: `Expert-level ${category.name}` },
+          beginner: { name: 'Beginner Level', description: `Begin with ${category.name}` },
+          intermediate: { name: 'Intermediate Level', description: `Build ${category.name} skills` },
+          advanced: { name: 'Advanced Level', description: `Master ${category.name}` },
+          all: { name: 'All Levels', description: `All ${category.name} courses` }
         }
       };
       return acc;
     }, {}),
     
-    // Fallback hardcoded categories (if no dynamic categories available)
-    redhat: {
-      name: 'Red Hat Technologies',
-      icon: 'https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg',
-      color: 'red',
-      description: 'Industry-leading Linux and OpenShift certifications',
-      keywords: ['red hat', 'rhcsa', 'rhce', 'do188', 'openshift', 'linux', 'ansible', 'redhat'],
-      levels: {
-        foundation: { name: 'Foundation Level', description: 'Start your Red Hat journey' },
-        professional: { name: 'Professional Level', description: 'Advanced system administration' },
-        specialist: { name: 'Specialist Level', description: 'Expert-level specializations' }
-      }
-    },
-    aws: {
-      name: 'AWS Cloud Platform',
-      icon: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg',
-      color: 'orange',
-      description: 'Amazon Web Services cloud computing certifications',
-      keywords: ['aws', 'cloud', 'amazon', 'practitioner', 'solutions architect', 'developer'],
-      levels: {
-        foundation: { name: 'Foundation Level', description: 'Cloud computing basics' },
-        associate: { name: 'Associate Level', description: 'Professional cloud skills' },
-        professional: { name: 'Professional Level', description: 'Expert cloud architecture' }
-      }
-    },
-    kubernetes: {
-      name: 'Kubernetes Ecosystem',
-      icon: 'https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg',
-      color: 'blue',
-      description: 'Container orchestration and cloud-native technologies',
-      keywords: ['kubernetes', 'cka', 'cks', 'ckad', 'container', 'docker', 'cloud native'],
-      levels: {
-        administrator: { name: 'Administrator Level', description: 'Cluster administration' },
-        security: { name: 'Security Level', description: 'Security specialization' },
-        developer: { name: 'Developer Level', description: 'Application development' }
-      }
-    },
-    devops: {
-      name: 'DevOps Engineering',
-      icon: '🔧',
-      color: 'green',
-      description: 'DevOps, MLOps, SecOps and automation technologies',
-      keywords: ['devops', 'mlops', 'secops', 'automation', 'ci/cd', 'jenkins', 'docker', 'terraform', 'ansible'],
-      levels: {
-        foundation: { name: 'Foundation Level', description: 'DevOps fundamentals' },
-        professional: { name: 'Professional Level', description: 'Advanced DevOps practices' },
-        expert: { name: 'Expert Level', description: 'Enterprise DevOps leadership' }
-      }
-    },
-    cybersecurity: {
-      name: 'Cybersecurity & Ethical Hacking',
-      icon: '🛡️',
-      color: 'slate',
-      description: 'Cybersecurity, ethical hacking, penetration testing and security analysis',
-      keywords: ['cybersecurity', 'cyber security', 'ethical hacking', 'penetration testing', 'security', 'kali linux', 'wireshark', 'metasploit', 'vulnerability', 'incident response'],
-      levels: {
-        foundation: { name: 'Foundation Level', description: 'Security fundamentals' },
-        professional: { name: 'Professional Level', description: 'Advanced security practices' },
-        expert: { name: 'Expert Level', description: 'Security leadership & consulting' }
-      }
-    },
-    programming: {
-      name: 'Programming & Development',
-      icon: '💻',
-      color: 'purple',
-      description: 'Programming languages and software development skills',
-      keywords: ['java', 'salesforce', 'c++', 'dsa', 'data structures', 'programming', 'development', 'coding'],
-      levels: {
-        beginner: { name: 'Beginner Level', description: 'Programming fundamentals' },
-        intermediate: { name: 'Intermediate Level', description: 'Advanced programming concepts' },
-        professional: { name: 'Professional Level', description: 'Industry-ready development' }
-      }
-    },
-    degree: {
-      name: 'Degree Programs',
-      icon: '🎓',
-      color: 'indigo',
-      description: 'Comprehensive degree and diploma programs',
-      keywords: ['bca', 'degree', 'bachelor', 'diploma', 'graduation', 'computer applications'],
-      levels: {
-        undergraduate: { name: 'Undergraduate', description: 'Bachelor degree programs' },
-        diploma: { name: 'Diploma', description: 'Professional diploma courses' },
-        certification: { name: 'Certification', description: 'Professional certifications' }
-      }
-    },
+    // Always include "All Courses" tab
     general: {
       name: 'All Courses',
       icon: '📚',

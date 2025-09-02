@@ -1,14 +1,14 @@
 {
-  "timestamp": "2025-09-01T12:09:08.565999",
+  "timestamp": "2025-09-02T08:40:24.450432",
   "backend_url": "https://grras-content-sync.preview.emergentagent.com",
   "total_tests": 12,
-  "passed_tests": 6,
-  "failed_tests": 6,
-  "success_rate": "50.0%",
+  "passed_tests": 3,
+  "failed_tests": 9,
+  "success_rate": "25.0%",
   "test_results": {
     "server_health": true,
     "mongodb_connection": true,
-    "cms_content_available": true,
+    "cms_content_available": false,
     "courses_endpoint": true,
     "course_data_structure": false,
     "eligibility_widget_data": false,
@@ -17,16 +17,20 @@
     "syllabus_generation": true,
     "leads_management": false,
     "new_courses_addition": false,
-    "new_courses_verification": true,
+    "new_courses_verification": false,
     "new_learning_paths_addition": false,
-    "new_learning_paths_verification": true
+    "new_learning_paths_verification": false
   },
   "errors": [
+    "Missing CMS sections: ['branding', 'pages']",
     "Some courses missing required fields for EligibilityWidget",
     "Admin login failed with status 401",
-    "Contact form submission failed with status 422"
+    "Contact form submission failed with status 422",
+    "Missing certification courses: ['aws-cloud-practitioner-certification', 'aws-solutions-architect-associate', 'cka-certified-kubernetes-administrator', 'cks-certified-kubernetes-security', 'rhcsa-red-hat-system-administrator', 'rhce-red-hat-certified-engineer', 'do188-red-hat-openshift-development']",
+    "Missing learning paths: ['aws-cloud-specialist-path', 'kubernetes-expert-path', 'redhat-linux-professional-path']"
   ],
   "critical_issues": [
+    "CMS content is not available",
     "Course data missing required fields for EligibilityWidget",
     "Failed to add new certification courses to CMS"
   ],

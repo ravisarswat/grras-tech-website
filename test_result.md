@@ -1,9 +1,9 @@
 # Backend Testing Results - GRRAS Solutions Training Institute
 
 ## Latest Test Summary - Course Cleanup Verification
-- **Test Date**: 2025-09-02T14:11:32
+- **Test Date**: 2025-09-02T14:17:19
 - **Backend URL**: https://category-admin-5.preview.emergentagent.com
-- **Overall Success Rate**: 85.7% (6/7 tests passed)
+- **Overall Success Rate**: 57.1% (4/7 tests passed)
 - **Critical Issues**: 1 (Course cleanup was not performed)
 
 ### 🎯 COURSE CLEANUP VERIFICATION RESULTS

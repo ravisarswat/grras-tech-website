@@ -175,7 +175,7 @@ const Header = () => {
                                       
                                       {/* Arrow */}
                                       <div className="flex-shrink-0">
-                                        <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-300" />
+                                        <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-orange-600 group-hover:translate-x-1 transition-all duration-300" />
                                       </div>
                                     </div>
                                   </div>

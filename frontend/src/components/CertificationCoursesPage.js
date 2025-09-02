@@ -508,28 +508,14 @@ const CertificationCoursesPage = () => {
                 Build expertise with hands-on experience and recognized credentials
               </p>
 
-              {/* Stats */}
+              {/* Dynamic Stats from categories */}
               <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-12 max-w-4xl mx-auto">
-                <div className="text-center">
-                  <div className="text-2xl font-bold mb-2">{categorizedCourses.redhat.length}</div>
-                  <div className="text-sm text-gray-200">Red Hat</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold mb-2">{categorizedCourses.aws.length}</div>
-                  <div className="text-sm text-gray-200">AWS</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold mb-2">{categorizedCourses.kubernetes.length}</div>
-                  <div className="text-sm text-gray-200">Kubernetes</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold mb-2">{categorizedCourses.programming.length}</div>
-                  <div className="text-sm text-gray-200">Programming</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold mb-2">{categorizedCourses.degree.length}</div>
-                  <div className="text-sm text-gray-200">Degrees</div>
-                </div>
+                {Object.entries(courseVendors).slice(0, 5).map(([key, vendor], index) => (
+                  <div key={key} className="text-center">
+                    <div className="text-2xl font-bold mb-2">{categorizedCourses[key]?.length || 0}</div>
+                    <div className="text-sm text-gray-200">{vendor.name}</div>
+                  </div>
+                ))}
                 <div className="text-center">
                   <div className="text-2xl font-bold mb-2">95%</div>
                   <div className="text-sm text-gray-200">Success Rate</div>

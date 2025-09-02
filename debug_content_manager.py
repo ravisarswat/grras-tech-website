@@ -6,6 +6,7 @@ Debug ContentManager Directly
 import asyncio
 import sys
 import os
+import motor.motor_asyncio
 
 # Add the backend directory to the Python path
 sys.path.append('/app/backend')
@@ -17,8 +18,16 @@ async def debug_content_manager():
     try:
         print("🚀 Testing ContentManager Directly...")
         
-        # Initialize content manager
-        content_manager = ContentManager()
+        # Initialize MongoDB client
+        MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
+        DB_NAME = os.environ.get('DB_NAME', 'grras_database')
+        mongo_client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URL)
+        
+        # Initialize content manager with MongoDB client
+        content_manager = ContentManager(
+            mongo_client=mongo_client,
+            db_name=DB_NAME
+        )
         
         # Test direct MongoDB access
         print("\n1. Testing direct MongoDB access:")

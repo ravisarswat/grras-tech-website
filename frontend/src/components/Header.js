@@ -64,16 +64,23 @@ const Header = () => {
         <header className="bg-white shadow-sm border-b sticky top-0 z-50">
           <div className="container mx-auto px-4">
             <div className="flex justify-between items-center py-4">
-              {/* ORIGINAL LOGO RESTORED */}
-              <Link to="/" className="flex items-center space-x-3">
-                <img 
-                  src="https://grras.com/uploads/grras_logo.png" 
-                  alt="GRRAS Solutions" 
-                  className="h-10 w-auto" 
-                />
+              {/* PREMIUM COMPANY LOGO */}
+              <Link to="/" className="flex items-center space-x-3 group">
+                <div className="relative">
+                  <img 
+                    src="https://customer-assets.emergentagent.com/job_db8831d9-1fc7-46ac-b819-59bb9fafe1eb/artifacts/lu0elrou_black%20logo.jpg" 
+                    alt="GRRAS Solutions - Training Institute" 
+                    className="h-12 w-auto transition-transform group-hover:scale-105" 
+                  />
+                  <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
                 <div className="flex flex-col">
-                  <span className="text-2xl font-bold text-gray-900">GRRAS</span>
-                  <span className="text-sm text-gray-600 -mt-1">Solutions</span>
+                  <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    GRRAS
+                  </span>
+                  <span className="text-sm text-gray-600 font-medium -mt-1 tracking-wide">
+                    Training Institute
+                  </span>
                 </div>
               </Link>
 

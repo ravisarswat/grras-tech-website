@@ -1277,6 +1277,181 @@ async def get_all_blog_posts_admin(admin_verified: bool = Depends(verify_admin_t
         logging.error(f"Error fetching admin blog posts: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch blog posts")
 
+# ===== CATEGORIES API ENDPOINTS =====
+
+@api_router.get("/categories")
+async def get_categories():
+    """Get all visible course categories with course counts"""
+    try:
+        content = await content_manager.get_content()
+        course_categories = content.get("courseCategories", {})
+        courses = content.get("courses", [])
+        
+        # Build response with course counts
+        categories_with_counts = []
+        
+        for slug, category in course_categories.items():
+            # Count courses in this category
+            category_courses = [c for c in courses if c.get("visible", True) and slug in c.get("categories", [])]
+            course_count = len(category_courses)
+            
+            # Only include categories that are visible or have courses
+            if category.get("featured") or course_count > 0:
+                categories_with_counts.append({
+                    "slug": slug,
+                    "name": category.get("name"),
+                    "description": category.get("description"),
+                    "icon": category.get("icon", "folder"),
+                    "color": category.get("color", "#3B82F6"),
+                    "gradient": category.get("gradient", "from-blue-500 to-blue-600"),
+                    "featured": category.get("featured", False),
+                    "course_count": course_count,
+                    "courses": [c.get("slug") for c in category_courses],
+                    "seo": category.get("seo", {})
+                })
+        
+        # Sort by featured first, then by course count
+        categories_with_counts.sort(key=lambda x: (-int(x["featured"]), -x["course_count"]))
+        
+        return {"categories": categories_with_counts}
+    
+    except Exception as e:
+        logging.error(f"Error fetching categories: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch categories")
+
+@api_router.get("/admin/categories")
+async def get_admin_categories(admin_verified: bool = Depends(verify_admin_token)):
+    """Get all course categories for admin management"""
+    try:
+        content = await content_manager.get_content()
+        course_categories = content.get("courseCategories", {})
+        courses = content.get("courses", [])
+        
+        # Build response with detailed info for admin
+        admin_categories = []
+        
+        for slug, category in course_categories.items():
+            # Count courses in this category
+            category_courses = [c for c in courses if slug in c.get("categories", [])]
+            
+            admin_categories.append({
+                "slug": slug,
+                "name": category.get("name"),
+                "description": category.get("description"),
+                "icon": category.get("icon", "folder"),
+                "color": category.get("color", "#3B82F6"),
+                "gradient": category.get("gradient", "from-blue-500 to-blue-600"),
+                "featured": category.get("featured", False),
+                "course_count": len(category_courses),
+                "courses": [c.get("slug") for c in category_courses],
+                "seo": category.get("seo", {}),
+                "created_at": category.get("created_at", ""),
+                "updated_at": category.get("updated_at", "")
+            })
+        
+        return {"categories": admin_categories}
+    
+    except Exception as e:
+        logging.error(f"Error fetching admin categories: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch categories")
+
+@api_router.post("/admin/categories")
+async def create_category(category: CategoryRequest, admin_verified: bool = Depends(verify_admin_token)):
+    """Create new course category (Admin only)"""
+    try:
+        content = await content_manager.get_content()
+        course_categories = content.get("courseCategories", {})
+        
+        # Check if slug already exists
+        if category.slug in course_categories:
+            raise HTTPException(status_code=400, detail="Category slug already exists")
+        
+        # Create new category
+        new_category = {
+            "name": category.name,
+            "slug": category.slug,
+            "description": category.description,
+            "icon": category.icon,
+            "color": category.color,
+            "gradient": category.gradient,
+            "featured": category.featured,
+            "courses": [],
+            "seo": {
+                "title": category.seo_title or f"{category.name} Training Courses - GRRAS Institute Jaipur",
+                "description": category.seo_description or category.description,
+                "keywords": category.seo_keywords or f"{category.name.lower()}, training, courses, jaipur"
+            },
+            "created_at": datetime.utcnow().isoformat(),
+            "updated_at": datetime.utcnow().isoformat()
+        }
+        
+        course_categories[category.slug] = new_category
+        content["courseCategories"] = course_categories
+        
+        await content_manager.save_content(content, user="admin", is_draft=False)
+        
+        logging.info(f"✅ Category created: {category.name} ({category.slug})")
+        return {"message": "Category created successfully", "category": new_category}
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error creating category: {e}")
+        raise HTTPException(status_code=500, detail="Failed to create category")
+
+@api_router.delete("/admin/categories/{category_slug}")
+async def delete_category(category_slug: str, admin_verified: bool = Depends(verify_admin_token)):
+    """Delete course category with proper course handling (Admin only)"""
+    try:
+        content = await content_manager.get_content()
+        course_categories = content.get("courseCategories", {})
+        courses = content.get("courses", [])
+        
+        # Check if category exists
+        if category_slug not in course_categories:
+            raise HTTPException(status_code=404, detail="Category not found")
+        
+        # Find courses assigned to this category
+        affected_courses = []
+        for course in courses:
+            if category_slug in course.get("categories", []):
+                affected_courses.append(course)
+        
+        # Auto-unassign courses from this category (Option B - preferred)
+        unassigned_count = 0
+        for course in affected_courses:
+            course_categories_list = course.get("categories", [])
+            if category_slug in course_categories_list:
+                course_categories_list.remove(category_slug)
+                course["categories"] = course_categories_list
+                unassigned_count += 1
+        
+        # Delete the category
+        del course_categories[category_slug]
+        
+        # Update content
+        content["courseCategories"] = course_categories
+        content["courses"] = courses
+        
+        await content_manager.save_content(content, user="admin", is_draft=False)
+        
+        message = f"Category '{course_categories.get(category_slug, {}).get('name', category_slug)}' deleted successfully"
+        if unassigned_count > 0:
+            message += f". {unassigned_count} course(s) were unassigned from this category."
+        
+        logging.info(f"✅ Category deleted: {category_slug}, {unassigned_count} courses unassigned")
+        return {
+            "message": message,
+            "unassigned_courses": unassigned_count,
+            "affected_courses": [c.get("slug") for c in affected_courses]
+        }
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error deleting category: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete category")
+
 # Include API router
 app.include_router(api_router)
 

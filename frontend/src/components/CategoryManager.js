@@ -41,14 +41,14 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
     });
   };
 
-  const deleteCategory = (slug) => {
+  const deleteCategory = async (slug) => {
     const categoryName = categories[slug]?.name || slug;
     const courseCount = getCoursesByCategory(slug).length;
     
     // Show confirmation dialog
     const confirmMessage = courseCount > 0 
-      ? `Are you sure you want to delete "${categoryName}"?\n\nThis will remove the category from ${courseCount} course(s). The courses will remain but will be unassigned from this category.`
-      : `Are you sure you want to delete "${categoryName}"?`;
+      ? `Are you sure you want to delete "${categoryName}"?\n\nThis will remove the category from ${courseCount} course(s). The courses will remain but will be unassigned from this category.\n\nChanges will be saved automatically.`
+      : `Are you sure you want to delete "${categoryName}"?\n\nChanges will be saved automatically.`;
     
     if (window.confirm(confirmMessage)) {
       const newCategories = { ...categories };
@@ -60,14 +60,31 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
         categories: (course.categories || []).filter(cat => cat !== slug)
       }));
       
+      // Update local state first
       updateContent('courseCategories', newCategories);
       updateContent('courses', updatedCourses);
       
-      // Show success message with save reminder
-      if (courseCount > 0) {
-        alert(`✅ Category "${categoryName}" deleted locally!\n${courseCount} course(s) have been unassigned from this category.\n\n⚠️ IMPORTANT: Click "Save Changes" button at the top to save permanently!`);
+      // Auto-save to backend if saveContent function is available
+      if (saveContent && !saving) {
+        try {
+          alert(`🔄 Saving deletion of "${categoryName}"...`);
+          await saveContent();
+          
+          if (courseCount > 0) {
+            alert(`✅ Category "${categoryName}" deleted successfully!\n${courseCount} course(s) have been unassigned and changes saved to database.`);
+          } else {
+            alert(`✅ Category "${categoryName}" deleted successfully and saved to database!`);
+          }
+        } catch (error) {
+          alert(`❌ Category deleted locally but failed to save to database!\nPlease click "Save Changes" button manually.\n\nError: ${error.message}`);
+        }
       } else {
-        alert(`✅ Category "${categoryName}" deleted locally!\n\n⚠️ IMPORTANT: Click "Save Changes" button at the top to save permanently!`);
+        // Fallback to manual save reminder
+        if (courseCount > 0) {
+          alert(`✅ Category "${categoryName}" deleted locally!\n${courseCount} course(s) have been unassigned from this category.\n\n⚠️ IMPORTANT: Click "Save Changes" button at the top to save permanently!`);
+        } else {
+          alert(`✅ Category "${categoryName}" deleted locally!\n\n⚠️ IMPORTANT: Click "Save Changes" button at the top to save permanently!`);
+        }
       }
     }
   };

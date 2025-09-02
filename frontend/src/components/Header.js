@@ -106,10 +106,10 @@ const Header = () => {
                       </Link>
                     )}
 
-                    {/* Premium Dynamic Dropdown */}
+                    {/* Premium Dynamic Dropdown - Fixed */}
                     {item.hasDropdown && isCoursesOpen && (
                       <div 
-                        className="absolute top-full left-0 mt-3 w-[480px] bg-white/98 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200 z-50 animate-in slide-in-from-top-4 duration-300 overflow-hidden"
+                        className="fixed top-16 left-0 right-0 w-full bg-white/98 backdrop-blur-xl shadow-2xl border-t border-gray-200 z-50 animate-in slide-in-from-top-4 duration-300 overflow-hidden"
                         onMouseEnter={() => setIsCoursesOpen(true)}
                         onMouseLeave={() => setIsCoursesOpen(false)}
                       >

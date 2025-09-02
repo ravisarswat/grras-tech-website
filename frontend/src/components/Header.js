@@ -132,15 +132,15 @@ const Header = () => {
                                 <Link
                                   key={track.id}
                                   to={track.path}
-                                  className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors group"
+                                  className="flex items-center justify-between p-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 group border border-transparent hover:border-blue-100 hover:shadow-sm"
                                   onClick={() => setIsCoursesOpen(false)}
                                 >
                                   <div className="flex items-center space-x-3">
-                                    <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
+                                    <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 group-hover:from-blue-100 group-hover:to-purple-100 transition-all duration-300">
                                       <img 
                                         src={track.logo} 
                                         alt={track.name}
-                                        className="w-6 h-6 object-contain"
+                                        className="w-6 h-6 object-contain group-hover:scale-110 transition-transform duration-300"
                                         onError={(e) => {
                                           e.target.style.display = 'none';
                                           e.target.nextElementSibling.style.display = 'flex';
@@ -150,11 +150,13 @@ const Header = () => {
                                         <BookOpen className="h-3 w-3 text-blue-600" />
                                       </div>
                                     </div>
-                                    <span className="font-medium text-gray-900">{track.name}</span>
+                                    <span className="font-medium text-gray-900 group-hover:text-blue-700 transition-colors duration-300">{track.name}</span>
                                   </div>
                                   <div className="flex items-center space-x-2">
-                                    <span className="text-sm text-gray-500">{track.courseCount} courses</span>
-                                    <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-blue-600" />
+                                    <span className="text-sm px-2 py-1 bg-gray-100 group-hover:bg-blue-100 text-gray-600 group-hover:text-blue-700 rounded-full transition-all duration-300 font-medium">
+                                      {track.courseCount} courses
+                                    </span>
+                                    <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-300" />
                                   </div>
                                 </Link>
                               ))

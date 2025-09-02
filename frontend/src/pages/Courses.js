@@ -9,6 +9,7 @@ const API = `${BACKEND_URL}/api`;
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');

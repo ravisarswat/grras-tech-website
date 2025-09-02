@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { 
-  Plus, 
-  Trash2, 
-  Eye, 
-  EyeOff, 
   ChevronDown, 
-  ChevronRight,
-  GripVertical,
-  AlertCircle,
-  CheckCircle
+  ChevronUp, 
+  Edit3, 
+  Trash2, 
+  Save, 
+  X, 
+  Eye, 
+  EyeOff,
+  ArrowUp,
+  ArrowDown,
+  Plus,
+  Minus
 } from 'lucide-react';
-import { toast } from 'sonner';
 
 const CourseEditor = ({ 
   course, 
@@ -25,25 +27,22 @@ const CourseEditor = ({
   const [activeSection, setActiveSection] = useState('basic');
   const [slugError, setSlugError] = useState('');
 
-  // Validate slug uniqueness
-  const validateSlug = (newSlug) => {
-    if (!newSlug) {
+  const validateSlug = (slug) => {
+    if (!slug) {
       setSlugError('Slug is required');
       return false;
     }
     
-    const slugPattern = /^[a-z0-9-]+$/;
-    if (!slugPattern.test(newSlug)) {
+    // Check for valid slug format
+    if (!/^[a-z0-9-]+$/.test(slug)) {
       setSlugError('Slug can only contain lowercase letters, numbers, and hyphens');
       return false;
     }
     
-    const isUnique = !courses.some((c, i) => 
-      i !== index && c.slug === newSlug
-    );
-    
-    if (!isUnique) {
-      setSlugError('This slug is already taken. Please choose a different one.');
+    // Check for duplicate slugs (excluding current course)
+    const existingCourse = courses.find((c, i) => c.slug === slug && i !== index);
+    if (existingCourse) {
+      setSlugError('This slug is already in use');
       return false;
     }
     
@@ -52,146 +51,46 @@ const CourseEditor = ({
   };
 
   const handleFieldUpdate = (field, value) => {
+    // Special handling for slug validation
     if (field === 'slug') {
       validateSlug(value);
     }
-    onUpdate(index, field, value);
+    
+    onUpdate(index, { ...course, [field]: value });
   };
 
-  const handleArrayFieldAdd = (field, value) => {
-    if (value.trim()) {
-      const currentArray = course[field] || [];
-      handleFieldUpdate(field, [...currentArray, value.trim()]);
-      return true;
-    }
-    return false;
+  const addHighlight = () => {
+    const highlights = course.highlights || [];
+    handleFieldUpdate('highlights', [...highlights, '']);
   };
 
-  const handleArrayFieldRemove = (field, itemIndex) => {
-    const currentArray = course[field] || [];
-    handleFieldUpdate(field, currentArray.filter((_, i) => i !== itemIndex));
+  const updateHighlight = (highlightIndex, value) => {
+    const highlights = [...(course.highlights || [])];
+    highlights[highlightIndex] = value;
+    handleFieldUpdate('highlights', highlights);
   };
 
-  const ArrayFieldEditor = ({ 
-    field, 
-    label, 
-    placeholder, 
-    inputType = 'text' 
-  }) => {
-    const [inputValue, setInputValue] = useState('');
-    const items = course[field] || [];
-
-    const handleAdd = () => {
-      if (handleArrayFieldAdd(field, inputValue)) {
-        setInputValue('');
-        toast.success(`Added "${inputValue}" to ${label.toLowerCase()}`);
-      }
-    };
-
-    return (
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          {label}
-        </label>
-        
-        {/* Display existing items */}
-        <div className="flex flex-wrap gap-2 mb-2">
-          {items.map((item, itemIndex) => (
-            <span
-              key={itemIndex}
-              className="inline-flex items-center gap-1 bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm"
-            >
-              {item}
-              <button
-                onClick={() => handleArrayFieldRemove(field, itemIndex)}
-                className="text-blue-600 hover:text-blue-800 ml-1"
-                type="button"
-              >
-                ×
-              </button>
-            </span>
-          ))}
-        </div>
-        
-        {/* Add new item */}
-        <div className="flex gap-2">
-          <input
-            type={inputType}
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            placeholder={placeholder}
-            className="form-input flex-1"
-            onKeyPress={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault();
-                handleAdd();
-              }
-            }}
-          />
-          <button
-            onClick={handleAdd}
-            className="btn-outline px-3"
-            type="button"
-          >
-            Add
-          </button>
-        </div>
-      </div>
-    );
+  const removeHighlight = (highlightIndex) => {
+    const highlights = course.highlights || [];
+    const newHighlights = highlights.filter((_, i) => i !== highlightIndex);
+    handleFieldUpdate('highlights', newHighlights);
   };
 
   const sections = [
     { id: 'basic', name: 'Basic Info' },
     { id: 'content', name: 'Content' },
-    { id: 'details', name: 'Course Details' },
-    { id: 'seo', name: 'SEO & Meta' }
+    { id: 'categories', name: 'Categories' },
+    { id: 'pricing', name: 'Pricing' },
+    { id: 'seo', name: 'SEO' }
   ];
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border">
+    <div className="bg-white border border-gray-200 rounded-lg shadow-sm">
       {/* Course Header */}
-      <div className="flex items-center justify-between p-4 border-b">
+      <div className="p-4 border-b border-gray-200">
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="text-gray-500 hover:text-gray-700"
-          >
-            {isExpanded ? (
-              <ChevronDown className="h-5 w-5" />
-            ) : (
-              <ChevronRight className="h-5 w-5" />
-            )}
-          </button>
-          
           <div className="flex items-center gap-2">
-            <GripVertical className="h-4 w-4 text-gray-400" />
-            <span className="text-sm text-gray-500">#{course.order || index + 1}</span>
-            <h3 className="text-lg font-medium text-gray-900">
-              {course.title || 'Untitled Course'}
-            </h3>
-          </div>
-          
-          <div className="flex items-center gap-2">
-            {course.visible ? (
-              <Eye className="h-4 w-4 text-green-500" />
-            ) : (
-              <EyeOff className="h-4 w-4 text-gray-400" />
-            )}
-            
-            {slugError && (
-              <AlertCircle className="h-4 w-4 text-red-500" />
-            )}
-            
-            {!slugError && course.slug && (
-              <CheckCircle className="h-4 w-4 text-green-500" />
-            )}
-          </div>
-        </div>
-        
-        {/* Quick Actions */}
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-2">
-            {/* Dynamic Category Icons */}
+            {/* Dynamic Category Display */}
             {course.categories && course.categories.length > 0 ? (
               course.categories.map(categorySlug => {
                 const category = categories[categorySlug];
@@ -210,45 +109,83 @@ const CourseEditor = ({
                 📚 Uncategorized
               </span>
             )}
+            
+            {course.visible === false && (
+              <span className="text-xs font-medium px-2 py-1 rounded-full bg-red-100 text-red-600">
+                Hidden
+              </span>
+            )}
           </div>
           
-          <button
-            onClick={() => onMove(index, 'up')}
-            disabled={index === 0}
-            className="p-1 text-gray-400 hover:text-gray-600 disabled:opacity-50"
-          >
-            ↑
-          </button>
+          <div className="flex-1">
+            <h3 className="font-semibold text-gray-900">{course.title || 'Untitled Course'}</h3>
+            <p className="text-sm text-gray-500">Slug: {course.slug || 'no-slug'}</p>
+          </div>
           
-          <button
-            onClick={() => onMove(index, 'down')}
-            disabled={index === courses.length - 1}
-            className="p-1 text-gray-400 hover:text-gray-600 disabled:opacity-50"
-          >
-            ↓
-          </button>
-          
-          <button
-            onClick={() => onDelete(index)}
-            className="p-1 text-red-400 hover:text-red-600"
-          >
-            <Trash2 className="h-4 w-4" />
-          </button>
+          <div className="flex items-center gap-2">
+            {/* Move buttons */}
+            <button
+              onClick={() => onMove(index, 'up')}
+              disabled={index === 0}
+              className="p-1 text-gray-400 hover:text-gray-600 disabled:opacity-50"
+              title="Move up"
+            >
+              <ArrowUp className="h-4 w-4" />
+            </button>
+            <button
+              onClick={() => onMove(index, 'down')}
+              disabled={index === courses.length - 1}
+              className="p-1 text-gray-400 hover:text-gray-600 disabled:opacity-50"
+              title="Move down"
+            >
+              <ArrowDown className="h-4 w-4" />
+            </button>
+            
+            {/* Visibility toggle */}
+            <button
+              onClick={() => handleFieldUpdate('visible', !(course.visible === false))}
+              className={`p-2 rounded-lg transition-colors ${
+                course.visible !== false 
+                  ? 'text-green-600 hover:bg-green-50' 
+                  : 'text-gray-400 hover:bg-gray-50'
+              }`}
+              title={course.visible !== false ? 'Hide course' : 'Show course'}
+            >
+              {course.visible !== false ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+            </button>
+            
+            {/* Expand/Collapse */}
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+            >
+              {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            </button>
+            
+            {/* Delete button */}
+            <button
+              onClick={() => onDelete(index)}
+              className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+              title="Delete course"
+            >
+              <Trash2 className="h-4 w-4" />
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Expanded Course Editor */}
+      {/* Course Editor (Expanded) */}
       {isExpanded && (
         <div className="p-4">
           {/* Section Tabs */}
-          <div className="flex space-x-1 mb-6 bg-gray-100 p-1 rounded-lg">
-            {sections.map((section) => (
+          <div className="flex gap-1 mb-6 border-b border-gray-200">
+            {sections.map(section => (
               <button
                 key={section.id}
                 onClick={() => setActiveSection(section.id)}
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                className={`px-4 py-2 text-sm font-medium transition-colors ${
                   activeSection === section.id
-                    ? 'bg-white text-red-600 shadow-sm'
+                    ? 'text-red-600 border-b-2 border-red-600'
                     : 'text-gray-500 hover:text-gray-700'
                 }`}
               >
@@ -257,78 +194,131 @@ const CourseEditor = ({
             ))}
           </div>
 
-          {/* Basic Info Section */}
-          {activeSection === 'basic' && (
-            <div className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
+          {/* Section Content */}
+          <div className="space-y-4">
+            {activeSection === 'basic' && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Course Title *
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Title *</label>
                   <input
                     type="text"
                     value={course.title || ''}
                     onChange={(e) => handleFieldUpdate('title', e.target.value)}
                     className="form-input"
-                    placeholder="Enter course title"
+                    placeholder="Course title"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Slug (URL) *
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Slug *</label>
                   <input
                     type="text"
                     value={course.slug || ''}
-                    onChange={(e) => handleFieldUpdate('slug', e.target.value.toLowerCase().replace(/\s+/g, '-'))}
-                    className={`form-input ${slugError ? 'border-red-300' : ''}`}
-                    placeholder="course-url-slug"
+                    onChange={(e) => handleFieldUpdate('slug', e.target.value)}
+                    className={`form-input ${slugError ? 'border-red-500' : ''}`}
+                    placeholder="course-slug"
                   />
-                  {slugError && (
-                    <p className="text-red-500 text-sm mt-1">{slugError}</p>
-                  )}
-                </div>
-                
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    One-liner Description *
-                  </label>
-                  <input
-                    type="text"
-                    value={course.oneLiner || ''}
-                    onChange={(e) => handleFieldUpdate('oneLiner', e.target.value)}
-                    className="form-input"
-                    placeholder="Brief description of the course"
-                  />
+                  {slugError && <p className="text-red-500 text-xs mt-1">{slugError}</p>}
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Duration
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Level</label>
+                  <select
+                    value={course.level || ''}
+                    onChange={(e) => handleFieldUpdate('level', e.target.value)}
+                    className="form-input"
+                  >
+                    <option value="">Select level</option>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                    <option value="Professional">Professional</option>
+                    <option value="All Levels">All Levels</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Duration</label>
                   <input
                     type="text"
                     value={course.duration || ''}
                     onChange={(e) => handleFieldUpdate('duration', e.target.value)}
                     className="form-input"
-                    placeholder="e.g., 6 Months"
+                    placeholder="e.g., 3 months"
+                  />
+                </div>
+                
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">One-liner</label>
+                  <input
+                    type="text"
+                    value={course.oneLiner || ''}
+                    onChange={(e) => handleFieldUpdate('oneLiner', e.target.value)}
+                    className="form-input"
+                    placeholder="Brief tagline for the course"
+                  />
+                </div>
+              </div>
+            )}
+
+            {activeSection === 'content' && (
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                  <textarea
+                    value={course.description || ''}
+                    onChange={(e) => handleFieldUpdate('description', e.target.value)}
+                    className="form-input"
+                    rows="4"
+                    placeholder="Detailed course description"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Fees
-                  </label>
-                  <input
-                    type="text"
-                    value={course.fees || ''}
-                    onChange={(e) => handleFieldUpdate('fees', e.target.value)}
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Overview</label>
+                  <textarea
+                    value={course.overview || ''}
+                    onChange={(e) => handleFieldUpdate('overview', e.target.value)}
                     className="form-input"
-                    placeholder="e.g., ₹20,000 or Contact for fees"
+                    rows="3"
+                    placeholder="Course overview"
                   />
                 </div>
                 
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Highlights</label>
+                  <div className="space-y-2">
+                    {(course.highlights || []).map((highlight, i) => (
+                      <div key={i} className="flex gap-2">
+                        <input
+                          type="text"
+                          value={highlight}
+                          onChange={(e) => updateHighlight(i, e.target.value)}
+                          className="form-input flex-1"
+                          placeholder="Course highlight"
+                        />
+                        <button
+                          onClick={() => removeHighlight(i)}
+                          className="p-2 text-red-500 hover:bg-red-50 rounded-lg"
+                        >
+                          <Minus className="h-4 w-4" />
+                        </button>
+                      </div>
+                    ))}
+                    <button
+                      onClick={addHighlight}
+                      className="inline-flex items-center gap-2 text-sm text-red-600 hover:text-red-700"
+                    >
+                      <Plus className="h-4 w-4" />
+                      Add Highlight
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeSection === 'categories' && (
+              <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Categories
@@ -370,298 +360,92 @@ const CourseEditor = ({
                   <div className="mt-1 text-xs text-gray-500">
                     Select one or more categories for this course. This determines where the course appears on the website.
                   </div>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Level
-                  </label>
-                  <select
-                    value={course.level || ''}
-                    onChange={(e) => handleFieldUpdate('level', e.target.value)}
-                    className="form-input"
-                  >
-                    <option value="">Select level</option>
-                    <optgroup label="🔴 Red Hat Levels">
-                      <option value="Foundation Level">Foundation Level</option>
-                      <option value="Professional Level">Professional Level</option>
-                      <option value="Specialist Level">Specialist Level</option>
-                    </optgroup>
-                    <optgroup label="☁️ AWS Levels">
-                      <option value="Foundation Level">Foundation Level</option>
-                      <option value="Associate Level">Associate Level</option>
-                      <option value="Professional Level">Professional Level</option>
-                    </optgroup>
-                    <optgroup label="⚙️ Kubernetes Levels">
-                      <option value="Administrator Level">Administrator Level</option>
-                      <option value="Security Level">Security Level</option>
-                      <option value="Developer Level">Developer Level</option>
-                    </optgroup>
-                    <optgroup label="🔧 DevOps Levels">
-                      <option value="Foundation Level">Foundation Level</option>
-                      <option value="Professional Level">Professional Level</option>
-                      <option value="Expert Level">Expert Level</option>
-                    </optgroup>
-                    <optgroup label="🛡️ Cybersecurity Levels">
-                      <option value="Foundation Level">Foundation Level</option>
-                      <option value="Professional Level">Professional Level</option>
-                      <option value="Expert Level">Expert Level</option>
-                    </optgroup>
-                    <optgroup label="💻 Programming Levels">
-                      <option value="Beginner Level">Beginner Level</option>
-                      <option value="Intermediate Level">Intermediate Level</option>
-                      <option value="Professional Level">Professional Level</option>
-                    </optgroup>
-                    <optgroup label="🎓 Degree Levels">
-                      <option value="Undergraduate">Undergraduate</option>
-                      <option value="Diploma">Diploma</option>
-                      <option value="Certification">Certification</option>
-                    </optgroup>
-                    <optgroup label="📚 General Levels">
-                      <option value="Beginner">Beginner</option>
-                      <option value="Intermediate">Intermediate</option>
-                      <option value="Advanced">Advanced</option>
-                      <option value="Expert">Expert</option>
-                    </optgroup>
-                  </select>
-                  <div className="mt-1 text-xs text-gray-500">
-                    This determines which level section the course appears in within its category
-                  </div>
+                  {(!course.categories || course.categories.length === 0) && (
+                    <div className="mt-2 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                      <p className="text-sm text-yellow-800">
+                        ⚠️ This course is not assigned to any category. It will appear in "Uncategorized" section.
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
-              
-              <div className="grid md:grid-cols-2 gap-4">
+            )}
+
+            {activeSection === 'pricing' && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Thumbnail URL
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Price</label>
                   <input
-                    type="url"
-                    value={course.thumbnailUrl || ''}
-                    onChange={(e) => handleFieldUpdate('thumbnailUrl', e.target.value)}
+                    type="text"
+                    value={course.price || ''}
+                    onChange={(e) => handleFieldUpdate('price', e.target.value)}
                     className="form-input"
-                    placeholder="https://..."
+                    placeholder="e.g., ₹35,000"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Order
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Icon/Emoji</label>
                   <input
-                    type="number"
-                    value={course.order || ''}
-                    onChange={(e) => handleFieldUpdate('order', parseInt(e.target.value) || 1)}
+                    type="text"
+                    value={course.icon || ''}
+                    onChange={(e) => handleFieldUpdate('icon', e.target.value)}
                     className="form-input"
-                    min="1"
+                    placeholder="e.g., 🔴 or 💻"
                   />
                 </div>
-              </div>
-              
-              <div className="flex items-center gap-4">
-                <label className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    checked={course.visible !== false}
-                    onChange={(e) => handleFieldUpdate('visible', e.target.checked)}
-                    className="rounded"
-                  />
-                  <span className="text-sm font-medium text-gray-700">Visible on website</span>
-                </label>
                 
-                <label className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    checked={course.featured || false}
-                    onChange={(e) => handleFieldUpdate('featured', e.target.checked)}
-                    className="rounded"
-                  />
-                  <span className="text-sm font-medium text-gray-700">Featured course</span>
-                </label>
-              </div>
-            </div>
-          )}
-
-          {/* Content Section */}
-          {activeSection === 'content' && (
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Course Overview
-                </label>
-                <textarea
-                  value={course.overview || ''}
-                  onChange={(e) => handleFieldUpdate('overview', e.target.value)}
-                  className="form-textarea"
-                  rows={4}
-                  placeholder="Detailed description of the course..."
-                />
-              </div>
-              
-              <ArrayFieldEditor
-                field="tools"
-                label="Tools & Technologies"
-                placeholder="Add a tool or technology"
-              />
-              
-              <ArrayFieldEditor
-                field="highlights"
-                label="Course Highlights"
-                placeholder="Add a course highlight"
-              />
-              
-              <ArrayFieldEditor
-                field="learningOutcomes"
-                label="Learning Outcomes"
-                placeholder="Add a learning outcome"
-              />
-              
-              <ArrayFieldEditor
-                field="careerRoles"
-                label="Career Roles"
-                placeholder="Add a career role"
-              />
-            </div>
-          )}
-
-          {/* Course Details Section */}
-          {activeSection === 'details' && (
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Certificate Information
-                </label>
-                <textarea
-                  value={course.certificateInfo || ''}
-                  onChange={(e) => handleFieldUpdate('certificateInfo', e.target.value)}
-                  className="form-textarea"
-                  rows={3}
-                  placeholder="Information about certificates provided..."
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Batch Information
-                </label>
-                <textarea
-                  value={course.batchesInfo || ''}
-                  onChange={(e) => handleFieldUpdate('batchesInfo', e.target.value)}
-                  className="form-textarea"
-                  rows={3}
-                  placeholder="Information about batch schedules, intake, etc..."
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Eligibility Criteria
-                </label>
-                <input
-                  type="text"
-                  value={course.eligibility || ''}
-                  onChange={(e) => handleFieldUpdate('eligibility', e.target.value)}
-                  className="form-input"
-                  placeholder="e.g., 12th Pass, Graduate, Basic Programming Knowledge"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Mode of Training
-                </label>
-                <div className="flex gap-4">
-                  {['Classroom', 'Online', 'Hybrid'].map((mode) => (
-                    <label key={mode} className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={(course.mode || []).includes(mode)}
-                        onChange={(e) => {
-                          const currentMode = course.mode || [];
-                          if (e.target.checked) {
-                            handleFieldUpdate('mode', [...currentMode, mode]);
-                          } else {
-                            handleFieldUpdate('mode', currentMode.filter(m => m !== mode));
-                          }
-                        }}
-                        className="rounded"
-                      />
-                      <span className="text-sm text-gray-700">{mode}</span>
-                    </label>
-                  ))}
+                <div className="md:col-span-2">
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={course.featured || false}
+                      onChange={(e) => handleFieldUpdate('featured', e.target.checked)}
+                      className="rounded text-red-600 focus:ring-red-500"
+                    />
+                    <span className="text-sm font-medium text-gray-700">Featured Course</span>
+                  </label>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* SEO Section */}
-          {activeSection === 'seo' && (
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  SEO Title
-                </label>
-                <input
-                  type="text"
-                  value={course.seo?.title || ''}
-                  onChange={(e) => handleFieldUpdate('seo', { 
-                    ...course.seo, 
-                    title: e.target.value 
-                  })}
-                  className="form-input"
-                  placeholder="SEO optimized title"
-                />
+            {activeSection === 'seo' && (
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">SEO Title</label>
+                  <input
+                    type="text"
+                    value={course.seo?.title || ''}
+                    onChange={(e) => handleFieldUpdate('seo', { ...course.seo, title: e.target.value })}
+                    className="form-input"
+                    placeholder="Course SEO title"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">SEO Description</label>
+                  <textarea
+                    value={course.seo?.description || ''}
+                    onChange={(e) => handleFieldUpdate('seo', { ...course.seo, description: e.target.value })}
+                    className="form-input"
+                    rows="3"
+                    placeholder="Course SEO description"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">SEO Keywords</label>
+                  <input
+                    type="text"
+                    value={course.seo?.keywords || ''}
+                    onChange={(e) => handleFieldUpdate('seo', { ...course.seo, keywords: e.target.value })}
+                    className="form-input"
+                    placeholder="course, training, certification, jaipur"
+                  />
+                </div>
               </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  SEO Description
-                </label>
-                <textarea
-                  value={course.seo?.description || ''}
-                  onChange={(e) => handleFieldUpdate('seo', { 
-                    ...course.seo, 
-                    description: e.target.value 
-                  })}
-                  className="form-textarea"
-                  rows={3}
-                  placeholder="SEO meta description (150-160 characters)"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  SEO Keywords
-                </label>
-                <input
-                  type="text"
-                  value={course.seo?.keywords || ''}
-                  onChange={(e) => handleFieldUpdate('seo', { 
-                    ...course.seo, 
-                    keywords: e.target.value 
-                  })}
-                  className="form-input"
-                  placeholder="comma, separated, keywords"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  OG Image URL
-                </label>
-                <input
-                  type="url"
-                  value={course.seo?.ogImage || ''}
-                  onChange={(e) => handleFieldUpdate('seo', { 
-                    ...course.seo, 
-                    ogImage: e.target.value 
-                  })}
-                  className="form-input"
-                  placeholder="https://..."
-                />
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       )}
     </div>

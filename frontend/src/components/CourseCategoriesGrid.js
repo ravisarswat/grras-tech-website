@@ -60,10 +60,10 @@ const CourseCategoriesGrid = () => {
     }
   };
 
-  // Only show categories with courses
+  // Show featured categories (show all, including those with 0 courses)
   const visibleCategories = categories.filter(category => 
-    category.course_count > 0 && category.featured
-  ).slice(0, 6);
+    category.featured
+  ).sort((a, b) => (a.order || 999) - (b.order || 999)).slice(0, 6);
 
   if (loading) {
     return (
@@ -83,7 +83,20 @@ const CourseCategoriesGrid = () => {
   }
 
   if (visibleCategories.length === 0) {
-    return null;
+    return (
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Explore by Category
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Categories coming soon...
+            </p>
+          </div>
+        </div>
+      </section>
+    );
   }
 
   return (
@@ -115,12 +128,33 @@ const CourseCategoriesGrid = () => {
               >
                 {/* Category Icon & Header */}
                 <div className="flex items-center mb-6">
-                  <div 
-                    className="w-16 h-16 rounded-2xl flex items-center justify-center text-white mr-4 group-hover:scale-110 transition-transform"
-                    style={{ backgroundColor: category.color }}
-                  >
-                    <IconComponent className="h-8 w-8" />
-                  </div>
+                  {/* Use logo_url if available, otherwise use icon */}
+                  {category.logo_url ? (
+                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-white mr-4 group-hover:scale-110 transition-transform p-2">
+                      <img 
+                        src={category.logo_url} 
+                        alt={category.name}
+                        className="w-12 h-12 object-contain"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'flex';
+                        }}
+                      />
+                      <div 
+                        className="w-12 h-12 rounded-xl flex items-center justify-center text-white"
+                        style={{ backgroundColor: category.color, display: 'none' }}
+                      >
+                        <IconComponent className="h-6 w-6" />
+                      </div>
+                    </div>
+                  ) : (
+                    <div 
+                      className="w-16 h-16 rounded-2xl flex items-center justify-center text-white mr-4 group-hover:scale-110 transition-transform"
+                      style={{ backgroundColor: category.color }}
+                    >
+                      <IconComponent className="h-8 w-8" />
+                    </div>
+                  )}
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-gray-900 group-hover:text-red-600 transition-colors">
                       {category.name}

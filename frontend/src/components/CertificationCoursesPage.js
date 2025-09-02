@@ -113,6 +113,8 @@ const CertificationCoursesPage = () => {
       const category = courseCategories[slug];
       acc[slug] = {
         name: category.name || slug,
+        slug: slug, // Add slug for reference
+        order: category.order || 999, // Include order from category
         icon: category.icon === 'server' ? '🔴' : 
               category.icon === 'cloud' ? '☁️' : 
               category.icon === 'container' ? '⚙️' :

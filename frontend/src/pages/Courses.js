@@ -138,30 +138,97 @@ const Courses = () => {
       />
       
       <div className="min-h-screen bg-gray-50">
-        <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-purple-900 text-white py-16">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                GRRAS Certification Academy
-              </h1>
-              <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
-                Transform your career with industry-recognized certifications and hands-on training programs designed for real-world success.
+        {/* Enhanced Hero Section */}
+        <div className="relative bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white py-20 overflow-hidden">
+          {/* Animated Background Elements */}
+          <div className="absolute inset-0">
+            <div className="absolute top-10 left-10 w-20 h-20 bg-orange-500/10 rounded-full animate-pulse"></div>
+            <div className="absolute top-32 right-20 w-16 h-16 bg-red-500/10 rounded-full animate-bounce"></div>
+            <div className="absolute bottom-20 left-1/4 w-12 h-12 bg-yellow-500/10 rounded-full animate-ping"></div>
+            <div className="absolute bottom-32 right-1/3 w-8 h-8 bg-green-500/10 rounded-full animate-pulse"></div>
+            
+            {/* Gradient Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-600/20 via-transparent to-red-600/20"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20"></div>
+          </div>
+
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-5xl mx-auto text-center">
+              {/* Main Heading with Animation */}
+              <div className="mb-8">
+                <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl mb-6 shadow-2xl transform hover:scale-110 transition-all duration-300">
+                  <BookOpen className="w-10 h-10 text-white" />
+                </div>
+                
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-4 bg-gradient-to-r from-white via-blue-100 to-orange-200 bg-clip-text text-transparent leading-tight">
+                  GRRAS Certification
+                </h1>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-orange-300 mb-6">
+                  Academy
+                </h2>
+              </div>
+              
+              <p className="text-xl md:text-2xl text-blue-100 mb-12 max-w-4xl mx-auto leading-relaxed font-light">
+                🚀 Transform your career with <span className="font-bold text-orange-300">industry-recognized certifications</span> and 
+                <span className="font-bold text-red-300"> hands-on training programs</span> designed for real-world success.
               </p>
               
-              {/* DYNAMIC STATS - NO HARDCODE */}
-              <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-12 max-w-4xl mx-auto">
-                {categories.slice(1, 6).map((category) => (
-                  <div key={category.id} className="text-center">
-                    <div className="text-2xl font-bold mb-2">{category.count}</div>
-                    <div className="text-sm text-gray-200">{category.name}</div>
+              {/* Enhanced CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                <button className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-600 to-red-600 text-white font-bold rounded-2xl hover:from-orange-700 hover:to-red-700 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl">
+                  <span>Explore Courses</span>
+                  <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />
+                </button>
+                
+                <button className="group inline-flex items-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-2xl hover:bg-white/20 transition-all duration-300 transform hover:scale-105 border border-white/20">
+                  <Users className="mr-3 h-5 w-5" />
+                  <span>Join 5000+ Students</span>
+                </button>
+              </div>
+              
+              {/* DYNAMIC STATS with Enhanced Design */}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-8 max-w-5xl mx-auto">
+                {categories.slice(0, 5).map((category, index) => (
+                  <div key={category.id} className="group bg-white/10 backdrop-blur-sm rounded-2xl p-4 text-center hover:bg-white/20 transition-all duration-300 transform hover:scale-105 border border-white/20">
+                    <div className="text-3xl font-black mb-2 bg-gradient-to-r from-orange-300 to-red-300 bg-clip-text text-transparent">
+                      {category.count}
+                    </div>
+                    <div className="text-sm text-gray-200 font-medium leading-tight">
+                      {category.name.replace(/&/g, ' & ')}
+                    </div>
                   </div>
                 ))}
-                <div className="text-center">
-                  <div className="text-2xl font-bold mb-2">95%</div>
-                  <div className="text-sm text-gray-200">Success Rate</div>
+                <div className="group bg-white/10 backdrop-blur-sm rounded-2xl p-4 text-center hover:bg-white/20 transition-all duration-300 transform hover:scale-105 border border-white/20">
+                  <div className="text-3xl font-black mb-2 bg-gradient-to-r from-green-300 to-emerald-300 bg-clip-text text-transparent">
+                    95%
+                  </div>
+                  <div className="text-sm text-gray-200 font-medium">Success Rate</div>
+                </div>
+              </div>
+
+              {/* Success Indicators */}
+              <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-blue-200">
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+                  <span>✅ Industry Certified</span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-orange-400 rounded-full mr-2 animate-pulse"></div>
+                  <span>🎯 Job-Ready Skills</span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-red-400 rounded-full mr-2 animate-pulse"></div>
+                  <span>🚀 Career Growth</span>
                 </div>
               </div>
             </div>
+          </div>
+          
+          {/* Bottom Wave Effect */}
+          <div className="absolute bottom-0 left-0 right-0">
+            <svg className="w-full h-20 text-gray-50" viewBox="0 0 1200 120" preserveAspectRatio="none">
+              <path d="M0,120 C400,60 800,60 1200,120 L1200,120 L0,120 Z" fill="currentColor"></path>
+            </svg>
           </div>
         </div>
 

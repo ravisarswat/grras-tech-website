@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 async def test_category_deletion_with_courses():
     """Test category deletion with proper course unassignment"""
-    backend_url = "https://responsive-edu-site.preview.emergentagent.com"
+    backend_url = "https://grras-content-sync.preview.emergentagent.com"
     
     async with aiohttp.ClientSession() as session:
         # 1. Get admin token

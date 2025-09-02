@@ -542,7 +542,7 @@ const CertificationCoursesPage = () => {
         <section className="bg-white border-b sticky top-0 z-40 shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex space-x-8 overflow-x-auto py-4">
-              {Object.entries(courseVendors).map(([key, vendor]) => (
+              {sortedCourseVendorEntries.map(([key, vendor]) => (
                 <button
                   key={key}
                   onClick={() => setActiveTab(key)}

@@ -99,11 +99,16 @@ const Header = () => {
                     ) : (
                       <Link
                         to={item.path}
-                        className={`text-gray-700 hover:text-blue-600 font-medium py-2 ${
-                          isActivePath(item.path) ? 'text-blue-600 border-b-2 border-blue-600' : ''
+                        className={`relative text-gray-700 hover:text-blue-600 font-medium py-2 px-3 rounded-lg transition-all duration-200 ${
+                          isActivePath(item.path) 
+                            ? 'text-blue-600 bg-blue-50 shadow-sm' 
+                            : 'hover:bg-gray-50'
                         }`}
                       >
                         {item.name}
+                        {isActivePath(item.path) && (
+                          <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full"></span>
+                        )}
                       </Link>
                     )}
 

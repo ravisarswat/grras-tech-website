@@ -105,12 +105,9 @@ const CertificationCoursesPage = () => {
     return 'intermediate';
   };
 
-  // Sort courseVendors by order for display
-  const sortedCourseVendors = Object.entries(courseVendors).sort(([, a], [, b]) => {
-    const orderA = courseCategories[a.slug]?.order || 999;
-    const orderB = courseCategories[b.slug]?.order || 999;
-    return orderA - orderB;
-  });
+  // Vendor-based course organization
+  // Combine dynamic categories with hardcoded ones for backward compatibility
+  const courseVendors = {
     // Dynamic categories from admin panel
     ...Object.keys(courseCategories).reduce((acc, slug) => {
       const category = courseCategories[slug];

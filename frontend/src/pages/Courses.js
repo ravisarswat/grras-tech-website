@@ -53,6 +53,7 @@ const Courses = () => {
         }))
         .sort((a, b) => (a.order || 999) - (b.order || 999));
 
+      // ONLY DYNAMIC CATEGORIES - NO HARDCODE
       const dynamicCategories = [
         {
           id: 'all',
@@ -63,6 +64,7 @@ const Courses = () => {
         }
       ];
 
+      // Add ONLY admin panel categories
       Object.entries(categoriesData)
         .filter(([, category]) => category.visible !== false)
         .sort(([, a], [, b]) => (a.order || 999) - (b.order || 999))
@@ -71,15 +73,15 @@ const Courses = () => {
             course.categories && course.categories.includes(slug)
           ).length;
           
-          if (categoryCount > 0) {
-            dynamicCategories.push({
-              id: slug,
-              name: category.name,
-              count: categoryCount,
-              slug: slug,
-              order: category.order || 999
-            });
-          }
+          // Show all categories even if 0 courses (user can assign later)
+          dynamicCategories.push({
+            id: slug,
+            name: category.name,
+            count: categoryCount,
+            slug: slug,
+            order: category.order || 999,
+            logo: category.logo
+          });
         });
       
       setCourses(processedCourses);
@@ -125,7 +127,8 @@ const Courses = () => {
                 Transform your career with industry-recognized certifications and hands-on training programs designed for real-world success.
               </p>
               
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-12 max-w-4xl mx-auto">
+              {/* DYNAMIC STATS - NO HARDCODE */}
+              <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-12 max-w-4xl mx-auto">
                 {categories.slice(1, 6).map((category) => (
                   <div key={category.id} className="text-center">
                     <div className="text-2xl font-bold mb-2">{category.count}</div>
@@ -142,18 +145,27 @@ const Courses = () => {
         </div>
 
         <div className="container mx-auto px-4 py-12">
+          {/* DYNAMIC CATEGORY TABS - NO HARDCODE */}
           <div className="mb-8">
             <div className="flex flex-wrap gap-2">
               {categories.map((category) => (
                 <button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all ${
+                  className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all flex items-center gap-2 ${
                     selectedCategory === category.id
                       ? 'bg-blue-600 text-white shadow-lg'
                       : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                   }`}
                 >
+                  {category.logo && (
+                    <img 
+                      src={category.logo} 
+                      alt={category.name}
+                      className="w-4 h-4 object-contain"
+                      onError={(e) => e.target.style.display = 'none'}
+                    />
+                  )}
                   {category.name} ({category.count})
                 </button>
               ))}
@@ -173,7 +185,12 @@ const Courses = () => {
                 <BookOpen className="h-16 w-16 mx-auto" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">No courses found</h3>
-              <p className="text-gray-600">Try selecting a different category.</p>
+              <p className="text-gray-600">
+                {selectedCategory === 'all' 
+                  ? 'No courses available yet.' 
+                  : 'This category has no courses assigned yet. Add courses from the admin panel.'
+                }
+              </p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

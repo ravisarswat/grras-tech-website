@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Edit, Trash2, Eye, EyeOff, ChevronDown, ChevronUp } from 'lucide-react';
+import { Plus, Edit, Trash2, Eye, EyeOff, ChevronDown, ChevronUp, Upload } from 'lucide-react';
 
 const CategoryManager = ({ content, updateContent }) => {
   const [expandedCategory, setExpandedCategory] = useState(null);
@@ -22,6 +22,7 @@ const CategoryManager = ({ content, updateContent }) => {
       description: 'Category description',
       icon: 'folder',
       color: '#3B82F6',
+      logo: '', // Add logo field
       visible: true,
       order: maxOrder + 1,
       seo: { title: '', description: '', keywords: '' }
@@ -115,6 +116,9 @@ const CategoryManager = ({ content, updateContent }) => {
             <div key={slug} className="bg-white border rounded-lg p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-4">
+                  {category.logo && (
+                    <img src={category.logo} alt={category.name} className="w-8 h-8 object-contain" />
+                  )}
                   <h3 className="text-lg font-semibold">{category.name}</h3>
                   <span className="text-sm text-gray-500">
                     {getCoursesByCategory(slug).length} courses
@@ -147,7 +151,7 @@ const CategoryManager = ({ content, updateContent }) => {
 
               {expandedCategory === slug && (
                 <div className="space-y-4 pt-4 border-t">
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-4 gap-4">
                     <div>
                       <label className="block text-sm font-medium mb-2">Name</label>
                       <input
@@ -175,6 +179,27 @@ const CategoryManager = ({ content, updateContent }) => {
                         className="w-full border rounded p-2"
                       />
                     </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Color</label>
+                      <input
+                        type="color"
+                        value={category.color || '#3B82F6'}
+                        onChange={(e) => updateCategory(slug, 'color', e.target.value)}
+                        className="w-full border rounded p-2 h-10"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Logo URL</label>
+                    <input
+                      type="url"
+                      value={category.logo || ''}
+                      onChange={(e) => updateCategory(slug, 'logo', e.target.value)}
+                      className="w-full border rounded p-2"
+                      placeholder="https://example.com/logo.png"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Company logo for display in dropdowns and cards</p>
                   </div>
 
                   <div>

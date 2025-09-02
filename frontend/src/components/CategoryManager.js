@@ -14,6 +14,7 @@ const CategoryManager = ({ content, updateContent }) => {
 
   const addCategory = () => {
     const timestamp = Date.now();
+    const existingCount = Object.keys(categories).length;
     const newCategory = {
       name: 'New Category',
       slug: `new-category-${timestamp}`,
@@ -23,6 +24,7 @@ const CategoryManager = ({ content, updateContent }) => {
       gradient: 'from-blue-500 to-blue-600',
       featured: false,
       visible: true,
+      order: existingCount + 1, // Add ordering
       seo: {
         title: '',
         description: '',

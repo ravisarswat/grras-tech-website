@@ -106,11 +106,14 @@ const CourseDetail = () => {
               {/* Course Info */}
               <div className="animate-fade-in-up">
                 <Link 
-                  to="/courses"
-                  className="inline-flex items-center text-white hover:text-gray-200 mb-6 transition-colors"
+                  to={course.categories && course.categories.length > 0 
+                    ? `/courses?tab=${course.categories[0]}` 
+                    : "/courses"
+                  }
+                  className="inline-flex items-center text-white hover:text-gray-200 mb-6 transition-colors group"
                 >
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  Back to Courses
+                  <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform duration-300" />
+                  <span>Back to {course.categories && course.categories.length > 0 ? `${course.categories[0].charAt(0).toUpperCase() + course.categories[0].slice(1)} Courses` : 'All Courses'}</span>
                 </Link>
                 
                 <div className="flex items-center gap-4 mb-4">

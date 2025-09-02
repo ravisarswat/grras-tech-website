@@ -60,6 +60,7 @@ function AppContent() {
           <Route path="/privacy" element={<Privacy />} />
           
           {/* Admin Routes */}
+          <Route path="/admin" element={<AdminContent />} />
           <Route path="/admin/leads" element={<AdminLeads />} />
           <Route path="/admin/content" element={<AdminContent />} />
           

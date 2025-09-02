@@ -165,10 +165,10 @@ const Header = () => {
                                       
                                       {/* Content */}
                                       <div className="flex-1 min-w-0">
-                                        <h4 className="font-semibold text-gray-900 group-hover:text-blue-700 transition-colors duration-300 truncate">
+                                        <h4 className="font-semibold text-gray-900 group-hover:text-orange-700 transition-colors duration-300 truncate">
                                           {track.name}
                                         </h4>
-                                        <p className="text-sm text-gray-600 group-hover:text-blue-600 transition-colors duration-300">
+                                        <p className="text-sm text-gray-600 group-hover:text-orange-600 transition-colors duration-300">
                                           {track.courseCount} professional course{track.courseCount !== 1 ? 's' : ''} available
                                         </p>
                                       </div>

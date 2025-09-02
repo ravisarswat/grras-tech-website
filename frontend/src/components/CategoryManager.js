@@ -193,7 +193,7 @@ const CategoryManager = ({ content, updateContent }) => {
         </div>
       ) : (
         <div className="space-y-4">
-          {Object.entries(categories).map(([categorySlug, category]) => (
+          {sortedCategoryEntries.map(([categorySlug, category]) => (
             <div key={categorySlug} className="bg-white rounded-lg shadow-sm border border-gray-200">
               {/* Category Header */}
               <div className="p-4 border-b border-gray-100">

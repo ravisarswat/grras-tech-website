@@ -210,95 +210,23 @@ const Header = () => {
                           <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Technology Tracks</h4>
                           
                           <div className="space-y-1">
-                            <Link
-                              to="/courses?tab=redhat"
-                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
-                              onClick={() => setIsCoursesOpen(false)}
-                            >
-                              <img 
-                                src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg" 
-                                alt="Red Hat" 
-                                className="w-4 h-4 mr-3"
-                                onError={(e) => {
-                                  e.target.style.display = 'none';
-                                  e.target.nextSibling.style.display = 'inline';
-                                }}
-                              />
-                              <div className="w-2 h-2 bg-red-500 rounded-full mr-3" style={{display: 'none'}}></div>
-                              <span>Red Hat Technologies</span>
-                            </Link>
-                            
-                            <Link
-                              to="/courses?tab=aws"
-                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
-                              onClick={() => setIsCoursesOpen(false)}
-                            >
-                              <img 
-                                src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" 
-                                alt="AWS" 
-                                className="w-4 h-4 mr-3"
-                                onError={(e) => {
-                                  e.target.style.display = 'none';
-                                  e.target.nextSibling.style.display = 'inline';
-                                }}
-                              />
-                              <div className="w-2 h-2 bg-orange-500 rounded-full mr-3" style={{display: 'none'}}></div>
-                              <span>AWS Cloud Platform</span>
-                            </Link>
-                            
-                            <Link
-                              to="/courses?tab=kubernetes"
-                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
-                              onClick={() => setIsCoursesOpen(false)}
-                            >
-                              <img 
-                                src="https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg" 
-                                alt="Kubernetes" 
-                                className="w-4 h-4 mr-3"
-                                onError={(e) => {
-                                  e.target.style.display = 'none';
-                                  e.target.nextSibling.style.display = 'inline';
-                                }}
-                              />
-                              <div className="w-2 h-2 bg-blue-500 rounded-full mr-3" style={{display: 'none'}}></div>
-                              <span>Kubernetes Ecosystem</span>
-                            </Link>
-                            
-                            <Link
-                              to="/courses?tab=devops"
-                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
-                              onClick={() => setIsCoursesOpen(false)}
-                            >
-                              <div className="w-4 h-4 mr-3 flex items-center justify-center text-green-600">🔧</div>
-                              <span>DevOps Engineering</span>
-                            </Link>
-                            
-                            <Link
-                              to="/courses?tab=cybersecurity"
-                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
-                              onClick={() => setIsCoursesOpen(false)}
-                            >
-                              <div className="w-4 h-4 mr-3 flex items-center justify-center text-slate-600">🛡️</div>
-                              <span>Cybersecurity & Ethical Hacking</span>
-                            </Link>
-                            
-                            <Link
-                              to="/courses?tab=programming"
-                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
-                              onClick={() => setIsCoursesOpen(false)}
-                            >
-                              <div className="w-4 h-4 mr-3 flex items-center justify-center text-purple-600">💻</div>
-                              <span>Programming & Development</span>
-                            </Link>
-                            
-                            <Link
-                              to="/courses?tab=degree"
-                              className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
-                              onClick={() => setIsCoursesOpen(false)}
-                            >
-                              <div className="w-4 h-4 mr-3 flex items-center justify-center text-indigo-600">🎓</div>
-                              <span>Degree Programs</span>
-                            </Link>
+                            {categories.slice(0, 6).map((category) => (
+                              <Link
+                                key={category.slug}
+                                to={`/courses/${category.slug}`}
+                                className="flex items-center px-2 py-2 text-sm text-gray-700 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
+                                onClick={() => setIsCoursesOpen(false)}
+                              >
+                                <div 
+                                  className="w-2 h-2 rounded-full mr-3" 
+                                  style={{ backgroundColor: category.color }}
+                                ></div>
+                                <span>{category.name}</span>
+                                <span className="ml-auto text-xs text-gray-400">
+                                  {category.course_count}
+                                </span>
+                              </Link>
+                            ))}
                           </div>
                         </div>
                         

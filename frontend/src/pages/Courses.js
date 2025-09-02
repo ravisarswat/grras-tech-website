@@ -74,17 +74,9 @@ const Courses = () => {
         .sort((a, b) => (a.order || 999) - (b.order || 999));
 
       // ONLY DYNAMIC CATEGORIES - NO HARDCODE
-      const dynamicCategories = [
-        {
-          id: 'all',
-          name: 'All Courses',
-          count: processedCourses.length,
-          slug: 'all',
-          order: 0
-        }
-      ];
+      const dynamicCategories = [];
 
-      // Add ONLY admin panel categories
+      // Add ONLY admin panel categories FIRST
       Object.entries(categoriesData)
         .filter(([, category]) => category.visible !== false)
         .sort(([, a], [, b]) => (a.order || 999) - (b.order || 999))
@@ -103,6 +95,15 @@ const Courses = () => {
             logo: category.logo
           });
         });
+
+      // Add "All Courses" at the END for better UX
+      dynamicCategories.push({
+        id: 'all',
+        name: 'All Courses',
+        count: processedCourses.length,
+        slug: 'all',
+        order: 9999 // Ensures it comes last
+      });
       
       setCourses(processedCourses);
       setCategories(dynamicCategories);

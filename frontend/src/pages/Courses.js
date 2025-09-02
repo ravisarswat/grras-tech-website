@@ -233,69 +233,82 @@ const Courses = () => {
         </div>
 
         <div className="container mx-auto px-4 py-12">
-          {/* Premium Dynamic Category Tabs */}
+          {/* Enhanced Premium Dynamic Category Tabs */}
           <div className="mb-12">
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-4 overflow-x-auto">
-              <div className="flex space-x-2 min-w-max">
+            <div className="bg-white rounded-3xl shadow-2xl border border-gray-200 p-6 overflow-x-auto">
+              <div className="flex space-x-3 min-w-max">
                 {categories.map((category, index) => (
                   <button
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}
-                    className={`group relative px-6 py-4 rounded-xl font-semibold whitespace-nowrap transition-all duration-300 flex items-center gap-3 min-w-0 ${
+                    className={`group relative px-8 py-5 rounded-2xl font-bold whitespace-nowrap transition-all duration-500 flex items-center gap-4 min-w-0 transform hover:scale-105 ${
                       selectedCategory === category.id
-                        ? 'bg-gradient-to-r from-orange-600 to-red-600 text-white shadow-xl transform scale-105'
-                        : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:shadow-md hover:scale-102 border border-gray-200 hover:border-orange-200'
+                        ? 'bg-gradient-to-r from-orange-600 via-red-600 to-orange-700 text-white shadow-2xl scale-110 ring-4 ring-orange-200'
+                        : 'bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700 hover:from-orange-50 hover:to-red-50 hover:text-orange-800 hover:shadow-xl border-2 border-gray-200 hover:border-orange-300'
                     }`}
+                    style={{
+                      animation: selectedCategory === category.id ? 'pulse 2s infinite' : 'none'
+                    }}
                   >
-                    {/* Logo/Icon */}
-                    <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 ${
+                    {/* Enhanced Logo/Icon */}
+                    <div className={`flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 ${
                       selectedCategory === category.id 
-                        ? 'bg-white/20' 
-                        : 'bg-white group-hover:bg-blue-50'
+                        ? 'bg-white/30 backdrop-blur-sm shadow-lg' 
+                        : 'bg-white group-hover:bg-orange-100 shadow-md border border-gray-200 group-hover:border-orange-300'
                     }`}>
                       {category.logo ? (
                         <img 
                           src={category.logo} 
                           alt={category.name}
-                          className="w-5 h-5 object-contain"
+                          className="w-7 h-7 object-contain filter group-hover:brightness-110"
                           onError={(e) => e.target.style.display = 'none'}
                         />
                       ) : (
-                        <BookOpen className={`w-5 h-5 ${
+                        <BookOpen className={`w-7 h-7 transition-all duration-300 ${
                           selectedCategory === category.id 
-                            ? 'text-white' 
-                            : 'text-gray-500 group-hover:text-orange-600'
+                            ? 'text-white scale-110' 
+                            : 'text-gray-600 group-hover:text-orange-600 group-hover:scale-110'
                         }`} />
                       )}
                     </div>
                     
-                    {/* Category Info */}
+                    {/* Enhanced Category Info */}
                     <div className="flex flex-col items-start min-w-0">
-                      <span className="text-sm font-bold truncate">
+                      <span className="text-base font-black truncate mb-1">
                         {category.name}
                       </span>
-                      <span className={`text-xs ${
+                      <span className={`text-sm font-semibold ${
                         selectedCategory === category.id 
-                          ? 'text-white/80' 
+                          ? 'text-white/90' 
                           : 'text-gray-500 group-hover:text-orange-600'
                       }`}>
                         {category.count} course{category.count !== 1 ? 's' : ''}
                       </span>
                     </div>
                     
-                    {/* Active indicator */}
+                    {/* Enhanced Active indicator */}
                     {selectedCategory === category.id && (
-                      <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-white rounded-full shadow-md"></div>
+                      <>
+                        <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-r from-orange-400 to-red-400 rounded-full shadow-lg animate-bounce"></div>
+                        <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-6 h-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-full shadow-md"></div>
+                      </>
                     )}
                     
-                    {/* Hover effect overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    {/* Enhanced Hover effect overlay */}
+                    <div className={`absolute inset-0 bg-gradient-to-r from-orange-500/10 via-red-500/10 to-orange-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 ${
+                      selectedCategory === category.id ? 'opacity-20' : ''
+                    }`}></div>
+                    
+                    {/* Sparkle effect for active tab */}
+                    {selectedCategory === category.id && (
+                      <div className="absolute top-2 right-2 w-2 h-2 bg-white rounded-full animate-ping"></div>
+                    )}
                   </button>
                 ))}
               </div>
               
-              {/* Tab indicator line */}
-              <div className="mt-4 h-0.5 bg-gradient-to-r from-orange-500 to-red-500 rounded-full opacity-20"></div>
+              {/* Enhanced Tab indicator line with gradient */}
+              <div className="mt-6 h-1 bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 rounded-full shadow-lg"></div>
             </div>
           </div>
 

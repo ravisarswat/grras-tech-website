@@ -93,9 +93,9 @@ const Header = () => {
                     ) : (
                       <Link
                         to={item.path}
-                        className={`relative text-gray-700 hover:text-blue-600 font-medium py-2 px-3 rounded-lg transition-all duration-200 ${
+                        className={`relative text-gray-700 hover:text-orange-600 font-medium py-2 px-3 rounded-lg transition-all duration-200 ${
                           isActivePath(item.path) 
-                            ? 'text-blue-600 bg-blue-50 shadow-sm' 
+                            ? 'text-orange-600 bg-orange-50 shadow-sm' 
                             : 'hover:bg-gray-50'
                         }`}
                       >

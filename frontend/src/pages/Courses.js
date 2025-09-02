@@ -64,6 +64,8 @@ const Courses = () => {
       ));
     }
   }, [courses, selectedCategory]);
+
+  const fetchData = async () => {
     try {
       setLoading(true);
       

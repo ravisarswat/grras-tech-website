@@ -115,12 +115,17 @@ const Header = () => {
                     {/* Dynamic Dropdown - NO HARDCODE */}
                     {item.hasDropdown && isCoursesOpen && (
                       <div 
-                        className="absolute top-full left-0 mt-2 w-96 bg-white rounded-xl shadow-2xl border border-gray-100 z-50"
+                        className="absolute top-full left-0 mt-2 w-96 bg-white/95 backdrop-blur-sm rounded-xl shadow-2xl border border-gray-100 z-50 animate-in slide-in-from-top-2 duration-200"
                         onMouseEnter={() => setIsCoursesOpen(true)}
                         onMouseLeave={() => setIsCoursesOpen(false)}
                       >
                         <div className="p-6">
-                          <h3 className="text-lg font-semibold text-gray-900 mb-4">Technology Tracks</h3>
+                          <div className="flex items-center space-x-2 mb-4">
+                            <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full"></div>
+                            <h3 className="text-lg font-semibold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                              Technology Tracks
+                            </h3>
+                          </div>
                           <div className="space-y-3">
                             {technologyTracks.length > 0 ? (
                               technologyTracks.map((track) => (

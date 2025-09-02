@@ -8,6 +8,7 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const Courses = () => {
+  const location = useLocation();
   const [courses, setCourses] = useState([]);
   const [categories, setCategories] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState([]);
@@ -17,6 +18,25 @@ const Courses = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  // Handle URL parameters for category selection
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const tabParam = urlParams.get('tab');
+    
+    if (tabParam && categories.length > 0) {
+      // Check if the tab parameter matches any category
+      const foundCategory = categories.find(cat => cat.slug === tabParam || cat.id === tabParam);
+      if (foundCategory) {
+        setSelectedCategory(foundCategory.id);
+        console.log(`✅ Set selected category to: ${foundCategory.name} (${foundCategory.id})`);
+      } else {
+        // If tab parameter doesn't match any category, default to 'all'
+        setSelectedCategory('all');
+        console.log(`⚠️ Tab parameter '${tabParam}' not found, defaulting to 'all'`);
+      }
+    }
+  }, [location.search, categories]);
 
   useEffect(() => {
     if (selectedCategory === 'all') {

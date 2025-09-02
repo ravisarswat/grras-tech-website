@@ -398,9 +398,7 @@ const Header = () => {
                               <div className="text-xs opacity-80">{category.course_count} course{category.course_count !== 1 ? 's' : ''}</div>
                             </div>
                           </Link>
-                        ))
-                        
-                        <div className="border-t border-gray-300 my-4"></div>
+                        ))}
                         
                         <Link
                           to="/courses"

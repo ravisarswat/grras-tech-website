@@ -159,203 +159,55 @@ const CertificationCoursesPage = () => {
     return orderA - orderB;
   });
 
-  // Categorize courses by vendor
+  // Categorize courses by vendor - ONLY DYNAMIC categories
   const categorizedCourses = useMemo(() => {
     if (!courses || courses.length === 0) {
-      return {
-        redhat: [],
-        aws: [],
-        kubernetes: [],
-        programming: [],
-        degree: [],
-        general: []
-      };
+      // Return empty object with dynamic category keys + general
+      const result = { general: [] };
+      Object.keys(courseCategories).forEach(slug => {
+        result[slug] = [];
+      });
+      return result;
     }
 
-    const result = {
-      redhat: [],
-      aws: [],
-      kubernetes: [],
-      devops: [],
-      cybersecurity: [],
-      programming: [],
-      degree: [],
-      general: []
-    };
+    // Initialize result with dynamic categories + general
+    const result = { general: [] };
+    Object.keys(courseCategories).forEach(slug => {
+      result[slug] = [];
+    });
 
-    // First, filter out duplicates based on slug
+    // Filter out duplicates based on slug
     const uniqueCourses = courses.filter((course, index, arr) => 
       arr.findIndex(c => c.slug === course.slug) === index
     );
 
     uniqueCourses.forEach(course => {
-      const title = course.title?.toLowerCase() || '';
-      const category = course.category?.toLowerCase() || '';
-      const tools = course.tools?.join(' ').toLowerCase() || '';
-      const oneLiner = course.oneLiner?.toLowerCase() || '';
-      const searchText = `${title} ${category} ${tools} ${oneLiner}`;
-
+      // Check if course is assigned to any dynamic categories
+      const courseCategs = course.categories || [];
       let categorizedFlag = false;
 
-      // PRIORITY 1: Direct category field matching (ABSOLUTE PRIORITY)
-      if (category === 'devops') {
-        result.devops.push({
-          ...course,
-          vendor: 'devops',
-          level: determineLevel(course, 'devops')
-        });
-        categorizedFlag = true;
-      }
-      else if (category === 'security' || category === 'cybersecurity') {
-        result.cybersecurity.push({
-          ...course,
-          vendor: 'cybersecurity',
-          level: determineLevel(course, 'cybersecurity')
-        });
-        categorizedFlag = true;
-      }
-      else if (category === 'degree' || title.includes('bca') || title.includes('degree')) {
-        result.degree.push({
-          ...course,
-          vendor: 'degree',
-          level: determineLevel(course, 'degree')
-        });
-        categorizedFlag = true;
-      }
-      else if (category === 'certification') {
-        result.redhat.push({
-          ...course,
-          vendor: 'redhat',
-          level: determineLevel(course, 'redhat')
-        });
-        categorizedFlag = true;
-      }
-      else if (category === 'cloud') {
-        result.aws.push({
-          ...course,
-          vendor: 'aws',
-          level: determineLevel(course, 'aws')
-        });
-        categorizedFlag = true;
-      }
-      else if (category === 'container') {
-        result.kubernetes.push({
-          ...course,
-          vendor: 'kubernetes',
-          level: determineLevel(course, 'kubernetes')
-        });
-        categorizedFlag = true;
-      }
-      else if (category === 'programming' && !title.includes('bca') && !title.includes('degree')) {
-        result.programming.push({
-          ...course,
-          vendor: 'programming',
-          level: determineLevel(course, 'programming')
-        });
-        categorizedFlag = true;
-      }
-      
-      // PRIORITY 2: Keyword-based fallback matching (only if no direct category match)
-      if (!categorizedFlag) {
-        if (courseVendors.redhat.keywords.some(keyword => searchText.includes(keyword))) {
-          result.redhat.push({
+      // Add course to its assigned categories
+      courseCategs.forEach(categorySlug => {
+        if (result[categorySlug]) {
+          result[categorySlug].push({
             ...course,
-            vendor: 'redhat',
-            level: determineLevel(course, 'redhat')
+            vendor: categorySlug,
+            level: determineLevel(course, categorySlug)
           });
           categorizedFlag = true;
         }
-        else if (courseVendors.aws.keywords.some(keyword => searchText.includes(keyword))) {
-          result.aws.push({
-            ...course,
-            vendor: 'aws',
-            level: determineLevel(course, 'aws')
-          });
-          categorizedFlag = true;
-        }
-        else if (courseVendors.kubernetes.keywords.some(keyword => searchText.includes(keyword))) {
-          result.kubernetes.push({
-            ...course,
-            vendor: 'kubernetes',
-            level: determineLevel(course, 'kubernetes')
-          });
-          categorizedFlag = true;
-        }
-        else if (courseVendors.devops.keywords.some(keyword => searchText.includes(keyword))) {
-          result.devops.push({
-            ...course,
-            vendor: 'devops',
-            level: determineLevel(course, 'devops')
-          });
-          categorizedFlag = true;
-        }
-        else if (courseVendors.cybersecurity.keywords.some(keyword => searchText.includes(keyword))) {
-          result.cybersecurity.push({
-            ...course,
-            vendor: 'cybersecurity',
-            level: determineLevel(course, 'cybersecurity')
-          });
-          categorizedFlag = true;
-        }
-        else if (courseVendors.programming.keywords.some(keyword => searchText.includes(keyword))) {
-          result.programming.push({
-            ...course,
-            vendor: 'programming',
-            level: determineLevel(course, 'programming')
-          });
-          categorizedFlag = true;
-        }
-      }
+      });
 
-      // Always add to general category (unique courses only)
+      // Always add to general category
       result.general.push({
         ...course,
         vendor: 'general',
         level: 'all'
       });
-
-      // Fallback categorization for uncategorized courses
-      if (!categorizedFlag && !title.includes('test')) {
-        // Programming fallback
-        if (title.includes('java') || title.includes('c++') || title.includes('data structures') || 
-            title.includes('machine learning') || title.includes('data science') ||
-            category.includes('programming') || category.includes('technology')) {
-          if (!result.programming.find(c => c.slug === course.slug)) {
-            result.programming.push({
-              ...course,
-              vendor: 'programming',
-              level: determineLevel(course, 'programming')
-            });
-          }
-        }
-        // Security/Cyber fallback
-        else if (title.includes('cyber') || title.includes('security') || 
-                 category.includes('security')) {
-          // Add to general as security specialty
-          // Can be viewed under "All Courses" tab
-        }
-        // DevOps/Cloud fallback
-        else if (title.includes('devops') || title.includes('cloud') || 
-                 category.includes('cloud')) {
-          // Add to general as DevOps specialty
-          // Can be viewed under "All Courses" tab
-        }
-        // Degree fallback
-        else if (title.includes('bca') || title.includes('degree') || 
-                 category.includes('degree')) {
-          if (!result.degree.find(c => c.slug === course.slug)) {
-            result.degree.push({
-              ...course,
-              vendor: 'degree',
-              level: determineLevel(course, 'degree')
-            });
-          }
-        }
-      }
     });
 
     return result;
-  }, [courses]);
+  }, [courses, courseCategories]);
 
   // Filter courses based on search and level
   const filteredCourses = useMemo(() => {

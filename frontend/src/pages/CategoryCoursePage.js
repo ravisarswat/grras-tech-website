@@ -17,12 +17,12 @@ import { useContent } from '../contexts/ContentContext';
 
 const CategoryCoursePage = () => {
   const { categorySlug } = useParams();
-  const { content } = useContent();
+  const [category, setCategory] = useState(null);
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
   
-  const courseCategories = content?.courseCategories || {};
-  const courses = content?.courses || [];
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
   
-  const category = courseCategories[categorySlug];
   const [categoryStats, setCategoryStats] = useState({
     totalCourses: 0,
     totalStudents: 0,
@@ -31,20 +31,48 @@ const CategoryCoursePage = () => {
   });
 
   useEffect(() => {
-    if (category && category.courses) {
-      const categoryCourses = category.courses
-        .map(courseSlug => courses.find(c => c.slug === courseSlug))
-        .filter(Boolean)
-        .filter(course => course.visible !== false);
+    fetchCategoryData();
+  }, [categorySlug]);
+
+  const fetchCategoryData = async () => {
+    try {
+      // Fetch both categories and courses
+      const [categoriesResponse, coursesResponse] = await Promise.all([
+        fetch(`${BACKEND_URL}/api/categories`),
+        fetch(`${BACKEND_URL}/api/courses`)
+      ]);
       
-      setCategoryStats({
-        totalCourses: categoryCourses.length,
-        totalStudents: 500 + (categoryCourses.length * 50), // Mock calculation
-        averageDuration: categoryCourses.length > 0 ? '3-6 months' : 'N/A',
-        placementRate: '95%'
-      });
+      if (categoriesResponse.ok && coursesResponse.ok) {
+        const categoriesData = await categoriesResponse.json();
+        const coursesData = await coursesResponse.json();
+        
+        // Find the specific category
+        const foundCategory = categoriesData.categories.find(cat => cat.slug === categorySlug);
+        if (foundCategory) {
+          setCategory(foundCategory);
+          
+          // Filter courses for this category
+          const categoryCourses = coursesData.courses.filter(course => 
+            course.visible !== false && course.categories && course.categories.includes(categorySlug)
+          );
+          
+          setCourses(categoryCourses);
+          
+          // Update stats
+          setCategoryStats({
+            totalCourses: categoryCourses.length,
+            totalStudents: 500 + (categoryCourses.length * 50),
+            averageDuration: categoryCourses.length > 0 ? '3-6 months' : 'N/A',
+            placementRate: '95%'
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching category data:', error);
+    } finally {
+      setLoading(false);
     }
-  }, [category, courses]);
+  };
 
   if (!category) {
     return (

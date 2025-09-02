@@ -136,44 +136,64 @@ const Header = () => {
                         
                         {/* Categories Grid */}
                         <div className="p-6">
-                          <div className="space-y-3">
+                          <div className="grid grid-cols-1 gap-2">
                             {technologyTracks.length > 0 ? (
-                              technologyTracks.map((track) => (
+                              technologyTracks.map((track, index) => (
                                 <Link
                                   key={track.id}
                                   to={track.path}
-                                  className="flex items-center justify-between p-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 group border border-transparent hover:border-blue-100 hover:shadow-sm"
+                                  className="group relative overflow-hidden rounded-xl border border-gray-100 bg-white hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:border-blue-200"
                                   onClick={() => setIsCoursesOpen(false)}
                                 >
-                                  <div className="flex items-center space-x-3">
-                                    <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 group-hover:from-blue-100 group-hover:to-purple-100 transition-all duration-300">
-                                      <img 
-                                        src={track.logo} 
-                                        alt={track.name}
-                                        className="w-6 h-6 object-contain group-hover:scale-110 transition-transform duration-300"
-                                        onError={(e) => {
-                                          e.target.style.display = 'none';
-                                          e.target.nextElementSibling.style.display = 'flex';
-                                        }}
-                                      />
-                                      <div className="hidden w-6 h-6 bg-blue-100 rounded flex items-center justify-center">
-                                        <BookOpen className="h-3 w-3 text-blue-600" />
+                                  <div className="p-4">
+                                    <div className="flex items-center space-x-4">
+                                      {/* Logo */}
+                                      <div className="relative">
+                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 group-hover:from-blue-100 group-hover:to-purple-100 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
+                                          <img 
+                                            src={track.logo} 
+                                            alt={track.name}
+                                            className="w-7 h-7 object-contain group-hover:scale-110 transition-transform duration-300"
+                                            onError={(e) => {
+                                              e.target.style.display = 'none';
+                                              e.target.nextElementSibling.style.display = 'flex';
+                                            }}
+                                          />
+                                          <div className="hidden w-7 h-7 bg-blue-100 rounded flex items-center justify-center">
+                                            <BookOpen className="h-4 w-4 text-blue-600" />
+                                          </div>
+                                        </div>
+                                        <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xs font-bold transform group-hover:scale-110 transition-transform duration-300">
+                                          {track.courseCount}
+                                        </div>
+                                      </div>
+                                      
+                                      {/* Content */}
+                                      <div className="flex-1 min-w-0">
+                                        <h4 className="font-semibold text-gray-900 group-hover:text-blue-700 transition-colors duration-300 truncate">
+                                          {track.name}
+                                        </h4>
+                                        <p className="text-sm text-gray-600 group-hover:text-blue-600 transition-colors duration-300">
+                                          {track.courseCount} professional course{track.courseCount !== 1 ? 's' : ''} available
+                                        </p>
+                                      </div>
+                                      
+                                      {/* Arrow */}
+                                      <div className="flex-shrink-0">
+                                        <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-300" />
                                       </div>
                                     </div>
-                                    <span className="font-medium text-gray-900 group-hover:text-blue-700 transition-colors duration-300">{track.name}</span>
                                   </div>
-                                  <div className="flex items-center space-x-2">
-                                    <span className="text-sm px-2 py-1 bg-gray-100 group-hover:bg-blue-100 text-gray-600 group-hover:text-blue-700 rounded-full transition-all duration-300 font-medium">
-                                      {track.courseCount} courses
-                                    </span>
-                                    <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-300" />
-                                  </div>
+                                  
+                                  {/* Hover overlay */}
+                                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                 </Link>
                               ))
                             ) : (
-                              <div className="text-center py-4 text-gray-500">
-                                <BookOpen className="h-8 w-8 mx-auto mb-2 text-gray-300" />
-                                <p>No categories available</p>
+                              <div className="text-center py-8 text-gray-500">
+                                <BookOpen className="h-12 w-12 mx-auto mb-3 text-gray-300" />
+                                <p className="font-medium">No categories available</p>
+                                <p className="text-sm">Categories will appear here once added</p>
                               </div>
                             )}
                           </div>

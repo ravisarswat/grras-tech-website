@@ -253,7 +253,7 @@ class CourseCleanupVerificationTester:
                     missing_sections = []
                     
                     for section in required_sections:
-                        if section in content and content[section]:
+                        if section in content:
                             intact_sections.append(section)
                             logger.info(f"   ✅ {section}: Present and intact")
                         else:

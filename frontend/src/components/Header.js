@@ -101,7 +101,7 @@ const Header = () => {
                       >
                         {item.name}
                         {isActivePath(item.path) && (
-                          <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full"></span>
+                          <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-gradient-to-r from-orange-500 to-red-500 rounded-full"></span>
                         )}
                       </Link>
                     )}

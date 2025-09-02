@@ -11,6 +11,7 @@ import {
   CheckCircle
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useContent } from '../contexts/ContentContext';
 
 const CourseEditor = ({ 
   course, 

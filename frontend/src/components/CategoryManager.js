@@ -77,18 +77,44 @@ const CategoryManager = ({ content, updateContent }) => {
     updateCategory(categorySlug, 'featured', !category.featured);
   };
 
+  // Get courses assigned to a category
+  const getCoursesByCategory = (categorySlug) => {
+    return courses.filter(course => 
+      course.categories && course.categories.includes(categorySlug)
+    );
+  };
+
   const addCourseToCategory = (categorySlug, courseSlug) => {
-    const category = categories[categorySlug];
-    if (!category.courses.includes(courseSlug)) {
-      const newCourses = [...category.courses, courseSlug];
-      updateCategory(categorySlug, 'courses', newCourses);
-    }
+    // Find the course and add category to its categories array
+    const updatedCourses = courses.map(course => {
+      if (course.slug === courseSlug) {
+        const currentCategories = course.categories || [];
+        if (!currentCategories.includes(categorySlug)) {
+          return {
+            ...course,
+            categories: [...currentCategories, categorySlug]
+          };
+        }
+      }
+      return course;
+    });
+    
+    updateContent('courses', updatedCourses);
   };
 
   const removeCourseFromCategory = (categorySlug, courseSlug) => {
-    const category = categories[categorySlug];
-    const newCourses = category.courses.filter(slug => slug !== courseSlug);
-    updateCategory(categorySlug, 'courses', newCourses);
+    // Find the course and remove category from its categories array
+    const updatedCourses = courses.map(course => {
+      if (course.slug === courseSlug && course.categories) {
+        return {
+          ...course,
+          categories: course.categories.filter(cat => cat !== categorySlug)
+        };
+      }
+      return course;
+    });
+    
+    updateContent('courses', updatedCourses);
   };
 
   // Safe check for available courses to prevent undefined errors

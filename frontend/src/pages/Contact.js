@@ -88,15 +88,19 @@ const Contact = () => {
     setIsSubmitting(true);
     
     try {
-      const requestData = {
-        name: formData.name.trim(),
-        email: formData.email.trim(),
-        phone: formData.phone.replace(/\D/g, ''),
-        course: 'General Inquiry', // Required field for backend
-        message: formData.message.trim()
-      };
+      // Create FormData for backend Form(...) endpoints
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name.trim());
+      formDataToSend.append('email', formData.email.trim());
+      formDataToSend.append('phone', formData.phone.replace(/\D/g, ''));
+      formDataToSend.append('course', 'General Inquiry');
+      formDataToSend.append('message', formData.message.trim());
       
-      await axios.post(`${API}/contact`, requestData);
+      await axios.post(`${API}/contact`, formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
       
       toast.success('Message sent successfully!', {
         description: 'We will get back to you within 24 hours.',

@@ -38,15 +38,22 @@ const Courses = () => {
     }
   }, [location.search, categories]);
 
-  useEffect(() => {
-    if (selectedCategory === 'all') {
-      setFilteredCourses(courses);
-    } else {
-      setFilteredCourses(courses.filter(course => 
-        course.categories && course.categories.includes(selectedCategory)
-      ));
-    }
-  }, [courses, selectedCategory]);
+  // Enhanced category selection with smooth scroll
+  const handleCategorySelect = (categoryId) => {
+    setSelectedCategory(categoryId);
+    
+    // Scroll to the selected tab button smoothly
+    setTimeout(() => {
+      const selectedButton = document.querySelector(`button[data-category-id="${categoryId}"]`);
+      if (selectedButton) {
+        selectedButton.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center'
+        });
+      }
+    }, 100);
+  };
 
   const fetchData = async () => {
     try {

@@ -185,12 +185,16 @@ const Header = () => {
                 ))}
               </nav>
 
-              {/* Mobile Menu Button */}
+              {/* Premium Mobile Menu Button */}
               <button
-                className="lg:hidden"
+                className="lg:hidden p-2 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 hover:from-blue-100 hover:to-purple-100 border border-blue-100 transition-all duration-300 hover:shadow-md"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                {isMenuOpen ? (
+                  <X className="h-5 w-5 text-blue-600" />
+                ) : (
+                  <Menu className="h-5 w-5 text-blue-600" />
+                )}
               </button>
             </div>
           </div>

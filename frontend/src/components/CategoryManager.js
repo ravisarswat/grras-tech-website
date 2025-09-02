@@ -359,7 +359,7 @@ const CategoryManager = ({ content, updateContent }) => {
                         >
                           <option value="">Select course to add...</option>
                           {availableCourses
-                            .filter(course => !category.courses?.includes(course.slug))
+                            .filter(course => !getCoursesByCategory(categorySlug).some(c => c.slug === course.slug))
                             .map(course => (
                               <option key={course.slug} value={course.slug}>
                                 {course.title}

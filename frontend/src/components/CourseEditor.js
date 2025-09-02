@@ -21,9 +21,13 @@ const CourseEditor = ({
   onDelete, 
   onMove 
 }) => {
+  const { content } = useContent();
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeSection, setActiveSection] = useState('basic');
   const [slugError, setSlugError] = useState('');
+  
+  // Get dynamic categories from content
+  const dynamicCategories = content?.courseCategories || {};
 
   // Validate slug uniqueness
   const validateSlug = (newSlug) => {

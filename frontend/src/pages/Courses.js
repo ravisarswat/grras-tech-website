@@ -55,7 +55,15 @@ const Courses = () => {
     }, 100);
   };
 
-  const fetchData = async () => {
+  useEffect(() => {
+    if (selectedCategory === 'all') {
+      setFilteredCourses(courses);
+    } else {
+      setFilteredCourses(courses.filter(course => 
+        course.categories && course.categories.includes(selectedCategory)
+      ));
+    }
+  }, [courses, selectedCategory]);
     try {
       setLoading(true);
       

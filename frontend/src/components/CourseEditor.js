@@ -333,17 +333,29 @@ const CourseEditor = ({
                     className="form-input"
                   >
                     <option value="">Select category</option>
-                    <option value="certification">🔴 Red Hat Technologies</option>
-                    <option value="cloud">☁️ AWS Cloud Platform</option>
-                    <option value="container">⚙️ Kubernetes Ecosystem</option>
-                    <option value="devops">🔧 DevOps Engineering</option>
-                    <option value="security">🛡️ Cybersecurity & Ethical Hacking</option>
-                    <option value="programming">💻 Programming & Development</option>
-                    <option value="degree">🎓 Degree Programs</option>
-                    <option value="other">📚 Other</option>
+                    {Object.entries(dynamicCategories)
+                      .sort(([, a], [, b]) => (a.order || 999) - (b.order || 999))
+                      .map(([slug, category]) => (
+                        <option key={slug} value={slug}>
+                          {category.icon === 'server' && '🔴'} 
+                          {category.icon === 'cloud' && '☁️'} 
+                          {category.icon === 'container' && '⚙️'} 
+                          {category.icon === 'terminal' && '🔧'} 
+                          {category.icon === 'shield' && '🛡️'} 
+                          {category.icon === 'code' && '💻'} 
+                          {category.icon === 'graduation-cap' && '🎓'} 
+                          {!['server', 'cloud', 'container', 'terminal', 'shield', 'code', 'graduation-cap'].includes(category.icon) && '📚'} 
+                          &nbsp;{category.name}
+                        </option>
+                      ))}
+                    {Object.keys(dynamicCategories).length === 0 && (
+                      <option disabled>No categories available - Add categories first</option>
+                    )}
                   </select>
                   <div className="mt-1 text-xs text-gray-500">
-                    This determines which tab the course appears in on the Courses page
+                    {Object.keys(dynamicCategories).length > 0 
+                      ? "This determines which category the course belongs to" 
+                      : "Add categories in the Categories tab first"}
                   </div>
                 </div>
                 

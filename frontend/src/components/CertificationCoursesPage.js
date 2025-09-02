@@ -103,9 +103,6 @@ const CertificationCoursesPage = () => {
   };
 
   // Vendor-based course organization
-  // Dynamic course categories from admin panel + fallback hardcoded
-  const courseCategories = content?.courseCategories || {};
-  
   // Combine dynamic categories with hardcoded ones for backward compatibility
   const courseVendors = {
     // Dynamic categories from admin panel

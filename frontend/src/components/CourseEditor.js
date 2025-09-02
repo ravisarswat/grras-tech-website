@@ -16,6 +16,7 @@ const CourseEditor = ({
   course, 
   index, 
   courses,
+  categories = {},
   onUpdate, 
   onDelete, 
   onMove 

@@ -144,7 +144,7 @@ const Header = () => {
                                     <div className="flex items-center space-x-4">
                                       {/* Logo */}
                                       <div className="relative">
-                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 group-hover:from-blue-100 group-hover:to-purple-100 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
+                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 group-hover:from-orange-100 group-hover:to-red-100 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
                                           <img 
                                             src={track.logo} 
                                             alt={track.name}

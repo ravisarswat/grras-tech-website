@@ -106,8 +106,44 @@ const CategoryManager = ({ content, updateContent }) => {
       }
     };
 
+    // Auto-assign existing courses to categories based on keywords
+    const updatedCourses = courses.map(course => {
+      const courseTitle = (course.title || '').toLowerCase();
+      const courseDescription = (course.description || '').toLowerCase();
+      const courseContent = `${courseTitle} ${courseDescription}`;
+      
+      let assignedCategories = [];
+      
+      // Smart assignment based on course content
+      if (courseContent.includes('red hat') || courseContent.includes('rhcsa') || courseContent.includes('rhce')) {
+        assignedCategories.push('red-hat');
+      }
+      if (courseContent.includes('aws') || courseContent.includes('amazon') || courseContent.includes('cloud practitioner')) {
+        assignedCategories.push('aws');
+      }
+      if (courseContent.includes('kubernetes') || courseContent.includes('k8s') || courseContent.includes('cka')) {
+        assignedCategories.push('kubernetes');
+      }
+      if (courseContent.includes('devops') || courseContent.includes('jenkins') || courseContent.includes('ansible')) {
+        assignedCategories.push('devops');
+      }
+      if (courseContent.includes('cyber') || courseContent.includes('security') || courseContent.includes('ethical') || courseContent.includes('hacking')) {
+        assignedCategories.push('cybersecurity');
+      }
+      if (courseContent.includes('programming') || courseContent.includes('c++') || courseContent.includes('python') || courseContent.includes('java') || courseContent.includes('data science')) {
+        assignedCategories.push('programming');
+      }
+      
+      return {
+        ...course,
+        categories: assignedCategories.length > 0 ? assignedCategories : (course.categories || [])
+      };
+    });
+
+    // Update both categories and courses
     updateContent('courseCategories', existingCategories);
-    console.log('✅ Existing categories imported to admin panel');
+    updateContent('courses', updatedCourses);
+    console.log('✅ Existing categories imported and courses auto-assigned');
   };
 
   // Error states

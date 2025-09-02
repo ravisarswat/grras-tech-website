@@ -748,6 +748,23 @@ class BlogPostRequest(BaseModel):
     excerpt: Optional[str] = None
     featured_image: Optional[str] = None
     category: Optional[str] = "general"
+
+class CategoryRequest(BaseModel):
+    name: str
+    slug: str
+    description: str
+    icon: str = "folder"
+    color: str = "#3B82F6"
+    gradient: str = "from-blue-500 to-blue-600"
+    featured: bool = False
+    seo_title: Optional[str] = None
+    seo_description: Optional[str] = None
+    seo_keywords: Optional[str] = None
+
+class CategoryDeleteRequest(BaseModel):
+    category_slug: str
+    action: str = "unassign"  # "unassign" or "reassign"
+    target_category: Optional[str] = None
     tags: Optional[List[str]] = []
     author: Optional[str] = "GRRAS Team"
     published: Optional[bool] = True

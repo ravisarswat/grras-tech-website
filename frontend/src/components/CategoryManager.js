@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Trash2, Eye, EyeOff, Save, ChevronUp, ChevronDown, Tag, Palette, Globe } from 'lucide-react';
+import { Plus, Edit, Trash2, Eye, EyeOff, ChevronDown, ChevronUp } from 'lucide-react';
 
 const CategoryManager = ({ content, updateContent }) => {
   const [expandedCategory, setExpandedCategory] = useState(null);
@@ -7,254 +7,73 @@ const CategoryManager = ({ content, updateContent }) => {
   const categories = content?.courseCategories || {};
   const courses = content?.courses || [];
 
-  // Sort categories by order field (lowest first)
-  const sortedCategoryEntries = Object.entries(categories).sort(([, a], [, b]) => {
+  // Sort categories by order
+  const sortedCategories = Object.entries(categories).sort(([, a], [, b]) => {
     return (a.order || 999) - (b.order || 999);
   });
 
-  // Enhanced debugging
-  console.log('🔍 CategoryManager DEBUG:');
-  console.log('   - content:', content);
-  console.log('   - content type:', typeof content);
-  console.log('   - content keys:', content ? Object.keys(content) : 'null');
-  console.log('   - courseCategories:', content?.courseCategories);
-  console.log('   - categories count:', Object.keys(categories).length);
-  console.log('   - categories data:', categories);
-  console.log('   - courses count:', courses.length);
-
-  // Auto-import existing categories if admin panel is empty
-  React.useEffect(() => {
-    if (content && Object.keys(categories).length === 0) {
-      console.log('🔄 Auto-importing existing categories to admin panel...');
-      importExistingCategories();
-    }
-  }, [content]);
-
-  const importExistingCategories = () => {
-    const existingCategories = {
-      "red-hat": {
-        name: 'Red Hat Technologies',
-        slug: 'red-hat',
-        description: 'Industry-leading Linux and OpenShift certifications',
-        icon: 'server',
-        color: '#EE0000',
-        gradient: 'from-red-500 to-red-700',
-        featured: true,
-        visible: true,
-        order: 1,
-        seo: { title: 'Red Hat Certification Training', description: 'Red Hat training courses', keywords: 'red hat, rhcsa, rhce' }
-      },
-      "aws": {
-        name: 'AWS Cloud Platform',
-        slug: 'aws',
-        description: 'Amazon Web Services cloud computing certifications',
-        icon: 'cloud',
-        color: '#FF9900',
-        gradient: 'from-orange-400 to-orange-600',
-        featured: true,
-        visible: true,
-        order: 2,
-        seo: { title: 'AWS Cloud Training', description: 'AWS certification courses', keywords: 'aws, cloud, certification' }
-      },
-      "kubernetes": {
-        name: 'Kubernetes Ecosystem',
-        slug: 'kubernetes',
-        description: 'Container orchestration and cloud-native technologies',
-        icon: 'container',
-        color: '#326CE5',
-        gradient: 'from-blue-500 to-blue-700',
-        featured: true,
-        visible: true,
-        order: 3,
-        seo: { title: 'Kubernetes Training', description: 'Kubernetes certification', keywords: 'kubernetes, container, cka' }
-      },
-      "devops": {
-        name: 'DevOps Engineering',
-        slug: 'devops',
-        description: 'DevOps practices, CI/CD pipelines, automation',
-        icon: 'terminal',
-        color: '#10B981',
-        gradient: 'from-green-500 to-green-700',
-        featured: true,
-        visible: true,
-        order: 4,
-        seo: { title: 'DevOps Training', description: 'DevOps courses', keywords: 'devops, jenkins, ansible' }
-      },
-      "cybersecurity": {
-        name: 'Cybersecurity & Ethical Hacking',
-        slug: 'cybersecurity',
-        description: 'Ethical hacking, penetration testing, security analysis',
-        icon: 'shield',
-        color: '#8B5CF6',
-        gradient: 'from-purple-500 to-purple-700',
-        featured: true,
-        visible: true,
-        order: 5,
-        seo: { title: 'Cybersecurity Training', description: 'Ethical hacking courses', keywords: 'cybersecurity, ethical hacking' }
-      },
-      "programming": {
-        name: 'Programming & Development',
-        slug: 'programming',
-        description: 'Programming languages, software development',
-        icon: 'code',
-        color: '#6366F1',
-        gradient: 'from-indigo-500 to-indigo-700',
-        featured: true,
-        visible: true,
-        order: 6,
-        seo: { title: 'Programming Training', description: 'Programming courses', keywords: 'programming, c++, python' }
-      }
-    };
-
-    // Auto-assign existing courses to categories based on keywords
-    const updatedCourses = courses.map(course => {
-      const courseTitle = (course.title || '').toLowerCase();
-      const courseDescription = (course.description || '').toLowerCase();
-      const courseContent = `${courseTitle} ${courseDescription}`;
-      
-      let assignedCategories = [];
-      
-      // Smart assignment based on course content
-      if (courseContent.includes('red hat') || courseContent.includes('rhcsa') || courseContent.includes('rhce')) {
-        assignedCategories.push('red-hat');
-      }
-      if (courseContent.includes('aws') || courseContent.includes('amazon') || courseContent.includes('cloud practitioner')) {
-        assignedCategories.push('aws');
-      }
-      if (courseContent.includes('kubernetes') || courseContent.includes('k8s') || courseContent.includes('cka')) {
-        assignedCategories.push('kubernetes');
-      }
-      if (courseContent.includes('devops') || courseContent.includes('jenkins') || courseContent.includes('ansible')) {
-        assignedCategories.push('devops');
-      }
-      if (courseContent.includes('cyber') || courseContent.includes('security') || courseContent.includes('ethical') || courseContent.includes('hacking')) {
-        assignedCategories.push('cybersecurity');
-      }
-      if (courseContent.includes('programming') || courseContent.includes('c++') || courseContent.includes('python') || courseContent.includes('java') || courseContent.includes('data science')) {
-        assignedCategories.push('programming');
-      }
-      
-      return {
-        ...course,
-        categories: assignedCategories.length > 0 ? assignedCategories : (course.categories || [])
-      };
-    });
-
-    // Update both categories and courses
-    updateContent('courseCategories', existingCategories);
-    updateContent('courses', updatedCourses);
-    console.log('✅ Existing categories imported and courses auto-assigned');
-  };
-
-  // Error states
-  if (!content) {
-    console.warn('❌ CategoryManager: Content is null/undefined');
-    return <div>Error: Content not loaded</div>;
-  }
-  
-  if (!content.courseCategories) {
-    console.warn('❌ CategoryManager: content.courseCategories is missing');
-    return <div>Error: courseCategories missing from content</div>;
-  }
-
   const addCategory = () => {
     const timestamp = Date.now();
-    
-    // Find the highest existing order and add 1
-    const existingOrders = Object.values(categories).map(cat => cat.order || 0);
-    const maxOrder = existingOrders.length > 0 ? Math.max(...existingOrders) : 0;
+    const maxOrder = Math.max(0, ...Object.values(categories).map(c => c.order || 0));
     
     const newCategory = {
       name: 'New Category',
-      slug: `new-category-${timestamp}`,
+      slug: `category-${timestamp}`,
       description: 'Category description',
       icon: 'folder',
       color: '#3B82F6',
-      gradient: 'from-blue-500 to-blue-600',
-      featured: false,
       visible: true,
-      order: maxOrder + 1, // Set order after existing categories
-      seo: {
-        title: '',
-        description: '',
-        keywords: ''
-      }
+      order: maxOrder + 1,
+      seo: { title: '', description: '', keywords: '' }
     };
     
-    const newCategories = {
+    updateContent('courseCategories', {
       ...categories,
       [newCategory.slug]: newCategory
-    };
-    
-    updateContent('courseCategories', newCategories);
+    });
   };
 
-  const updateCategory = (categorySlug, field, value) => {
+  const updateCategory = (slug, field, value) => {
+    updateContent('courseCategories', {
+      ...categories,
+      [slug]: { ...categories[slug], [field]: value }
+    });
+  };
+
+  const deleteCategory = (slug) => {
     const newCategories = { ...categories };
+    delete newCategories[slug];
     
-    if (field === 'slug' && value !== categorySlug) {
-      // Handle slug change by creating new entry and deleting old
-      newCategories[value] = { ...newCategories[categorySlug], slug: value };
-      delete newCategories[categorySlug];
-    } else {
-      newCategories[categorySlug] = { ...newCategories[categorySlug], [field]: value };
-    }
+    // Remove category from all courses
+    const updatedCourses = courses.map(course => ({
+      ...course,
+      categories: (course.categories || []).filter(cat => cat !== slug)
+    }));
     
     updateContent('courseCategories', newCategories);
+    updateContent('courses', updatedCourses);
   };
 
-  const updateCategorySEO = (categorySlug, field, value) => {
-    const newCategories = { ...categories };
-    newCategories[categorySlug] = {
-      ...newCategories[categorySlug],
-      seo: {
-        ...newCategories[categorySlug].seo,
-        [field]: value
-      }
-    };
-    updateContent('courseCategories', newCategories);
-  };
-
-  const deleteCategory = (categorySlug) => {
-    if (window.confirm('Are you sure you want to delete this category? This action cannot be undone.')) {
-      const newCategories = { ...categories };
-      delete newCategories[categorySlug];
-      updateContent('courseCategories', newCategories);
-    }
-  };
-
-  const toggleCategoryFeatured = (categorySlug) => {
-    const category = categories[categorySlug];
-    updateCategory(categorySlug, 'featured', !category.featured);
-  };
-
-  // Get courses assigned to a category
   const getCoursesByCategory = (categorySlug) => {
     return courses.filter(course => 
       course.categories && course.categories.includes(categorySlug)
     );
   };
 
-  const addCourseToCategory = (categorySlug, courseSlug) => {
-    // Find the course and add category to its categories array
+  const assignCourseToCategory = (categorySlug, courseSlug) => {
     const updatedCourses = courses.map(course => {
       if (course.slug === courseSlug) {
         const currentCategories = course.categories || [];
         if (!currentCategories.includes(categorySlug)) {
-          return {
-            ...course,
-            categories: [...currentCategories, categorySlug]
-          };
+          return { ...course, categories: [...currentCategories, categorySlug] };
         }
       }
       return course;
     });
-    
     updateContent('courses', updatedCourses);
   };
 
   const removeCourseFromCategory = (categorySlug, courseSlug) => {
-    // Find the course and remove category from its categories array
     const updatedCourses = courses.map(course => {
       if (course.slug === courseSlug && course.categories) {
         return {
@@ -264,247 +83,120 @@ const CategoryManager = ({ content, updateContent }) => {
       }
       return course;
     });
-    
     updateContent('courses', updatedCourses);
   };
-
-  // Safe check for available courses to prevent undefined errors
-  const availableCourses = courses.filter(course => 
-    course && course.visible !== false && course.slug && course.title
-  );
-
-  const iconOptions = [
-    'folder', 'code', 'server', 'shield', 'cloud', 'container', 
-    'graduation-cap', 'book-open', 'cpu', 'database', 'terminal', 'globe'
-  ];
-
-  const colorOptions = [
-    { name: 'Blue', value: '#3B82F6', gradient: 'from-blue-500 to-blue-600' },
-    { name: 'Red', value: '#EF4444', gradient: 'from-red-500 to-red-600' },
-    { name: 'Green', value: '#10B981', gradient: 'from-green-500 to-green-600' },
-    { name: 'Purple', value: '#8B5CF6', gradient: 'from-purple-500 to-purple-600' },
-    { name: 'Orange', value: '#F59E0B', gradient: 'from-orange-500 to-orange-600' },
-    { name: 'Indigo', value: '#6366F1', gradient: 'from-indigo-500 to-indigo-600' },
-    { name: 'Pink', value: '#EC4899', gradient: 'from-pink-500 to-pink-600' },
-    { name: 'Teal', value: '#14B8A6', gradient: 'from-teal-500 to-teal-600' }
-  ];
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-xl font-semibold text-gray-900">Course Categories</h2>
-          <p className="text-sm text-gray-600 mt-1">
-            Organize courses into categories for better discovery and navigation
-          </p>
-        </div>
+        <h2 className="text-2xl font-bold">Categories</h2>
         <button
           onClick={addCategory}
-          className="btn-primary flex items-center gap-2"
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2"
         >
           <Plus className="h-4 w-4" />
           Add Category
         </button>
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <div className="flex items-start gap-3">
-          <Tag className="h-5 w-5 text-blue-600 mt-0.5" />
-          <div>
-            <h4 className="text-blue-900 font-medium">Category Management</h4>
-            <p className="text-blue-800 text-sm mt-1">
-              Categories help organize courses and improve user experience. Featured categories 
-              will be prominently displayed on the homepage and course discovery sections.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {Object.keys(categories).length === 0 ? (
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center">
-          <Tag className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No Categories Yet</h3>
-          <p className="text-gray-600 mb-4">
-            Create your first course category to start organizing your courses.
-          </p>
+      {sortedCategories.length === 0 ? (
+        <div className="text-center py-12 bg-gray-50 rounded-lg">
+          <p className="text-gray-500 mb-4">No categories yet</p>
           <button
             onClick={addCategory}
-            className="btn-primary flex items-center gap-2 mx-auto"
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
           >
-            <Plus className="h-4 w-4" />
             Create First Category
           </button>
         </div>
       ) : (
         <div className="space-y-4">
-          {sortedCategoryEntries.map(([categorySlug, category]) => (
-            <div key={categorySlug} className="bg-white rounded-lg shadow-sm border border-gray-200">
-              {/* Category Header */}
-              <div className="p-4 border-b border-gray-100">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div 
-                      className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-medium"
-                      style={{ backgroundColor: category.color }}
-                    >
-                      {category.icon?.charAt(0)?.toUpperCase() || 'C'}
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-gray-900">{category.name}</h3>
-                      <p className="text-sm text-gray-500">
-                        {getCoursesByCategory(categorySlug).length} courses • {category.featured ? 'Featured' : 'Regular'}
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => toggleCategoryFeatured(categorySlug)}
-                      className={`p-2 rounded-lg ${
-                        category.featured 
-                          ? 'bg-yellow-100 text-yellow-600' 
-                          : 'bg-gray-100 text-gray-600'
-                      }`}
-                      title={category.featured ? 'Remove from featured' : 'Mark as featured'}
-                    >
-                      {category.featured ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
-                    </button>
-                    
-                    <button
-                      onClick={() => setExpandedCategory(
-                        expandedCategory === categorySlug ? null : categorySlug
-                      )}
-                      className="p-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200"
-                    >
-                      {expandedCategory === categorySlug ? 
-                        <ChevronUp className="h-4 w-4" /> : 
-                        <ChevronDown className="h-4 w-4" />
-                      }
-                    </button>
-                    
-                    <button
-                      onClick={() => deleteCategory(categorySlug)}
-                      className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  </div>
+          {sortedCategories.map(([slug, category]) => (
+            <div key={slug} className="bg-white border rounded-lg p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-4">
+                  <h3 className="text-lg font-semibold">{category.name}</h3>
+                  <span className="text-sm text-gray-500">
+                    {getCoursesByCategory(slug).length} courses
+                  </span>
+                  <span className={`px-2 py-1 rounded text-xs ${category.visible ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
+                    {category.visible ? 'Visible' : 'Hidden'}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => updateCategory(slug, 'visible', !category.visible)}
+                    className="p-2 hover:bg-gray-100 rounded"
+                  >
+                    {category.visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+                  </button>
+                  <button
+                    onClick={() => setExpandedCategory(expandedCategory === slug ? null : slug)}
+                    className="p-2 hover:bg-gray-100 rounded"
+                  >
+                    {expandedCategory === slug ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                  </button>
+                  <button
+                    onClick={() => deleteCategory(slug)}
+                    className="p-2 text-red-600 hover:bg-red-50 rounded"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
                 </div>
               </div>
 
-              {/* Category Details (Expandable) */}
-              {expandedCategory === categorySlug && (
-                <div className="p-6 space-y-6">
-                  {/* Basic Information */}
-                  <div className="grid md:grid-cols-3 gap-4">
+              {expandedCategory === slug && (
+                <div className="space-y-4 pt-4 border-t">
+                  <div className="grid grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Category Name
-                      </label>
+                      <label className="block text-sm font-medium mb-2">Name</label>
                       <input
                         type="text"
                         value={category.name}
-                        onChange={(e) => updateCategory(categorySlug, 'name', e.target.value)}
-                        className="form-input"
-                        placeholder="e.g., Cloud & DevOps"
+                        onChange={(e) => updateCategory(slug, 'name', e.target.value)}
+                        className="w-full border rounded p-2"
                       />
                     </div>
-                    
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        URL Slug
-                      </label>
+                      <label className="block text-sm font-medium mb-2">Slug</label>
                       <input
                         type="text"
                         value={category.slug}
-                        onChange={(e) => updateCategory(categorySlug, 'slug', e.target.value)}
-                        className="form-input"
-                        placeholder="e.g., cloud-devops"
+                        onChange={(e) => updateCategory(slug, 'slug', e.target.value)}
+                        className="w-full border rounded p-2"
                       />
                     </div>
-
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Display Order
-                      </label>
+                      <label className="block text-sm font-medium mb-2">Order</label>
                       <input
                         type="number"
-                        min="1"
                         value={category.order || 1}
-                        onChange={(e) => updateCategory(categorySlug, 'order', parseInt(e.target.value) || 1)}
-                        className="form-input"
-                        placeholder="1"
+                        onChange={(e) => updateCategory(slug, 'order', parseInt(e.target.value))}
+                        className="w-full border rounded p-2"
                       />
-                      <p className="text-xs text-gray-500 mt-1">Lower numbers appear first</p>
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Description
-                    </label>
+                    <label className="block text-sm font-medium mb-2">Description</label>
                     <textarea
                       value={category.description}
-                      onChange={(e) => updateCategory(categorySlug, 'description', e.target.value)}
-                      className="form-textarea"
-                      rows={3}
-                      placeholder="Describe what this category covers..."
+                      onChange={(e) => updateCategory(slug, 'description', e.target.value)}
+                      className="w-full border rounded p-2"
+                      rows="2"
                     />
                   </div>
 
-                  {/* Visual Settings */}
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Icon
-                      </label>
-                      <select
-                        value={category.icon}
-                        onChange={(e) => updateCategory(categorySlug, 'icon', e.target.value)}
-                        className="form-input"
-                      >
-                        {iconOptions.map(icon => (
-                          <option key={icon} value={icon}>{icon}</option>
-                        ))}
-                      </select>
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Color Theme
-                      </label>
-                      <div className="flex gap-2 flex-wrap">
-                        {colorOptions.map(color => (
-                          <button
-                            key={color.value}
-                            onClick={() => {
-                              updateCategory(categorySlug, 'color', color.value);
-                              updateCategory(categorySlug, 'gradient', color.gradient);
-                            }}
-                            className={`w-8 h-8 rounded-lg ${
-                              category.color === color.value ? 'ring-2 ring-gray-400' : ''
-                            }`}
-                            style={{ backgroundColor: color.value }}
-                            title={color.name}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Course Assignment */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Assigned Courses ({getCoursesByCategory(categorySlug).length})
+                    <label className="block text-sm font-medium mb-2">
+                      Assigned Courses ({getCoursesByCategory(slug).length})
                     </label>
-                    
                     <div className="space-y-2">
-                      {/* Current courses */}
-                      {getCoursesByCategory(categorySlug).map(course => (
-                        <div key={course.slug} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                      {getCoursesByCategory(slug).map(course => (
+                        <div key={course.slug} className="flex items-center justify-between bg-gray-50 p-3 rounded">
                           <span className="font-medium">{course.title}</span>
                           <button
-                            onClick={() => removeCourseFromCategory(categorySlug, course.slug)}
+                            onClick={() => removeCourseFromCategory(slug, course.slug)}
                             className="text-red-600 hover:text-red-700"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -512,77 +204,24 @@ const CategoryManager = ({ content, updateContent }) => {
                         </div>
                       ))}
                       
-                      {/* Add course dropdown */}
-                      <div className="flex gap-2">
-                        <select
-                          className="form-input flex-1"
-                          onChange={(e) => {
-                            if (e.target.value) {
-                              addCourseToCategory(categorySlug, e.target.value);
-                              e.target.value = '';
-                            }
-                          }}
-                        >
-                          <option value="">Select course to add...</option>
-                          {availableCourses
-                            .filter(course => !getCoursesByCategory(categorySlug).some(c => c.slug === course.slug))
-                            .map(course => (
-                              <option key={course.slug} value={course.slug}>
-                                {course.title}
-                              </option>
-                            ))
+                      <select
+                        onChange={(e) => {
+                          if (e.target.value) {
+                            assignCourseToCategory(slug, e.target.value);
+                            e.target.value = '';
                           }
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* SEO Settings */}
-                  <div className="border-t border-gray-200 pt-6">
-                    <h4 className="text-lg font-medium text-gray-900 mb-4 flex items-center gap-2">
-                      <Globe className="h-5 w-5" />
-                      SEO Settings
-                    </h4>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Meta Title
-                        </label>
-                        <input
-                          type="text"
-                          value={category.seo?.title || ''}
-                          onChange={(e) => updateCategorySEO(categorySlug, 'title', e.target.value)}
-                          className="form-input"
-                          placeholder="SEO title for this category page"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Meta Description
-                        </label>
-                        <textarea
-                          value={category.seo?.description || ''}
-                          onChange={(e) => updateCategorySEO(categorySlug, 'description', e.target.value)}
-                          className="form-textarea"
-                          rows={2}
-                          placeholder="Brief description for search engines"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Keywords
-                        </label>
-                        <input
-                          type="text"
-                          value={category.seo?.keywords || ''}
-                          onChange={(e) => updateCategorySEO(categorySlug, 'keywords', e.target.value)}
-                          className="form-input"
-                          placeholder="Comma-separated keywords"
-                        />
-                      </div>
+                        }}
+                        className="w-full border rounded p-2"
+                      >
+                        <option value="">Add a course...</option>
+                        {courses
+                          .filter(course => !getCoursesByCategory(slug).some(c => c.slug === course.slug))
+                          .map(course => (
+                            <option key={course.slug} value={course.slug}>
+                              {course.title}
+                            </option>
+                          ))}
+                      </select>
                     </div>
                   </div>
                 </div>

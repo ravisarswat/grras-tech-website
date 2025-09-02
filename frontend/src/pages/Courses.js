@@ -9,52 +9,102 @@ const API = `${BACKEND_URL}/api`;
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   useEffect(() => {
-    fetchCourses();
+    fetchData();
   }, []);
 
   useEffect(() => {
     if (selectedCategory === 'all') {
       setFilteredCourses(courses);
     } else {
+      // Filter courses by category slug
       setFilteredCourses(courses.filter(course => 
-        course.category === selectedCategory
+        course.categories && course.categories.includes(selectedCategory)
       ));
     }
   }, [courses, selectedCategory]);
 
-  const fetchCourses = async () => {
+  const fetchData = async () => {
     try {
-      const response = await axios.get(`${API}/courses`);
-      const coursesData = response.data.courses || [];
+      setLoading(true);
       
-      // Use ONLY CMS data - no static fallbacks
-      const coursesWithDefaults = coursesData.map(course => ({
+      // Fetch both courses and categories from CMS
+      const [coursesResponse, contentResponse] = await Promise.all([
+        axios.get(`${API}/courses`),
+        axios.get(`${API}/content`)
+      ]);
+      
+      // Get courses data
+      const coursesData = coursesResponse.data.courses || [];
+      
+      // Get categories data  
+      const contentData = contentResponse.data.content || {};
+      const categoriesData = contentData.courseCategories || {};
+      
+      // Process courses - completely dynamic
+      const processedCourses = coursesData.map(course => ({
         ...course,
         // Ensure required display fields have defaults
         oneLiner: course.oneLiner || course.tagline || 'Professional Training Course',
         overview: course.overview || course.description || '',
-        icon: course.icon || getCategoryIcon(course.category),
-        color: course.color || getCategoryColor(course.category),
         highlights: course.highlights || [],
         level: course.level || 'All Levels',
-        category: course.category || 'other'
+        categories: course.categories || [] // Array of category slugs
       }));
       
-      // Filter only visible courses and sort by order
-      const visibleCourses = coursesWithDefaults
+      // Filter visible courses and sort by order
+      const visibleCourses = processedCourses
         .filter(course => course.visible !== false)
         .sort((a, b) => (a.order || 999) - (b.order || 999));
       
+      // Build dynamic categories from CMS data
+      const dynamicCategories = [];
+      
+      // Add "All Courses" option
+      dynamicCategories.push({
+        id: 'all',
+        name: 'All Courses',
+        count: visibleCourses.length,
+        slug: 'all',
+        order: 0
+      });
+      
+      // Add categories from CMS
+      Object.entries(categoriesData)
+        .filter(([slug, category]) => category.visible !== false)
+        .sort(([, a], [, b]) => (a.order || 999) - (b.order || 999))
+        .forEach(([slug, category]) => {
+          const categoryCount = visibleCourses.filter(course => 
+            course.categories && course.categories.includes(slug)
+          ).length;
+          
+          // Only show categories that have courses
+          if (categoryCount > 0) {
+            dynamicCategories.push({
+              id: slug,
+              name: category.name,
+              count: categoryCount,
+              slug: slug,
+              order: category.order || 999,
+              icon: category.icon,
+              color: category.color
+            });
+          }
+        });
+      
       setCourses(visibleCourses);
+      setCategories(dynamicCategories);
       setFilteredCourses(visibleCourses);
+      
     } catch (error) {
-      console.error('Error fetching courses:', error);
+      console.error('Error fetching data:', error);
       setCourses([]);
+      setCategories([{ id: 'all', name: 'All Courses', count: 0, slug: 'all', order: 0 }]);
       setFilteredCourses([]);
     } finally {
       setLoading(false);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Cloud, 
@@ -10,14 +10,19 @@ import {
   ArrowRight,
   BookOpen,
   Users,
-  Target
+  Target,
+  Folder,
+  Cpu,
+  Database,
+  Terminal,
+  Globe
 } from 'lucide-react';
-import { useContent } from '../contexts/ContentContext';
 
 const CourseCategoriesGrid = () => {
-  const { content } = useContent();
-  const courseCategories = content?.courseCategories || {};
-  const courses = content?.courses || [];
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
   // Icon mapping for categories
   const iconMap = {
@@ -27,20 +32,57 @@ const CourseCategoriesGrid = () => {
     'shield': Shield,
     'code': Code,
     'graduation-cap': GraduationCap,
-    'folder': BookOpen,
+    'folder': Folder,
     'book-open': BookOpen,
-    'cpu': Server,
-    'database': Server,
-    'terminal': Code,
-    'globe': Server
+    'cpu': Cpu,
+    'database': Database,
+    'terminal': Terminal,
+    'globe': Globe
   };
 
-  // Get featured categories
-  const featuredCategories = Object.entries(courseCategories)
-    .filter(([_, category]) => category.featured)
-    .slice(0, 6);
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
-  if (featuredCategories.length === 0) {
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/categories`);
+      if (response.ok) {
+        const data = await response.json();
+        setCategories(data.categories || []);
+      } else {
+        console.error('Failed to fetch categories');
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Only show categories with courses
+  const visibleCategories = categories.filter(category => 
+    category.course_count > 0 && category.featured
+  ).slice(0, 6);
+
+  if (loading) {
+    return (
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Explore by Category
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Loading categories...
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (visibleCategories.length === 0) {
     return null;
   }
 
@@ -59,46 +101,15 @@ const CourseCategoriesGrid = () => {
 
         {/* Categories Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {featuredCategories.map(([categorySlug, category]) => {
+          {visibleCategories.map((category) => {
             const IconComponent = iconMap[category.icon] || BookOpen;
-            const categoryCoursesCount = category.courses?.length || 0;
             
-            // Map category slugs to course tabs
-            let courseTabLink = '/courses';
-            switch(categorySlug) {
-              case 'cloud-devops':
-              case 'devops':
-                courseTabLink = '/courses?tab=devops';
-                break;
-              case 'linux-redhat':
-              case 'redhat':
-                courseTabLink = '/courses?tab=redhat';
-                break;
-              case 'kubernetes-containers':
-              case 'kubernetes':
-                courseTabLink = '/courses?tab=kubernetes';
-                break;
-              case 'cybersecurity':
-              case 'security':
-                courseTabLink = '/courses?tab=cybersecurity';
-                break;
-              case 'degree-programs':
-              case 'degree':
-                courseTabLink = '/courses?tab=degree';
-                break;
-              case 'programming':
-                courseTabLink = '/courses?tab=programming';
-                break;
-              case 'aws':
-                courseTabLink = '/courses?tab=aws';
-                break;
-              default:
-                courseTabLink = '/courses?tab=general';
-            }
+            // Create proper course link
+            const courseTabLink = `/courses/${category.slug}`;
             
             return (
               <Link
-                key={categorySlug}
+                key={category.slug}
                 to={courseTabLink}
                 className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
               >
@@ -116,7 +127,7 @@ const CourseCategoriesGrid = () => {
                     </h3>
                     <p className="text-sm text-gray-500 flex items-center gap-1">
                       <BookOpen className="h-4 w-4" />
-                      {categoryCoursesCount} course{categoryCoursesCount !== 1 ? 's' : ''}
+                      {category.course_count} course{category.course_count !== 1 ? 's' : ''}
                     </p>
                   </div>
                 </div>
@@ -125,29 +136,6 @@ const CourseCategoriesGrid = () => {
                 <p className="text-gray-600 mb-6 leading-relaxed">
                   {category.description}
                 </p>
-
-                {/* Course Previews */}
-                {category.courses && category.courses.length > 0 && (
-                  <div className="mb-6">
-                    <div className="space-y-2">
-                      {category.courses.slice(0, 3).map((courseSlug) => {
-                        const course = courses.find(c => c.slug === courseSlug);
-                        return course ? (
-                          <div key={courseSlug} className="flex items-center text-sm text-gray-600">
-                            <div className="w-2 h-2 bg-red-500 rounded-full mr-3"></div>
-                            <span>{course.title}</span>
-                          </div>
-                        ) : null;
-                      })}
-                      {category.courses.length > 3 && (
-                        <div className="flex items-center text-sm text-gray-400">
-                          <div className="w-2 h-2 bg-gray-300 rounded-full mr-3"></div>
-                          <span>+{category.courses.length - 3} more courses</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
 
                 {/* View Category Link */}
                 <div className="flex items-center justify-between">

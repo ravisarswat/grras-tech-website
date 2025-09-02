@@ -133,6 +133,18 @@ const Header = () => {
 
   const isActivePath = (path) => location.pathname === path;
 
+  // Check if we're on admin page
+  const isAdminPage = location.pathname.startsWith('/admin');
+
+  // Filter navigation items for admin pages (hide dropdown)
+  const filteredNavigationItems = isAdminPage 
+    ? navigationItems.filter(item => !item.hasDropdown)
+    : navigationItems;
+
+  const filteredMobileNavigationItems = isAdminPage 
+    ? mobileNavigationItems.filter(item => !item.hasDropdown)
+    : mobileNavigationItems;
+
   return (
     <header className="bg-white shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

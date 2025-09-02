@@ -33,22 +33,82 @@ const Header = () => {
     };
   }, [isMenuOpen]);
 
-  // Get dynamic categories from CMS
+  // Get dynamic categories from CMS with safe fallback
   const dynamicCategories = content?.courseCategories || {};
   
-  // Build technology tracks from dynamic categories
-  const technologyTracks = Object.entries(dynamicCategories)
-    .filter(([slug, category]) => category.visible !== false)
-    .sort(([, a], [, b]) => (a.order || 999) - (b.order || 999))
-    .map(([slug, category]) => ({
-      id: slug,
-      name: category.name,
-      path: `/courses?tab=${slug}`,
-      logo: getLogoForCategory(category.icon || 'default'),
-      bgColor: getBgColorForIcon(category.icon),
-      textColor: getTextColorForIcon(category.icon),
-      hoverColor: getHoverColorForIcon(category.icon)
-    }));
+  // Build technology tracks from dynamic categories with fallback to existing hardcoded
+  const technologyTracks = Object.keys(dynamicCategories).length > 0 
+    ? Object.entries(dynamicCategories)
+        .filter(([slug, category]) => category.visible !== false)
+        .sort(([, a], [, b]) => (a.order || 999) - (b.order || 999))
+        .map(([slug, category]) => ({
+          id: slug,
+          name: category.name,
+          path: `/courses?tab=${slug}`,
+          logo: getLogoForCategory(category.icon || 'default'),
+          bgColor: getBgColorForIcon(category.icon),
+          textColor: getTextColorForIcon(category.icon),
+          hoverColor: getHoverColorForIcon(category.icon)
+        }))
+    : getDefaultTechnologyTracks(); // Fallback to hardcoded if no dynamic categories
+
+  // Fallback hardcoded categories (to prevent white screen)
+  const getDefaultTechnologyTracks = () => [
+    {
+      id: 'redhat',
+      name: 'Red Hat Technologies',
+      path: '/courses?tab=redhat',
+      logo: 'https://logos-world.net/wp-content/uploads/2021/02/Red-Hat-Logo.png',
+      bgColor: 'bg-red-50',
+      textColor: 'text-red-700',
+      hoverColor: 'hover:bg-red-100'
+    },
+    {
+      id: 'aws',
+      name: 'AWS Cloud Platform',
+      path: '/courses?tab=aws',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg',
+      bgColor: 'bg-orange-50',
+      textColor: 'text-orange-700',
+      hoverColor: 'hover:bg-orange-100'
+    },
+    {
+      id: 'kubernetes',
+      name: 'Kubernetes Ecosystem',
+      path: '/courses?tab=kubernetes',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg',
+      bgColor: 'bg-blue-50',
+      textColor: 'text-blue-700',
+      hoverColor: 'hover:bg-blue-100'
+    },
+    {
+      id: 'devops',
+      name: 'DevOps Engineering',
+      path: '/courses?tab=devops',
+      logo: 'https://www.vectorlogo.zone/logos/jenkins/jenkins-icon.svg',
+      bgColor: 'bg-green-50',
+      textColor: 'text-green-700',
+      hoverColor: 'hover:bg-green-100'
+    },
+    {
+      id: 'cybersecurity',
+      name: 'Cybersecurity & Ethical Hacking',
+      path: '/courses?tab=cybersecurity',
+      logo: 'https://www.vectorlogo.zone/logos/kalilinux/kalilinux-icon.svg',
+      bgColor: 'bg-purple-50',
+      textColor: 'text-purple-700',
+      hoverColor: 'hover:bg-purple-100'
+    },
+    {
+      id: 'programming',
+      name: 'Programming & Development',
+      path: '/courses?tab=programming',
+      logo: 'https://www.vectorlogo.zone/logos/python/python-icon.svg',
+      bgColor: 'bg-indigo-50',
+      textColor: 'text-indigo-700',
+      hoverColor: 'hover:bg-indigo-100'
+    }
+  ];
 
   // Helper functions for styling based on category icon
   const getLogoForCategory = (icon) => {

@@ -52,8 +52,33 @@ const AdminContent = () => {
   useEffect(() => {
     if (isAuthenticated) {
       loadContent();
+      loadCategories();
     }
   }, [isAuthenticated]);
+
+  const loadCategories = async () => {
+    try {
+      const token = localStorage.getItem('admin_token');
+      const response = await axios.get(`${API}/admin/categories`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      
+      if (response.data && response.data.categories) {
+        // Convert array to object for easier lookup
+        const categoriesObj = {};
+        response.data.categories.forEach(cat => {
+          categoriesObj[cat.slug] = cat;
+        });
+        setCategories(categoriesObj);
+      }
+    } catch (error) {
+      console.error('Error loading categories:', error);
+      // Fallback to content categories if API fails
+      if (content && content.courseCategories) {
+        setCategories(content.courseCategories);
+      }
+    }
+  };
 
   const checkAuthentication = async () => {
     try {

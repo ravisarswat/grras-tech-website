@@ -236,8 +236,8 @@ class CategorySystemTester:
         try:
             # Test admin categories without token
             async with self.session.get(f"{self.api_base}/admin/categories") as response:
-                if response.status == 401:
-                    logger.info("✅ Admin categories endpoint properly requires authentication")
+                if response.status in [401, 403]:  # Accept both 401 (Unauthorized) and 403 (Forbidden)
+                    logger.info(f"✅ Admin categories endpoint properly requires authentication (status: {response.status})")
                     
                     # Test category creation without token
                     test_category = {
@@ -247,15 +247,15 @@ class CategorySystemTester:
                     }
                     
                     async with self.session.post(f"{self.api_base}/admin/categories", json=test_category) as create_response:
-                        if create_response.status == 401:
-                            logger.info("✅ Category creation properly requires authentication")
+                        if create_response.status in [401, 403]:  # Accept both 401 and 403
+                            logger.info(f"✅ Category creation properly requires authentication (status: {create_response.status})")
                             self.test_results["admin_authentication_required"] = True
                             return True
                         else:
-                            self.errors.append("Category creation should require authentication")
+                            self.errors.append(f"Category creation should require authentication (got status: {create_response.status})")
                             return False
                 else:
-                    self.errors.append("Admin categories endpoint should require authentication")
+                    self.errors.append(f"Admin categories endpoint should require authentication (got status: {response.status})")
                     return False
         except Exception as e:
             self.errors.append(f"Admin authentication test failed: {str(e)}")

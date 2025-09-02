@@ -92,13 +92,16 @@ const Courses = () => {
     return colors[category] || 'from-gray-500 to-gray-600';
   };
 
-  const categories = [
+  // Create dynamic category tabs from fetched data
+  const categoryTabs = [
     { id: 'all', name: 'All Courses', count: courses.length },
-    { id: 'degree', name: 'Degree Programs', count: courses.filter(c => c.category === 'degree').length },
-    { id: 'programming', name: 'Programming', count: courses.filter(c => c.category === 'programming').length },
-    { id: 'cloud', name: 'Cloud & DevOps', count: courses.filter(c => c.category === 'cloud').length },
-    { id: 'certification', name: 'Certifications', count: courses.filter(c => c.category === 'certification').length },
-    { id: 'security', name: 'Security', count: courses.filter(c => c.category === 'security').length }
+    ...categoryList.map(category => ({
+      id: category.slug,
+      name: category.name,
+      count: courses.filter(c => c.categories && c.categories.includes(category.slug)).length,
+      color: category.color,
+      gradient: category.gradient
+    }))
   ];
 
   if (loading) {

@@ -329,25 +329,22 @@ const CategoryManager = ({ content, updateContent }) => {
                   {/* Course Assignment */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Assigned Courses ({category.courses?.length || 0})
+                      Assigned Courses ({getCoursesByCategory(categorySlug).length})
                     </label>
                     
                     <div className="space-y-2">
                       {/* Current courses */}
-                      {category.courses?.map(courseSlug => {
-                        const course = courses.find(c => c.slug === courseSlug);
-                        return course ? (
-                          <div key={courseSlug} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
-                            <span className="font-medium">{course.title}</span>
-                            <button
-                              onClick={() => removeCourseFromCategory(categorySlug, courseSlug)}
-                              className="text-red-600 hover:text-red-700"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </button>
-                          </div>
-                        ) : null;
-                      })}
+                      {getCoursesByCategory(categorySlug).map(course => (
+                        <div key={course.slug} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                          <span className="font-medium">{course.title}</span>
+                          <button
+                            onClick={() => removeCourseFromCategory(categorySlug, course.slug)}
+                            className="text-red-600 hover:text-red-700"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
+                      ))}
                       
                       {/* Add course dropdown */}
                       <div className="flex gap-2">

@@ -253,20 +253,27 @@ const Courses = () => {
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredCourses.map((course) => (
-                <div key={course.slug} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow border border-gray-100 overflow-hidden">
+              {filteredCourses.map((course, index) => (
+                <div key={course.slug} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden hover:border-blue-200 transform hover:scale-[1.02]">
+                  {/* Header with gradient */}
+                  <div className="h-2 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+                  
                   <div className="p-6">
                     <div className="flex items-start justify-between mb-4">
-                      <div className="flex-1">
-                        <h3 className="text-xl font-bold text-gray-900 mb-2 leading-tight">
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-blue-700 transition-colors duration-300">
                           {course.title}
                         </h3>
-                        <p className="text-gray-600 text-sm leading-relaxed">
+                        <p className="text-gray-600 text-sm leading-relaxed line-clamp-2">
                           {course.oneLiner}
                         </p>
                       </div>
                       <div className="ml-4 flex-shrink-0">
-                        <span className="inline-block text-2xl">{course.icon || '📚'}</span>
+                        <div className="w-12 h-12 bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl flex items-center justify-center group-hover:from-blue-100 group-hover:to-purple-100 transition-all duration-300">
+                          <span className="text-2xl group-hover:scale-110 transition-transform duration-300">
+                            {course.icon || '📚'}
+                          </span>
+                        </div>
                       </div>
                     </div>
 

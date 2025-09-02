@@ -131,7 +131,7 @@ const Header = () => {
                           
                           {/* Full Categories Grid */}
                           <div className="p-6 max-h-96 overflow-y-auto">
-                          <div className="grid grid-cols-1 gap-2">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                             {technologyTracks.length > 0 ? (
                               technologyTracks.map((track, index) => (
                                 <Link

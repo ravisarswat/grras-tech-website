@@ -78,10 +78,17 @@ async def cleanup_all_courses():
                     logging.info(f"🧹 Cleared courses from category: {category.get('name', category_key)}")
         
         if 'learningPaths' in content_doc:
-            for path_key, path in content_doc['learningPaths'].items():
-                if 'courses' in path:
-                    path['courses'] = []
-                    logging.info(f"🧹 Cleared courses from learning path: {path.get('title', path_key)}")
+            learning_paths = content_doc['learningPaths']
+            if isinstance(learning_paths, dict):
+                for path_key, path in learning_paths.items():
+                    if isinstance(path, dict) and 'courses' in path:
+                        path['courses'] = []
+                        logging.info(f"🧹 Cleared courses from learning path: {path.get('title', path_key)}")
+            elif isinstance(learning_paths, list):
+                for path in learning_paths:
+                    if isinstance(path, dict) and 'courses' in path:
+                        path['courses'] = []
+                        logging.info(f"🧹 Cleared courses from learning path: {path.get('title', 'Unknown')}")
         
         # Add cleanup metadata
         from datetime import datetime, timezone

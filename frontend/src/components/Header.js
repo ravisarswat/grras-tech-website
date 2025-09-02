@@ -198,15 +198,22 @@ const Header = () => {
                             )}
                           </div>
                           
-                          <div className="mt-6 pt-4 border-t border-gray-100">
-                            <Link
-                              to="/courses"
-                              className="flex items-center justify-between text-blue-600 hover:text-blue-700 font-medium"
-                              onClick={() => setIsCoursesOpen(false)}
-                            >
-                              <span>Browse All Courses</span>
-                              <ArrowRight className="h-4 w-4" />
-                            </Link>
+                          {/* Footer */}
+                          <div className="mt-6 pt-4 border-t border-gray-200 bg-gradient-to-r from-gray-50 to-blue-50 -mx-6 px-6 py-4">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="text-sm font-medium text-gray-700">Explore All Courses</p>
+                                <p className="text-xs text-gray-500">16+ professional certifications</p>
+                              </div>
+                              <Link
+                                to="/courses"
+                                className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                                onClick={() => setIsCoursesOpen(false)}
+                              >
+                                <span>View All</span>
+                                <ArrowRight className="ml-2 h-4 w-4" />
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </div>

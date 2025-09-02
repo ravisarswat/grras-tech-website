@@ -279,7 +279,7 @@ const Courses = () => {
 
                     {/* Course Meta */}
                     <div className="flex items-center space-x-4 mb-4">
-                      <div className="flex items-center px-3 py-1 bg-blue-50 rounded-full text-sm text-blue-700 font-medium">
+                      <div className="flex items-center px-3 py-1 bg-orange-50 rounded-full text-sm text-orange-700 font-medium">
                         <Clock className="h-3 w-3 mr-1" />
                         <span>{course.duration || 'Self-paced'}</span>
                       </div>

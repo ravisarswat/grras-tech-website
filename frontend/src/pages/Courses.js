@@ -209,7 +209,7 @@ const Courses = () => {
                       <span className={`text-xs ${
                         selectedCategory === category.id 
                           ? 'text-white/80' 
-                          : 'text-gray-500 group-hover:text-blue-600'
+                          : 'text-gray-500 group-hover:text-orange-600'
                       }`}>
                         {category.count} course{category.count !== 1 ? 's' : ''}
                       </span>

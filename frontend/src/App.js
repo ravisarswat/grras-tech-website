@@ -29,10 +29,15 @@ import NotFound from './pages/NotFound';
 
 function AppContent() {
   useScrollToTop();
+  const location = useLocation();
+  
+  // Check if we're on admin page
+  const isAdminPage = location.pathname.startsWith('/admin');
   
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
+      {/* Only show Header if NOT on admin page */}
+      {!isAdminPage && <Header />}
       <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />

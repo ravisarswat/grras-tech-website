@@ -45,7 +45,6 @@ db = client[os.environ.get('DB_NAME', 'grras_database')]
 
 # Initialize Content Manager - MONGODB ONLY (No JSON fallbacks during normal operation)
 content_manager = ContentManager(
-    storage_type="mongo",  # FORCED MongoDB - single source of truth
     mongo_client=client,   # Always provide MongoDB client
     db_name=os.environ.get('DB_NAME', 'grras_database')
 )

@@ -1,0 +1,28 @@
+{
+  "timestamp": "2025-09-02T08:41:56.380490",
+  "backend_url": "https://grras-content-sync.preview.emergentagent.com",
+  "test_focus": "GRRAS Category System After Data Sync Fix",
+  "total_tests": 10,
+  "passed_tests": 9,
+  "failed_tests": 1,
+  "success_rate": "90.0%",
+  "test_results": {
+    "api_health": true,
+    "categories_8_tracks": true,
+    "categories_admin_endpoint": true,
+    "category_creation": true,
+    "category_deletion": true,
+    "admin_authentication": true,
+    "courses_endpoint": true,
+    "individual_course_access": true,
+    "cms_content_access": false,
+    "data_integrity": true
+  },
+  "errors": [
+    "Missing CMS sections: ['branding', 'pages']"
+  ],
+  "critical_issues": [],
+  "category_count": 8,
+  "course_count": 10,
+  "data_sync_fix_verified": true
+}

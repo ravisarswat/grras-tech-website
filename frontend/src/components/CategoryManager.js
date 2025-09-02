@@ -7,6 +7,113 @@ const CategoryManager = ({ content, updateContent }) => {
   const categories = content?.courseCategories || {};
   const courses = content?.courses || [];
 
+  // Import existing hardcoded categories if not present in CMS
+  const ensureExistingCategories = () => {
+    const existingHardcodedCategories = {
+      "red-hat": {
+        name: 'Red Hat Technologies',
+        slug: 'red-hat',
+        description: 'Industry-leading Linux and OpenShift certifications',
+        icon: 'server',
+        color: '#EE0000',
+        gradient: 'from-red-500 to-red-700',
+        featured: true,
+        visible: true,
+        order: 1,
+        seo: { title: 'Red Hat Certification Training', description: 'Red Hat training courses', keywords: 'red hat, rhcsa, rhce' }
+      },
+      "aws": {
+        name: 'AWS Cloud Platform',
+        slug: 'aws',
+        description: 'Amazon Web Services cloud computing certifications',
+        icon: 'cloud',
+        color: '#FF9900',
+        gradient: 'from-orange-400 to-orange-600',
+        featured: true,
+        visible: true,
+        order: 2,
+        seo: { title: 'AWS Cloud Training', description: 'AWS certification courses', keywords: 'aws, cloud, certification' }
+      },
+      "kubernetes": {
+        name: 'Kubernetes Ecosystem',
+        slug: 'kubernetes',
+        description: 'Container orchestration and cloud-native technologies',
+        icon: 'container',
+        color: '#326CE5',
+        gradient: 'from-blue-500 to-blue-700',
+        featured: true,
+        visible: true,
+        order: 3,
+        seo: { title: 'Kubernetes Training', description: 'Kubernetes certification', keywords: 'kubernetes, container, cka' }
+      },
+      "devops": {
+        name: 'DevOps Engineering',
+        slug: 'devops',
+        description: 'DevOps practices, CI/CD pipelines, automation',
+        icon: 'terminal',
+        color: '#10B981',
+        gradient: 'from-green-500 to-green-700',
+        featured: true,
+        visible: true,
+        order: 4,
+        seo: { title: 'DevOps Training', description: 'DevOps courses', keywords: 'devops, jenkins, ansible' }
+      },
+      "cybersecurity": {
+        name: 'Cybersecurity & Ethical Hacking',
+        slug: 'cybersecurity',
+        description: 'Ethical hacking, penetration testing, security analysis',
+        icon: 'shield',
+        color: '#8B5CF6',
+        gradient: 'from-purple-500 to-purple-700',
+        featured: true,
+        visible: true,
+        order: 5,
+        seo: { title: 'Cybersecurity Training', description: 'Ethical hacking courses', keywords: 'cybersecurity, ethical hacking' }
+      },
+      "programming": {
+        name: 'Programming & Development',
+        slug: 'programming',
+        description: 'Programming languages, software development',
+        icon: 'code',
+        color: '#6366F1',
+        gradient: 'from-indigo-500 to-indigo-700',
+        featured: true,
+        visible: true,
+        order: 6,
+        seo: { title: 'Programming Training', description: 'Programming courses', keywords: 'programming, c++, python' }
+      },
+      "degree-programs": {
+        name: 'Degree Programs',
+        slug: 'degree-programs',
+        description: 'Industry-integrated degree programs',
+        icon: 'graduation-cap',
+        color: '#F59E0B',
+        gradient: 'from-amber-500 to-amber-700',
+        featured: true,
+        visible: true,
+        order: 7,
+        seo: { title: 'Degree Programs', description: 'BCA, MCA degrees', keywords: 'bca, mca, degree' }
+      }
+    };
+
+    // Check if we need to import existing categories
+    const hasExistingCategories = Object.keys(existingHardcodedCategories).some(slug => categories[slug]);
+    
+    if (!hasExistingCategories && Object.keys(categories).length <= 1) {
+      // Import existing categories
+      const mergedCategories = { ...existingHardcodedCategories, ...categories };
+      updateContent('courseCategories', mergedCategories);
+      console.log('🔄 Imported existing hardcoded categories to admin panel');
+    }
+  };
+
+  // Auto-import on component mount if needed
+  React.useEffect(() => {
+    if (content && Object.keys(categories).length <= 1) {
+      ensureExistingCategories();
+    }
+  }, [content]);
+
   // Sort categories by order field (lowest first)
   const sortedCategoryEntries = Object.entries(categories).sort(([, a], [, b]) => {
     return (a.order || 999) - (b.order || 999);

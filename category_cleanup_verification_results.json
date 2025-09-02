@@ -1,0 +1,43 @@
+{
+  "timestamp": "2025-09-02T14:25:59.298663",
+  "backend_url": "https://category-admin-5.preview.emergentagent.com",
+  "test_type": "Category Cleanup Verification",
+  "total_tests": 6,
+  "passed_tests": 5,
+  "failed_tests": 1,
+  "success_rate": "83.3%",
+  "test_results": {
+    "server_health": true,
+    "database_connection": true,
+    "category_cleanup_verified": true,
+    "courses_integrity": true,
+    "admin_authentication": true,
+    "content_structure_intact": false,
+    "ready_for_fresh_categories": true
+  },
+  "verification_data": {
+    "courseCategories": "Empty (cleanup successful)",
+    "courses_count": 8,
+    "valid_courses": 8,
+    "sample_courses": [
+      "DevOps Training",
+      "BCA Degree Program",
+      "Red Hat Certifications",
+      "Data Science & Machine Learning",
+      "Java & Salesforce"
+    ],
+    "content_sections": {
+      "institute": "Present (10 items)",
+      "branding": "Present (3 items)",
+      "pages": "Present (4 items)"
+    },
+    "missing_sections": [
+      "learningPaths"
+    ]
+  },
+  "errors": [
+    "Missing content sections: ['learningPaths']"
+  ],
+  "critical_issues": [],
+  "cleanup_status": "CLEANUP SUCCESSFUL - System ready for fresh categories"
+}

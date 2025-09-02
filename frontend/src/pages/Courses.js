@@ -257,7 +257,8 @@ const Courses = () => {
                 {categories.map((category, index) => (
                   <button
                     key={category.id}
-                    onClick={() => setSelectedCategory(category.id)}
+                    data-category-id={category.id}
+                    onClick={() => handleCategorySelect(category.id)}
                     className={`group relative px-8 py-5 rounded-2xl font-bold whitespace-nowrap transition-all duration-500 flex items-center gap-4 min-w-0 transform hover:scale-105 ${
                       selectedCategory === category.id
                         ? 'bg-gradient-to-r from-orange-600 via-red-600 to-orange-700 text-white shadow-2xl scale-110 ring-4 ring-orange-200'

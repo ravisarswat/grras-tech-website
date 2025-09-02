@@ -42,17 +42,34 @@ const CategoryManager = ({ content, updateContent }) => {
   };
 
   const deleteCategory = (slug) => {
-    const newCategories = { ...categories };
-    delete newCategories[slug];
+    const categoryName = categories[slug]?.name || slug;
+    const courseCount = getCoursesByCategory(slug).length;
     
-    // Remove category from all courses
-    const updatedCourses = courses.map(course => ({
-      ...course,
-      categories: (course.categories || []).filter(cat => cat !== slug)
-    }));
+    // Show confirmation dialog
+    const confirmMessage = courseCount > 0 
+      ? `Are you sure you want to delete "${categoryName}"?\n\nThis will remove the category from ${courseCount} course(s). The courses will remain but will be unassigned from this category.`
+      : `Are you sure you want to delete "${categoryName}"?`;
     
-    updateContent('courseCategories', newCategories);
-    updateContent('courses', updatedCourses);
+    if (window.confirm(confirmMessage)) {
+      const newCategories = { ...categories };
+      delete newCategories[slug];
+      
+      // Remove category from all courses
+      const updatedCourses = courses.map(course => ({
+        ...course,
+        categories: (course.categories || []).filter(cat => cat !== slug)
+      }));
+      
+      updateContent('courseCategories', newCategories);
+      updateContent('courses', updatedCourses);
+      
+      // Show success message
+      if (courseCount > 0) {
+        alert(`✅ Category "${categoryName}" deleted successfully!\n${courseCount} course(s) have been unassigned from this category.`);
+      } else {
+        alert(`✅ Category "${categoryName}" deleted successfully!`);
+      }
+    }
   };
 
   const getCoursesByCategory = (categorySlug) => {

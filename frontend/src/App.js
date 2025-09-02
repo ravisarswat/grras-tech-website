@@ -12,7 +12,6 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Courses from './pages/Courses';
 import EnhancedCourses from './pages/EnhancedCourses';
-import CertificationCoursesPage from './components/CertificationCoursesPage';
 import CategoryCoursePage from './pages/CategoryCoursePage';
 import CourseDetail from './pages/CourseDetail';
 import LearningPaths from './pages/LearningPaths';

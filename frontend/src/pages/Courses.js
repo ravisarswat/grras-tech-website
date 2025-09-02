@@ -312,11 +312,26 @@ const Courses = () => {
             </div>
           </div>
 
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">
-              {selectedCategory === 'all' ? 'All Courses' : categories.find(c => c.id === selectedCategory)?.name} 
-              <span className="text-gray-500 ml-2">({filteredCourses.length})</span>
+          <div className="mb-8 text-center">
+            <h2 className="text-4xl font-black text-gray-900 mb-4">
+              {selectedCategory === 'all' ? (
+                <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+                  🎯 All Courses
+                </span>
+              ) : (
+                <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+                  {categories.find(c => c.id === selectedCategory)?.name}
+                </span>
+              )}
             </h2>
+            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-100 to-red-100 rounded-2xl shadow-lg">
+              <span className="text-lg font-bold text-orange-800">
+                {filteredCourses.length} Course{filteredCourses.length !== 1 ? 's' : ''} Available
+              </span>
+              {filteredCourses.length > 0 && (
+                <div className="ml-3 w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              )}
+            </div>
           </div>
 
           {filteredCourses.length === 0 ? (

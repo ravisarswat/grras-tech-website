@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { BookOpen, Clock, Users, ArrowRight, Filter } from 'lucide-react';
 import SEO from '../components/SEO';
 import axios from 'axios';

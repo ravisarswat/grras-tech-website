@@ -296,7 +296,7 @@ const Courses = () => {
                         <ul className="text-sm text-gray-600 space-y-2">
                           {course.highlights.slice(0, 3).map((highlight, index) => (
                             <li key={index} className="flex items-start">
-                              <div className="w-1.5 h-1.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                              <div className="w-1.5 h-1.5 bg-gradient-to-r from-orange-500 to-red-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                               <span className="leading-relaxed">{highlight}</span>
                             </li>
                           ))}

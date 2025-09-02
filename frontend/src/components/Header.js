@@ -113,23 +113,24 @@ const Header = () => {
                         onMouseEnter={() => setIsCoursesOpen(true)}
                         onMouseLeave={() => setIsCoursesOpen(false)}
                       >
-                        {/* Header with gradient background */}
-                        <div className="bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 px-6 py-4 border-b border-gray-100">
-                          <div className="flex items-center space-x-3">
-                            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-                              <BookOpen className="h-5 w-5 text-white" />
-                            </div>
-                            <div>
-                              <h3 className="text-xl font-bold bg-gradient-to-r from-blue-700 to-purple-700 bg-clip-text text-transparent">
-                                Technology Tracks
-                              </h3>
-                              <p className="text-sm text-gray-600">Choose your career path</p>
+                        <div className="container mx-auto px-4">
+                          {/* Header with orange gradient */}
+                          <div className="bg-gradient-to-r from-orange-50 via-red-50 to-orange-50 px-6 py-4 border-b border-gray-100">
+                            <div className="flex items-center space-x-3">
+                              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center">
+                                <BookOpen className="h-5 w-5 text-white" />
+                              </div>
+                              <div>
+                                <h3 className="text-xl font-bold bg-gradient-to-r from-orange-700 to-red-700 bg-clip-text text-transparent">
+                                  Technology Tracks
+                                </h3>
+                                <p className="text-sm text-gray-600">Choose your career path</p>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        
-                        {/* Categories Grid */}
-                        <div className="p-6">
+                          
+                          {/* Full Categories Grid */}
+                          <div className="p-6 max-h-96 overflow-y-auto">
                           <div className="grid grid-cols-1 gap-2">
                             {technologyTracks.length > 0 ? (
                               technologyTracks.map((track, index) => (

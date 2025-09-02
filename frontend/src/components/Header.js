@@ -89,53 +89,79 @@ const Header = () => {
                 <div className="absolute bottom-2 left-2 w-1.5 h-1.5 bg-red-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping animation-delay-200"></div>
               </Link>
 
-              {/* Desktop Navigation */}
-              <nav className="hidden lg:flex items-center space-x-6">
+              {/* Enhanced Desktop Navigation */}
+              <nav className="hidden lg:flex items-center space-x-8">
                 {filteredNavigationItems.map((item) => (
                   <div key={item.name} className="relative">
                     {item.hasDropdown ? (
                       <button
-                        className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 font-medium py-2"
+                        className="flex items-center space-x-2 text-gray-800 hover:text-orange-600 font-bold py-3 px-2 rounded-xl transition-all duration-300 hover:bg-orange-50 hover:shadow-md group relative"
                         onMouseEnter={() => setIsCoursesOpen(true)}
                       >
-                        <span>{item.name}</span>
-                        <ChevronDown className="h-4 w-4" />
+                        <span className="text-base">{item.name}</span>
+                        <ChevronDown className="h-4 w-4 group-hover:rotate-180 transition-transform duration-300" />
+                        
+                        {/* Hover underline effect */}
+                        <div className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-orange-500 to-red-500 group-hover:w-full group-hover:left-0 transition-all duration-300 rounded-full"></div>
                       </button>
                     ) : (
                       <Link
                         to={item.path}
-                        className={`relative text-gray-700 hover:text-orange-600 font-medium py-2 px-3 rounded-lg transition-all duration-200 ${
+                        className={`relative text-gray-800 hover:text-orange-600 font-bold py-3 px-4 rounded-xl transition-all duration-300 group ${
                           isActivePath(item.path) 
-                            ? 'text-orange-600 bg-orange-50 shadow-sm' 
-                            : 'hover:bg-gray-50'
+                            ? 'text-orange-600 bg-gradient-to-r from-orange-50 to-red-50 shadow-lg ring-2 ring-orange-200' 
+                            : 'hover:bg-gradient-to-r hover:from-orange-50 hover:to-red-50 hover:shadow-md'
                         }`}
                       >
-                        {item.name}
+                        <span className="relative z-10">{item.name}</span>
+                        
+                        {/* Active indicator */}
                         {isActivePath(item.path) && (
-                          <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-gradient-to-r from-orange-500 to-red-500 rounded-full"></span>
+                          <>
+                            <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-full shadow-lg"></span>
+                            <div className="absolute top-1 right-1 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+                          </>
                         )}
+                        
+                        {/* Hover underline effect */}
+                        {!isActivePath(item.path) && (
+                          <div className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-orange-500 to-red-500 group-hover:w-full group-hover:left-0 transition-all duration-300 rounded-full"></div>
+                        )}
+                        
+                        {/* Hover glow effect */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       </Link>
                     )}
 
-                    {/* Premium Dynamic Dropdown - Fixed */}
+                    {/* Enhanced Premium Dynamic Dropdown */}
                     {item.hasDropdown && isCoursesOpen && (
                       <div 
-                        className="fixed top-16 left-0 right-0 w-full bg-white/98 backdrop-blur-xl shadow-2xl border-t border-gray-200 z-50 animate-in slide-in-from-top-4 duration-300 overflow-hidden"
+                        className="fixed top-20 left-0 right-0 w-full bg-white/99 backdrop-blur-2xl shadow-2xl border-t-4 border-orange-500 z-50 animate-in slide-in-from-top-4 duration-500 overflow-hidden"
                         onMouseEnter={() => setIsCoursesOpen(true)}
                         onMouseLeave={() => setIsCoursesOpen(false)}
+                        style={{
+                          background: 'linear-gradient(135deg, rgba(255,255,255,0.99) 0%, rgba(255,247,237,0.99) 50%, rgba(254,242,242,0.99) 100%)'
+                        }}
                       >
                         <div className="container mx-auto px-4">
-                          {/* Header with orange gradient */}
-                          <div className="bg-gradient-to-r from-orange-50 via-red-50 to-orange-50 px-6 py-4 border-b border-gray-100">
-                            <div className="flex items-center space-x-3">
-                              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center">
-                                <BookOpen className="h-5 w-5 text-white" />
+                          {/* Enhanced Header with premium styling */}
+                          <div className="bg-gradient-to-r from-orange-100 via-red-50 to-orange-100 px-8 py-6 border-b border-orange-200 relative overflow-hidden">
+                            {/* Background pattern */}
+                            <div className="absolute inset-0 opacity-10">
+                              <div className="absolute top-2 left-10 w-4 h-4 bg-orange-400 rounded-full animate-pulse"></div>
+                              <div className="absolute top-8 right-20 w-3 h-3 bg-red-400 rounded-full animate-bounce"></div>
+                              <div className="absolute bottom-4 left-1/3 w-2 h-2 bg-orange-500 rounded-full animate-ping"></div>
+                            </div>
+                            
+                            <div className="flex items-center space-x-4 relative z-10">
+                              <div className="w-14 h-14 bg-gradient-to-br from-orange-500 via-red-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-2xl transform hover:scale-110 transition-all duration-300">
+                                <BookOpen className="h-7 w-7 text-white drop-shadow-lg" />
                               </div>
                               <div>
-                                <h3 className="text-xl font-bold bg-gradient-to-r from-orange-700 to-red-700 bg-clip-text text-transparent">
+                                <h3 className="text-2xl font-black bg-gradient-to-r from-orange-700 via-red-700 to-orange-800 bg-clip-text text-transparent mb-1">
                                   Technology Tracks
                                 </h3>
-                                <p className="text-sm text-gray-600">Choose your career path</p>
+                                <p className="text-base text-gray-700 font-medium">🚀 Choose your career path & transform your future</p>
                               </div>
                             </div>
                           </div>

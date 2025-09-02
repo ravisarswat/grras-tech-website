@@ -71,7 +71,8 @@ function AppContent() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
-      <Footer />
+      {/* Only show Footer if NOT on admin page */}
+      {!isAdminPage && <Footer />}
     </div>
   );
 }

@@ -247,7 +247,7 @@ const CategoryManager = ({ content, updateContent }) => {
               {expandedCategory === categorySlug && (
                 <div className="p-6 space-y-6">
                   {/* Basic Information */}
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid md:grid-cols-3 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Category Name
@@ -272,6 +272,21 @@ const CategoryManager = ({ content, updateContent }) => {
                         className="form-input"
                         placeholder="e.g., cloud-devops"
                       />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Display Order
+                      </label>
+                      <input
+                        type="number"
+                        min="1"
+                        value={category.order || 1}
+                        onChange={(e) => updateCategory(categorySlug, 'order', parseInt(e.target.value) || 1)}
+                        className="form-input"
+                        placeholder="1"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">Lower numbers appear first</p>
                     </div>
                   </div>
 

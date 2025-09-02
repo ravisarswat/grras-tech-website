@@ -66,38 +66,8 @@ const CourseCategoriesGrid = () => {
               course.categories && course.categories.includes(categorySlug)
             ).length;
             
-            // Map category slugs to course tabs
-            let courseTabLink = '/courses';
-            switch(categorySlug) {
-              case 'cloud-devops':
-              case 'devops':
-                courseTabLink = '/courses?tab=devops';
-                break;
-              case 'linux-redhat':
-              case 'redhat':
-                courseTabLink = '/courses?tab=redhat';
-                break;
-              case 'kubernetes-containers':
-              case 'kubernetes':
-                courseTabLink = '/courses?tab=kubernetes';
-                break;
-              case 'cybersecurity':
-              case 'security':
-                courseTabLink = '/courses?tab=cybersecurity';
-                break;
-              case 'degree-programs':
-              case 'degree':
-                courseTabLink = '/courses?tab=degree';
-                break;
-              case 'programming':
-                courseTabLink = '/courses?tab=programming';
-                break;
-              case 'aws':
-                courseTabLink = '/courses?tab=aws';
-                break;
-              default:
-                courseTabLink = '/courses?tab=general';
-            }
+            // Direct mapping to course tabs using actual database slugs
+            const courseTabLink = `/courses?tab=${categorySlug}`;
             
             return (
               <Link

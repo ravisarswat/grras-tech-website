@@ -112,20 +112,30 @@ const Header = () => {
                       </Link>
                     )}
 
-                    {/* Dynamic Dropdown - NO HARDCODE */}
+                    {/* Premium Dynamic Dropdown */}
                     {item.hasDropdown && isCoursesOpen && (
                       <div 
-                        className="absolute top-full left-0 mt-2 w-96 bg-white/95 backdrop-blur-sm rounded-xl shadow-2xl border border-gray-100 z-50 animate-in slide-in-from-top-2 duration-200"
+                        className="absolute top-full left-0 mt-3 w-[480px] bg-white/98 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200 z-50 animate-in slide-in-from-top-4 duration-300 overflow-hidden"
                         onMouseEnter={() => setIsCoursesOpen(true)}
                         onMouseLeave={() => setIsCoursesOpen(false)}
                       >
-                        <div className="p-6">
-                          <div className="flex items-center space-x-2 mb-4">
-                            <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full"></div>
-                            <h3 className="text-lg font-semibold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                              Technology Tracks
-                            </h3>
+                        {/* Header with gradient background */}
+                        <div className="bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 px-6 py-4 border-b border-gray-100">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                              <BookOpen className="h-5 w-5 text-white" />
+                            </div>
+                            <div>
+                              <h3 className="text-xl font-bold bg-gradient-to-r from-blue-700 to-purple-700 bg-clip-text text-transparent">
+                                Technology Tracks
+                              </h3>
+                              <p className="text-sm text-gray-600">Choose your career path</p>
+                            </div>
                           </div>
+                        </div>
+                        
+                        {/* Categories Grid */}
+                        <div className="p-6">
                           <div className="space-y-3">
                             {technologyTracks.length > 0 ? (
                               technologyTracks.map((track) => (

@@ -272,8 +272,8 @@ class CourseCleanupVerificationTester:
                         logger.info(f"   ✅ Course categories: {len(course_categories)} categories found")
                     
                     # Check learningPaths structure
-                    learning_paths = content.get("learningPaths", {})
-                    if learning_paths is not None:  # Can be empty dict
+                    learning_paths = content.get("learningPaths", [])
+                    if learning_paths is not None:  # Can be empty array
                         logger.info(f"   ✅ Learning paths structure: {len(learning_paths)} paths found")
                     
                     if not missing_sections:

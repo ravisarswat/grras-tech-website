@@ -78,6 +78,60 @@ const Courses = () => {
       const contentData = contentResponse.data.content || {};
       const categoriesData = contentData.courseCategories || {};
       
+      // Map course categories to available category slugs
+      const mapCourseToCategories = (course) => {
+        const courseCategory = course.category?.toLowerCase() || '';
+        const courseTitle = course.title?.toLowerCase() || '';
+        
+        // Create mapping based on course content
+        const categoryMapping = [];
+        
+        // AWS courses
+        if (courseCategory.includes('cloud') && courseTitle.includes('aws')) {
+          categoryMapping.push('aws');
+        }
+        
+        // Red Hat courses  
+        if (courseTitle.includes('red hat') || courseTitle.includes('rhcsa') || courseTitle.includes('rhce') || courseTitle.includes('openshift')) {
+          categoryMapping.push('redhat');
+        }
+        
+        // Kubernetes courses
+        if (courseTitle.includes('kubernetes') || courseTitle.includes('cka') || courseTitle.includes('cks')) {
+          categoryMapping.push('kubernetes');
+        }
+        
+        // DevOps courses
+        if (courseTitle.includes('devops')) {
+          categoryMapping.push('devops');
+        }
+        
+        // Cybersecurity courses
+        if (courseCategory.includes('security') || courseTitle.includes('security') || courseTitle.includes('cybersecurity')) {
+          categoryMapping.push('cybersecurity');
+        }
+        
+        // Programming courses
+        if (courseTitle.includes('programming') || courseTitle.includes('development') || courseTitle.includes('coding')) {
+          categoryMapping.push('programming');
+        }
+        
+        // Degree courses
+        if (courseTitle.includes('degree') || courseTitle.includes('bca') || courseTitle.includes('certification')) {
+          categoryMapping.push('degree');
+        }
+        
+        // Fallback - if no specific mapping found, try to use original category
+        if (categoryMapping.length === 0 && courseCategory) {
+          // Map generic categories to specific ones
+          if (courseCategory === 'cloud') categoryMapping.push('aws');
+          if (courseCategory === 'security') categoryMapping.push('cybersecurity');  
+          if (courseCategory === 'certification') categoryMapping.push('degree');
+        }
+        
+        return categoryMapping;
+      };
+
       const processedCourses = coursesData
         .filter(course => course.visible !== false)
         .map(course => ({
@@ -86,8 +140,8 @@ const Courses = () => {
           overview: course.overview || course.description || '',
           highlights: course.highlights || [],
           level: course.level || 'All Levels',
-          // Fix categories field - handle both singular 'category' and plural 'categories'
-          categories: course.categories || (course.category ? [course.category] : [])
+          // Fix categories field - use intelligent mapping
+          categories: course.categories || mapCourseToCategories(course)
         }))
         .sort((a, b) => (a.order || 999) - (b.order || 999));
 

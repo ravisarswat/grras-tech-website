@@ -373,17 +373,14 @@ const CourseEditor = ({
                     value={course.category || ''}
                     defaultValue={course.category || ''}
                     onChange={(e) => {
-                      const selectedCategory = e.target.value;
-                      console.log('🎯 User selected category:', selectedCategory);
-                      
-                      // Save both formats for compatibility
-                      handleFieldUpdate('category', selectedCategory);
-                      handleFieldUpdate('categories', selectedCategory ? [selectedCategory] : []);
-                      
-                      console.log('✅ Category updated:', { 
-                        category: selectedCategory, 
-                        categories: selectedCategory ? [selectedCategory] : [] 
-                      });
+                      const value = e.target.value;
+                      console.log('CATEGORY CHANGE:', value);
+                      handleFieldUpdate('category', value);
+                      if (value) {
+                        handleFieldUpdate('categories', [value]);
+                      } else {
+                        handleFieldUpdate('categories', []);
+                      }
                     }}
                     className="form-input"
                   >

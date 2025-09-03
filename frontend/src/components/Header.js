@@ -307,7 +307,7 @@ const Header = () => {
               }, 100);
             }}
           >
-            <div className="p-6 w-80 max-w-[90vw]">
+            <div className="p-4 sm:p-6 w-72 sm:w-80 max-w-[95vw]">
               <div className="flex items-center mb-4 pb-3 border-b border-orange-200">
                 <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center mr-3">
                   <BookOpen className="w-4 h-4 text-white" />

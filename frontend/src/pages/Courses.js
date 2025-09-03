@@ -509,7 +509,18 @@ const Courses = () => {
                       <div className="ml-6 flex-shrink-0">
                         <div className="w-16 h-16 bg-gradient-to-br from-orange-100 via-red-50 to-orange-100 rounded-2xl flex items-center justify-center group-hover:from-orange-200 group-hover:to-red-200 transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-6 shadow-lg">
                           <span className="text-3xl group-hover:scale-125 transition-transform duration-500 filter drop-shadow-sm">
-                            {course.icon || '📚'}
+                            {course.icon || (() => {
+                              const title = course.title.toLowerCase();
+                              if (title.includes('devops')) return '🚀';
+                              if (title.includes('aws') || title.includes('cloud')) return '☁️';
+                              if (title.includes('kubernetes')) return '⚙️';
+                              if (title.includes('red hat') || title.includes('rhcsa') || title.includes('rhce')) return '🐧';
+                              if (title.includes('security') || title.includes('cyber')) return '🔒';
+                              if (title.includes('data science') || title.includes('machine learning')) return '🤖';
+                              if (title.includes('programming') || title.includes('development')) return '💻';
+                              if (title.includes('degree') || title.includes('bca')) return '🎓';
+                              return '📚';
+                            })()}
                           </span>
                         </div>
                       </div>

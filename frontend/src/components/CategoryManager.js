@@ -19,26 +19,40 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
     const categoryName = 'New Category';
     const categorySlug = `new-category-${timestamp}`;
     
+    console.log('➕ Adding new category:', categorySlug);
+    
     const newCategory = {
       name: categoryName,
       slug: categorySlug,
       description: 'Enter category description here',
-      icon: 'folder',
+      icon: 'book',  // Changed to 'book' instead of 'folder'
       color: '#3B82F6',
       logo: '', 
       visible: true,
       order: maxOrder + 1,
-      featured: true, // Make new categories featured by default
-      seo: { title: '', description: '', keywords: '' }
+      featured: true,
+      seo: { title: '', description: '', keywords: '' },
+      createdAt: new Date().toISOString(),
+      modifiedAt: new Date().toISOString()
     };
     
-    updateContent('courseCategories', {
+    const updatedCategories = {
       ...categories,
       [categorySlug]: newCategory
-    });
+    };
     
-    // Expand the new category for immediate editing
-    setExpandedCategory(categorySlug);
+    console.log('📝 Updated categories:', Object.keys(updatedCategories));
+    
+    updateContent('courseCategories', updatedCategories);
+    
+    // Expand the new category for immediate editing with delay
+    setTimeout(() => {
+      setExpandedCategory(categorySlug);
+      console.log('🔍 Expanded category:', categorySlug);
+    }, 100);
+    
+    // Success feedback
+    console.log('✅ New category added successfully');
   };
 
   // Helper function to generate slug from name

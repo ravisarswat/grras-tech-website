@@ -96,106 +96,43 @@ const Header = () => {
 
             <nav className="hidden lg:flex items-center space-x-8">
               {navigationItems.map((item) => (
-                <div key={item.name}>
+                <div key={item.name} className="relative">
                   {item.hasDropdown ? (
-                    <div className="relative group">
-                      <button
-                        className="flex items-center space-x-2 text-gray-800 hover:text-orange-600 font-bold py-3 px-2 rounded-xl transition-all duration-200 hover:bg-orange-50 hover:shadow-md"
-                        onMouseEnter={handleDropdownOpen}
-                        onMouseLeave={() => handleDropdownClose(300)}
-                      >
-                        <span className="text-base">{item.name}</span>
-                        <ChevronDown className="h-4 w-4 group-hover:rotate-180 transition-transform duration-300" />
+                    <div 
+                      className="relative"
+                      onMouseEnter={() => setIsCoursesOpen(true)}
+                      onMouseLeave={() => setIsCoursesOpen(false)}
+                    >
+                      <button className="flex items-center space-x-2 text-gray-800 hover:text-orange-600 font-bold py-3 px-2">
+                        <span>{item.name}</span>
+                        <ChevronDown className="h-4 w-4" />
                       </button>
 
-                      {/* DROPDOWN USING PORTAL - GUARANTEED TO WORK */}
-                      {isCoursesOpen && createPortal(
-                        <div 
-                          className="fixed bg-white border-2 border-orange-500 shadow-2xl rounded-lg"
-                          onMouseEnter={handleDropdownOpen}
-                          onMouseLeave={() => handleDropdownClose(200)}
-                          style={{
-                            position: 'fixed',
-                            top: '80px',
-                            right: '100px',
-                            width: '350px',
-                            zIndex: 999999,
-                            backgroundColor: 'white',
-                            border: '2px solid #ea580c',
-                            borderRadius: '8px',
-                            padding: '20px',
-                            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
-                          }}
-                        >
-                          <div style={{ textAlign: 'center', marginBottom: '15px' }}>
-                            <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: '#ea580c', margin: '0' }}>
-                              Technology Tracks
-                            </h3>
-                          </div>
-                          
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            {technologyTracks.length > 0 ? (
-                              technologyTracks.map((track) => (
-                                <a
-                                  key={track.id}
-                                  href={track.path}
-                                  onClick={() => setIsCoursesOpen(false)}
-                                  style={{
-                                    display: 'block',
-                                    padding: '10px 12px',
-                                    backgroundColor: '#fff7ed',
-                                    border: '1px solid #fed7aa',
-                                    borderRadius: '6px',
-                                    textDecoration: 'none',
-                                    color: '#1f2937',
-                                    fontSize: '14px',
-                                    transition: 'all 0.2s ease'
-                                  }}
-                                  onMouseEnter={(e) => {
-                                    e.target.style.backgroundColor = '#ffedd5';
-                                    e.target.style.borderColor = '#fb923c';
-                                  }}
-                                  onMouseLeave={(e) => {
-                                    e.target.style.backgroundColor = '#fff7ed';
-                                    e.target.style.borderColor = '#fed7aa';
-                                  }}
-                                >
-                                  <div style={{ fontWeight: '600', marginBottom: '2px' }}>
-                                    {track.name}
-                                  </div>
-                                  <div style={{ fontSize: '12px', color: '#6b7280' }}>
-                                    {track.courseCount} courses
-                                  </div>
-                                </a>
-                              ))
-                            ) : (
-                              <div style={{ textAlign: 'center', color: '#6b7280', padding: '20px' }}>
-                                Loading categories...
-                              </div>
-                            )}
-                          </div>
-                          
-                          <div style={{ marginTop: '15px', paddingTop: '15px', borderTop: '1px solid #fed7aa' }}>
-                            <a
-                              href="/courses"
+                      {/* SIMPLE DROPDOWN */}
+                      {isCoursesOpen && (
+                        <div className="absolute left-0 mt-2 w-72 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                          <div className="p-4">
+                            <h3 className="font-bold text-orange-600 mb-3">Technology Tracks</h3>
+                            {technologyTracks.map((track) => (
+                              <a
+                                key={track.id}
+                                href={track.path}
+                                className="block px-3 py-2 hover:bg-gray-100 rounded mb-1"
+                                onClick={() => setIsCoursesOpen(false)}
+                              >
+                                <div className="font-medium">{track.name}</div>
+                                <div className="text-sm text-gray-500">{track.courseCount} courses</div>
+                              </a>
+                            ))}
+                            <a 
+                              href="/courses" 
+                              className="block mt-3 px-3 py-2 bg-orange-600 text-white rounded text-center"
                               onClick={() => setIsCoursesOpen(false)}
-                              style={{
-                                display: 'block',
-                                textAlign: 'center',
-                                padding: '10px 20px',
-                                backgroundColor: '#ea580c',
-                                color: 'white',
-                                fontWeight: 'bold',
-                                borderRadius: '6px',
-                                textDecoration: 'none',
-                                fontSize: '14px'
-                              }}
                             >
-                              🚀 View All Courses
+                              View All
                             </a>
                           </div>
-                        </div>,
-                        document.body
+                        </div>
                       )}
                     </div>
                   ) : (

@@ -222,17 +222,17 @@ const Header = () => {
                       </Link>
                     )}
 
-                    {/* Optimized Premium Dynamic Dropdown */}
-                    {item.hasDropdown && isCoursesOpen && createPortal(
+                    {/* Simple, Reliable Dropdown - No Portal */}
+                    {item.hasDropdown && isCoursesOpen && (
                       <div 
-                        data-dropdown="courses"
-                        className="fixed top-20 left-0 right-0 w-full bg-white/98 backdrop-blur-xl shadow-2xl border-t-4 border-orange-500 animate-in slide-in-from-top-2 duration-200 overflow-hidden"
+                        className="absolute top-full left-0 w-screen bg-white shadow-2xl border-t-4 border-orange-500 animate-in slide-in-from-top-2 duration-200"
                         onMouseEnter={handleDropdownOpen}
                         onMouseLeave={() => handleDropdownClose(200)}
                         style={{
-                          background: 'linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,247,237,0.98) 50%, rgba(254,242,242,0.98) 100%)',
-                          zIndex: 999999,
-                          position: 'fixed'
+                          zIndex: 99999,
+                          marginLeft: '-50vw',
+                          left: '50%',
+                          position: 'absolute'
                         }}
                       >
                         <div className="container mx-auto px-4">

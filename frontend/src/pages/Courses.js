@@ -107,58 +107,40 @@ const Courses = () => {
       const contentData = contentResponse.data.content || {};
       const categoriesData = contentData.courseCategories || {};
       
-      // Map course categories to available category slugs
+      // FIXED: Use actual database category assignment instead of hardcoded mapping
       const mapCourseToCategories = (course) => {
-        const courseCategory = course.category?.toLowerCase() || '';
-        const courseTitle = course.title?.toLowerCase() || '';
+        console.log('🔍 Mapping course:', course.title, 'Category field:', course.category, 'Categories field:', course.categories);
         
-        // Create mapping based on course content
-        const categoryMapping = [];
-        
-        // AWS courses
-        if (courseCategory.includes('cloud') && courseTitle.includes('aws')) {
-          categoryMapping.push('aws');
+        // Priority 1: Use categories array if available (proper format)
+        if (course.categories && Array.isArray(course.categories) && course.categories.length > 0) {
+          console.log('✅ Using categories array:', course.categories);
+          return course.categories;
         }
         
-        // Red Hat courses  
-        if (courseTitle.includes('red hat') || courseTitle.includes('rhcsa') || courseTitle.includes('rhce') || courseTitle.includes('openshift')) {
-          categoryMapping.push('redhat');
+        // Priority 2: Use single category field and convert to array
+        if (course.category && course.category.trim() !== '') {
+          const categorySlug = course.category.trim();
+          console.log('✅ Using single category:', categorySlug);
+          
+          // Check if this category exists in our dynamic categories
+          if (categoriesData[categorySlug]) {
+            return [categorySlug];
+          }
+          
+          // Try to find matching category by name comparison
+          const matchingCategory = Object.entries(categoriesData).find(([slug, catData]) => 
+            catData.name?.toLowerCase() === course.category.toLowerCase() ||
+            catData.title?.toLowerCase() === course.category.toLowerCase()
+          );
+          
+          if (matchingCategory) {
+            console.log('✅ Found matching category by name:', matchingCategory[0]);
+            return [matchingCategory[0]];
+          }
         }
         
-        // Kubernetes courses
-        if (courseTitle.includes('kubernetes') || courseTitle.includes('cka') || courseTitle.includes('cks')) {
-          categoryMapping.push('kubernetes');
-        }
-        
-        // DevOps courses
-        if (courseTitle.includes('devops')) {
-          categoryMapping.push('devops');
-        }
-        
-        // Cybersecurity courses
-        if (courseCategory.includes('security') || courseTitle.includes('security') || courseTitle.includes('cybersecurity')) {
-          categoryMapping.push('cybersecurity');
-        }
-        
-        // Programming courses
-        if (courseTitle.includes('programming') || courseTitle.includes('development') || courseTitle.includes('coding')) {
-          categoryMapping.push('programming');
-        }
-        
-        // Degree courses
-        if (courseTitle.includes('degree') || courseTitle.includes('bca') || courseTitle.includes('certification')) {
-          categoryMapping.push('degree');
-        }
-        
-        // Fallback - if no specific mapping found, try to use original category
-        if (categoryMapping.length === 0 && courseCategory) {
-          // Map generic categories to specific ones
-          if (courseCategory === 'cloud') categoryMapping.push('aws');
-          if (courseCategory === 'security') categoryMapping.push('cybersecurity');  
-          if (courseCategory === 'certification') categoryMapping.push('degree');
-        }
-        
-        return categoryMapping;
+        console.log('⚠️ No category assignment found, using fallback');
+        return ['other'];
       };
 
       const processedCourses = coursesData

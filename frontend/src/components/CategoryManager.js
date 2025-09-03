@@ -401,7 +401,8 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                 >
                   <div className="bg-green-100 border border-green-300 rounded p-2 mb-4">
                     <p className="text-green-800 text-sm font-medium">
-                      🔓 Form Ready: You can now type, paste, and edit freely. Panel will only close with collapse button or Escape key when not focused.
+                      🔓 <strong>Fixed Form</strong>: This form uses enhanced focus detection for Firefox compatibility. 
+                      You can now type, paste, and edit freely. Panel will only close with the collapse button or Escape key when not focused in any input.
                     </p>
                   </div>
                   

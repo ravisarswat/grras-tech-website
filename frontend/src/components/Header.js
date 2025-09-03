@@ -82,37 +82,27 @@ const Header = () => {
     closeDropdown();
   }, [location.pathname]);
 
-  // Get categories and courses for dropdown  
+  // Get categories and courses for dropdown
   const courseCategories = content?.courseCategories || {};
   const courses = content?.courses || [];
   
-  // Show popular/featured courses in dropdown instead of categories
-  const featuredCourses = courses
-    .filter(course => course.visible !== false && (course.featured || course.popular))
-    .slice(0, 8) // Limit to top 8 courses
-    .map(course => ({
-      id: course.slug,
-      name: course.title,
-      path: `/courses/${course.slug}`,
-      courseCount: 1,
-      logo: course.icon || null,
-      category: course.category || 'General',
-      fees: course.fees || 'Contact for Details'
-    }));
-
-  // Fallback: if no featured courses, show all courses
-  const technologyTracks = featuredCourses.length > 0 ? featuredCourses : courses
-    .filter(course => course.visible !== false)
-    .slice(0, 8)
-    .map(course => ({
-      id: course.slug,
-      name: course.title,  
-      path: `/courses/${course.slug}`,
-      courseCount: 1,
-      logo: course.icon || null,
-      category: course.category || 'General',
-      fees: course.fees || 'Contact for Details'
-    }));
+  const technologyTracks = Object.entries(courseCategories)
+    .filter(([, category]) => category.visible !== false)
+    .sort(([, a], [, b]) => (a.order || 999) - (b.order || 999))
+    .map(([slug, category]) => {
+      // Count actual courses in this category
+      const courseCount = courses.filter(course => 
+        course.categories && course.categories.includes(slug)
+      ).length;
+      
+      return {
+        id: slug,
+        name: category.name,
+        path: `/courses?tab=${slug}`,
+        courseCount: courseCount,
+        logo: category.logo
+      };
+    });
 
   const navigationItems = [
     { name: 'Home', path: '/' },

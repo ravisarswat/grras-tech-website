@@ -428,12 +428,18 @@ const LearningPathManager = ({ content, updateContent }) => {
                             <select
                               value={pathCourse.courseSlug}
                               onChange={(e) => updatePathCourse(pathSlug, index, 'courseSlug', e.target.value)}
-                              className="form-input"
+                              className="form-input text-sm"
+                              title={`${availableCourses.length} courses available`}
                             >
-                              <option value="">Select course...</option>
+                              <option value="">
+                                {availableCourses.length > 0 
+                                  ? `Select course... (${availableCourses.length} available)` 
+                                  : 'No courses available - Add courses first'
+                                }
+                              </option>
                               {availableCourses.map(course => (
                                 <option key={course.slug} value={course.slug}>
-                                  {course.title}
+                                  📚 {course.title} {course.duration ? `(${course.duration})` : ''} {course.fees ? `- ${course.fees.split(' ')[0]}` : ''}
                                 </option>
                               ))}
                             </select>

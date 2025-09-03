@@ -359,14 +359,47 @@ const CourseEditor = ({
                     Category
                   </label>
                   <select
-                    value={course.category || ''}
+                    value={(() => {
+                      // FIXED: Handle legacy category values
+                      const currentCategory = course.category || '';
+                      console.log('🔍 Current course category:', currentCategory);
+                      console.log('🔍 Available categories:', Object.keys(dynamicCategories));
+                      
+                      // If current category exists in dynamic categories, use it
+                      if (dynamicCategories[currentCategory]) {
+                        return currentCategory;
+                      }
+                      
+                      // Legacy mapping for old category values
+                      const legacyMapping = {
+                        'certification': 'redhat',
+                        'cloud': 'aws', 
+                        'container': 'kubernetes',
+                        'devops': 'devops',
+                        'security': 'cybersecurity',
+                        'programming': 'programming',
+                        'degree': 'degree'
+                      };
+                      
+                      if (legacyMapping[currentCategory]) {
+                        console.log('🔄 Mapping legacy category:', currentCategory, '→', legacyMapping[currentCategory]);
+                        return legacyMapping[currentCategory];
+                      }
+                      
+                      return '';
+                    })()}
                     onChange={(e) => {
                       const selectedCategory = e.target.value;
+                      console.log('🎯 User selected category:', selectedCategory);
+                      
                       // Save both formats for compatibility
                       handleFieldUpdate('category', selectedCategory);
-                      // FIXED: Also save as categories array for frontend compatibility
                       handleFieldUpdate('categories', selectedCategory ? [selectedCategory] : []);
-                      console.log('✅ Category updated:', { category: selectedCategory, categories: selectedCategory ? [selectedCategory] : [] });
+                      
+                      console.log('✅ Category updated:', { 
+                        category: selectedCategory, 
+                        categories: selectedCategory ? [selectedCategory] : [] 
+                      });
                     }}
                     className="form-input"
                   >

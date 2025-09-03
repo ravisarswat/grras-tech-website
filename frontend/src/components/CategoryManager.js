@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
-import { Plus, Trash2, Eye, EyeOff, ChevronDown, ChevronUp } from 'lucide-react';
+import { Plus, Trash2, Eye, EyeOff, ChevronDown, ChevronUp, X } from 'lucide-react';
 
 const CategoryManager = ({ content, updateContent }) => {
   const [expandedCategory, setExpandedCategory] = useState(null);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newCategory, setNewCategory] = useState({
+    name: '',
+    description: '',
+    icon: 'folder',
+    color: '#3B82F6',
+    logo: '',
+    visible: true,
+    order: 1,
+    seo: { title: '', description: '', keywords: '' }
+  });
 
   const categories = content?.courseCategories || {};
   const courses = content?.courses || [];
@@ -17,66 +28,124 @@ const CategoryManager = ({ content, updateContent }) => {
       .trim();
   };
 
-  // Add Category - Simple
+  // Reset new category form
+  const resetForm = () => {
+    const maxOrder = Math.max(0, ...Object.values(categories).map(c => c.order || 0));
+    setNewCategory({
+      name: '',
+      description: '',
+      icon: 'folder',
+      color: '#3B82F6',
+      logo: '',
+      visible: true,
+      order: maxOrder + 1,
+      seo: { title: '', description: '', keywords: '' }
+    });
+  };
+
+  // Add Category with full form
   const addCategory = () => {
-    const name = prompt('Category Name:');
-    if (!name) return;
-    
-    const slug = generateSlug(name);
-    if (categories[slug]) {
-      alert('Category already exists!');
+    if (!newCategory.name.trim()) {
+      alert('Category name is required!');
       return;
     }
 
-    const newCategory = {
-      name: name,
+    const slug = generateSlug(newCategory.name);
+    if (categories[slug]) {
+      alert('Category with this name already exists!');
+      return;
+    }
+
+    const categoryData = {
+      ...newCategory,
       slug: slug,
-      description: '',
-      visible: true,
-      order: Object.keys(categories).length + 1,
-      color: '#3B82F6'
+      createdAt: new Date().toISOString(),
+      modifiedAt: new Date().toISOString()
     };
+
+    console.log('➕ Adding category:', slug, categoryData);
 
     updateContent('courseCategories', {
       ...categories,
-      [slug]: newCategory
+      [slug]: categoryData
     });
 
-    alert(`✅ Category "${name}" added!`);
+    setShowAddForm(false);
+    resetForm();
+    alert(`✅ Category "${newCategory.name}" added successfully!`);
   };
 
   // Update Category
   const updateCategory = (slug, field, value) => {
-    const updated = { ...categories[slug], [field]: value };
+    const updated = { ...categories[slug] };
+    
+    if (field.includes('.')) {
+      // Handle nested fields like seo.title
+      const [parent, child] = field.split('.');
+      updated[parent] = { ...updated[parent], [child]: value };
+    } else {
+      updated[field] = value;
+    }
+    
+    updated.modifiedAt = new Date().toISOString();
+
+    console.log('📝 Updating category:', slug, field, value);
+
     updateContent('courseCategories', {
       ...categories,
       [slug]: updated
     });
   };
 
-  // Delete Category - Simple
+  // Delete Category - Fixed
   const deleteCategory = (slug) => {
     const categoryName = categories[slug]?.name;
-    if (!confirm(`Delete "${categoryName}"?`)) return;
+    const courseCount = getCoursesByCategory(slug).length;
+    
+    console.log('🗑️ Attempting to delete category:', slug, categoryName);
+    
+    const confirmMessage = courseCount > 0 
+      ? `Delete "${categoryName}"?\n\nThis will remove it from ${courseCount} course(s).`
+      : `Delete "${categoryName}"?`;
+    
+    if (!confirm(confirmMessage)) {
+      console.log('❌ User cancelled deletion');
+      return;
+    }
 
-    // Remove from categories
-    const newCategories = { ...categories };
-    delete newCategories[slug];
+    console.log('✅ User confirmed deletion');
 
-    // Remove from courses
+    // Create new categories object without the deleted one
+    const newCategories = {};
+    Object.keys(categories).forEach(key => {
+      if (key !== slug) {
+        newCategories[key] = categories[key];
+      }
+    });
+
+    // Remove category from all courses
     const updatedCourses = courses.map(course => ({
       ...course,
       categories: (course.categories || []).filter(cat => cat !== slug)
     }));
 
+    console.log('📝 Deleting category:', { 
+      deletedSlug: slug, 
+      remainingCategories: Object.keys(newCategories),
+      updatedCourses: updatedCourses.length 
+    });
+
+    // Update state
     updateContent('courseCategories', newCategories);
     updateContent('courses', updatedCourses);
 
+    // Close expanded panel if this category was expanded
     if (expandedCategory === slug) {
       setExpandedCategory(null);
     }
 
-    alert(`✅ Category "${categoryName}" deleted!`);
+    console.log('✅ Category deleted successfully');
+    alert(`✅ Category "${categoryName}" deleted successfully!`);
   };
 
   // Get courses by category
@@ -123,7 +192,10 @@ const CategoryManager = ({ content, updateContent }) => {
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Categories</h2>
         <button
-          onClick={addCategory}
+          onClick={() => {
+            resetForm();
+            setShowAddForm(true);
+          }}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2"
         >
           <Plus className="h-4 w-4" />
@@ -131,11 +203,170 @@ const CategoryManager = ({ content, updateContent }) => {
         </button>
       </div>
 
+      {/* Add Category Form Modal */}
+      {showAddForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold">Add New Category</h3>
+              <button
+                onClick={() => setShowAddForm(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Name *</label>
+                  <input
+                    type="text"
+                    value={newCategory.name}
+                    onChange={(e) => setNewCategory({...newCategory, name: e.target.value})}
+                    className="w-full border rounded p-2"
+                    placeholder="e.g. Server Administration & Networking"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Icon</label>
+                  <input
+                    type="text"
+                    value={newCategory.icon}
+                    onChange={(e) => setNewCategory({...newCategory, icon: e.target.value})}
+                    className="w-full border rounded p-2"
+                    placeholder="e.g. folder, server, network"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Description</label>
+                <textarea
+                  value={newCategory.description}
+                  onChange={(e) => setNewCategory({...newCategory, description: e.target.value})}
+                  className="w-full border rounded p-2"
+                  rows="3"
+                  placeholder="e.g. Learn core server administration, system management, and networking concepts..."
+                />
+              </div>
+
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Order</label>
+                  <input
+                    type="number"
+                    value={newCategory.order}
+                    onChange={(e) => setNewCategory({...newCategory, order: parseInt(e.target.value) || 1})}
+                    className="w-full border rounded p-2"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Color</label>
+                  <input
+                    type="color"
+                    value={newCategory.color}
+                    onChange={(e) => setNewCategory({...newCategory, color: e.target.value})}
+                    className="w-full border rounded p-2 h-10"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Visible</label>
+                  <select
+                    value={newCategory.visible}
+                    onChange={(e) => setNewCategory({...newCategory, visible: e.target.value === 'true'})}
+                    className="w-full border rounded p-2"
+                  >
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Logo URL</label>
+                <input
+                  type="url"
+                  value={newCategory.logo}
+                  onChange={(e) => setNewCategory({...newCategory, logo: e.target.value})}
+                  className="w-full border rounded p-2"
+                  placeholder="e.g. https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg"
+                />
+              </div>
+
+              <div className="border-t pt-4">
+                <h4 className="text-sm font-medium mb-2">SEO Settings</h4>
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">SEO Title</label>
+                    <input
+                      type="text"
+                      value={newCategory.seo.title}
+                      onChange={(e) => setNewCategory({
+                        ...newCategory, 
+                        seo: {...newCategory.seo, title: e.target.value}
+                      })}
+                      className="w-full border rounded p-2 text-sm"
+                      placeholder="SEO title for search engines"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">SEO Description</label>
+                    <textarea
+                      value={newCategory.seo.description}
+                      onChange={(e) => setNewCategory({
+                        ...newCategory, 
+                        seo: {...newCategory.seo, description: e.target.value}
+                      })}
+                      className="w-full border rounded p-2 text-sm"
+                      rows="2"
+                      placeholder="SEO description for search engines"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">SEO Keywords</label>
+                    <input
+                      type="text"
+                      value={newCategory.seo.keywords}
+                      onChange={(e) => setNewCategory({
+                        ...newCategory, 
+                        seo: {...newCategory.seo, keywords: e.target.value}
+                      })}
+                      className="w-full border rounded p-2 text-sm"
+                      placeholder="keyword1, keyword2, keyword3"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2 mt-6">
+              <button
+                onClick={() => setShowAddForm(false)}
+                className="px-4 py-2 border rounded-lg hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={addCategory}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              >
+                Add Category
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {sortedCategories.length === 0 ? (
         <div className="text-center py-12 bg-gray-50 rounded-lg">
           <p className="text-gray-500 mb-4">No categories yet</p>
           <button
-            onClick={addCategory}
+            onClick={() => {
+              resetForm();
+              setShowAddForm(true);
+            }}
             className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
           >
             Create First Category
@@ -147,6 +378,9 @@ const CategoryManager = ({ content, updateContent }) => {
             <div key={slug} className="bg-white border rounded-lg p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-4">
+                  {category.logo && (
+                    <img src={category.logo} alt={category.name} className="w-8 h-8 object-contain" />
+                  )}
                   <h3 className="text-lg font-semibold">{category.name}</h3>
                   <span className="text-sm text-gray-500">
                     ({getCoursesByCategory(slug).length} courses)

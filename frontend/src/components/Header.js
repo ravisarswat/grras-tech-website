@@ -140,7 +140,9 @@ const Header = () => {
                         onMouseEnter={() => setIsCoursesOpen(true)}
                         onMouseLeave={() => setIsCoursesOpen(false)}
                         style={{
-                          background: 'linear-gradient(135deg, rgba(255,255,255,0.99) 0%, rgba(255,247,237,0.99) 50%, rgba(254,242,242,0.99) 100%)'
+                          background: 'linear-gradient(135deg, rgba(255,255,255,0.99) 0%, rgba(255,247,237,0.99) 50%, rgba(254,242,242,0.99) 100%)',
+                          zIndex: 99999,
+                          position: 'fixed'
                         }}
                       >
                         <div className="container mx-auto px-4">

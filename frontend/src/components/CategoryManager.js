@@ -340,9 +340,14 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                       <label className="block text-sm font-medium mb-2">Name</label>
                       <input
                         type="text"
-                        value={category.name}
+                        value={category.name || ''}
                         onChange={(e) => updateCategory(slug, 'name', e.target.value)}
+                        onKeyDown={(e) => e.stopPropagation()}
+                        onKeyUp={(e) => e.stopPropagation()}
+                        onKeyPress={(e) => e.stopPropagation()}
                         className="w-full border rounded p-2"
+                        placeholder="Enter category name"
+                        autoFocus={slug.includes('new-category')}
                       />
                     </div>
                     <div>

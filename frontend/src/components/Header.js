@@ -181,17 +181,73 @@ const Header = () => {
                 {filteredNavigationItems.map((item) => (
                   <div key={item.name} className="relative">
                     {item.hasDropdown ? (
-                      <button
-                        className="flex items-center space-x-2 text-gray-800 hover:text-orange-600 font-bold py-3 px-2 rounded-xl transition-all duration-200 hover:bg-orange-50 hover:shadow-md group relative"
-                        onMouseEnter={handleDropdownOpen}
-                        onMouseLeave={() => handleDropdownClose(300)}
-                      >
-                        <span className="text-base">{item.name}</span>
-                        <ChevronDown className="h-4 w-4 group-hover:rotate-180 transition-transform duration-300" />
-                        
-                        {/* Hover underline effect */}
-                        <div className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-orange-500 to-red-500 group-hover:w-full group-hover:left-0 transition-all duration-300 rounded-full"></div>
-                      </button>
+                      <div className="relative">
+                        <button
+                          className="flex items-center space-x-2 text-gray-800 hover:text-orange-600 font-bold py-3 px-2 rounded-xl transition-all duration-200 hover:bg-orange-50 hover:shadow-md group relative"
+                          onMouseEnter={handleDropdownOpen}
+                          onMouseLeave={() => handleDropdownClose(300)}
+                        >
+                          <span className="text-base">{item.name}</span>
+                          <ChevronDown className="h-4 w-4 group-hover:rotate-180 transition-transform duration-300" />
+                          
+                          {/* Hover underline effect */}
+                          <div className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-orange-500 to-red-500 group-hover:w-full group-hover:left-0 transition-all duration-300 rounded-full"></div>
+                        </button>
+
+                        {/* GUARANTEED VISIBLE DROPDOWN */}
+                        {isCoursesOpen && (
+                          <div 
+                            className="absolute bg-white border-2 border-orange-500 shadow-2xl rounded-lg p-6 mt-2"
+                            onMouseEnter={handleDropdownOpen}
+                            onMouseLeave={() => handleDropdownClose(200)}
+                            style={{
+                              position: 'absolute',
+                              top: '100%',
+                              left: '-200px',
+                              width: '500px',
+                              zIndex: 999999,
+                              backgroundColor: '#ffffff',
+                              border: '2px solid #ea580c',
+                              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+                            }}
+                          >
+                            <h3 className="text-xl font-bold text-orange-800 mb-4 text-center">Technology Tracks</h3>
+                            
+                            <div className="space-y-3">
+                              {technologyTracks.length > 0 ? (
+                                technologyTracks.map((track) => (
+                                  <Link
+                                    key={track.id}
+                                    to={track.path}
+                                    className="flex items-center justify-between p-3 bg-orange-50 hover:bg-orange-100 rounded-lg transition-colors duration-200 border border-orange-200"
+                                    onClick={() => setIsCoursesOpen(false)}
+                                  >
+                                    <div>
+                                      <div className="font-bold text-gray-900">{track.name}</div>
+                                      <div className="text-sm text-gray-600">{track.courseCount} courses available</div>
+                                    </div>
+                                    <ArrowRight className="h-4 w-4 text-orange-600" />
+                                  </Link>
+                                ))
+                              ) : (
+                                <div className="text-center text-gray-500 py-6">
+                                  <div className="text-lg">Loading categories...</div>
+                                </div>
+                              )}
+                            </div>
+                            
+                            <div className="mt-6 pt-4 border-t-2 border-orange-200 text-center">
+                              <Link
+                                to="/courses"
+                                className="inline-block px-6 py-3 bg-gradient-to-r from-orange-600 to-red-600 text-white font-bold rounded-lg hover:from-orange-700 hover:to-red-700 transition-all duration-200 shadow-lg"
+                                onClick={() => setIsCoursesOpen(false)}
+                              >
+                                🚀 View All Courses
+                              </Link>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     ) : (
                       <Link
                         to={item.path}

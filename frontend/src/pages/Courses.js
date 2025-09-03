@@ -245,16 +245,45 @@ const Courses = () => {
                 <span className="font-bold text-red-300"> hands-on training programs</span> designed for real-world success.
               </p>
               
-              {/* Enhanced CTA Buttons */}
+              {/* Enhanced CTA Buttons with Smart Functionality */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-                <button className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-600 to-red-600 text-white font-bold rounded-2xl hover:from-orange-700 hover:to-red-700 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl">
-                  <span>Explore Courses</span>
+                <button 
+                  onClick={() => {
+                    // Scroll to most popular category (Red Hat with highest course count)
+                    const popularCategory = categories.reduce((prev, current) => 
+                      prev.count > current.count ? prev : current
+                    );
+                    if (popularCategory && popularCategory.id !== 'all') {
+                      setSelectedCategory(popularCategory.id);
+                      setTimeout(() => {
+                        document.getElementById('course-categories-section')?.scrollIntoView({
+                          behavior: 'smooth',
+                          block: 'start'
+                        });
+                      }, 100);
+                    }
+                  }}
+                  className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-600 to-red-600 text-white font-bold rounded-2xl hover:from-orange-700 hover:to-red-700 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl"
+                >
+                  <span>🔥 Most Popular ({categories.find(c => c.count === Math.max(...categories.filter(cat => cat.id !== 'all').map(cat => cat.count)))?.name || 'Courses'})</span>
                   <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />
                 </button>
                 
-                <button className="group inline-flex items-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-2xl hover:bg-white/20 transition-all duration-300 transform hover:scale-105 border border-white/20">
+                <button 
+                  onClick={() => {
+                    // Show all courses and scroll to courses grid
+                    setSelectedCategory('all');
+                    setTimeout(() => {
+                      document.getElementById('courses-grid-section')?.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                      });
+                    }, 100);
+                  }}
+                  className="group inline-flex items-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-2xl hover:bg-white/20 transition-all duration-300 transform hover:scale-105 border border-white/20"
+                >
                   <Users className="mr-3 h-5 w-5" />
-                  <span>Join 5000+ Students</span>
+                  <span>View All {processedCourses.length} Courses</span>
                 </button>
               </div>
               

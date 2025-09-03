@@ -44,38 +44,6 @@ const Header = () => {
       clearTimeout(dropdownTimeout);
     }
   }, [location.pathname, dropdownTimeout]);
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (isCoursesOpen && !event.target.closest('nav')) {
-        setIsCoursesOpen(false);
-      }
-    };
-
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, [isCoursesOpen]);
-
-  // Close dropdown when scrolling
-  useEffect(() => {
-    const handleScroll = () => {
-      if (isCoursesOpen) {
-        setIsCoursesOpen(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [isCoursesOpen]);
-
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.classList.add('menu-open');
-    } else {
-      document.body.classList.remove('menu-open');
-      setIsMobileCoursesOpen(false);
-    }
-    return () => document.body.classList.remove('menu-open');
-  }, [isMenuOpen]);
 
   // Get ONLY dynamic categories from admin panel
   const categories = content?.courseCategories || {};

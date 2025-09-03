@@ -222,27 +222,16 @@ const CourseEditor = ({
         
         {/* Quick Actions */}
         <div className="flex items-center gap-2">
-          <span className="text-sm px-2 py-1 rounded-full bg-gray-100 text-gray-700">
+          <span className="text-sm px-2 py-1 rounded-full bg-blue-100 text-blue-700 font-medium">
             {(() => {
               const categorySlug = course.category || '';
               const categoryData = dynamicCategories[categorySlug];
               
               if (categoryData) {
-                // Use dynamic category with proper icon
-                const iconMap = {
-                  'server': '🔴',
-                  'cloud': '☁️', 
-                  'container': '⚙️',
-                  'terminal': '🔧',
-                  'shield': '🛡️',
-                  'code': '💻',
-                  'graduation-cap': '🎓'
-                };
-                const icon = iconMap[categoryData.icon] || '📚';
-                return `${icon} ${categoryData.name}`;
+                return `${categoryData.name}`;
               }
               
-              return course.category ? `📚 ${course.category}` : '📚 Uncategorized';
+              return 'Uncategorized';
             })()}
           </span>
           

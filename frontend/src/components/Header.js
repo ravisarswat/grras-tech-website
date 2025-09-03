@@ -176,9 +176,13 @@ const Header = () => {
                     {/* Enhanced Premium Dynamic Dropdown - Using Portal */}
                     {item.hasDropdown && isCoursesOpen && createPortal(
                       <div 
+                        data-dropdown="courses"
                         className="fixed top-20 left-0 right-0 w-full bg-white/99 backdrop-blur-2xl shadow-2xl border-t-4 border-orange-500 animate-in slide-in-from-top-4 duration-500 overflow-hidden"
                         onMouseEnter={() => setIsCoursesOpen(true)}
-                        onMouseLeave={() => setIsCoursesOpen(false)}
+                        onMouseLeave={() => {
+                          // Delay close to prevent flicker
+                          setTimeout(() => setIsCoursesOpen(false), 150);
+                        }}
                         style={{
                           background: 'linear-gradient(135deg, rgba(255,255,255,0.99) 0%, rgba(255,247,237,0.99) 50%, rgba(254,242,242,0.99) 100%)',
                           zIndex: 999999,

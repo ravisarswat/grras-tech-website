@@ -102,7 +102,7 @@ const CategoryManager = ({ content, updateContent }) => {
     alert('Test delete called for: ' + slug);
   };
 
-  // Delete Category - Enhanced Debug Version
+  // Delete Category - Force Save Button Enable
   const deleteCategory = (slug) => {
     console.log('🗑️ DELETE ATTEMPT:', slug);
     console.log('🗑️ Available categories:', Object.keys(categories));
@@ -148,9 +148,14 @@ const CategoryManager = ({ content, updateContent }) => {
 
     console.log('🗑️ Updated courses count:', updatedCourses.length);
 
-    // Update state
+    // Update state with timestamp to force change detection
+    const timestampedCategories = {
+      ...newCategories,
+      _lastModified: new Date().toISOString()
+    };
+
     console.log('🗑️ Calling updateContent for categories...');
-    updateContent('courseCategories', newCategories);
+    updateContent('courseCategories', timestampedCategories);
     
     console.log('🗑️ Calling updateContent for courses...');
     updateContent('courses', updatedCourses);
@@ -161,7 +166,18 @@ const CategoryManager = ({ content, updateContent }) => {
     }
 
     console.log('✅ Delete operations completed');
-    alert(`✅ Category "${categoryName}" deleted! Check console and click "Save Changes" to persist.`);
+    
+    // Force a small delay and then check save button
+    setTimeout(() => {
+      const saveButton = document.querySelector('button:contains("Save Changes")');
+      if (saveButton && saveButton.disabled) {
+        console.log('⚠️ Save button still disabled after delete - this is the bug!');
+      } else {
+        console.log('✅ Save button should now be enabled');
+      }
+    }, 100);
+
+    alert(`✅ Category "${categoryName}" deleted! Save Changes button should now be enabled.`);
   };
 
   // Get courses by category

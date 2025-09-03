@@ -31,19 +31,22 @@ const Courses = () => {
         setSelectedCategory(foundCategory.id);
         console.log(`✅ Set selected category to: ${foundCategory.name} (${foundCategory.id})`);
         
-        // Auto-scroll to category tabs section with smooth animation
+        // Auto-scroll to category tabs section with perfect positioning
         setTimeout(() => {
           const categoryTabsSection = document.getElementById('course-categories-section');
           if (categoryTabsSection) {
-            categoryTabsSection.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start',
-              inline: 'nearest'
+            // Calculate perfect scroll position - tabs should be visible at top
+            const rect = categoryTabsSection.getBoundingClientRect();
+            const scrollTop = window.pageYOffset + rect.top - 100; // 100px offset from top
+            
+            window.scrollTo({
+              top: scrollTop,
+              behavior: 'smooth'
             });
-            console.log(`🎯 Auto-scrolled to category tabs for: ${foundCategory.name}`);
+            console.log(`🎯 Auto-scrolled to perfect position for: ${foundCategory.name}`);
           }
           
-          // Then scroll to the specific selected tab
+          // Then scroll to the specific selected tab (horizontally only)
           setTimeout(() => {
             const selectedButton = document.querySelector(`button[data-category-id="${foundCategory.id}"]`);
             if (selectedButton) {
@@ -54,8 +57,8 @@ const Courses = () => {
               });
               console.log(`🚀 Auto-scrolled to selected tab: ${foundCategory.name}`);
             }
-          }, 500);
-        }, 100);
+          }, 800);
+        }, 300);
       } else {
         // If tab parameter doesn't match any category, default to 'all'
         setSelectedCategory('all');

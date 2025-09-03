@@ -486,6 +486,8 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                       type="url"
                       value={category.logo || ''}
                       onChange={(e) => updateCategory(slug, 'logo', e.target.value)}
+                      onFocus={(e) => e.target.setAttribute('data-focused', 'true')}
+                      onBlur={(e) => e.target.removeAttribute('data-focused')}
                       className="w-full border rounded p-2"
                       placeholder="https://example.com/logo.png"
                     />
@@ -497,6 +499,14 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                     <textarea
                       value={category.description}
                       onChange={(e) => updateCategory(slug, 'description', e.target.value)}
+                      onFocus={(e) => {
+                        e.target.setAttribute('data-focused', 'true');
+                        console.log('🎯 Description field focused');
+                      }}
+                      onBlur={(e) => {
+                        e.target.removeAttribute('data-focused');
+                        console.log('👋 Description field blurred');
+                      }}
                       className="w-full border rounded p-2"
                       rows="2"
                       placeholder="Enter category description"

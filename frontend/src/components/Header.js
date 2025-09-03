@@ -134,12 +134,22 @@ const Header = () => {
           <div className="flex justify-between items-center py-4">
             <Link to="/" className="flex items-center group relative">
               <div className="relative">
-                <div className="absolute -inset-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl opacity-0 group-hover:opacity-20 transition-all duration-500 blur-sm"></div>
+                {/* Enhanced glow effect */}
+                <div className="absolute -inset-3 bg-gradient-to-r from-orange-500 via-red-500 to-orange-600 rounded-3xl opacity-0 group-hover:opacity-25 transition-all duration-700 blur-lg"></div>
+                <div className="absolute -inset-1 bg-gradient-to-r from-orange-300 to-red-300 rounded-2xl opacity-0 group-hover:opacity-30 transition-all duration-500 blur-sm"></div>
+                
                 <img 
                   src="https://customer-assets.emergentagent.com/job_grras-course-manager/artifacts/9kv3gbea_black%20logo.jpg" 
-                  alt="GRRAS" 
-                  className="h-16 w-auto transition-all duration-500 group-hover:scale-110 group-hover:brightness-110 relative z-10 drop-shadow-lg" 
+                  alt="GRRAS Solutions" 
+                  className="h-16 w-auto transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 relative z-10 drop-shadow-xl filter" 
                 />
+                
+                {/* Premium brand name */}
+                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+                  <span className="text-[10px] font-black text-gray-600 group-hover:text-orange-600 transition-colors duration-500 tracking-wider uppercase">
+                    Solutions
+                  </span>
+                </div>
               </div>
             </Link>
 

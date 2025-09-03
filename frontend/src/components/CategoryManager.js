@@ -376,7 +376,7 @@ const CategoryManager = ({ content, updateContent }) => {
           </button>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4" key={categories.__forceUpdate || 'categories'}>
           {sortedCategories.map(([slug, category]) => (
             <div key={slug} className="bg-white border rounded-lg p-6">
               <div className="flex items-center justify-between mb-4">

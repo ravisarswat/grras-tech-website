@@ -135,7 +135,7 @@ const Courses = () => {
           highlights: course.highlights || [],
           level: course.level || 'All Levels',
           // Fix categories field - use intelligent mapping
-          categories: course.categories || mapCourseToCategories(course)
+          categories: course.categories || getCourseCategories(course)
         }))
         .sort((a, b) => (a.order || 999) - (b.order || 999));
 

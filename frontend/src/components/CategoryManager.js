@@ -423,13 +423,6 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                       type="url"
                       value={category.logo || ''}
                       onChange={(e) => updateCategory(slug, 'logo', e.target.value)}
-                      onKeyDown={(e) => e.stopPropagation()}
-                      onKeyUp={(e) => e.stopPropagation()}
-                      onKeyPress={(e) => e.stopPropagation()}
-                      onPaste={(e) => e.stopPropagation()}
-                      onInput={(e) => e.stopPropagation()}
-                      onFocus={(e) => e.stopPropagation()}
-                      onBlur={(e) => e.stopPropagation()}
                       className="w-full border rounded p-2"
                       placeholder="https://example.com/logo.png"
                     />
@@ -441,31 +434,6 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                     <textarea
                       value={category.description}
                       onChange={(e) => updateCategory(slug, 'description', e.target.value)}
-                      // Most critical for textarea - all events that could trigger collapse
-                      onKeyDown={(e) => {
-                        e.stopPropagation();
-                        console.log('📝 Description keydown:', e.key);
-                      }}
-                      onKeyUp={(e) => {
-                        e.stopPropagation();
-                      }}
-                      onKeyPress={(e) => {
-                        e.stopPropagation();
-                      }}
-                      onPaste={(e) => {
-                        e.stopPropagation();
-                        console.log('📋 Description paste');
-                      }}
-                      onInput={(e) => {
-                        e.stopPropagation();
-                      }}
-                      onFocus={(e) => {
-                        e.stopPropagation();
-                        console.log('🎯 Description focused');
-                      }}
-                      onBlur={(e) => {
-                        e.stopPropagation();
-                      }}
                       className="w-full border rounded p-2"
                       rows="2"
                       placeholder="Enter category description"

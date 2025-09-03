@@ -186,9 +186,9 @@ const CategoryManager = ({ content, updateContent }) => {
     updateContent('courses', updatedCourses);
   };
 
-  const sortedCategories = Object.entries(categories).sort(([,a], [,b]) => 
-    (a.order || 0) - (b.order || 0)
-  );
+  const sortedCategories = Object.entries(categories)
+    .filter(([slug]) => slug !== '__forceUpdate') // Filter out force update key
+    .sort(([,a], [,b]) => (a.order || 0) - (b.order || 0));
 
   return (
     <div className="space-y-6">

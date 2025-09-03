@@ -199,6 +199,73 @@ const Header = () => {
           </div>
         </div>
       </header>
+
+        {/* PORTAL-BASED DROPDOWN */}
+        {isCoursesOpen && createPortal(
+          <div
+            ref={dropdownRef}
+            className="dropdown-portal bg-white rounded-lg shadow-2xl border border-gray-200 animate-in slide-in-from-top-2 duration-200"
+            style={{
+              position: 'fixed',
+              top: `${dropdownPosition.top}px`,
+              left: `${dropdownPosition.left}px`,
+              zIndex: 100000,
+              width: 'max-content',
+              maxWidth: '90vw'
+            }}
+            onMouseEnter={() => {
+              // Keep dropdown open when hovering
+            }}
+            onMouseLeave={() => {
+              setTimeout(() => {
+                if (!coursesButtonRef.current?.matches(':hover')) {
+                  closeDropdown();
+                }
+              }, 100);
+            }}
+          >
+            <div className="p-6 w-80 max-w-[90vw]">
+              <h3 className="font-bold text-orange-600 text-lg mb-4 border-b border-orange-200 pb-2">
+                Technology Tracks
+              </h3>
+              
+              <div className="space-y-2 max-h-80 overflow-y-auto">
+                {technologyTracks.length > 0 ? (
+                  technologyTracks.map((track, index) => (
+                    <a
+                      key={track.id}
+                      href={track.path}
+                      className="flex items-center justify-between p-3 hover:bg-orange-50 rounded-lg border border-transparent hover:border-orange-200 transition-all duration-200"
+                      onClick={closeDropdown}
+                      tabIndex={index + 1}
+                    >
+                      <div className="flex-1">
+                        <div className="font-semibold text-gray-900 text-sm">{track.name}</div>
+                        <div className="text-xs text-gray-500">{track.courseCount} courses available</div>
+                      </div>
+                      <ArrowRight className="h-4 w-4 text-orange-500 flex-shrink-0 ml-2" />
+                    </a>
+                  ))
+                ) : (
+                  <div className="text-center text-gray-500 py-6">
+                    <div className="animate-pulse">Loading categories...</div>
+                  </div>
+                )}
+              </div>
+              
+              <div className="mt-4 pt-4 border-t border-gray-200">
+                <a 
+                  href="/courses" 
+                  className="block w-full text-center px-4 py-3 bg-gradient-to-r from-orange-600 to-red-600 text-white font-bold rounded-lg hover:from-orange-700 hover:to-red-700 transition-all duration-200 shadow-lg"
+                  onClick={closeDropdown}
+                >
+                  🚀 View All Courses
+                </a>
+              </div>
+            </div>
+          </div>,
+          document.body
+        )}
     </>
   );
 };

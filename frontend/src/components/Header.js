@@ -235,152 +235,74 @@ const Header = () => {
                           position: 'absolute'
                         }}
                       >
-                        <div className="container mx-auto px-4">
-                          {/* Enhanced Header with premium styling */}
-                          <div className="bg-gradient-to-r from-orange-100 via-red-50 to-orange-100 px-8 py-6 border-b border-orange-200 relative overflow-hidden">
-                            {/* Background pattern */}
-                            <div className="absolute inset-0 opacity-10">
-                              <div className="absolute top-2 left-10 w-4 h-4 bg-orange-400 rounded-full animate-pulse"></div>
-                              <div className="absolute top-8 right-20 w-3 h-3 bg-red-400 rounded-full animate-bounce"></div>
-                              <div className="absolute bottom-4 left-1/3 w-2 h-2 bg-orange-500 rounded-full animate-ping"></div>
-                            </div>
-                            
-                            <div className="flex items-center space-x-4 relative z-10">
-                              <div className="w-14 h-14 bg-gradient-to-br from-orange-500 via-red-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-2xl transform hover:scale-110 transition-all duration-300">
-                                <BookOpen className="h-7 w-7 text-white drop-shadow-lg" />
+                        <div className="p-6">
+                          {/* Simple Header */}
+                          <div className="bg-gradient-to-r from-orange-100 to-red-100 px-6 py-4 mb-4 rounded-xl">
+                            <div className="flex items-center space-x-3">
+                              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center">
+                                <BookOpen className="h-5 w-5 text-white" />
                               </div>
                               <div>
-                                <h3 className="text-2xl font-black bg-gradient-to-r from-orange-700 via-red-700 to-orange-800 bg-clip-text text-transparent mb-1">
-                                  Technology Tracks
-                                </h3>
-                                <p className="text-base text-gray-700 font-medium">🚀 Choose your career path & transform your future</p>
+                                <h3 className="text-xl font-bold text-orange-800">Technology Tracks</h3>
+                                <p className="text-sm text-gray-600">Choose your career path</p>
                               </div>
                             </div>
                           </div>
-                          
-                          {/* Enhanced Categories Grid */}
-                          <div className="p-8 max-h-96 overflow-y-auto">
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                          {/* Simple Categories Grid */}
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
                             {technologyTracks.length > 0 ? (
-                              technologyTracks.map((track, index) => (
+                              technologyTracks.map((track) => (
                                 <Link
                                   key={track.id}
                                   to={track.path}
-                                  className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-white hover:bg-gradient-to-br hover:from-orange-50 hover:via-white hover:to-red-50 transition-all duration-500 hover:shadow-2xl hover:scale-[1.03] hover:border-orange-300 transform"
+                                  className="group flex items-center space-x-3 p-3 rounded-xl border border-gray-200 bg-white hover:bg-orange-50 hover:border-orange-300 transition-all duration-200"
                                   onClick={() => setIsCoursesOpen(false)}
-                                  style={{
-                                    animationDelay: `${index * 100}ms`
-                                  }}
                                 >
-                                  <div className="p-6">
-                                    <div className="flex items-center space-x-5">
-                                      {/* Enhanced Logo */}
-                                      <div className="relative">
-                                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-gray-50 via-white to-gray-100 group-hover:from-orange-100 group-hover:via-red-50 group-hover:to-orange-100 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-lg group-hover:shadow-2xl border-2 border-gray-200 group-hover:border-orange-300">
-                                          <img 
-                                            src={track.logo} 
-                                            alt={track.name}
-                                            className="w-9 h-9 object-contain group-hover:scale-125 transition-all duration-500 filter group-hover:brightness-110"
-                                            onError={(e) => {
-                                              e.target.style.display = 'none';
-                                              e.target.nextElementSibling.style.display = 'flex';
-                                            }}
-                                          />
-                                          <div className="hidden w-9 h-9 bg-gradient-to-br from-orange-100 to-red-100 rounded-xl flex items-center justify-center">
-                                            <BookOpen className="h-5 w-5 text-orange-600" />
-                                          </div>
-                                        </div>
-                                        
-                                        {/* Enhanced Course Count Badge */}
-                                        <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-orange-500 via-red-500 to-orange-600 rounded-full flex items-center justify-center text-white text-sm font-black transform group-hover:scale-125 transition-all duration-300 shadow-xl group-hover:shadow-2xl border-2 border-white">
-                                          {track.courseCount}
-                                          
-                                          {/* Sparkle effect */}
-                                          <div className="absolute top-0 right-0 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
-                                        </div>
-                                      </div>
-                                      
-                                      {/* Enhanced Content */}
-                                      <div className="flex-1 min-w-0">
-                                        <h4 className="font-black text-lg text-gray-900 group-hover:text-orange-700 transition-colors duration-300 mb-2 line-clamp-1">
-                                          {track.name}
-                                        </h4>
-                                        <p className="text-sm text-gray-600 group-hover:text-orange-600 transition-colors duration-300 font-semibold">
-                                          🎯 {track.courseCount} professional course{track.courseCount !== 1 ? 's' : ''} available
-                                        </p>
-                                        
-                                        {/* Progress indicator */}
-                                        <div className="mt-3 w-full h-1 bg-gray-200 rounded-full overflow-hidden">
-                                          <div 
-                                            className="h-full bg-gradient-to-r from-orange-500 to-red-500 rounded-full transform group-hover:scale-x-100 transition-transform duration-700 origin-left"
-                                            style={{ width: `${Math.min((track.courseCount / 10) * 100, 100)}%` }}
-                                          ></div>
-                                        </div>
-                                      </div>
-                                      
-                                      {/* Enhanced Arrow */}
-                                      <div className="flex-shrink-0">
-                                        <div className="w-10 h-10 rounded-xl bg-gray-100 group-hover:bg-gradient-to-br group-hover:from-orange-100 group-hover:to-red-100 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
-                                          <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-orange-600 group-hover:translate-x-1 transition-all duration-300" />
-                                        </div>
-                                      </div>
-                                    </div>
+                                  <div className="w-12 h-12 rounded-xl bg-gray-100 group-hover:bg-orange-100 flex items-center justify-center">
+                                    {track.logo ? (
+                                      <img 
+                                        src={track.logo} 
+                                        alt={track.name}
+                                        className="w-7 h-7 object-contain"
+                                      />
+                                    ) : (
+                                      <BookOpen className="h-6 w-6 text-orange-600" />
+                                    )}
                                   </div>
-                                  
-                                  {/* Enhanced hover overlay */}
-                                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-red-500/5 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                  
-                                  {/* Shine effect */}
-                                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                                  <div className="flex-1">
+                                    <h4 className="font-semibold text-gray-900 group-hover:text-orange-700">
+                                      {track.name}
+                                    </h4>
+                                    <p className="text-sm text-gray-600">
+                                      {track.courseCount} course{track.courseCount !== 1 ? 's' : ''}
+                                    </p>
                                   </div>
+                                  <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-orange-600" />
                                 </Link>
                               ))
                             ) : (
-                              <div className="col-span-2 text-center py-12 text-gray-500">
-                                <div className="w-20 h-20 bg-gradient-to-br from-orange-100 to-red-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                                  <BookOpen className="h-10 w-10 text-orange-400" />
-                                </div>
-                                <p className="font-bold text-lg mb-2">No categories available</p>
-                                <p className="text-sm">Categories will appear here once added via admin panel</p>
+                              <div className="col-span-2 text-center py-8 text-gray-500">
+                                <BookOpen className="h-12 w-12 mx-auto mb-3 text-gray-300" />
+                                <p>No categories available</p>
                               </div>
                             )}
                           </div>
-                          
-                          
-                          {/* Enhanced Footer */}
-                          <div className="mt-8 pt-6 border-t-2 border-orange-200 bg-gradient-to-r from-orange-50 via-red-50 to-orange-50 -mx-8 px-8 py-6 relative overflow-hidden">
-                            {/* Background decoration */}
-                            <div className="absolute inset-0 opacity-20">
-                              <div className="absolute top-2 left-8 w-3 h-3 bg-orange-400 rounded-full animate-bounce"></div>
-                              <div className="absolute bottom-2 right-12 w-2 h-2 bg-red-400 rounded-full animate-ping"></div>
-                            </div>
-                            
-                            <div className="flex items-center justify-between relative z-10">
-                              <div>
-                                <p className="text-lg font-black text-gray-800 mb-1">🚀 Explore All Courses</p>
-                                <p className="text-sm text-gray-600 font-semibold">15+ professional certifications • Industry-recognized training</p>
-                              </div>
-                              <Link
-                                to="/courses"
-                                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-600 via-red-600 to-orange-700 text-white text-base font-black rounded-2xl hover:from-orange-700 hover:to-red-700 transition-all duration-500 transform hover:scale-110 shadow-2xl hover:shadow-3xl group relative overflow-hidden"
-                                onClick={() => setIsCoursesOpen(false)}
-                              >
-                                {/* Button shine effect */}
-                                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                
-                                <span className="relative z-10">View All Courses</span>
-                                <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300 relative z-10" />
-                                
-                                {/* Sparkle effects */}
-                                <div className="absolute top-1 right-2 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
-                                <div className="absolute bottom-1 left-2 w-1.5 h-1.5 bg-white rounded-full opacity-0 group-hover:opacity-100 animate-ping animation-delay-200"></div>
-                              </Link>
-                            </div>
-                          </div>
+
+                          {/* Simple Footer */}
+                          <div className="pt-4 border-t border-gray-200 flex justify-between items-center">
+                            <span className="text-sm text-gray-600">Explore all courses</span>
+                            <Link
+                              to="/courses"
+                              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-600 to-red-600 text-white text-sm font-semibold rounded-xl hover:from-orange-700 hover:to-red-700 transition-all duration-200"
+                              onClick={() => setIsCoursesOpen(false)}
+                            >
+                              View All
+                              <ArrowRight className="ml-2 h-4 w-4" />
+                            </Link>
                           </div>
                         </div>
-                      </div>, document.body
+                      </div>
                     )}
                   </div>
                 ))}

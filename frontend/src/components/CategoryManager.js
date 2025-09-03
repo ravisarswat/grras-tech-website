@@ -419,8 +419,15 @@ const CategoryManager = ({ content, updateContent }) => {
                   </button>
                   
                   <button
-                    onClick={() => deleteCategory(slug)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      console.log('🔴 DELETE BUTTON CLICKED!', slug);
+                      alert('Delete button clicked for: ' + slug);
+                      deleteCategory(slug);
+                    }}
                     className="p-2 text-red-600 hover:bg-red-50 rounded border border-red-200 ml-4"
+                    title="Delete category"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>

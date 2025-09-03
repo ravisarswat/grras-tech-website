@@ -134,43 +134,24 @@ const Header = () => {
               {navigationItems.map((item) => (
                 <div key={item.name} className="relative">
                   {item.hasDropdown ? (
-                    <div className="relative group">
-                      <button className="flex items-center space-x-1 text-gray-800 hover:text-orange-600 font-bold py-3 px-2">
+                    <div className="relative">
+                      <button
+                        ref={coursesButtonRef}
+                        className="flex items-center space-x-1 text-gray-800 hover:text-orange-600 font-bold py-3 px-2 rounded-xl transition-all duration-200"
+                        onMouseEnter={openDropdown}
+                        onMouseLeave={() => {
+                          // Delay close to allow moving to dropdown
+                          setTimeout(() => {
+                            if (!dropdownRef.current?.matches(':hover') && !coursesButtonRef.current?.matches(':hover')) {
+                              closeDropdown();
+                            }
+                          }, 100);
+                        }}
+                        onClick={openDropdown}
+                      >
                         <span>{item.name}</span>
                         <ChevronDown className="h-4 w-4" />
                       </button>
-
-                      {/* FIXED Z-INDEX DROPDOWN */}
-                      <div className="absolute left-0 top-full mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200" style={{ zIndex: 10000, position: 'absolute', top: '100%', left: '0' }}>
-                        <h3 className="font-bold text-orange-600 text-lg mb-3 border-b pb-2">Technology Tracks</h3>
-                        <div className="space-y-2">
-                          {technologyTracks.length > 0 ? (
-                            technologyTracks.map((track) => (
-                              <a
-                                key={track.id}
-                                href={track.path}
-                                className="flex items-center justify-between p-3 hover:bg-orange-50 rounded-lg border border-transparent hover:border-orange-200"
-                              >
-                                <div>
-                                  <div className="font-semibold text-gray-900">{track.name}</div>
-                                  <div className="text-sm text-gray-500">{track.courseCount} courses</div>
-                                </div>
-                                <ArrowRight className="h-4 w-4 text-orange-500" />
-                              </a>
-                            ))
-                          ) : (
-                            <div className="text-center text-gray-500 py-4">Loading categories...</div>
-                          )}
-                        </div>
-                        <div className="mt-4 pt-3 border-t">
-                          <a 
-                            href="/courses" 
-                            className="block w-full text-center px-4 py-3 bg-gradient-to-r from-orange-600 to-red-600 text-white font-bold rounded-lg hover:from-orange-700 hover:to-red-700"
-                          >
-                            🚀 View All Courses
-                          </a>
-                        </div>
-                      </div>
                     </div>
                   ) : (
                     <Link

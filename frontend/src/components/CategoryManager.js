@@ -360,43 +360,12 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                 <div 
                   ref={(el) => formRefs.current[slug] = el}
                   className="space-y-4 pt-4 border-t bg-blue-50 p-4 rounded-lg"
-                  // Comprehensive event stopping to prevent collapse
-                  onKeyDown={(e) => {
-                    e.stopPropagation();
-                    console.log('🔑 Form keydown stopped:', e.key);
-                  }}
-                  onKeyUp={(e) => {
-                    e.stopPropagation();
-                    console.log('🔑 Form keyup stopped:', e.key);
-                  }}
-                  onKeyPress={(e) => {
-                    e.stopPropagation();
-                  }}
-                  onPaste={(e) => {
-                    e.stopPropagation();
-                    console.log('📋 Paste event stopped');
-                  }}
-                  onInput={(e) => {
-                    e.stopPropagation();
-                  }}
-                  onChange={(e) => {
-                    e.stopPropagation();
-                  }}
+                  // Only prevent click/mouse events that could trigger collapse - allow keyboard events through
                   onClick={(e) => {
-                    e.stopPropagation(); // Prevent any click handlers
+                    e.stopPropagation(); // Prevent any click handlers from collapsing
                   }}
                   onMouseDown={(e) => {
-                    e.stopPropagation();
-                  }}
-                  onMouseUp={(e) => {
-                    e.stopPropagation();
-                  }}
-                  onFocus={(e) => {
-                    e.stopPropagation();
-                  }}
-                  onBlur={(e) => {
-                    // Only stop propagation, don't close panel on blur within form
-                    e.stopPropagation();
+                    e.stopPropagation(); // Prevent mousedown from triggering collapse
                   }}
                   style={{ isolation: 'isolate' }}
                 >

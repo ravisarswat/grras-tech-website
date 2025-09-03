@@ -12,11 +12,30 @@ const Header = () => {
   const { content } = useContent();
   const location = useLocation();
 
-  // Close dropdown on navigation
+  // Optimized dropdown handlers for smooth UX
+  const handleDropdownOpen = () => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+    setIsCoursesOpen(true);
+  };
+
+  const handleDropdownClose = (delay = 200) => {
+    const timeout = setTimeout(() => {
+      setIsCoursesOpen(false);
+    }, delay);
+    setDropdownTimeout(timeout);
+  };
+
+  // Cleanup timeouts
   useEffect(() => {
-    setIsCoursesOpen(false);
-    setIsMenuOpen(false);
-  }, [location.pathname]);
+    return () => {
+      if (dropdownTimeout) {
+        clearTimeout(dropdownTimeout);
+      }
+    };
+  }, [dropdownTimeout]);
 
   // Close dropdown when clicking outside
   useEffect(() => {

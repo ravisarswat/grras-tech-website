@@ -97,16 +97,32 @@ const CategoryManager = ({ content, updateContent }) => {
     });
   };
 
-  // Delete Category - Clean Working Version  
+  // Delete Category - Enhanced Debug Version
   const deleteCategory = (slug) => {
+    console.log('🗑️ DELETE ATTEMPT:', slug);
+    console.log('🗑️ Available categories:', Object.keys(categories));
+    
     const categoryName = categories[slug]?.name;
+    console.log('🗑️ Category name:', categoryName);
+    
+    if (!categoryName) {
+      alert('Category not found!');
+      return;
+    }
+    
     const courseCount = getCoursesByCategory(slug).length;
+    console.log('🗑️ Course count:', courseCount);
     
     const confirmMessage = courseCount > 0 
       ? `Delete "${categoryName}"?\n\nThis will remove it from ${courseCount} course(s).`
       : `Delete "${categoryName}"?`;
     
-    if (!confirm(confirmMessage)) return;
+    if (!confirm(confirmMessage)) {
+      console.log('❌ User cancelled deletion');
+      return;
+    }
+
+    console.log('✅ User confirmed deletion');
 
     // Create new categories without deleted one
     const newCategories = {};
@@ -116,14 +132,22 @@ const CategoryManager = ({ content, updateContent }) => {
       }
     }
     
+    console.log('🗑️ New categories keys:', Object.keys(newCategories));
+    console.log('🗑️ Deleted category removed?', !(slug in newCategories));
+    
     // Remove category from courses
     const updatedCourses = courses.map(course => ({
       ...course,
       categories: (course.categories || []).filter(cat => cat !== slug)
     }));
 
+    console.log('🗑️ Updated courses count:', updatedCourses.length);
+
     // Update state
+    console.log('🗑️ Calling updateContent for categories...');
     updateContent('courseCategories', newCategories);
+    
+    console.log('🗑️ Calling updateContent for courses...');
     updateContent('courses', updatedCourses);
 
     // Close expanded panel
@@ -131,7 +155,8 @@ const CategoryManager = ({ content, updateContent }) => {
       setExpandedCategory(null);
     }
 
-    alert(`✅ Category "${categoryName}" deleted!`);
+    console.log('✅ Delete operations completed');
+    alert(`✅ Category "${categoryName}" deleted! Check console and click "Save Changes" to persist.`);
   };
 
   // Get courses by category

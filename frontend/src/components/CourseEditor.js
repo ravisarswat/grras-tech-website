@@ -361,21 +361,33 @@ const CourseEditor = ({
                     key={`category-select-${course.slug || index}-${course.category || 'none'}`}
                     value={course.category || ''}
                     onChange={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      
                       const selectedCategory = e.target.value;
-                      console.log('🎯 CATEGORY SELECTION:', selectedCategory);
-                      console.log('📋 Available categories:', Object.keys(dynamicCategories));
-                      console.log('🔍 Current course.category:', course.category);
+                      console.log('🎯 ADMIN CATEGORY SELECTION EVENT:');
+                      console.log('   Selected:', selectedCategory);
+                      console.log('   Course Title:', course.title);  
+                      console.log('   Course Index:', index);
+                      console.log('   Available Categories:', Object.keys(dynamicCategories));
+                      console.log('   Current course.category:', course.category);
                       
-                      // Update category - this will trigger immediate UI update
-                      onUpdate(index, 'category', selectedCategory);
+                      // Force immediate update using the parent onUpdate function
+                      try {
+                        onUpdate(index, 'category', selectedCategory);
+                        console.log('✅ onUpdate called for category field');
+                        
+                        // Also update categories array for frontend compatibility  
+                        setTimeout(() => {
+                          onUpdate(index, 'categories', selectedCategory ? [selectedCategory] : []);
+                          console.log('✅ onUpdate called for categories array');
+                        }, 50);
+                        
+                      } catch (error) {
+                        console.error('❌ Error updating category:', error);
+                      }
                       
-                      // Update categories array in next tick to avoid conflicts
-                      setTimeout(() => {
-                        onUpdate(index, 'categories', selectedCategory ? [selectedCategory] : []);
-                      }, 0);
-                      
-                      console.log('✅ Category updated to:', selectedCategory);
-                      console.log('✅ Categories array updated to:', selectedCategory ? [selectedCategory] : []);
+                      console.log('✅ CATEGORY SELECTION COMPLETE');
                     }}
                     className="form-input"
                   >

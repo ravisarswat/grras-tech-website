@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Plus, Edit, Trash2, Eye, EyeOff, ChevronDown, ChevronUp, Upload } from 'lucide-react';
-import axios from 'axios';
+import { Plus, Trash2, Eye, EyeOff, ChevronDown, ChevronUp } from 'lucide-react';
 
 const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
   const [expandedCategory, setExpandedCategory] = useState(null);

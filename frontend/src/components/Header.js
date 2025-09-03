@@ -278,57 +278,6 @@ const Header = () => {
                       </Link>
                     )}
 
-                    {/* Ultra Simple Dropdown - Guaranteed to Work */}
-                    {item.hasDropdown && isCoursesOpen && (
-                      <div 
-                        className="absolute bg-white border border-gray-300 shadow-lg rounded-lg p-4 mt-2 min-w-96"
-                        onMouseEnter={handleDropdownOpen}
-                        onMouseLeave={() => handleDropdownClose(200)}
-                        style={{
-                          position: 'absolute',
-                          top: '100%',
-                          left: '50%',
-                          transform: 'translateX(-50%)',
-                          zIndex: 9999,
-                          backgroundColor: 'white',
-                          minWidth: '400px'
-                        }}
-                      >
-                        <div className="text-center mb-4">
-                          <h3 className="text-lg font-bold text-gray-800">Technology Tracks</h3>
-                        </div>
-                        
-                        <div className="space-y-2">
-                          {technologyTracks.length > 0 ? (
-                            technologyTracks.map((track) => (
-                              <Link
-                                key={track.id}
-                                to={track.path}
-                                className="block p-2 hover:bg-orange-50 rounded text-gray-700 hover:text-orange-700"
-                                onClick={() => setIsCoursesOpen(false)}
-                              >
-                                <div className="font-semibold">{track.name}</div>
-                                <div className="text-sm text-gray-500">{track.courseCount} courses</div>
-                              </Link>
-                            ))
-                          ) : (
-                            <div className="text-center text-gray-500 py-4">
-                              Loading categories...
-                            </div>
-                          )}
-                        </div>
-                        
-                        <div className="mt-4 pt-4 border-t border-gray-200 text-center">
-                          <Link
-                            to="/courses"
-                            className="inline-block px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700"
-                            onClick={() => setIsCoursesOpen(false)}
-                          >
-                            View All Courses
-                          </Link>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 ))}
               </nav>

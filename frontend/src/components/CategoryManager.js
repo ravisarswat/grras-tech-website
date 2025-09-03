@@ -6,48 +6,60 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
   const [expandedCategory, setExpandedCategory] = useState(null);
   const formRefs = useRef({});
 
-  // Add global keyboard event handler with robust focus detection
+  // Add global keyboard event handler with Firefox-specific focus detection
   useEffect(() => {
+    let focusCheckTimer = null;
+    
     const handleGlobalKeyDown = (e) => {
-      // Only handle Escape key for closing panels
+      // Only handle Escape key for closing panels - ignore all other keys completely
       if (e.key !== 'Escape') {
-        return; // Let all other keys through without interference
+        return;
       }
       
-      // For Escape key, check if we're inside any form field
-      if (expandedCategory && formRefs.current[expandedCategory]) {
-        const formElement = formRefs.current[expandedCategory];
-        
-        // Multiple methods to detect if focus is inside form (Firefox compatibility)
+      if (!expandedCategory || !formRefs.current[expandedCategory]) {
+        return;
+      }
+      
+      const formElement = formRefs.current[expandedCategory];
+      
+      // Firefox-compatible focus detection with multiple fallbacks
+      const checkFocusAndClose = () => {
         const isInsideForm = (
-          // Method 1: Check event target
-          formElement.contains(e.target) ||
-          // Method 2: Check active element with small delay tolerance
+          // Check the event target first (most reliable)
+          (e.target && formElement.contains(e.target)) ||
+          // Check active element
           (document.activeElement && formElement.contains(document.activeElement)) ||
-          // Method 3: Check if target is an input/textarea/select
-          (e.target && (
-            e.target.tagName === 'INPUT' || 
-            e.target.tagName === 'TEXTAREA' || 
-            e.target.tagName === 'SELECT'
-          ) && formElement.contains(e.target))
+          // Check for any focused input/textarea/select inside form
+          (formElement.querySelector('input:focus, textarea:focus, select:focus')) ||
+          // Check if any form element has focus class or attribute
+          (formElement.querySelector('[data-focused="true"]'))
         );
         
-        if (isInsideForm) {
-          console.log('🔐 Escape key blocked - focus is inside form');
-          return; // Don't close if focus is inside form
+        if (!isInsideForm) {
+          console.log('✅ Closing panel - no focus detected inside form');
+          setExpandedCategory(null);
+        } else {
+          console.log('🔐 Keeping panel open - focus detected inside form');
         }
+      };
+      
+      // For Firefox compatibility, add small delay to let focus events settle
+      if (focusCheckTimer) {
+        clearTimeout(focusCheckTimer);
       }
       
-      // Only close on Escape when focus is clearly outside any form
-      if (expandedCategory) {
-        console.log('✅ Escape key closing panel - focus outside form');
-        setExpandedCategory(null);
-      }
+      focusCheckTimer = setTimeout(checkFocusAndClose, 0);
     };
 
-    // Use capture phase to catch events early
+    // Use capture phase for more reliable event handling
     document.addEventListener('keydown', handleGlobalKeyDown, true);
-    return () => document.removeEventListener('keydown', handleGlobalKeyDown, true);
+    
+    return () => {
+      document.removeEventListener('keydown', handleGlobalKeyDown, true);
+      if (focusCheckTimer) {
+        clearTimeout(focusCheckTimer);
+      }
+    };
   }, [expandedCategory]);
 
   const categories = content?.courseCategories || {};

@@ -1,7 +1,7 @@
 import requests
 import json
 
-BASE_URL = "https://grras-course-manager.preview.emergentagent.com/api"
+BASE_URL = "https://ecstatic-jackson.preview.emergentagent.com/api"
 
 # Get admin token
 response = requests.post(f"{BASE_URL}/admin/login", json={"password": "grras@admin2024"})

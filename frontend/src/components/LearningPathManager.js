@@ -157,16 +157,42 @@ const LearningPathManager = ({ content, updateContent }) => {
   };
 
   const removePathCourse = (pathSlug, courseIndex) => {
-    const path = learningPaths[pathSlug];
-    const newCourses = path.courses.filter((_, i) => i !== courseIndex);
+    console.log('🗑️ Remove Course clicked:', { pathSlug, courseIndex });
     
-    // Reorder courses
-    newCourses.forEach((course, index) => {
-      course.order = index + 1;
-    });
-    
-    updatePath(pathSlug, 'courses', newCourses);
-    updatePath(pathSlug, 'totalCourses', newCourses.length);
+    try {
+      const path = learningPaths[pathSlug];
+      const newCourses = path.courses.filter((_, i) => i !== courseIndex);
+      
+      console.log('📚 Filtered courses:', newCourses);
+      
+      // Reorder courses (though we use index+1 for display now)
+      newCourses.forEach((course, index) => {
+        course.order = index + 1;
+      });
+      
+      // FIXED: Single atomic update to avoid race condition
+      const updatedPath = {
+        ...path,
+        courses: newCourses,
+        totalCourses: newCourses.length
+      };
+      
+      const newPaths = {
+        ...learningPaths,
+        [pathSlug]: updatedPath
+      };
+      
+      console.log('🆕 Updated path after deletion:', updatedPath);
+      
+      updateContent('learningPaths', newPaths);
+      
+      console.log(`✅ Successfully removed course from learning path: ${path.title}`);
+      alert(`✅ Course removed successfully! Remaining courses: ${newCourses.length}`);
+      
+    } catch (error) {
+      console.error('❌ Error removing course:', error);
+      alert(`Error removing course: ${error.message}`);
+    }
   };
 
   const movePathCourse = (pathSlug, courseIndex, direction) => {

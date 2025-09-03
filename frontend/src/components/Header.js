@@ -177,7 +177,7 @@ const Header = () => {
               </Link>
 
               {/* Enhanced Desktop Navigation */}
-              <nav className="hidden lg:flex items-center space-x-8">
+              <nav className="hidden lg:flex items-center space-x-8 relative">
                 {filteredNavigationItems.map((item) => (
                   <div key={item.name} className="relative">
                     {item.hasDropdown ? (

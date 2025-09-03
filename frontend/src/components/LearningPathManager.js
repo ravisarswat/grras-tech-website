@@ -407,7 +407,15 @@ const LearningPathManager = ({ content, updateContent }) => {
                   {/* Course Progression */}
                   <div className="border-t border-gray-200 pt-6">
                     <div className="flex justify-between items-center mb-4">
-                      <h4 className="text-lg font-medium text-gray-900">Course Progression</h4>
+                      <div>
+                        <h4 className="text-lg font-medium text-gray-900">Course Progression</h4>
+                        <p className="text-sm text-gray-500">
+                          {availableCourses.length > 0 
+                            ? `${availableCourses.length} courses available for selection`
+                            : 'No courses available - add courses first'
+                          }
+                        </p>
+                      </div>
                       <button
                         onClick={() => addCourseToPath(pathSlug)}
                         className={`btn-outline btn-sm flex items-center gap-2 ${

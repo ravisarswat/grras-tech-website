@@ -843,90 +843,12 @@ const AdminContent = () => {
             </div>
           )}
 
-          {/* Courses Tab - Enhanced with CourseEditor */}
+          {/* Courses Tab */}
           {activeTab === 'courses' && (
-            <div className="space-y-6">
-              <div className="flex justify-between items-center">
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900">Courses Management</h2>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Add, edit, and manage course content. Changes will be reflected everywhere automatically.
-                  </p>
-                </div>
-                <div className="text-sm text-gray-500">
-                  {content?.courses ? `${content.courses.length} courses` : 'Loading courses...'}
-                </div>
-              </div>
-              
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <div className="flex items-start gap-3">
-                  <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5" />
-                  <div>
-                    <h4 className="text-blue-900 font-medium">Single Source of Truth</h4>
-                    <p className="text-blue-800 text-sm mt-1">
-                      Courses added here will automatically appear in the courses list, dropdown navigation, 
-                      detail pages, and PDF downloads. No code changes required.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex justify-end mb-4">
-                <button
-                  onClick={addCourse}
-                  className="btn-primary flex items-center gap-2"
-                >
-                  <Plus className="h-4 w-4" />
-                  Add New Course
-                </button>
-              </div>
-              
-              {!content?.courses ? (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                  <p className="text-yellow-800">Loading courses data...</p>
-                </div>
-              ) : content.courses.length === 0 ? (
-                <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center">
-                  <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No Courses Yet</h3>
-                  <p className="text-gray-600 mb-4">
-                    Get started by adding your first course. It will appear automatically across your website.
-                  </p>
-                  <button
-                    onClick={addCourse}
-                    className="btn-primary flex items-center gap-2 mx-auto"
-                  >
-                    <Plus className="h-4 w-4" />
-                    Add Your First Course
-                  </button>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {content.courses.map((course, index) => (
-                    <CourseEditor
-                      key={course.slug || index}
-                      course={course}
-                      index={index}
-                      courses={content.courses}
-                      categories={content.courseCategories || {}}
-                      onUpdate={updateCourse}
-                      onDelete={deleteCourse}
-                      onMove={moveCourse}
-                    />
-                  ))}
-                  
-                  <div className="text-center py-8">
-                    <button
-                      onClick={addCourse}
-                      className="btn-outline flex items-center gap-2 mx-auto"
-                    >
-                      <Plus className="h-4 w-4" />
-                      Add Another Course
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
+            <CourseManager 
+              content={content} 
+              updateContent={updateContent}
+            />
           )}
 
           {/* Categories Tab */}

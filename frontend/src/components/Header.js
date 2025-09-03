@@ -121,10 +121,14 @@ const Header = () => {
 
   return (
     <>
-      <header className="bg-white/98 backdrop-blur-xl shadow-2xl border-b border-orange-100/50 sticky top-0 relative overflow-hidden" style={{ zIndex: 9999 }}>
-        {/* Beautiful Background Effects */}
-        <div className="absolute inset-0 bg-gradient-to-r from-orange-50/30 via-white to-red-50/30"></div>
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 via-red-500 to-orange-600"></div>
+      <header className="bg-white/95 backdrop-blur-2xl shadow-2xl border-b border-orange-100/50 sticky top-0 relative overflow-hidden" style={{ zIndex: 9999 }}>
+        {/* Enhanced Beautiful Background Effects */}
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-50/40 via-white/95 to-red-50/40"></div>
+        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-orange-500 via-red-500 to-orange-600 shadow-lg"></div>
+        
+        {/* Subtle floating orbs for premium feel */}
+        <div className="absolute top-0 left-1/4 w-32 h-32 bg-gradient-to-r from-orange-400/10 to-red-400/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-1/4 w-24 h-24 bg-gradient-to-r from-red-400/10 to-orange-400/10 rounded-full blur-2xl"></div>
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex justify-between items-center py-4">

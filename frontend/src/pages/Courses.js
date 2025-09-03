@@ -107,39 +107,34 @@ const Courses = () => {
       const contentData = contentResponse.data.content || {};
       const categoriesData = contentData.courseCategories || {};
       
-      // FIXED: Use actual database category assignment instead of hardcoded mapping
+      // 100% DATABASE-DRIVEN category mapping
       const mapCourseToCategories = (course) => {
-        console.log('🔍 Mapping course:', course.title, 'Category field:', course.category, 'Categories field:', course.categories);
+        console.log('🔍 Course:', course.title);
+        console.log('   - course.category:', course.category);  
+        console.log('   - course.categories:', course.categories);
+        console.log('   - Available DB categories:', Object.keys(categoriesData));
         
-        // Priority 1: Use categories array if available (proper format)
+        // Priority 1: Use categories array (new format)
         if (course.categories && Array.isArray(course.categories) && course.categories.length > 0) {
           console.log('✅ Using categories array:', course.categories);
           return course.categories;
         }
         
-        // Priority 2: Use single category field and convert to array
+        // Priority 2: Use single category field - DIRECT DATABASE MATCH ONLY
         if (course.category && course.category.trim() !== '') {
           const categorySlug = course.category.trim();
-          console.log('✅ Using single category:', categorySlug);
           
-          // Check if this category exists in our dynamic categories
+          // ONLY exact database matches - no hardcoded mapping
           if (categoriesData[categorySlug]) {
+            console.log('✅ Direct DB match:', categorySlug);
             return [categorySlug];
           }
           
-          // Try to find matching category by name comparison
-          const matchingCategory = Object.entries(categoriesData).find(([slug, catData]) => 
-            catData.name?.toLowerCase() === course.category.toLowerCase() ||
-            catData.title?.toLowerCase() === course.category.toLowerCase()
-          );
-          
-          if (matchingCategory) {
-            console.log('✅ Found matching category by name:', matchingCategory[0]);
-            return [matchingCategory[0]];
-          }
+          console.log('❌ Category not found in DB:', categorySlug);
+          console.log('❌ Available categories:', Object.keys(categoriesData));
         }
         
-        console.log('⚠️ No category assignment found, using fallback');
+        console.log('⚠️ Using fallback: other');
         return ['other'];
       };
 

@@ -229,8 +229,7 @@ const Header = () => {
                                     <ArrowRight className="h-4 w-4 text-orange-600" />
                                   </Link>
                                 ))
-                              </div>
-                            ) : (
+                              ) : (
                                 <div className="text-center text-gray-500 py-6">
                                   <div className="text-lg">Loading categories...</div>
                                 </div>

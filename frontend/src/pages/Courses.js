@@ -372,7 +372,7 @@ const Courses = () => {
                     key={category.id}
                     data-category-id={category.id}
                     onClick={() => handleCategorySelect(category.id)}
-                    className={`group relative px-8 py-5 rounded-2xl font-bold whitespace-nowrap transition-all duration-500 flex items-center gap-4 min-w-0 transform hover:scale-105 ${
+                    className={`group relative px-4 sm:px-8 py-3 sm:py-5 rounded-xl sm:rounded-2xl font-bold whitespace-nowrap transition-all duration-500 flex items-center gap-2 sm:gap-4 min-w-0 transform hover:scale-105 text-sm sm:text-base ${
                       selectedCategory === category.id
                         ? 'bg-gradient-to-r from-orange-600 via-red-600 to-orange-700 text-white shadow-2xl scale-110 ring-4 ring-orange-200'
                         : 'bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700 hover:from-orange-50 hover:to-red-50 hover:text-orange-800 hover:shadow-xl border-2 border-gray-200 hover:border-orange-300'

@@ -250,7 +250,9 @@ const Header = () => {
                     >
                       <div className="flex-1">
                         <div className="font-semibold text-gray-900 text-sm">{track.name}</div>
-                        <div className="text-xs text-gray-500">{track.courseCount} courses available</div>
+                        <div className="text-xs text-gray-500">
+                          {track.courseCount > 0 ? `${track.courseCount} courses available` : 'Coming soon'}
+                        </div>
                       </div>
                       <ArrowRight className="h-4 w-4 text-orange-500 flex-shrink-0 ml-2" />
                     </a>
@@ -258,6 +260,7 @@ const Header = () => {
                 ) : (
                   <div className="text-center text-gray-500 py-6">
                     <div className="animate-pulse">Loading categories...</div>
+                    <div className="text-xs mt-2">Total courses: {courses.length}</div>
                   </div>
                 )}
               </div>

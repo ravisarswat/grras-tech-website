@@ -107,35 +107,23 @@ const Courses = () => {
       const contentData = contentResponse.data.content || {};
       const categoriesData = contentData.courseCategories || {};
       
-      // 100% DATABASE-DRIVEN category mapping
-      const mapCourseToCategories = (course) => {
-        console.log('🔍 Course:', course.title);
-        console.log('   - course.category:', course.category);  
-        console.log('   - course.categories:', course.categories);
-        console.log('   - Available DB categories:', Object.keys(categoriesData));
+      // 🚀 FRESH DYNAMIC CATEGORY SYSTEM - FUTURE PROOF
+      const getCourseCategories = (course) => {
+        // Get all available categories from database
+        const availableCategories = Object.keys(categoriesData);
         
-        // Priority 1: Use categories array (new format)
+        // Use categories array if exists (new format)
         if (course.categories && Array.isArray(course.categories) && course.categories.length > 0) {
-          console.log('✅ Using categories array:', course.categories);
-          return course.categories;
+          return course.categories.filter(cat => availableCategories.includes(cat));
         }
         
-        // Priority 2: Use single category field - DIRECT DATABASE MATCH ONLY
-        if (course.category && course.category.trim() !== '') {
-          const categorySlug = course.category.trim();
-          
-          // ONLY exact database matches - no hardcoded mapping
-          if (categoriesData[categorySlug]) {
-            console.log('✅ Direct DB match:', categorySlug);
-            return [categorySlug];
-          }
-          
-          console.log('❌ Category not found in DB:', categorySlug);
-          console.log('❌ Available categories:', Object.keys(categoriesData));
+        // Use single category if exists and valid
+        if (course.category && availableCategories.includes(course.category)) {
+          return [course.category];
         }
         
-        console.log('⚠️ Using fallback: other');
-        return ['other'];
+        // Return empty array - no category assigned
+        return [];
       };
 
       const processedCourses = coursesData

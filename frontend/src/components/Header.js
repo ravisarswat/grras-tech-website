@@ -11,6 +11,36 @@ const Header = () => {
   const { content } = useContent();
   const location = useLocation();
 
+  // Close dropdown on navigation
+  useEffect(() => {
+    setIsCoursesOpen(false);
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isCoursesOpen && !event.target.closest('nav')) {
+        setIsCoursesOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isCoursesOpen]);
+
+  // Close dropdown when scrolling
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isCoursesOpen) {
+        setIsCoursesOpen(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isCoursesOpen]);
+
   useEffect(() => {
     if (isMenuOpen) {
       document.body.classList.add('menu-open');

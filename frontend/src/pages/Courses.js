@@ -499,7 +499,7 @@ const Courses = () => {
                   <div className="p-4 sm:p-6 lg:p-8">
                     <div className="flex items-start justify-between mb-6">
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-2xl font-black text-gray-900 mb-4 leading-tight group-hover:text-orange-700 transition-colors duration-300 line-clamp-2">
+                        <h3 className="text-lg sm:text-xl lg:text-2xl font-black text-gray-900 mb-3 sm:mb-4 leading-tight group-hover:text-orange-700 transition-colors duration-300 line-clamp-2">
                           {course.title}
                         </h3>
                         <p className="text-gray-600 text-base leading-relaxed line-clamp-3 group-hover:text-gray-700 transition-colors duration-300">

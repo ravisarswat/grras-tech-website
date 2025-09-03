@@ -102,7 +102,7 @@ const CategoryManager = ({ content, updateContent }) => {
     alert('Test delete called for: ' + slug);
   };
 
-  // Delete Category - Force React Re-render
+  // Delete Category - Fixed with Meta Update
   const deleteCategory = (slug) => {
     console.log('🗑️ DELETE ATTEMPT:', slug);
     console.log('🗑️ Available categories before:', Object.keys(categories));
@@ -132,23 +132,29 @@ const CategoryManager = ({ content, updateContent }) => {
       categories: (course.categories || []).filter(cat => cat !== slug)
     }));
 
-    // Force complete re-render by adding force update key
-    const forceUpdateCategories = {
-      ...newCategories,
-      __forceUpdate: Date.now()
-    };
-
-    console.log('🗑️ Calling updateContent with force update...');
-    updateContent('courseCategories', forceUpdateCategories);
+    console.log('🗑️ Calling updateContent for categories and courses...');
+    updateContent('courseCategories', newCategories);
     updateContent('courses', updatedCourses);
+
+    // 🔥 CRITICAL FIX: Force meta update so Save Changes button activates
+    const meta = content?.meta || {};
+    updateContent('meta', {
+      ...meta,
+      lastModified: new Date().toISOString(),
+      modifiedBy: 'admin-delete',
+      changeType: 'category-delete',
+      deletedCategory: slug
+    });
+
+    console.log('🔥 Meta updated - Save Changes button should now enable');
 
     // Close expanded panel
     if (expandedCategory === slug) {
       setExpandedCategory(null);
     }
 
-    console.log('✅ Delete operations completed with force update');
-    alert(`✅ Category "${categoryName}" deleted and UI should refresh!`);
+    console.log('✅ Delete operations completed with meta update');
+    alert(`✅ Category "${categoryName}" deleted! Save Changes button is now enabled.`);
   };
 
   // Get courses by category

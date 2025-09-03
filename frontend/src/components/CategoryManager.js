@@ -356,7 +356,11 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                         type="text"
                         value={category.slug}
                         onChange={(e) => updateCategory(slug, 'slug', e.target.value)}
+                        onKeyDown={(e) => e.stopPropagation()}
+                        onKeyUp={(e) => e.stopPropagation()}
+                        onKeyPress={(e) => e.stopPropagation()}
                         className="w-full border rounded p-2"
+                        placeholder="category-url-slug"
                       />
                     </div>
                     <div>

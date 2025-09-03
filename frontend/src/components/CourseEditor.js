@@ -367,31 +367,7 @@ const CourseEditor = ({
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Category
                   </label>
-                  {(() => {
-                    // Legacy mapping - match EXACT database slugs
-                    const legacyMapping = {
-                      'certification': 'red-hat-technologies',
-                      'cloud': 'aws-cloud-platform', 
-                      'container': 'kubernetes-ecosystem',
-                      'devops': 'devops-engineering',
-                      'security': 'cybersecurity-ethical-hacking',
-                      'programming': 'programming-development',
-                      'degree': 'degree',
-                      'server': 'server-administration-networking'
-                    };
-                    
-                    // Check if current category needs mapping
-                    const currentCategory = course.category;
-                    if (currentCategory && legacyMapping[currentCategory] && dynamicCategories[legacyMapping[currentCategory]]) {
-                      console.log('🔄 Legacy mapping applied:', currentCategory, '->', legacyMapping[currentCategory]);
-                      // Auto-update to new category slug
-                      setTimeout(() => {
-                        handleFieldUpdate('category', legacyMapping[currentCategory]);
-                      }, 0);
-                    }
-                    
-                    return null;
-                  })()}
+                  {/* 100% Dynamic Category System - No Hardcoded Mappings */}
                   <select
                     key={`category-${course.slug || 'new'}-${Object.keys(dynamicCategories).length}`}
                     value={(() => {

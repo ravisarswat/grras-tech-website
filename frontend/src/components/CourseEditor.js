@@ -384,47 +384,90 @@ const CourseEditor = ({
                     className="form-input"
                   >
                     <option value="">Select level</option>
-                    <optgroup label="🔴 Red Hat Levels">
-                      <option value="Foundation Level">Foundation Level</option>
-                      <option value="Professional Level">Professional Level</option>
-                      <option value="Specialist Level">Specialist Level</option>
-                    </optgroup>
-                    <optgroup label="☁️ AWS Levels">
-                      <option value="Foundation Level">Foundation Level</option>
-                      <option value="Associate Level">Associate Level</option>
-                      <option value="Professional Level">Professional Level</option>
-                    </optgroup>
-                    <optgroup label="⚙️ Kubernetes Levels">
-                      <option value="Administrator Level">Administrator Level</option>
-                      <option value="Security Level">Security Level</option>
-                      <option value="Developer Level">Developer Level</option>
-                    </optgroup>
-                    <optgroup label="🔧 DevOps Levels">
-                      <option value="Foundation Level">Foundation Level</option>
-                      <option value="Professional Level">Professional Level</option>
-                      <option value="Expert Level">Expert Level</option>
-                    </optgroup>
-                    <optgroup label="🛡️ Cybersecurity Levels">
-                      <option value="Foundation Level">Foundation Level</option>
-                      <option value="Professional Level">Professional Level</option>
-                      <option value="Expert Level">Expert Level</option>
-                    </optgroup>
-                    <optgroup label="💻 Programming Levels">
-                      <option value="Beginner Level">Beginner Level</option>
-                      <option value="Intermediate Level">Intermediate Level</option>
-                      <option value="Professional Level">Professional Level</option>
-                    </optgroup>
-                    <optgroup label="🎓 Degree Levels">
-                      <option value="Undergraduate">Undergraduate</option>
-                      <option value="Diploma">Diploma</option>
-                      <option value="Certification">Certification</option>
-                    </optgroup>
-                    <optgroup label="📚 General Levels">
-                      <option value="Beginner">Beginner</option>
-                      <option value="Intermediate">Intermediate</option>
-                      <option value="Advanced">Advanced</option>
-                      <option value="Expert">Expert</option>
-                    </optgroup>
+                    {(() => {
+                      const selectedCategory = course.category;
+                      const categoryData = selectedCategory ? dynamicCategories[selectedCategory] : null;
+                      
+                      // Smart level selection based on category
+                      if (selectedCategory === 'redhat') {
+                        return (
+                          <optgroup label="🔴 Red Hat Levels">
+                            <option value="Foundation Level">Foundation Level</option>
+                            <option value="Professional Level">Professional Level</option>
+                            <option value="Specialist Level">Specialist Level</option>
+                          </optgroup>
+                        );
+                      } else if (selectedCategory === 'aws') {
+                        return (
+                          <optgroup label="☁️ AWS Levels">
+                            <option value="Foundation Level">Foundation Level</option>
+                            <option value="Associate Level">Associate Level</option>
+                            <option value="Professional Level">Professional Level</option>
+                          </optgroup>
+                        );
+                      } else if (selectedCategory === 'kubernetes') {
+                        return (
+                          <optgroup label="⚙️ Kubernetes Levels">
+                            <option value="Administrator Level">Administrator Level</option>
+                            <option value="Security Level">Security Level</option>
+                            <option value="Developer Level">Developer Level</option>
+                          </optgroup>
+                        );
+                      } else if (selectedCategory === 'devops') {
+                        return (
+                          <optgroup label="🔧 DevOps Levels">
+                            <option value="Foundation Level">Foundation Level</option>
+                            <option value="Professional Level">Professional Level</option>
+                            <option value="Expert Level">Expert Level</option>
+                          </optgroup>
+                        );
+                      } else if (selectedCategory === 'cybersecurity') {
+                        return (
+                          <optgroup label="🛡️ Cybersecurity Levels">
+                            <option value="Foundation Level">Foundation Level</option>
+                            <option value="Professional Level">Professional Level</option>
+                            <option value="Expert Level">Expert Level</option>
+                          </optgroup>
+                        );
+                      } else if (selectedCategory === 'programming') {
+                        return (
+                          <optgroup label="💻 Programming Levels">
+                            <option value="Beginner Level">Beginner Level</option>
+                            <option value="Intermediate Level">Intermediate Level</option>
+                            <option value="Professional Level">Professional Level</option>
+                          </optgroup>
+                        );
+                      } else if (selectedCategory === 'degree') {
+                        return (
+                          <optgroup label="🎓 Degree Levels">
+                            <option value="Undergraduate">Undergraduate</option>
+                            <option value="Diploma">Diploma</option>
+                            <option value="Certification">Certification</option>
+                          </optgroup>
+                        );
+                      } else {
+                        // Show all levels when no category selected or unknown category
+                        return (
+                          <>
+                            <optgroup label="📚 General Levels">
+                              <option value="Beginner">Beginner</option>
+                              <option value="Intermediate">Intermediate</option>
+                              <option value="Advanced">Advanced</option>
+                            </optgroup>
+                            <optgroup label="🎓 Academic Levels">
+                              <option value="Undergraduate">Undergraduate</option>
+                              <option value="Diploma">Diploma</option>
+                              <option value="Certification">Certification</option>
+                            </optgroup>
+                            <optgroup label="🏢 Professional Levels">
+                              <option value="Foundation Level">Foundation Level</option>
+                              <option value="Professional Level">Professional Level</option>
+                              <option value="Expert Level">Expert Level</option>
+                            </optgroup>
+                          </>
+                        );
+                      }
+                    })()}
                   </select>
                   <div className="mt-1 text-xs text-gray-500">
                     This determines which level section the course appears in within its category

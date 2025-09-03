@@ -359,30 +359,58 @@ const CourseEditor = ({
                     }}
                     className="form-input"
                   >
-                    <option value="">Select category</option>
-                    {Object.entries(dynamicCategories)
-                      .sort(([, a], [, b]) => (a.order || 999) - (b.order || 999))
-                      .map(([slug, category]) => (
-                        <option key={slug} value={slug}>
-                          {category.icon === 'server' && '🔴'} 
-                          {category.icon === 'cloud' && '☁️'} 
-                          {category.icon === 'container' && '⚙️'} 
-                          {category.icon === 'terminal' && '🔧'} 
-                          {category.icon === 'shield' && '🛡️'} 
-                          {category.icon === 'code' && '💻'} 
-                          {category.icon === 'graduation-cap' && '🎓'} 
-                          {!['server', 'cloud', 'container', 'terminal', 'shield', 'code', 'graduation-cap'].includes(category.icon) && '📚'} 
-                          &nbsp;{category.name}
-                        </option>
-                      ))}
-                    {Object.keys(dynamicCategories).length === 0 && (
-                      <option disabled>No categories available - Add categories first</option>
+                    <option value="">
+                      {Object.keys(dynamicCategories).length === 0 
+                        ? 'Loading categories...' 
+                        : `Select category (${Object.keys(dynamicCategories).length} available)`
+                      }
+                    </option>
+                    
+                    {Object.keys(dynamicCategories).length === 0 ? (
+                      <option disabled>No categories found - Check database connection</option>
+                    ) : (
+                      Object.entries(dynamicCategories)
+                        .sort(([, a], [, b]) => (a.order || 999) - (b.order || 999))
+                        .map(([slug, category]) => {
+                          // Dynamic icon mapping from database
+                          const getIconForCategory = (iconName) => {
+                            const iconMap = {
+                              'server': '🔴',
+                              'cloud': '☁️', 
+                              'container': '⚙️',
+                              'terminal': '🔧',
+                              'shield': '🛡️',
+                              'code': '💻',
+                              'graduation-cap': '🎓',
+                              'book': '📚',
+                              'globe': '🌐',
+                              'database': '🗄️',
+                              'settings': '⚙️'
+                            };
+                            return iconMap[iconName] || '📚';
+                          };
+                          
+                          return (
+                            <option key={slug} value={slug} data-category-name={category.name}>
+                              {getIconForCategory(category.icon)} {category.name || category.title || slug}
+                            </option>
+                          );
+                        })
                     )}
                   </select>
+                  
+                  {/* Enhanced help text with debug info */}
                   <div className="mt-1 text-xs text-gray-500">
-                    {Object.keys(dynamicCategories).length > 0 
-                      ? "This determines which category the course belongs to" 
-                      : "Add categories in the Categories tab first"}
+                    {Object.keys(dynamicCategories).length > 0 ? (
+                      <div>
+                        <div>✅ {Object.keys(dynamicCategories).length} categories loaded from database</div>
+                        <div className="text-gray-400">Current selection: {course.category || 'None'}</div>
+                      </div>
+                    ) : (
+                      <div className="text-red-500">
+                        ⚠️ Categories not loading - Check ContentContext connection
+                      </div>
+                    )}
                   </div>
                 </div>
                 

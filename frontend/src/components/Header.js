@@ -87,39 +87,40 @@ const Header = () => {
               <div className="flex flex-col items-center">
                 <div className="relative">
                   <div className="absolute -inset-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl opacity-0 group-hover:opacity-20 transition-all duration-500 blur-sm"></div>
-                  {/* GRRAS Logo as SVG - Same design, better format */}
+                  {/* GRRAS Original Logo as SVG */}
                   <div className="relative w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center group-hover:scale-110 transition-all duration-500 border-2 border-orange-100">
-                    <svg width="48" height="48" viewBox="0 0 100 100" className="drop-shadow-md">
-                      {/* GRRAS Logo Recreation in SVG */}
+                    <svg width="48" height="48" viewBox="0 0 200 120" className="drop-shadow-md">
+                      {/* GRRAS Logo Recreation based on your actual logo */}
                       <defs>
-                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#ea580c" />
-                          <stop offset="50%" stopColor="#dc2626" />
-                          <stop offset="100%" stopColor="#ea580c" />
+                        <linearGradient id="redGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#ff4444" />
+                          <stop offset="100%" stopColor="#cc0000" />
+                        </linearGradient>
+                        <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#44ff44" />
+                          <stop offset="100%" stopColor="#00cc00" />
+                        </linearGradient>
+                        <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#6699ff" />
+                          <stop offset="100%" stopColor="#0066cc" />
                         </linearGradient>
                       </defs>
                       
-                      {/* Background Circle */}
-                      <circle cx="50" cy="50" r="45" fill="url(#logoGradient)" stroke="#fff" strokeWidth="2"/>
+                      {/* Three diamond shapes like in your logo */}
+                      <rect x="80" y="15" width="20" height="20" rx="4" fill="url(#redGradient)" transform="rotate(45 90 25)"/>
+                      <rect x="60" y="35" width="18" height="18" rx="3" fill="url(#greenGradient)" transform="rotate(45 69 44)"/>
+                      <rect x="100" y="35" width="18" height="18" rx="3" fill="url(#blueGradient)" transform="rotate(45 109 44)"/>
                       
-                      {/* Letter G */}
-                      <text x="50" y="65" 
-                            fontSize="40" 
+                      {/* "grras" text in lowercase bold */}
+                      <text x="100" y="85" 
+                            fontSize="28" 
                             fontFamily="Arial, sans-serif" 
-                            fontWeight="bold" 
-                            fill="white" 
+                            fontWeight="900" 
+                            fill="#000000" 
                             textAnchor="middle"
                             dominantBaseline="middle">
-                        G
+                        grras
                       </text>
-                      
-                      {/* Decorative Elements */}
-                      <circle cx="75" cy="25" r="3" fill="white" opacity="0.8">
-                        <animate attributeName="opacity" values="0.8;0.4;0.8" dur="2s" repeatCount="indefinite"/>
-                      </circle>
-                      <circle cx="25" cy="75" r="2" fill="white" opacity="0.6">
-                        <animate attributeName="opacity" values="0.6;0.3;0.6" dur="3s" repeatCount="indefinite"/>
-                      </circle>
                     </svg>
                   </div>
                 </div>

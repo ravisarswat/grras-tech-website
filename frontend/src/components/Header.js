@@ -5,15 +5,8 @@ import { useContent } from '../contexts/ContentContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCoursesOpen, setIsCoursesOpen] = useState(false);
-  
   const location = useLocation();
   const { content } = useContent();
-
-  // Close dropdown on navigation
-  useEffect(() => {
-    setIsCoursesOpen(false);
-  }, [location.pathname]);
 
   // Get categories for dropdown
   const courseCategories = content?.courseCategories || {};

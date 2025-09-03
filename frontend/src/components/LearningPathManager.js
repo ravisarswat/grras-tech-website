@@ -77,10 +77,17 @@ const LearningPathManager = ({ content, updateContent }) => {
 
   const addCourseToPath = (pathSlug) => {
     const path = learningPaths[pathSlug];
+    
+    // Check if there are available courses to add
+    if (availableCourses.length === 0) {
+      alert('No courses available. Please add courses first in the Courses section.');
+      return;
+    }
+    
     const newCourse = {
       courseSlug: '',
       order: (path.courses?.length || 0) + 1,
-      title: 'Course Title',
+      title: 'Select a course...',
       duration: '4 weeks',
       prerequisite: false
     };
@@ -88,6 +95,9 @@ const LearningPathManager = ({ content, updateContent }) => {
     const newCourses = [...(path.courses || []), newCourse];
     updatePath(pathSlug, 'courses', newCourses);
     updatePath(pathSlug, 'totalCourses', newCourses.length);
+    
+    // Show success message
+    console.log(`Added new course slot to learning path: ${path.title}`);
   };
 
   const updatePathCourse = (pathSlug, courseIndex, field, value) => {

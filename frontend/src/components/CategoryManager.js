@@ -382,7 +382,15 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                 <div 
                   ref={(el) => formRefs.current[slug] = el}
                   className="space-y-4 pt-4 border-t bg-blue-50 p-4 rounded-lg"
-                  // Only prevent click/mouse events that could trigger collapse - allow keyboard events through
+                  // Prevent only problematic keyboard events from bubbling, allow normal input
+                  onKeyDown={(e) => {
+                    // Only stop propagation for keys that might trigger unwanted behavior
+                    if (e.key === 'Escape' || e.key === 'Enter') {
+                      e.stopPropagation();
+                      console.log('🚫 Stopped propagation for potentially problematic key:', e.key);
+                    }
+                    // Let all other keys (typing, paste, etc.) bubble normally
+                  }}
                   onClick={(e) => {
                     e.stopPropagation(); // Prevent any click handlers from collapsing
                   }}

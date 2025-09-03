@@ -109,9 +109,26 @@ const LearningPathManager = ({ content, updateContent }) => {
       
       const newCourses = [...(path.courses || []), newCourse];
       console.log('📚 Updated courses array:', newCourses);
+      console.log('🔢 New courses length:', newCourses.length);
       
-      updatePath(pathSlug, 'courses', newCourses);
-      updatePath(pathSlug, 'totalCourses', newCourses.length);
+      // Update both courses and totalCourses in single call to avoid race conditions
+      const updatedPath = {
+        ...path,
+        courses: newCourses,
+        totalCourses: newCourses.length
+      };
+      
+      console.log('📝 Complete updated path:', updatedPath);
+      
+      // Update the learning paths object
+      const newPaths = {
+        ...learningPaths,
+        [pathSlug]: updatedPath
+      };
+      
+      console.log('🗂️ Complete updated learning paths:', newPaths);
+      
+      updateContent('learningPaths', newPaths);
       
       // Show success message
       console.log(`✅ Successfully added new course slot to learning path: ${path.title}`);

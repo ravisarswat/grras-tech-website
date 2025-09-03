@@ -93,14 +93,13 @@ const Header = () => {
               </div>
             </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8 relative">
+            <nav className="hidden lg:flex items-center space-x-8">
               {navigationItems.map((item) => (
-                <div key={item.name} className="relative">
+                <div key={item.name}>
                   {item.hasDropdown ? (
-                    <div className="relative">
+                    <div className="relative group">
                       <button
-                        className="flex items-center space-x-2 text-gray-800 hover:text-orange-600 font-bold py-3 px-2 rounded-xl transition-all duration-200 hover:bg-orange-50 hover:shadow-md group relative"
+                        className="flex items-center space-x-2 text-gray-800 hover:text-orange-600 font-bold py-3 px-2 rounded-xl transition-all duration-200 hover:bg-orange-50 hover:shadow-md"
                         onMouseEnter={handleDropdownOpen}
                         onMouseLeave={() => handleDropdownClose(300)}
                       >
@@ -108,101 +107,55 @@ const Header = () => {
                         <ChevronDown className="h-4 w-4 group-hover:rotate-180 transition-transform duration-300" />
                       </button>
 
-                      {/* GUARANTEED WORKING DROPDOWN */}
-                      {isCoursesOpen && (
-                        <div 
-                          className="absolute bg-white border-2 border-orange-500 shadow-2xl rounded-lg mt-2"
-                          onMouseEnter={handleDropdownOpen}
-                          onMouseLeave={() => handleDropdownClose(200)}
-                          style={{
-                            position: 'absolute',
-                            top: '100%',
-                            left: '-150px',
-                            width: '400px',
-                            zIndex: 999999,
-                            backgroundColor: 'white',
-                            border: '2px solid #ea580c',
-                            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-                            padding: '1.5rem'
-                          }}
-                        >
-                          <div 
-                            style={{
-                              textAlign: 'center',
-                              fontSize: '1.25rem',
-                              fontWeight: 'bold',
-                              color: '#ea580c',
-                              marginBottom: '1rem'
-                            }}
-                          >
+                      {/* FIXED DROPDOWN WITH DIFFERENT POSITIONING */}
+                      <div 
+                        className={`${isCoursesOpen ? 'block' : 'hidden'} absolute top-full right-0 w-80 bg-white border border-gray-200 rounded-lg shadow-xl`}
+                        onMouseEnter={handleDropdownOpen}
+                        onMouseLeave={() => handleDropdownClose(200)}
+                        style={{
+                          position: 'absolute',
+                          top: '100%',
+                          right: '0',
+                          zIndex: 50,
+                          marginTop: '8px'
+                        }}
+                      >
+                        <div className="p-4">
+                          <h3 className="text-lg font-bold text-orange-800 mb-3 text-center border-b border-orange-200 pb-2">
                             Technology Tracks
-                          </div>
+                          </h3>
                           
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                          <div className="space-y-2">
                             {technologyTracks.length > 0 ? (
                               technologyTracks.map((track) => (
                                 <Link
                                   key={track.id}
                                   to={track.path}
+                                  className="block p-2 hover:bg-orange-50 rounded text-gray-700 hover:text-orange-700 border border-transparent hover:border-orange-200"
                                   onClick={() => setIsCoursesOpen(false)}
-                                  style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-between',
-                                    padding: '0.75rem',
-                                    backgroundColor: '#fff7ed',
-                                    border: '1px solid #fed7aa',
-                                    borderRadius: '0.5rem',
-                                    textDecoration: 'none',
-                                    transition: 'all 0.2s'
-                                  }}
-                                  onMouseEnter={(e) => {
-                                    e.target.style.backgroundColor = '#ffedd5';
-                                    e.target.style.borderColor = '#fb923c';
-                                  }}
-                                  onMouseLeave={(e) => {
-                                    e.target.style.backgroundColor = '#fff7ed';
-                                    e.target.style.borderColor = '#fed7aa';
-                                  }}
                                 >
-                                  <div>
-                                    <div style={{ fontWeight: 'bold', color: '#1f2937', fontSize: '0.9rem' }}>
-                                      {track.name}
-                                    </div>
-                                    <div style={{ color: '#6b7280', fontSize: '0.8rem' }}>
-                                      {track.courseCount} courses
-                                    </div>
-                                  </div>
-                                  <div style={{ color: '#ea580c', fontSize: '1rem' }}>→</div>
+                                  <div className="font-semibold text-sm">{track.name}</div>
+                                  <div className="text-xs text-gray-500">{track.courseCount} courses</div>
                                 </Link>
                               ))
                             ) : (
-                              <div style={{ textAlign: 'center', color: '#6b7280', padding: '1.5rem' }}>
+                              <div className="text-center text-gray-500 py-4 text-sm">
                                 Loading categories...
                               </div>
                             )}
                           </div>
                           
-                          <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '2px solid #fed7aa', textAlign: 'center' }}>
+                          <div className="mt-4 pt-3 border-t border-gray-200">
                             <Link
                               to="/courses"
+                              className="block w-full text-center px-4 py-2 bg-orange-600 text-white font-semibold rounded hover:bg-orange-700 text-sm"
                               onClick={() => setIsCoursesOpen(false)}
-                              style={{
-                                display: 'inline-block',
-                                padding: '0.75rem 1.5rem',
-                                background: 'linear-gradient(to right, #ea580c, #dc2626)',
-                                color: 'white',
-                                fontWeight: 'bold',
-                                borderRadius: '0.5rem',
-                                textDecoration: 'none',
-                                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                              }}
                             >
-                              🚀 View All Courses
+                              View All Courses
                             </Link>
                           </div>
                         </div>
-                      )}
+                      </div>
                     </div>
                   ) : (
                     <Link

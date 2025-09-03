@@ -370,13 +370,24 @@ const CourseEditor = ({
                   </label>
                   <select
                     value={(() => {
-                      // FIXED: Handle legacy category values
+                      // Enhanced category value handling
                       const currentCategory = course.category || '';
-                      console.log('🔍 Current course category:', currentCategory);
-                      console.log('🔍 Available categories:', Object.keys(dynamicCategories));
+                      const availableCategories = Object.keys(dynamicCategories);
+                      
+                      console.log('🎯 Category Selection Debug:');
+                      console.log('   Current course category:', currentCategory);
+                      console.log('   Available categories:', availableCategories);
+                      console.log('   Categories count:', availableCategories.length);
+                      
+                      // If no categories available, show loading state
+                      if (availableCategories.length === 0) {
+                        console.log('⏳ No categories loaded yet');
+                        return '';
+                      }
                       
                       // If current category exists in dynamic categories, use it
-                      if (dynamicCategories[currentCategory]) {
+                      if (currentCategory && dynamicCategories[currentCategory]) {
+                        console.log('✅ Using exact match:', currentCategory);
                         return currentCategory;
                       }
                       
@@ -391,11 +402,29 @@ const CourseEditor = ({
                         'degree': 'degree'
                       };
                       
-                      if (legacyMapping[currentCategory]) {
-                        console.log('🔄 Mapping legacy category:', currentCategory, '→', legacyMapping[currentCategory]);
-                        return legacyMapping[currentCategory];
+                      if (currentCategory && legacyMapping[currentCategory]) {
+                        const mappedCategory = legacyMapping[currentCategory];
+                        if (dynamicCategories[mappedCategory]) {
+                          console.log('🔄 Using legacy mapping:', currentCategory, '→', mappedCategory);
+                          return mappedCategory;
+                        }
                       }
                       
+                      // Try to find category by name match
+                      if (currentCategory) {
+                        const nameMatch = availableCategories.find(slug => {
+                          const category = dynamicCategories[slug];
+                          return category.name?.toLowerCase().includes(currentCategory.toLowerCase()) ||
+                                 category.title?.toLowerCase().includes(currentCategory.toLowerCase());
+                        });
+                        
+                        if (nameMatch) {
+                          console.log('🔍 Found by name match:', currentCategory, '→', nameMatch);
+                          return nameMatch;
+                        }
+                      }
+                      
+                      console.log('❌ No match found, using empty value');
                       return '';
                     })()}
                     onChange={(e) => {

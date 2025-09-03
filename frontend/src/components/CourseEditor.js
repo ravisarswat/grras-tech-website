@@ -356,14 +356,11 @@ const CourseEditor = ({
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Category
                   </label>
-                  {/* 🎯 FIXED CATEGORY SELECTION WITH PROPER STATE BINDING */}
+                  {/* 🎯 FIXED CATEGORY SELECTION WITH STABLE KEY */}
                   <select
-                    key={`category-select-${course.slug || index}-${course.category || 'none'}`}
+                    key={`category-select-${course.slug || index}`}
                     value={course.category || ''}
                     onChange={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      
                       const selectedCategory = e.target.value;
                       console.log('🎯 ADMIN CATEGORY SELECTION EVENT:');
                       console.log('   Selected:', selectedCategory);
@@ -372,20 +369,11 @@ const CourseEditor = ({
                       console.log('   Available Categories:', Object.keys(dynamicCategories));
                       console.log('   Current course.category:', course.category);
                       
-                      // Force immediate update using the parent onUpdate function
-                      try {
-                        onUpdate(index, 'category', selectedCategory);
-                        console.log('✅ onUpdate called for category field');
-                        
-                        // Also update categories array for frontend compatibility  
-                        setTimeout(() => {
-                          onUpdate(index, 'categories', selectedCategory ? [selectedCategory] : []);
-                          console.log('✅ onUpdate called for categories array');
-                        }, 50);
-                        
-                      } catch (error) {
-                        console.error('❌ Error updating category:', error);
-                      }
+                      // Immediate update using the parent onUpdate function
+                      onUpdate(index, 'category', selectedCategory);
+                      
+                      // Also update categories array for frontend compatibility
+                      onUpdate(index, 'categories', selectedCategory ? [selectedCategory] : []);
                       
                       console.log('✅ CATEGORY SELECTION COMPLETE');
                     }}

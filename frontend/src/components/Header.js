@@ -131,20 +131,40 @@ const Header = () => {
                 <div className="flex flex-col items-center">
                   <div className="relative">
                     <div className="absolute -inset-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl opacity-0 group-hover:opacity-20 transition-all duration-500 blur-sm"></div>
-                    {/* Enhanced SVG Logo for better branding */}
-                    <div className="relative w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center group-hover:scale-110 transition-all duration-500">
-                      <div className="w-12 h-12 bg-gradient-to-br from-orange-500 via-red-500 to-orange-600 rounded-xl flex items-center justify-center relative overflow-hidden">
-                        {/* Modern geometric logo design */}
-                        <div className="relative w-8 h-8">
-                          <div className="absolute inset-0 bg-white/30 rounded-lg transform rotate-12"></div>
-                          <div className="absolute inset-1 bg-white/60 rounded-md transform -rotate-6"></div>
-                          <div className="absolute inset-2 bg-white rounded-sm flex items-center justify-center">
-                            <span className="text-orange-600 font-black text-sm">G</span>
-                          </div>
-                        </div>
-                        {/* Animated accent */}
-                        <div className="absolute top-1 right-1 w-2 h-2 bg-white/80 rounded-full animate-pulse"></div>
-                      </div>
+                    {/* GRRAS Logo as SVG - Same design, better format */}
+                    <div className="relative w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center group-hover:scale-110 transition-all duration-500 border-2 border-orange-100">
+                      <svg width="48" height="48" viewBox="0 0 100 100" className="drop-shadow-md">
+                        {/* GRRAS Logo Recreation in SVG */}
+                        <defs>
+                          <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stopColor="#ea580c" />
+                            <stop offset="50%" stopColor="#dc2626" />
+                            <stop offset="100%" stopColor="#ea580c" />
+                          </linearGradient>
+                        </defs>
+                        
+                        {/* Background Circle */}
+                        <circle cx="50" cy="50" r="45" fill="url(#logoGradient)" stroke="#fff" strokeWidth="2"/>
+                        
+                        {/* Letter G */}
+                        <text x="50" y="65" 
+                              fontSize="40" 
+                              fontFamily="Arial, sans-serif" 
+                              fontWeight="bold" 
+                              fill="white" 
+                              textAnchor="middle"
+                              dominantBaseline="middle">
+                          G
+                        </text>
+                        
+                        {/* Decorative Elements */}
+                        <circle cx="75" cy="25" r="3" fill="white" opacity="0.8">
+                          <animate attributeName="opacity" values="0.8;0.4;0.8" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="25" cy="75" r="2" fill="white" opacity="0.6">
+                          <animate attributeName="opacity" values="0.6;0.3;0.6" dur="3s" repeatCount="indefinite"/>
+                        </circle>
+                      </svg>
                     </div>
                   </div>
                   <span className="text-sm font-black text-transparent bg-gradient-to-r from-orange-600 via-red-600 to-orange-700 bg-clip-text -mt-1 tracking-wide group-hover:scale-105 transition-all duration-300">

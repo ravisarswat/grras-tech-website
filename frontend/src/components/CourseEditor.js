@@ -395,7 +395,36 @@ const CourseEditor = ({
                   })()}
                   <select
                     key={`category-${course.slug || 'new'}-${Object.keys(dynamicCategories).length}`}
-                    value={course.category || ''}
+                    value={(() => {
+                      // Legacy mapping - match EXACT database slugs
+                      const legacyMapping = {
+                        'certification': 'red-hat-technologies',
+                        'cloud': 'aws-cloud-platform', 
+                        'container': 'kubernetes-ecosystem',
+                        'devops': 'devops-engineering',
+                        'security': 'cybersecurity-ethical-hacking',
+                        'programming': 'programming-development',
+                        'degree': 'degree',
+                        'server': 'server-administration-networking'
+                      };
+                      
+                      const currentCategory = course.category || '';
+                      
+                      // If current category exists in dynamic categories, use it
+                      if (dynamicCategories[currentCategory]) {
+                        console.log('✅ Using exact match:', currentCategory);
+                        return currentCategory;
+                      }
+                      
+                      // Check legacy mapping
+                      if (legacyMapping[currentCategory] && dynamicCategories[legacyMapping[currentCategory]]) {
+                        console.log('🔄 Using legacy mapping:', currentCategory, '->', legacyMapping[currentCategory]);
+                        return legacyMapping[currentCategory];
+                      }
+                      
+                      console.log('❌ No match found, using empty value. Current:', currentCategory, 'Available:', Object.keys(dynamicCategories));
+                      return '';
+                    })()}
                     defaultValue={course.category || ''}
                     onChange={(e) => {
                       const value = e.target.value;

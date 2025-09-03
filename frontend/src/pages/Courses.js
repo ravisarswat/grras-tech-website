@@ -211,7 +211,7 @@ const Courses = () => {
       
       <div className="min-h-screen bg-gray-50">
         {/* Enhanced Hero Section */}
-        <div className="relative bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white py-20 overflow-hidden">
+        <div className="relative bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white py-20 overflow-hidden" style={{zIndex: 1}}>
           {/* Animated Background Elements */}
           <div className="absolute inset-0">
             <div className="absolute top-10 left-10 w-20 h-20 bg-orange-500/10 rounded-full animate-pulse"></div>

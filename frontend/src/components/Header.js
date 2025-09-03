@@ -311,17 +311,17 @@ const Header = () => {
                           <div className="font-bold text-gray-900 text-sm group-hover:text-orange-700 transition-colors duration-200">
                             {track.name}
                           </div>
-                          <div className="text-xs text-gray-500 group-hover:text-orange-600 transition-colors duration-200">
-                            {track.courseCount > 0 ? (
+                          <div className="flex items-center justify-between">
+                            <div className="text-xs text-gray-500 group-hover:text-orange-600 transition-colors duration-200">
                               <span className="flex items-center">
                                 <div className="w-2 h-2 bg-green-500 rounded-full mr-1.5 animate-pulse"></div>
-                                {track.courseCount} courses available
+                                {track.category}
                               </span>
-                            ) : (
-                              <span className="flex items-center">
-                                <div className="w-2 h-2 bg-orange-400 rounded-full mr-1.5"></div>
-                                Coming soon
-                              </span>
+                            </div>
+                            {track.fees && (
+                              <div className="text-xs font-bold text-green-600">
+                                {track.fees.split(' ')[0]}
+                              </div>
                             )}
                           </div>
                         </div>

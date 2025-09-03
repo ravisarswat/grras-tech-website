@@ -486,15 +486,42 @@ const Courses = () => {
                       </div>
                     </div>
 
-                    {/* Enhanced Course Meta */}
-                    <div className="flex items-center space-x-3 mb-6">
-                      <div className="flex items-center px-4 py-2 bg-gradient-to-r from-orange-50 to-red-50 rounded-2xl text-sm text-orange-800 font-bold border border-orange-200 shadow-sm">
-                        <Clock className="h-4 w-4 mr-2" />
-                        <span>{course.duration || 'Self-paced'}</span>
-                      </div>
-                      <div className="flex items-center px-4 py-2 bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl text-sm text-red-800 font-bold border border-red-200 shadow-sm">
-                        <Users className="h-4 w-4 mr-2" />
-                        <span>{course.level}</span>
+                    {/* Enhanced Course Meta with Pricing */}
+                    <div className="space-y-4 mb-6">
+                      {/* Pricing Display - Premium Style */}
+                      {course.fees && (
+                        <div className="bg-gradient-to-r from-green-50 via-emerald-50 to-green-50 rounded-2xl p-4 border-2 border-green-200 shadow-lg relative overflow-hidden">
+                          <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-green-400/10 to-emerald-400/10 rounded-full -mr-10 -mt-10"></div>
+                          <div className="relative z-10">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="text-2xl font-black text-green-800 mb-1">
+                                  {course.fees}
+                                </p>
+                                <p className="text-sm text-green-600 font-semibold">
+                                  💳 EMI Options Available
+                                </p>
+                              </div>
+                              <div className="text-right">
+                                <div className="inline-flex items-center px-3 py-1 bg-green-100 rounded-full">
+                                  <span className="text-xs font-bold text-green-700">Best Value</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Duration and Level */}
+                      <div className="flex items-center space-x-3">
+                        <div className="flex items-center px-4 py-2 bg-gradient-to-r from-orange-50 to-red-50 rounded-2xl text-sm text-orange-800 font-bold border border-orange-200 shadow-sm">
+                          <Clock className="h-4 w-4 mr-2" />
+                          <span>{course.duration || 'Self-paced'}</span>
+                        </div>
+                        <div className="flex items-center px-4 py-2 bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl text-sm text-red-800 font-bold border border-red-200 shadow-sm">
+                          <Users className="h-4 w-4 mr-2" />
+                          <span>{course.level}</span>
+                        </div>
                       </div>
                     </div>
 

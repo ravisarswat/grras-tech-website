@@ -6,8 +6,81 @@ import { useContent } from '../contexts/ContentContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCoursesOpen, setIsCoursesOpen] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
+  const coursesButtonRef = useRef(null);
+  const dropdownRef = useRef(null);
   const location = useLocation();
   const { content } = useContent();
+
+  // Calculate dropdown position
+  const calculatePosition = () => {
+    if (coursesButtonRef.current) {
+      const rect = coursesButtonRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + 8,
+        left: rect.left
+      });
+    }
+  };
+
+  // Open dropdown
+  const openDropdown = () => {
+    setIsCoursesOpen(true);
+    calculatePosition();
+  };
+
+  // Close dropdown
+  const closeDropdown = () => {
+    setIsCoursesOpen(false);
+  };
+
+  // Handle outside click
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (isCoursesOpen && 
+          !coursesButtonRef.current?.contains(event.target) && 
+          !dropdownRef.current?.contains(event.target)) {
+        closeDropdown();
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, [isCoursesOpen]);
+
+  // Handle Esc key
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === 'Escape' && isCoursesOpen) {
+        closeDropdown();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscKey);
+    return () => document.removeEventListener('keydown', handleEscKey);
+  }, [isCoursesOpen]);
+
+  // Handle scroll and resize
+  useEffect(() => {
+    const handleScrollResize = () => {
+      if (isCoursesOpen) {
+        calculatePosition();
+      }
+    };
+
+    window.addEventListener('scroll', handleScrollResize);
+    window.addEventListener('resize', handleScrollResize);
+    return () => {
+      window.removeEventListener('scroll', handleScrollResize);
+      window.removeEventListener('resize', handleScrollResize);
+    };
+  }, [isCoursesOpen]);
+
+  // Close on navigation
+  useEffect(() => {
+    closeDropdown();
+  }, [location.pathname]);
 
   // Get categories for dropdown
   const courseCategories = content?.courseCategories || {};

@@ -358,6 +358,7 @@ const CourseEditor = ({
                   </label>
                   {/* 🎯 FIXED CATEGORY SELECTION WITH PROPER STATE BINDING */}
                   <select
+                    key={`category-select-${course.slug || index}-${course.category || 'none'}`}
                     value={course.category || ''}
                     onChange={(e) => {
                       const selectedCategory = e.target.value;

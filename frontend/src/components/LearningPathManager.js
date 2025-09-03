@@ -498,8 +498,20 @@ const LearningPathManager = ({ content, updateContent }) => {
                       ))}
                       
                       {(!path.courses || path.courses.length === 0) && (
-                        <div className="text-center py-4 text-gray-500">
-                          No courses added yet. Click "Add Course" to start building the progression.
+                        <div className="text-center py-8 bg-blue-50 rounded-lg border-2 border-dashed border-blue-200">
+                          <Route className="h-12 w-12 text-blue-400 mx-auto mb-3" />
+                          <p className="text-gray-600 font-medium mb-2">No courses in this learning path yet</p>
+                          <p className="text-sm text-gray-500">
+                            {availableCourses.length > 0 
+                              ? `Click "Add Course" to choose from ${availableCourses.length} available courses and start building the progression.`
+                              : "Add courses in the Courses section first, then come back to build learning paths."
+                            }
+                          </p>
+                          {availableCourses.length === 0 && (
+                            <p className="text-xs text-red-500 mt-2">
+                              ⚠️ No courses available in the system
+                            </p>
+                          )}
                         </div>
                       )}
                     </div>

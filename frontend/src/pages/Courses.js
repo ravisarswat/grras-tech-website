@@ -496,7 +496,7 @@ const Courses = () => {
                     <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-400 animate-pulse opacity-50"></div>
                   </div>
                   
-                  <div className="p-8">
+                  <div className="p-4 sm:p-6 lg:p-8">
                     <div className="flex items-start justify-between mb-6">
                       <div className="flex-1 min-w-0">
                         <h3 className="text-2xl font-black text-gray-900 mb-4 leading-tight group-hover:text-orange-700 transition-colors duration-300 line-clamp-2">

@@ -386,7 +386,6 @@ const CourseEditor = ({
                     <option value="">Select level</option>
                     {(() => {
                       const selectedCategory = course.category;
-                      const categoryData = selectedCategory ? dynamicCategories[selectedCategory] : null;
                       
                       // Smart level selection based on category
                       if (selectedCategory === 'redhat') {

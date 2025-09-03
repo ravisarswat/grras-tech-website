@@ -400,6 +400,9 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                     <textarea
                       value={category.description}
                       onChange={(e) => updateCategory(slug, 'description', e.target.value)}
+                      onKeyDown={(e) => e.stopPropagation()}
+                      onKeyUp={(e) => e.stopPropagation()}
+                      onKeyPress={(e) => e.stopPropagation()}
                       className="w-full border rounded p-2"
                       rows="2"
                     />

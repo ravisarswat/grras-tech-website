@@ -63,8 +63,16 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
       createdAt: new Date().toISOString(),
       modifiedAt: new Date().toISOString(),
     };
-    updateContent('courseCategories', { ...categories, [key]: newCat });
-    setTimeout(() => setExpandedCategory(key), 100);
+    
+    const updatedCategories = { ...categories, [key]: newCat };
+    console.log('➕ Adding new category:', key, 'Total categories:', Object.keys(updatedCategories).length);
+    
+    updateContent('courseCategories', updatedCategories);
+    
+    setTimeout(() => {
+      setExpandedCategory(key);
+      console.log('✅ New category added and expanded');
+    }, 100);
   };
 
   // ---------------- Update Category fields ----------------

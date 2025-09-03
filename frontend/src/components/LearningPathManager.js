@@ -436,8 +436,8 @@ const LearningPathManager = ({ content, updateContent }) => {
                     
                     <div className="space-y-3">
                       {path.courses?.map((pathCourse, index) => (
-                        <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                          <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-sm font-medium text-blue-600">
+                        <div key={index} className="flex items-center gap-3 p-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-sm font-bold text-white shadow-md">
                             {pathCourse.order}
                           </div>
                           

@@ -508,7 +508,7 @@ const Courses = () => {
                       </div>
                       <div className="ml-6 flex-shrink-0">
                         <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-gradient-to-br from-orange-100 via-red-50 to-orange-100 rounded-xl sm:rounded-2xl flex items-center justify-center group-hover:from-orange-200 group-hover:to-red-200 transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-6 shadow-lg">
-                          <span className="text-3xl group-hover:scale-125 transition-transform duration-500 filter drop-shadow-sm">
+                          <span className="text-xl sm:text-2xl lg:text-3xl group-hover:scale-125 transition-transform duration-500 filter drop-shadow-sm">
                             {course.icon || (() => {
                               const title = course.title.toLowerCase();
                               if (title.includes('devops')) return '🚀';

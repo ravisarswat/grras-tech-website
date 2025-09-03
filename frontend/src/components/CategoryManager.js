@@ -258,10 +258,14 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
     const updatedCourses = courses.map((course) => {
       if (course.slug === courseSlug) {
         const cur = course.categories || [];
-        if (!cur.includes(categoryKey)) return { ...course, categories: [...cur, categoryKey] };
+        if (!cur.includes(categoryKey)) {
+          return { ...course, categories: [...cur, categoryKey] };
+        }
       }
       return course;
     });
+    
+    console.log('📝 Assigning course to category:', { categoryKey, courseSlug });
     updateContent('courses', updatedCourses);
   };
 
@@ -272,6 +276,8 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
       }
       return course;
     });
+    
+    console.log('📝 Removing course from category:', { categoryKey, courseSlug });
     updateContent('courses', updatedCourses);
   };
 

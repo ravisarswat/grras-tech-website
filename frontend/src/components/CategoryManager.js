@@ -324,16 +324,16 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
 
               {expandedCategory === slug && (
                 <div 
-                  className="space-y-4 pt-4 border-t"
-                  onKeyDown={(e) => {
-                    // Prevent keyboard events from bubbling up and closing the editor
-                    e.stopPropagation();
-                    console.log('🔤 Keyboard event in category editor:', e.key);
-                  }}
-                  onClick={(e) => {
-                    // Prevent clicks inside the form from bubbling up
-                    e.stopPropagation();
-                  }}
+                  className="space-y-4 pt-4 border-t bg-blue-50 p-4 rounded-lg"
+                  onKeyDown={(e) => e.stopPropagation()}
+                  onKeyUp={(e) => e.stopPropagation()}
+                  onKeyPress={(e) => e.stopPropagation()}
+                  onClick={(e) => e.stopPropagation()}
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onMouseUp={(e) => e.stopPropagation()}
+                  onFocus={(e) => e.stopPropagation()}
+                  onBlur={(e) => e.stopPropagation()}
+                  style={{ isolation: 'isolate' }}
                 >
                   <div className="grid grid-cols-4 gap-4">
                     <div>

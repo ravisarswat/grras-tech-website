@@ -310,7 +310,10 @@ const AdminContent = () => {
   };
 
   const updateContent = (path, value) => {
-    const newContent = { ...content };
+    console.log('🔄 updateContent called:', { path, valueType: typeof value, valueKeys: typeof value === 'object' ? Object.keys(value || {}) : 'N/A' });
+    
+    // Create a deep copy to ensure change detection works
+    const newContent = JSON.parse(JSON.stringify(content));
     const keys = path.split('.');
     let current = newContent;
     
@@ -322,7 +325,18 @@ const AdminContent = () => {
     }
     
     current[keys[keys.length - 1]] = value;
+    
+    // Add a timestamp to force change detection
+    newContent._lastModified = new Date().toISOString();
+    
+    console.log('🔄 Setting new content with timestamp:', newContent._lastModified);
     setContent(newContent);
+    
+    // Log if changes should be detected
+    setTimeout(() => {
+      const hasChangesNow = JSON.stringify(newContent) !== JSON.stringify(originalContent);
+      console.log('🔄 Changes detected after update:', hasChangesNow);
+    }, 0);
   };
 
   const forceSyncWithWebsite = async () => {

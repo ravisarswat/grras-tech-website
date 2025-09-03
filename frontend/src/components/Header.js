@@ -142,9 +142,9 @@ const Header = () => {
                 <div className="absolute -inset-1 bg-gradient-to-r from-orange-300 to-red-300 rounded-2xl opacity-0 group-hover:opacity-30 transition-all duration-500 blur-sm"></div>
                 
                 <img 
-                  src="https://customer-assets.emergentagent.com/job_grras-course-manager/artifacts/9kv3gbea_black%20logo.jpg" 
+                  src="https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png" 
                   alt="GRRAS Solutions" 
-                  className="h-16 w-auto transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 relative z-10 drop-shadow-xl filter" 
+                  className="h-20 w-auto transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 relative z-10 drop-shadow-2xl filter rounded-2xl p-2 bg-gradient-to-r from-gray-900/90 to-black/90 backdrop-blur-sm" 
                 />
                 
                 {/* Premium brand name */}

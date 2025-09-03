@@ -131,11 +131,21 @@ const Header = () => {
                 <div className="flex flex-col items-center">
                   <div className="relative">
                     <div className="absolute -inset-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl opacity-0 group-hover:opacity-20 transition-all duration-500 blur-sm"></div>
-                    <img 
-                      src="https://customer-assets.emergentagent.com/job_db8831d9-1fc7-46ac-b819-59bb9fafe1eb/artifacts/lu0elrou_black%20logo.jpg" 
-                      alt="GRRAS Solutions" 
-                      className="h-16 w-auto transition-all duration-500 group-hover:scale-110 group-hover:brightness-110 relative z-10 drop-shadow-lg" 
-                    />
+                    {/* Enhanced SVG Logo for better branding */}
+                    <div className="relative w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center group-hover:scale-110 transition-all duration-500">
+                      <div className="w-12 h-12 bg-gradient-to-br from-orange-500 via-red-500 to-orange-600 rounded-xl flex items-center justify-center relative overflow-hidden">
+                        {/* Modern geometric logo design */}
+                        <div className="relative w-8 h-8">
+                          <div className="absolute inset-0 bg-white/30 rounded-lg transform rotate-12"></div>
+                          <div className="absolute inset-1 bg-white/60 rounded-md transform -rotate-6"></div>
+                          <div className="absolute inset-2 bg-white rounded-sm flex items-center justify-center">
+                            <span className="text-orange-600 font-black text-sm">G</span>
+                          </div>
+                        </div>
+                        {/* Animated accent */}
+                        <div className="absolute top-1 right-1 w-2 h-2 bg-white/80 rounded-full animate-pulse"></div>
+                      </div>
+                    </div>
                   </div>
                   <span className="text-sm font-black text-transparent bg-gradient-to-r from-orange-600 via-red-600 to-orange-700 bg-clip-text -mt-1 tracking-wide group-hover:scale-105 transition-all duration-300">
                     Solutions

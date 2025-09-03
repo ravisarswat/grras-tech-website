@@ -1,14 +1,17 @@
-# GRRAS Learning Path "Add Course" Fix
+# GRRAS Learning Path Complete Fix
 
-## Problem
-The "Add Course" button in Learning Path admin shows success message but doesn't actually add courses to the UI.
+## Problems Fixed
+1. ✅ **Add Course**: Button shows success but doesn't add courses to UI
+2. ✅ **Delete Course**: Delete button doesn't work 
+3. ✅ **Wrong Numbering**: All courses show "1" instead of sequential 1, 2, 3, 4, 5
 
-## Root Cause
-State update race condition in the `addCourseToPath` function. Multiple `updatePath` calls were causing conflicts.
+## Root Causes
+1. **State update race conditions** in multiple functions
+2. **Numbering display** using inconsistent `pathCourse.order` instead of `index + 1`
 
-## Fix Required in LearningPathManager.js
+## Complete Fix Required in LearningPathManager.js
 
-Replace the `addCourseToPath` function (around line 86) with this fixed version:
+### 1. Fix Add Course Function (around line 86):
 
 ```javascript
 const addCourseToPath = (pathSlug) => {

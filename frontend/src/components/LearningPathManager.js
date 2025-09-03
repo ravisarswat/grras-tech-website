@@ -196,19 +196,38 @@ const LearningPathManager = ({ content, updateContent }) => {
   };
 
   const movePathCourse = (pathSlug, courseIndex, direction) => {
-    const path = learningPaths[pathSlug];
-    const newCourses = [...path.courses];
-    const targetIndex = direction === 'up' ? courseIndex - 1 : courseIndex + 1;
+    console.log('🔄 Move Course:', { pathSlug, courseIndex, direction });
     
-    if (targetIndex >= 0 && targetIndex < newCourses.length) {
-      [newCourses[courseIndex], newCourses[targetIndex]] = [newCourses[targetIndex], newCourses[courseIndex]];
+    try {
+      const path = learningPaths[pathSlug];
+      const newCourses = [...path.courses];
+      const targetIndex = direction === 'up' ? courseIndex - 1 : courseIndex + 1;
       
-      // Update order values
-      newCourses.forEach((course, i) => {
-        course.order = i + 1;
-      });
-      
-      updatePath(pathSlug, 'courses', newCourses);
+      if (targetIndex >= 0 && targetIndex < newCourses.length) {
+        [newCourses[courseIndex], newCourses[targetIndex]] = [newCourses[targetIndex], newCourses[courseIndex]];
+        
+        // Update order values
+        newCourses.forEach((course, i) => {
+          course.order = i + 1;
+        });
+        
+        // FIXED: Single atomic update
+        const updatedPath = {
+          ...path,
+          courses: newCourses
+        };
+        
+        const newPaths = {
+          ...learningPaths,
+          [pathSlug]: updatedPath
+        };
+        
+        updateContent('learningPaths', newPaths);
+        
+        console.log(`✅ Course moved ${direction} successfully`);
+      }
+    } catch (error) {
+      console.error('❌ Error moving course:', error);
     }
   };
 

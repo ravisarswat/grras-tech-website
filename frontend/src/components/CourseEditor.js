@@ -35,16 +35,18 @@ const CourseEditor = ({
     }
   }, [course.category]);
   
-  // Get dynamic categories from content with debugging
-  const dynamicCategories = content?.courseCategories || {};
+  // Get dynamic categories - prioritize prop, fallback to content
+  const dynamicCategories = propCategories || content?.courseCategories || {};
   
   // Debug logging for category loading
   React.useEffect(() => {
     console.log('🔍 CourseEditor - Content loaded:', !!content);
-    console.log('🔍 CourseEditor - Categories available:', Object.keys(dynamicCategories));
+    console.log('🔍 CourseEditor - Prop categories:', !!propCategories, Object.keys(propCategories || {}));
+    console.log('🔍 CourseEditor - Content categories:', Object.keys(content?.courseCategories || {}));
+    console.log('🔍 CourseEditor - Final categories used:', Object.keys(dynamicCategories));
     console.log('🔍 CourseEditor - Course category:', course.category);
     console.log('🔍 CourseEditor - Full categories data:', dynamicCategories);
-  }, [content, dynamicCategories, course.category]);
+  }, [content, propCategories, dynamicCategories, course.category]);
 
   // Validate slug uniqueness
   const validateSlug = (newSlug) => {

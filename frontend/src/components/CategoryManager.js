@@ -97,57 +97,50 @@ const CategoryManager = ({ content, updateContent }) => {
     });
   };
 
-  // Delete Category - With Force Refresh
+  // Debug - Test simple delete first
   const deleteCategory = async (slug) => {
+    console.log('🔍 DELETE DEBUG - Starting delete for:', slug);
+    console.log('🔍 Current categories:', Object.keys(categories));
+    
     const categoryName = categories[slug]?.name;
-    const courseCount = getCoursesByCategory(slug).length;
+    if (!categoryName) {
+      console.log('❌ Category not found:', slug);
+      alert('Category not found!');
+      return;
+    }
     
-    console.log('🗑️ Attempting to delete category:', slug, categoryName);
+    console.log('🔍 Category to delete:', categoryName);
     
-    const confirmMessage = courseCount > 0 
-      ? `Delete "${categoryName}"?\n\nThis will remove it from ${courseCount} course(s).`
-      : `Delete "${categoryName}"?`;
-    
-    if (!confirm(confirmMessage)) {
-      console.log('❌ User cancelled deletion');
+    if (!confirm(`Delete "${categoryName}"?`)) {
+      console.log('❌ User cancelled');
       return;
     }
 
     console.log('✅ User confirmed deletion');
 
-    try {
-      // Simple delete approach - use object destructuring 
-      const { [slug]: deletedCategory, ...remainingCategories } = categories;
-
-      // Remove category from all courses
-      const updatedCourses = courses.map(course => ({
-        ...course,
-        categories: (course.categories || []).filter(cat => cat !== slug)
-      }));
-
-      console.log('📝 Deleting category:', { 
-        deletedSlug: slug, 
-        categoryName,
-        remainingCategories: Object.keys(remainingCategories),
-        updatedCourses: updatedCourses.length 
-      });
-
-      // Force update with completely new objects
-      updateContent('courseCategories', remainingCategories);
-      updateContent('courses', updatedCourses);
-
-      // Close expanded panel if this category was expanded
-      if (expandedCategory === slug) {
-        setExpandedCategory(null);
+    // Step 1: Test if we can create new categories object
+    const newCategories = {};
+    for (const [key, value] of Object.entries(categories)) {
+      if (key !== slug) {
+        newCategories[key] = value;
       }
-
-      console.log('✅ Category delete operations completed');
-      alert(`✅ Category "${categoryName}" deleted! Don't forget to click "Save Changes" to persist.`);
-
-    } catch (error) {
-      console.error('❌ Delete failed:', error);
-      alert(`❌ Failed to delete category: ${error.message}`);
     }
+    
+    console.log('🔍 New categories created:', Object.keys(newCategories));
+    console.log('🔍 Deleted category exists in original?', slug in categories);
+    console.log('🔍 Deleted category exists in new?', slug in newCategories);
+
+    // Step 2: Update categories only first
+    console.log('🔍 Calling updateContent...');
+    updateContent('courseCategories', newCategories);
+    console.log('✅ updateContent called');
+
+    // Close expanded panel
+    if (expandedCategory === slug) {
+      setExpandedCategory(null);
+    }
+
+    alert(`✅ Category "${categoryName}" should be deleted. Check console and refresh if needed.`);
   };
 
   // Get courses by category

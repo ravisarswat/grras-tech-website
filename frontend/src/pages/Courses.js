@@ -283,7 +283,7 @@ const Courses = () => {
                   className="group inline-flex items-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-2xl hover:bg-white/20 transition-all duration-300 transform hover:scale-105 border border-white/20"
                 >
                   <Users className="mr-3 h-5 w-5" />
-                  <span>View All {processedCourses.length} Courses</span>
+                  <span>View All {courses.length} Courses</span>
                 </button>
               </div>
               

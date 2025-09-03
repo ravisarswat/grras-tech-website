@@ -414,7 +414,7 @@ const Courses = () => {
             </div>
           </div>
 
-          <div className="mb-8 text-center">
+          <div className="mb-8 text-center" id="courses-grid-section">
             <h2 className="text-4xl font-black text-gray-900 mb-4">
               {selectedCategory === 'all' ? (
                 <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">

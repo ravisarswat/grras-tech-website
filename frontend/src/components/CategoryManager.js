@@ -134,14 +134,17 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
       coursesUpdated: updatedCourses.length 
     });
 
-    // 3) save
+    // 3) Force state update with completely new objects
     updateContent('courseCategories', newCategories);
     updateContent('courses', updatedCourses);
 
-    // keep editor open
-    if (expandedCategory === oldKey) setExpandedCategory(desired);
+    // keep editor open with new key
+    if (expandedCategory === oldKey) {
+      setExpandedCategory(desired);
+    }
 
-    alert('✅ Key synced to slug. Frontend URL ab slug use karega. Don\'t forget to click "Save Changes" at the top.');
+    console.log('✅ Key sync completed, state updated');
+    alert('✅ Key synced to slug. Frontend URL ab slug use karega. Click "Save Changes" to persist changes.');
   };
 
   // (Optional) One-click: Sync **all** categories keys to slugs (unique handling)

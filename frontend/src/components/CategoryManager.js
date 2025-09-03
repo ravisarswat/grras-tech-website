@@ -1,300 +1,220 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Plus, Trash2, Eye, EyeOff, ChevronDown, ChevronUp } from 'lucide-react';
 
-const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
+const CategoryManager = ({ content, updateContent }) => {
   const [expandedCategory, setExpandedCategory] = useState(null);
   const formRefs = useRef({});
 
-  // Add global keyboard event handler with Firefox-specific focus detection
+  // ---------------- Keyboard guard: typing par collapse na ho ----------------
   useEffect(() => {
-    let focusCheckTimer = null;
-    
-    const handleGlobalKeyDown = (e) => {
-      // Only handle Escape key for closing panels - ignore all other keys completely
-      if (e.key !== 'Escape') {
+    const handleKey = (e) => {
+      if (!expandedCategory) return;
+      const formEl = formRefs.current[expandedCategory];
+      if (formEl && e.target instanceof Node && formEl.contains(e.target)) {
+        e.stopPropagation();
+        if (e.key === 'Escape') e.stopImmediatePropagation();
         return;
       }
-      
-      if (!expandedCategory || !formRefs.current[expandedCategory]) {
-        return;
-      }
-      
-      const formElement = formRefs.current[expandedCategory];
-      
-      // Firefox-compatible focus detection with multiple fallbacks
-      const checkFocusAndClose = () => {
-        const isInsideForm = (
-          // Check the event target first (most reliable)
-          (e.target && formElement.contains(e.target)) ||
-          // Check active element
-          (document.activeElement && formElement.contains(document.activeElement)) ||
-          // Check for any focused input/textarea/select inside form
-          (formElement.querySelector('input:focus, textarea:focus, select:focus')) ||
-          // Check if any form element has focus class or attribute
-          (formElement.querySelector('[data-focused="true"]'))
-        );
-        
-        if (!isInsideForm) {
-          console.log('✅ Closing panel - no focus detected inside form');
-          setExpandedCategory(null);
-        } else {
-          console.log('🔐 Keeping panel open - focus detected inside form');
-        }
-      };
-      
-      // For Firefox compatibility, add small delay to let focus events settle
-      if (focusCheckTimer) {
-        clearTimeout(focusCheckTimer);
-      }
-      
-      focusCheckTimer = setTimeout(checkFocusAndClose, 0);
+      if (e.key === 'Escape') setExpandedCategory(null);
     };
 
-    // Use capture phase for more reliable event handling
-    document.addEventListener('keydown', handleGlobalKeyDown, true);
-    
+    document.addEventListener('keydown', handleKey, true);
+    document.addEventListener('keypress', handleKey, true);
+    document.addEventListener('keyup', handleKey, true);
     return () => {
-      document.removeEventListener('keydown', handleGlobalKeyDown, true);
-      if (focusCheckTimer) {
-        clearTimeout(focusCheckTimer);
-      }
+      document.removeEventListener('keydown', handleKey, true);
+      document.removeEventListener('keypress', handleKey, true);
+      document.removeEventListener('keyup', handleKey, true);
     };
   }, [expandedCategory]);
 
   const categories = content?.courseCategories || {};
   const courses = content?.courses || [];
 
-  // Sort categories by order
-  const sortedCategories = Object.entries(categories).sort(([, a], [, b]) => {
+  // ---------------- Helpers ----------------
+  const generateSlug = (name) =>
+    (name || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '');
+
+  const sortEntries = Object.entries(categories).sort(([, a], [, b]) => {
     return (a.order || 999) - (b.order || 999);
   });
 
+  // ---------------- Add Category ----------------
   const addCategory = () => {
-    const timestamp = Date.now();
-    const maxOrder = Math.max(0, ...Object.values(categories).map(c => c.order || 0));
-    const categoryName = 'New Category';
-    const categorySlug = `new-category-${timestamp}`;
-    
-    console.log('➕ Adding new category:', categorySlug);
-    
-    const newCategory = {
-      name: categoryName,
-      slug: categorySlug,
+    const ts = Date.now();
+    const maxOrder = Math.max(0, ...Object.values(categories).map((c) => c.order || 0));
+    const key = `new-category-${ts}`;
+    const newCat = {
+      name: 'New Category',
+      slug: 'new-category',
       description: 'Enter category description here',
-      icon: 'book',  // Changed to 'book' instead of 'folder'
+      icon: 'book',
       color: '#3B82F6',
-      logo: '', 
+      logo: '',
       visible: true,
       order: maxOrder + 1,
       featured: true,
       seo: { title: '', description: '', keywords: '' },
       createdAt: new Date().toISOString(),
-      modifiedAt: new Date().toISOString()
+      modifiedAt: new Date().toISOString(),
     };
-    
-    const updatedCategories = {
-      ...categories,
-      [categorySlug]: newCategory
-    };
-    
-    console.log('📝 Updated categories:', Object.keys(updatedCategories));
-    
-    updateContent('courseCategories', updatedCategories);
-    
-    // Expand the new category for immediate editing with delay
-    setTimeout(() => {
-      setExpandedCategory(categorySlug);
-      console.log('🔍 Expanded category:', categorySlug);
-    }, 100);
-    
-    // Success feedback
-    console.log('✅ New category added successfully');
+    updateContent('courseCategories', { ...categories, [key]: newCat });
+    setTimeout(() => setExpandedCategory(key), 100);
   };
 
-  // Helper function to generate slug from name
-  const generateSlug = (name) => {
-    return name
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
-      .replace(/\s+/g, '-') // Replace spaces with hyphens
-      .replace(/-+/g, '-') // Replace multiple hyphens with single
-      .trim('-'); // Remove leading/trailing hyphens
-  };
+  // ---------------- Update Category fields ----------------
+  // NOTE: Name change => slug auto-generate (value only). Key same rehta hai jab tak "Sync Key" na click karein.
+  const updateCategory = (key, field, value) => {
+    const current = categories[key];
+    if (!current) return;
 
-  const updateCategory = (slug, field, value) => {
-    let updatedCategory = { ...categories[slug], [field]: value };
-    
-    // If name is being updated, also update the slug
     if (field === 'name') {
-      const newSlug = generateSlug(value);
-      updatedCategory.slug = newSlug;
-      
-      // If slug is changing, we need to update the category key
-      if (newSlug !== slug) {
-        const newCategories = { ...categories };
-        delete newCategories[slug]; // Remove old key
-        newCategories[newSlug] = updatedCategory; // Add with new key
-        
-        // Also update course references from old slug to new slug
-        const updatedCourses = courses.map(course => ({
-          ...course,
-          categories: (course.categories || []).map(catSlug => 
-            catSlug === slug ? newSlug : catSlug
-          )
-        }));
-        
-        updateContent('courseCategories', newCategories);
-        updateContent('courses', updatedCourses);
-        
-        // Update expanded category to new slug
-        if (expandedCategory === slug) {
-          setExpandedCategory(newSlug);
-        }
-        
-        return;
-      }
+      const autoSlug = generateSlug(value || '');
+      const updated = { ...current, name: value, slug: autoSlug };
+      updateContent('courseCategories', { ...categories, [key]: updated });
+      return;
     }
-    
-    updateContent('courseCategories', {
-      ...categories,
-      [slug]: updatedCategory
-    });
+
+    // Slug field readOnly hai; fir bhi kabhi programmatically change karna ho:
+    if (field === 'slug') {
+      const updated = { ...current, slug: generateSlug(value || '') };
+      updateContent('courseCategories', { ...categories, [key]: updated });
+      return;
+    }
+
+    const updated = { ...current, [field]: value };
+    updateContent('courseCategories', { ...categories, [key]: updated });
   };
 
-  const deleteCategory = async (slug) => {
-    const categoryName = categories[slug]?.name || slug;
-    const courseCount = getCoursesByCategory(slug).length;
+  // ---------------- Permanent fix: Sync Key (key ≡ slug) ----------------
+  const syncSlugKey = (oldKey) => {
+    const cat = categories[oldKey];
+    if (!cat) return;
+
+    const desired = (cat.slug || '').trim();
+    if (!desired) return alert('Slug empty hai. Pehle Name/Slug set karo.');
+    if (desired === oldKey) return alert('Slug aur key already same hain.');
+    if (categories[desired]) return alert(`"${desired}" key already exists. Slug thoda change karein.`);
+
+    if (
+      !confirm(
+        `Rename category key?\n\nFrom: ${oldKey}\nTo:   ${desired}\n\nAll course references will be updated.`
+      )
+    ) {
+      return;
+    }
+
+    // 1) move category under new key
+    const newCategories = { ...categories };
+    delete newCategories[oldKey];
+    newCategories[desired] = { ...cat, slug: desired };
+
+    // 2) update all courses referencing oldKey
+    const updatedCourses = (courses || []).map((course) => ({
+      ...course,
+      categories: (course.categories || []).map((s) => (s === oldKey ? desired : s)),
+    }));
+
+    // 3) save
+    updateContent('courseCategories', newCategories);
+    updateContent('courses', updatedCourses);
+
+    // keep editor open
+    if (expandedCategory === oldKey) setExpandedCategory(desired);
+
+    alert('✅ Key synced to slug. Frontend URL ab slug use karega.');
+  };
+
+  // (Optional) One-click: Sync **all** categories keys to slugs (unique handling)
+  const syncAllCategories = () => {
+    if (!confirm('Sync ALL categories keys to their slugs? This updates all course references.')) return;
+
+    const entries = Object.entries(categories);
+    const used = new Set();
+    const finalKeyFor = {};
+
+    // compute unique keys
+    for (const [oldKey, cat] of entries) {
+      const want = generateSlug(cat.slug || cat.name || oldKey) || oldKey;
+      let s = want, i = 2;
+      while (used.has(s)) s = `${want}-${i++}`;
+      used.add(s);
+      finalKeyFor[oldKey] = s;
+    }
+
+    // rebuild maps
+    const newCats = {};
+    for (const [oldKey, cat] of entries) {
+      const nk = finalKeyFor[oldKey];
+      newCats[nk] = { ...cat, slug: nk };
+    }
+
+    const newCourses = (courses || []).map((course) => ({
+      ...course,
+      categories: (course.categories || []).map((k) => finalKeyFor[k] || k),
+    }));
+
+    updateContent('courseCategories', newCats);
+    updateContent('courses', newCourses);
+    alert('✅ All categories synced. URLs now use canonical slugs.');
+  };
+
+  // ---------------- Delete Category ----------------
+  const deleteCategory = (key) => {
+    const categoryName = categories[key]?.name || key;
+    const courseCount = getCoursesByCategory(key).length;
     
-    // Show confirmation dialog
     const confirmMessage = courseCount > 0 
-      ? `Are you sure you want to delete "${categoryName}"?\n\nThis will remove the category from ${courseCount} course(s). The courses will remain but will be unassigned from this category.\n\nThis will be saved directly to production database.`
-      : `Are you sure you want to delete "${categoryName}"?\n\nThis will be saved directly to production database.`;
+      ? `Are you sure you want to delete "${categoryName}"?\n\nThis will remove the category from ${courseCount} course(s). The courses will remain but will be unassigned from this category.`
+      : `Are you sure you want to delete "${categoryName}"?`;
     
     if (window.confirm(confirmMessage)) {
-      try {
-        // Show loading state
-        const deleteButton = document.querySelector(`button[onclick*="${slug}"]`);
-        if (deleteButton) {
-          deleteButton.disabled = true;
-          deleteButton.innerHTML = '🔄';
-        }
-        
-        // Make direct API call to delete category
-        const token = localStorage.getItem('admin_token');
-        const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://grras-tech-website-production.up.railway.app';
-        
-        if (!token) {
-          throw new Error('No admin token found. Please login again.');
-        }
-        
-        // Fetch current content from backend
-        const contentResponse = await fetch(`${BACKEND_URL}/api/content`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        
-        if (!contentResponse.ok) {
-          throw new Error(`Failed to fetch content: ${contentResponse.status}`);
-        }
-        
-        const currentContent = await contentResponse.json();
-        const backendContent = currentContent.content;
-        
-        // Delete category from backend content
-        const updatedCategories = { ...backendContent.courseCategories };
-        delete updatedCategories[slug];
-        
-        // Remove category from all courses in backend content
-        const updatedCourses = (backendContent.courses || []).map(course => ({
-          ...course,
-          categories: (course.categories || []).filter(cat => cat !== slug)
-        }));
-        
-        // Prepare updated content
-        const updatedContent = {
-          ...backendContent,
-          courseCategories: updatedCategories,
-          courses: updatedCourses,
-          meta: {
-            ...backendContent.meta,
-            lastModified: new Date().toISOString(),
-            modifiedBy: 'category-delete-direct'
-          }
-        };
-        
-        // Save directly to backend
-        const saveResponse = await fetch(`${BACKEND_URL}/api/content`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            content: updatedContent,
-            isDraft: false
-          })
-        });
-        
-        if (!saveResponse.ok) {
-          const errorData = await saveResponse.json().catch(() => ({ detail: 'Unknown error' }));
-          throw new Error(`Save failed: ${errorData.detail || saveResponse.status}`);
-        }
-        
-        // Update local state to reflect backend changes
-        updateContent('courseCategories', updatedCategories);
-        updateContent('courses', updatedCourses);
-        
-        // Success message
-        if (courseCount > 0) {
-          alert(`✅ SUCCESS!\n\nCategory "${categoryName}" permanently deleted from production database!\n\n${courseCount} course(s) have been unassigned.\n\nChanges are now live on website.`);
-        } else {
-          alert(`✅ SUCCESS!\n\nCategory "${categoryName}" permanently deleted from production database!\n\nChanges are now live on website.`);
-        }
-        
-        // Force refresh to show updated state
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-        
-      } catch (error) {
-        console.error('Delete category error:', error);
-        alert(`❌ FAILED to delete category!\n\nError: ${error.message}\n\nPlease try again or contact support.`);
-        
-        // Re-enable button
-        const deleteButton = document.querySelector(`button[onclick*="${slug}"]`);
-        if (deleteButton) {
-          deleteButton.disabled = false;
-          deleteButton.innerHTML = '🗑️';
-        }
+      // Remove category
+      const updatedCategories = { ...categories };
+      delete updatedCategories[key];
+      
+      // Remove category from all courses
+      const updatedCourses = courses.map(course => ({
+        ...course,
+        categories: (course.categories || []).filter(cat => cat !== key)
+      }));
+      
+      updateContent('courseCategories', updatedCategories);
+      updateContent('courses', updatedCourses);
+      
+      // Close expanded panel if this category was expanded
+      if (expandedCategory === key) {
+        setExpandedCategory(null);
       }
+      
+      alert(`✅ Category "${categoryName}" deleted successfully!`);
     }
   };
 
-  const getCoursesByCategory = (categorySlug) => {
-    return courses.filter(course => 
-      course.categories && course.categories.includes(categorySlug)
-    );
-  };
+  // ---------------- Course helpers ----------------
+  const getCoursesByCategory = (categoryKey) =>
+    courses.filter((c) => c.categories && c.categories.includes(categoryKey));
 
-  const assignCourseToCategory = (categorySlug, courseSlug) => {
-    const updatedCourses = courses.map(course => {
+  const assignCourseToCategory = (categoryKey, courseSlug) => {
+    const updatedCourses = courses.map((course) => {
       if (course.slug === courseSlug) {
-        const currentCategories = course.categories || [];
-        if (!currentCategories.includes(categorySlug)) {
-          return { ...course, categories: [...currentCategories, categorySlug] };
-        }
+        const cur = course.categories || [];
+        if (!cur.includes(categoryKey)) return { ...course, categories: [...cur, categoryKey] };
       }
       return course;
     });
     updateContent('courses', updatedCourses);
   };
 
-  const removeCourseFromCategory = (categorySlug, courseSlug) => {
-    const updatedCourses = courses.map(course => {
+  const removeCourseFromCategory = (categoryKey, courseSlug) => {
+    const updatedCourses = courses.map((course) => {
       if (course.slug === courseSlug && course.categories) {
-        return {
-          ...course,
-          categories: course.categories.filter(cat => cat !== categorySlug)
-        };
+        return { ...course, categories: course.categories.filter((c) => c !== categoryKey) };
       }
       return course;
     });

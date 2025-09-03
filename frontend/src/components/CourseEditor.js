@@ -356,32 +356,27 @@ const CourseEditor = ({
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Category
                   </label>
-                  {/* 🚀 FRESH DYNAMIC CATEGORY SYSTEM */}
+                  {/* 🚀 FIXED CATEGORY SELECTION */}
                   <select
                     value={course.category || ''}
                     onChange={(e) => {
-                      const selectedCategorySlug = e.target.value;
+                      const value = e.target.value;
+                      console.log('🎯 SELECTING CATEGORY:', value);
+                      console.log('🔍 BEFORE UPDATE - course.category:', course.category);
                       
-                      // Update both category fields for compatibility
-                      handleFieldUpdate('category', selectedCategorySlug);
-                      handleFieldUpdate('categories', selectedCategorySlug ? [selectedCategorySlug] : []);
+                      // Direct field update
+                      onUpdate(index, { ...course, category: value, categories: value ? [value] : [] });
                       
-                      console.log('✅ Category updated:', {
-                        slug: selectedCategorySlug,
-                        name: selectedCategorySlug ? dynamicCategories[selectedCategorySlug]?.name : 'None'
-                      });
+                      console.log('✅ AFTER UPDATE - new category:', value);
                     }}
                     className="form-input"
                   >
                     <option value="">Select Category</option>
-                    {Object.entries(dynamicCategories)
-                      .sort(([, a], [, b]) => (a.order || 999) - (b.order || 999))
-                      .map(([slug, category]) => (
-                        <option key={slug} value={slug}>
-                          {category.name || category.title || slug}
-                        </option>
-                      ))
-                    }
+                    {Object.entries(dynamicCategories).map(([slug, category]) => (
+                      <option key={slug} value={slug}>
+                        {category.name}
+                      </option>
+                    ))}
                   </select>
                   
                   {/* Enhanced help text with debug info */}

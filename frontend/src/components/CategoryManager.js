@@ -94,9 +94,14 @@ const CategoryManager = ({ content, updateContent }) => {
   // ---------------- Permanent fix: Sync Key (key ≡ slug) ----------------
   const syncSlugKey = (oldKey) => {
     const cat = categories[oldKey];
-    if (!cat) return;
+    if (!cat) {
+      console.log('❌ Category not found:', oldKey);
+      return;
+    }
 
     const desired = (cat.slug || '').trim();
+    console.log('🔄 Sync Key attempt:', { oldKey, currentSlug: cat.slug, desired });
+    
     if (!desired) return alert('Slug empty hai. Pehle Name/Slug set karo.');
     if (desired === oldKey) return alert('Slug aur key already same hain.');
     if (categories[desired]) return alert(`"${desired}" key already exists. Slug thoda change karein.`);
@@ -109,6 +114,8 @@ const CategoryManager = ({ content, updateContent }) => {
       return;
     }
 
+    console.log('✅ User confirmed key sync');
+
     // 1) move category under new key
     const newCategories = { ...categories };
     delete newCategories[oldKey];
@@ -120,6 +127,13 @@ const CategoryManager = ({ content, updateContent }) => {
       categories: (course.categories || []).map((s) => (s === oldKey ? desired : s)),
     }));
 
+    console.log('📝 Syncing key:', { 
+      oldKey, 
+      newKey: desired, 
+      updatedCategories: Object.keys(newCategories),
+      coursesUpdated: updatedCourses.length 
+    });
+
     // 3) save
     updateContent('courseCategories', newCategories);
     updateContent('courses', updatedCourses);
@@ -127,7 +141,7 @@ const CategoryManager = ({ content, updateContent }) => {
     // keep editor open
     if (expandedCategory === oldKey) setExpandedCategory(desired);
 
-    alert('✅ Key synced to slug. Frontend URL ab slug use karega.');
+    alert('✅ Key synced to slug. Frontend URL ab slug use karega. Don\'t forget to click "Save Changes" at the top.');
   };
 
   // (Optional) One-click: Sync **all** categories keys to slugs (unique handling)

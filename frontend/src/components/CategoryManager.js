@@ -203,7 +203,9 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
       }));
       
       console.log('📝 Updating content:', Object.keys(updatedCategories));
+      console.log('📝 Updated courses count:', updatedCourses.length);
       
+      // Force state update by creating completely new objects
       updateContent('courseCategories', updatedCategories);
       updateContent('courses', updatedCourses);
       
@@ -212,7 +214,8 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
         setExpandedCategory(null);
       }
       
-      alert(`✅ Category "${categoryName}" deleted successfully! Don't forget to click "Save Changes" at the top.`);
+      console.log('✅ Category deleted, state updated');
+      alert(`✅ Category "${categoryName}" deleted successfully! Click "Save Changes" to persist changes.`);
     } else {
       console.log('❌ User cancelled deletion');
     }

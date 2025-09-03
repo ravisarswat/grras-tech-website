@@ -8,7 +8,7 @@ import uuid
 from datetime import datetime, timedelta
 
 # Backend URL
-BACKEND_URL = "https://ecstatic-jackson.preview.emergentagent.com"
+BACKEND_URL = "https://training-portal-10.preview.emergentagent.com"
 
 # Admin credentials
 ADMIN_PASSWORD = "grras@admin2024"

@@ -1,6 +1,6 @@
 {
   "timestamp": "2025-08-31T12:14:56.456475",
-  "backend_url": "https://ecstatic-jackson.preview.emergentagent.com",
+  "backend_url": "https://training-portal-10.preview.emergentagent.com",
   "test_focus": "CertificationCoursesPage functionality",
   "total_tests": 5,
   "passed_tests": 5,

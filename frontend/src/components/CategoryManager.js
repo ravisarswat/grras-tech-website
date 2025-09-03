@@ -176,9 +176,19 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
       categories: (course.categories || []).map((k) => finalKeyFor[k] || k),
     }));
 
+    console.log('📝 Sync All Categories:', { 
+      totalCategories: entries.length,
+      updatedCategories: Object.keys(newCats),
+      updatedCourses: newCourses.length,
+      keyMappings: finalKeyFor
+    });
+
+    // Force state update with completely new objects
     updateContent('courseCategories', newCats);
     updateContent('courses', newCourses);
-    alert('✅ All categories synced. URLs now use canonical slugs.');
+    
+    console.log('✅ All categories synced, state updated');
+    alert('✅ All categories synced. URLs now use canonical slugs. Click "Save Changes" to persist changes.');
   };
 
   // ---------------- Delete Category ----------------

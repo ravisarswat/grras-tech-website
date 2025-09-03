@@ -6,26 +6,48 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
   const [expandedCategory, setExpandedCategory] = useState(null);
   const formRefs = useRef({});
 
-  // Add global keyboard event handler to prevent unwanted collapse
+  // Add global keyboard event handler with robust focus detection
   useEffect(() => {
     const handleGlobalKeyDown = (e) => {
-      // Don't close panel if focus is inside any expanded form
+      // Only handle Escape key for closing panels
+      if (e.key !== 'Escape') {
+        return; // Let all other keys through without interference
+      }
+      
+      // For Escape key, check if we're inside any form field
       if (expandedCategory && formRefs.current[expandedCategory]) {
         const formElement = formRefs.current[expandedCategory];
-        if (formElement && formElement.contains(document.activeElement)) {
-          // If focus is inside the form, don't close on any key
-          return;
+        
+        // Multiple methods to detect if focus is inside form (Firefox compatibility)
+        const isInsideForm = (
+          // Method 1: Check event target
+          formElement.contains(e.target) ||
+          // Method 2: Check active element with small delay tolerance
+          (document.activeElement && formElement.contains(document.activeElement)) ||
+          // Method 3: Check if target is an input/textarea/select
+          (e.target && (
+            e.target.tagName === 'INPUT' || 
+            e.target.tagName === 'TEXTAREA' || 
+            e.target.tagName === 'SELECT'
+          ) && formElement.contains(e.target))
+        );
+        
+        if (isInsideForm) {
+          console.log('🔐 Escape key blocked - focus is inside form');
+          return; // Don't close if focus is inside form
         }
       }
       
-      // Only close on Escape when focus is NOT inside form
-      if (e.key === 'Escape' && expandedCategory) {
+      // Only close on Escape when focus is clearly outside any form
+      if (expandedCategory) {
+        console.log('✅ Escape key closing panel - focus outside form');
         setExpandedCategory(null);
       }
     };
 
-    document.addEventListener('keydown', handleGlobalKeyDown);
-    return () => document.removeEventListener('keydown', handleGlobalKeyDown);
+    // Use capture phase to catch events early
+    document.addEventListener('keydown', handleGlobalKeyDown, true);
+    return () => document.removeEventListener('keydown', handleGlobalKeyDown, true);
   }, [expandedCategory]);
 
   const categories = content?.courseCategories || {};

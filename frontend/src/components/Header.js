@@ -10,39 +10,10 @@ const Header = () => {
   const location = useLocation();
   const { content } = useContent();
 
-  // Optimized dropdown handlers for smooth UX
-  const handleDropdownOpen = () => {
-    if (dropdownTimeout) {
-      clearTimeout(dropdownTimeout);
-      setDropdownTimeout(null);
-    }
-    setIsCoursesOpen(true);
-  };
-
-  const handleDropdownClose = (delay = 200) => {
-    const timeout = setTimeout(() => {
-      setIsCoursesOpen(false);
-    }, delay);
-    setDropdownTimeout(timeout);
-  };
-
-  // Cleanup timeouts
-  useEffect(() => {
-    return () => {
-      if (dropdownTimeout) {
-        clearTimeout(dropdownTimeout);
-      }
-    };
-  }, [dropdownTimeout]);
-
   // Close dropdown on navigation
   useEffect(() => {
     setIsCoursesOpen(false);
-    setIsMenuOpen(false);
-    if (dropdownTimeout) {
-      clearTimeout(dropdownTimeout);
-    }
-  }, [location.pathname, dropdownTimeout]);
+  }, [location.pathname]);
 
   // Get categories for dropdown
   const courseCategories = content?.courseCategories || {};

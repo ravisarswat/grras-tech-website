@@ -488,7 +488,7 @@ const Courses = () => {
               </div>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
               {filteredCourses.map((course, index) => (
                 <div key={course.slug} className="group bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden hover:border-orange-200 transform hover:scale-[1.05] hover:-translate-y-2 relative">
                   {/* Enhanced Header with gradient and glow effect */}

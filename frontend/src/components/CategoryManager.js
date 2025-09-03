@@ -371,7 +371,7 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                 >
                   <div className="bg-green-100 border border-green-300 rounded p-2 mb-4">
                     <p className="text-green-800 text-sm font-medium">
-                      🔒 Protected Form: This panel will stay open while you type, paste, or edit. Only Escape key (when not focused on inputs) or clicking the collapse button will close it.
+                      🔓 Form Ready: You can now type, paste, and edit freely. Panel will only close with collapse button or Escape key when not focused.
                     </p>
                   </div>
                   
@@ -382,31 +382,6 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                         type="text"
                         value={category.name || ''}
                         onChange={(e) => updateCategory(slug, 'name', e.target.value)}
-                        // Comprehensive event stopping for all input events
-                        onKeyDown={(e) => {
-                          e.stopPropagation();
-                          console.log('🔤 Name input keydown:', e.key);
-                        }}
-                        onKeyUp={(e) => {
-                          e.stopPropagation();
-                        }}
-                        onKeyPress={(e) => {
-                          e.stopPropagation();
-                        }}
-                        onPaste={(e) => {
-                          e.stopPropagation();
-                          console.log('📋 Name input paste');
-                        }}
-                        onInput={(e) => {
-                          e.stopPropagation();
-                        }}
-                        onFocus={(e) => {
-                          e.stopPropagation();
-                          console.log('🎯 Name input focused');
-                        }}
-                        onBlur={(e) => {
-                          e.stopPropagation();
-                        }}
                         className="w-full border rounded p-2"
                         placeholder="Enter category name"
                         autoFocus={slug.includes('new-category')}
@@ -418,13 +393,6 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                         type="text"
                         value={category.slug}
                         onChange={(e) => updateCategory(slug, 'slug', e.target.value)}
-                        onKeyDown={(e) => e.stopPropagation()}
-                        onKeyUp={(e) => e.stopPropagation()}
-                        onKeyPress={(e) => e.stopPropagation()}
-                        onPaste={(e) => e.stopPropagation()}
-                        onInput={(e) => e.stopPropagation()}
-                        onFocus={(e) => e.stopPropagation()}
-                        onBlur={(e) => e.stopPropagation()}
                         className="w-full border rounded p-2"
                         placeholder="category-url-slug"
                       />
@@ -435,12 +403,6 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                         type="number"
                         value={category.order || 1}
                         onChange={(e) => updateCategory(slug, 'order', parseInt(e.target.value))}
-                        onKeyDown={(e) => e.stopPropagation()}
-                        onKeyUp={(e) => e.stopPropagation()}
-                        onKeyPress={(e) => e.stopPropagation()}
-                        onInput={(e) => e.stopPropagation()}
-                        onFocus={(e) => e.stopPropagation()}
-                        onBlur={(e) => e.stopPropagation()}
                         className="w-full border rounded p-2"
                       />
                     </div>
@@ -450,10 +412,6 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                         type="color"
                         value={category.color || '#3B82F6'}
                         onChange={(e) => updateCategory(slug, 'color', e.target.value)}
-                        onKeyDown={(e) => e.stopPropagation()}
-                        onInput={(e) => e.stopPropagation()}
-                        onFocus={(e) => e.stopPropagation()}
-                        onBlur={(e) => e.stopPropagation()}
                         className="w-full border rounded p-2 h-10"
                       />
                     </div>

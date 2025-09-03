@@ -446,7 +446,7 @@ const CategoryManager = ({ content, updateContent }) => {
                       e.preventDefault();
                       e.stopPropagation();
                       console.log('🔴 DELETE BUTTON CLICKED!', slug);
-                      alert('Delete button clicked for: ' + slug);
+                      console.log('🔴 Current categories before delete:', Object.keys(categories));
                       deleteCategory(slug);
                     }}
                     className="p-2 text-red-600 hover:bg-red-50 rounded border border-red-200 ml-4"

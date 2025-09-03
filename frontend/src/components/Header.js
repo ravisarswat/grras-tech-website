@@ -261,11 +261,11 @@ const Header = () => {
                   <BookOpen className="w-4 h-4 text-white" />
                 </div>
                 <h3 className="font-black text-orange-600 text-lg">
-                  🎯 Popular Courses
+                  Technology Tracks
                 </h3>
                 <div className="ml-auto">
                   <span className="inline-flex items-center px-2 py-1 bg-orange-100 text-orange-700 text-xs font-bold rounded-full">
-                    {technologyTracks.length} Courses
+                    {technologyTracks.length} Categories
                   </span>
                 </div>
               </div>

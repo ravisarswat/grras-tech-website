@@ -7,9 +7,9 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [dropdownTimeout, setDropdownTimeout] = useState(null);
-  const [isMobileCoursesOpen, setIsMobileCoursesOpen] = useState(false);
-  const { content } = useContent();
+  
   const location = useLocation();
+  const { content } = useContent();
 
   // Optimized dropdown handlers for smooth UX
   const handleDropdownOpen = () => {

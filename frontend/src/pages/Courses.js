@@ -545,8 +545,8 @@ const Courses = () => {
                       </div>
                     )}
 
-                    {/* Enhanced Footer */}
-                    <div className="flex items-center justify-between pt-6 border-t border-gray-200">
+                    {/* Enhanced Footer with Pricing CTA */}
+                    <div className="space-y-4 pt-6 border-t border-gray-200">
                       {/* Enhanced Categories */}
                       <div className="flex flex-wrap gap-2">
                         {course.categories && course.categories.length > 0 && (
@@ -561,20 +561,35 @@ const Courses = () => {
                         )}
                       </div>
                       
-                      {/* Enhanced CTA Button */}
-                      <Link
-                        to={`/courses/${course.slug}`}
-                        className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-600 via-red-600 to-orange-700 text-white text-sm font-black rounded-2xl hover:from-orange-700 hover:to-red-700 transition-all duration-500 transform hover:scale-110 shadow-2xl hover:shadow-3xl group relative overflow-hidden"
-                      >
-                        {/* Button Glow Effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      {/* Pricing and CTA Section */}
+                      <div className="flex items-center justify-between">
+                        {/* Compact Pricing */}
+                        {course.fees && (
+                          <div className="flex flex-col">
+                            <span className="text-lg font-black text-green-700 leading-tight">
+                              {course.fees.split(' ')[0]}
+                            </span>
+                            <span className="text-xs text-green-600 font-semibold">
+                              EMI Available
+                            </span>
+                          </div>
+                        )}
                         
-                        <span className="relative z-10">Explore</span>
-                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-2 transition-transform duration-300 relative z-10" />
-                        
-                        {/* Sparkle effect */}
-                        <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-white rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
-                      </Link>
+                        {/* Enhanced CTA Button */}
+                        <Link
+                          to={`/courses/${course.slug}`}
+                          className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-600 via-red-600 to-orange-700 text-white text-sm font-black rounded-2xl hover:from-orange-700 hover:to-red-700 transition-all duration-500 transform hover:scale-110 shadow-2xl hover:shadow-3xl group relative overflow-hidden"
+                        >
+                          {/* Button Glow Effect */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                          
+                          <span className="relative z-10">Enroll Now</span>
+                          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-2 transition-transform duration-300 relative z-10" />
+                          
+                          {/* Sparkle effect */}
+                          <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-white rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
+                        </Link>
+                      </div>
                     </div>
                   </div>
                   

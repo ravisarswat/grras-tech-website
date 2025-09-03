@@ -17,6 +17,7 @@ const CourseEditor = ({
   course, 
   index, 
   courses,
+  categories: propCategories,
   onUpdate, 
   onDelete, 
   onMove 

@@ -40,13 +40,23 @@ const CourseEditor = ({
   
   // Debug logging for category loading
   React.useEffect(() => {
+    console.log('=== CourseEditor Debug Info ===');
     console.log('🔍 CourseEditor - Content loaded:', !!content);
     console.log('🔍 CourseEditor - Prop categories:', !!propCategories, Object.keys(propCategories || {}));
     console.log('🔍 CourseEditor - Content categories:', Object.keys(content?.courseCategories || {}));
     console.log('🔍 CourseEditor - Final categories used:', Object.keys(dynamicCategories));
     console.log('🔍 CourseEditor - Course category:', course.category);
+    console.log('🔍 CourseEditor - Course title:', course.title);
     console.log('🔍 CourseEditor - Full categories data:', dynamicCategories);
-  }, [content, propCategories, dynamicCategories, course.category]);
+    
+    // Check if current category exists in available categories
+    if (course.category && !dynamicCategories[course.category]) {
+      console.warn('⚠️ Course category does not exist in available categories!');
+      console.log('Available:', Object.keys(dynamicCategories));
+      console.log('Course has:', course.category);
+    }
+    console.log('===============================');
+  }, [content, propCategories, dynamicCategories, course.category, course.title]);
 
   // Validate slug uniqueness
   const validateSlug = (newSlug) => {

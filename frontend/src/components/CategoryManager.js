@@ -462,15 +462,12 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                       
                       <select
                         onChange={(e) => {
-                          e.stopPropagation();
+                          e.stopPropagation(); // Only stop this specific event
                           if (e.target.value) {
                             assignCourseToCategory(slug, e.target.value);
                             e.target.value = '';
                           }
                         }}
-                        onKeyDown={(e) => e.stopPropagation()}
-                        onFocus={(e) => e.stopPropagation()}
-                        onBlur={(e) => e.stopPropagation()}
                         className="w-full border rounded p-2"
                       >
                         <option value="">Add a course...</option>

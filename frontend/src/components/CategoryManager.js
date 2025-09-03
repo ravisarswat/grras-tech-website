@@ -294,14 +294,28 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                   </button>
                   <button
                     onClick={() => setExpandedCategory(expandedCategory === slug ? null : slug)}
-                    className="p-2 hover:bg-gray-100 rounded"
+                    className="p-2 hover:bg-gray-100 rounded text-blue-600"
+                    title={expandedCategory === slug ? "Collapse category" : "Expand to edit category"}
                   >
                     {expandedCategory === slug ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                   </button>
-                  <button
-                    onClick={() => deleteCategory(slug)}
-                    className="p-2 text-red-600 hover:bg-red-50 rounded"
-                  >
+                  
+                  {/* Separated delete button with confirmation */}
+                  <div className="ml-4 border-l pl-4">
+                    <button
+                      onClick={() => {
+                        if (confirm(`⚠️ DELETE CATEGORY: "${category.name}"?\n\nThis will:\n• Delete category permanently\n• Remove from all courses\n• Cannot be undone\n\nType "DELETE" to confirm this is intentional.`)) {
+                          const confirmation = prompt('Type "DELETE" to confirm:');
+                          if (confirmation === 'DELETE') {
+                            deleteCategory(slug);
+                          } else {
+                            alert('❌ Deletion cancelled - confirmation text did not match');
+                          }
+                        }
+                      }}
+                      className="p-2 text-red-600 hover:bg-red-50 rounded border border-red-200"
+                      title="Delete category (requires confirmation)"
+                    >
                     <Trash2 className="h-4 w-4" />
                   </button>
                 </div>

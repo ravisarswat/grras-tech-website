@@ -60,40 +60,32 @@ const Header = () => {
               {navigationItems.map((item) => (
                 <div key={item.name} className="relative">
                   {item.hasDropdown ? (
-                    <div className="relative group">
+                    <div className="relative">
                       <button className="flex items-center space-x-1 text-gray-800 hover:text-orange-600 font-bold py-3 px-2">
                         <span>{item.name}</span>
                         <ChevronDown className="h-4 w-4" />
                       </button>
 
-                      {/* CSS HOVER DROPDOWN */}
-                      <div className="absolute left-0 top-full mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                        <div className="p-4">
-                          <h3 className="font-bold text-orange-600 text-lg mb-3 border-b pb-2">Technology Tracks</h3>
-                          <div className="space-y-2">
-                            {technologyTracks.map((track) => (
-                              <a
-                                key={track.id}
-                                href={track.path}
-                                className="flex items-center justify-between p-3 hover:bg-orange-50 rounded-lg border border-transparent hover:border-orange-200"
-                              >
-                                <div>
-                                  <div className="font-semibold text-gray-900">{track.name}</div>
-                                  <div className="text-sm text-gray-500">{track.courseCount} courses</div>
+                      {/* ALWAYS VISIBLE DROPDOWN FOR TESTING */}
+                      <div className="absolute left-0 top-full mt-2 w-80 bg-red-100 border-4 border-red-500 p-4 z-50">
+                        <h3 className="font-bold text-red-800 mb-2">DROPDOWN TEST</h3>
+                        <div className="text-sm text-gray-700">
+                          <p>Categories found: {technologyTracks.length}</p>
+                          {technologyTracks.length > 0 ? (
+                            <div>
+                              {technologyTracks.slice(0, 3).map((track) => (
+                                <div key={track.id} className="p-1 bg-white mb-1 rounded">
+                                  {track.name} ({track.courseCount})
                                 </div>
-                                <ArrowRight className="h-4 w-4 text-orange-500" />
-                              </a>
-                            ))}
-                          </div>
-                          <div className="mt-4 pt-3 border-t">
-                            <a 
-                              href="/courses" 
-                              className="block w-full text-center px-4 py-3 bg-gradient-to-r from-orange-600 to-red-600 text-white font-bold rounded-lg hover:from-orange-700 hover:to-red-700"
-                            >
-                              🚀 View All Courses
-                            </a>
-                          </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="text-red-600">NO DATA FOUND!</div>
+                          )}
                         </div>
+                        <a href="/courses" className="block mt-2 p-2 bg-red-500 text-white text-center rounded">
+                          Go to Courses
+                        </a>
                       </div>
                     </div>
                   ) : (

@@ -38,6 +38,9 @@ const LearningPathManager = ({ content, updateContent }) => {
   };
 
   const updatePath = (pathSlug, field, value) => {
+    console.log('🔄 updatePath called:', { pathSlug, field, value });
+    console.log('📋 Current learningPaths:', learningPaths);
+    
     const newPaths = { ...learningPaths };
     
     if (field === 'slug' && value !== pathSlug) {
@@ -47,7 +50,12 @@ const LearningPathManager = ({ content, updateContent }) => {
       newPaths[pathSlug] = { ...newPaths[pathSlug], [field]: value };
     }
     
+    console.log('🆕 Updated paths:', newPaths);
+    console.log('📊 Updated path data:', newPaths[pathSlug]);
+    
     updateContent('learningPaths', newPaths);
+    
+    console.log('✅ updateContent called for learningPaths');
   };
 
   const updatePathSEO = (pathSlug, field, value) => {

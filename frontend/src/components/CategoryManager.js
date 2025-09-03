@@ -445,14 +445,53 @@ const CategoryManager = ({ content, updateContent }) => {
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Description</label>
-                    <textarea
-                      value={category.description || ''}
-                      onChange={(e) => updateCategory(slug, 'description', e.target.value)}
-                      className="w-full border rounded p-2"
-                      rows="2"
-                    />
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Description</label>
+                      <textarea
+                        value={category.description || ''}
+                        onChange={(e) => updateCategory(slug, 'description', e.target.value)}
+                        className="w-full border rounded p-2"
+                        rows="2"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Logo URL</label>
+                      <input
+                        type="url"
+                        value={category.logo || ''}
+                        onChange={(e) => updateCategory(slug, 'logo', e.target.value)}
+                        className="w-full border rounded p-2"
+                        placeholder="https://example.com/logo.png"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">Logo for category display</p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Icon</label>
+                      <input
+                        type="text"
+                        value={category.icon || ''}
+                        onChange={(e) => updateCategory(slug, 'icon', e.target.value)}
+                        className="w-full border rounded p-2"
+                        placeholder="e.g. folder, server, network"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Visible</label>
+                      <select
+                        value={category.visible ? 'true' : 'false'}
+                        onChange={(e) => updateCategory(slug, 'visible', e.target.value === 'true')}
+                        className="w-full border rounded p-2"
+                      >
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                      </select>
+                    </div>
                   </div>
 
                   <div>

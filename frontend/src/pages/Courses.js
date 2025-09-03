@@ -382,7 +382,7 @@ const Courses = () => {
                     }}
                   >
                     {/* Enhanced Logo/Icon */}
-                    <div className={`flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 ${
+                    <div className={`flex-shrink-0 w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center transition-all duration-500 ${
                       selectedCategory === category.id 
                         ? 'bg-white/30 backdrop-blur-sm shadow-lg' 
                         : 'bg-white group-hover:bg-orange-100 shadow-md border border-gray-200 group-hover:border-orange-300'

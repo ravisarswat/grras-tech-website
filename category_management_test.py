@@ -165,7 +165,7 @@ class CategoryManagementTester:
         """Test 3: Admin Authentication - test admin login for course management"""
         try:
             # Get admin password from environment or use default
-            admin_password = os.environ.get('ADMIN_PASSWORD', 'grras@admin2024')
+            admin_password = os.environ.get('ADMIN_PASSWORD', 'grras-admin')
             
             login_data = {"password": admin_password}
             

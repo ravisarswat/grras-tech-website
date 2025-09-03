@@ -432,7 +432,11 @@ const LearningPathManager = ({ content, updateContent }) => {
                         </p>
                       </div>
                       <button
-                        onClick={() => addCourseToPath(pathSlug)}
+                        onClick={(e) => {
+                          console.log('🖱️ Button click event triggered', e);
+                          addCourseToPath(pathSlug);
+                        }}
+                        onMouseDown={() => console.log('🖱️ Button mouse down')}
                         className={`btn-outline btn-sm flex items-center gap-2 ${
                           availableCourses.length === 0 
                             ? 'opacity-50 cursor-not-allowed' 
@@ -443,6 +447,7 @@ const LearningPathManager = ({ content, updateContent }) => {
                           ? 'No courses available. Add courses first in the Courses section.' 
                           : `Add course from ${availableCourses.length} available courses`
                         }
+                        type="button"
                       >
                         <Plus className="h-4 w-4" />
                         Add Course ({availableCourses.length})

@@ -134,17 +134,16 @@ const Header = () => {
                       </Link>
                     )}
 
-                    {/* Enhanced Premium Dynamic Dropdown */}
-                    {item.hasDropdown && isCoursesOpen && (
+                    {/* Enhanced Premium Dynamic Dropdown - Using Portal */}
+                    {item.hasDropdown && isCoursesOpen && createPortal(
                       <div 
                         className="fixed top-20 left-0 right-0 w-full bg-white/99 backdrop-blur-2xl shadow-2xl border-t-4 border-orange-500 animate-in slide-in-from-top-4 duration-500 overflow-hidden"
                         onMouseEnter={() => setIsCoursesOpen(true)}
                         onMouseLeave={() => setIsCoursesOpen(false)}
                         style={{
                           background: 'linear-gradient(135deg, rgba(255,255,255,0.99) 0%, rgba(255,247,237,0.99) 50%, rgba(254,242,242,0.99) 100%)',
-                          zIndex: '999999 !important',
-                          position: 'fixed !important',
-                          isolation: 'isolate'
+                          zIndex: 999999,
+                          position: 'fixed'
                         }}
                       >
                         <div className="container mx-auto px-4">

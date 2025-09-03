@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Plus, Trash2, Eye, EyeOff, ChevronDown, ChevronUp } from 'lucide-react';
 
-const CategoryManager = ({ content, updateContent }) => {
+const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
   const [expandedCategory, setExpandedCategory] = useState(null);
   const formRefs = useRef({});
 

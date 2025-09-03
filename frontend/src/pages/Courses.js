@@ -395,7 +395,7 @@ const Courses = () => {
                           onError={(e) => e.target.style.display = 'none'}
                         />
                       ) : (
-                        <BookOpen className={`w-7 h-7 transition-all duration-300 ${
+                        <BookOpen className={`w-4 h-4 sm:w-7 sm:h-7 transition-all duration-300 ${
                           selectedCategory === category.id 
                             ? 'text-white scale-110' 
                             : 'text-gray-600 group-hover:text-orange-600 group-hover:scale-110'

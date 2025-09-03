@@ -335,7 +335,7 @@ const Courses = () => {
 
         <div className="container mx-auto px-4 py-12">
           {/* Enhanced Premium Dynamic Category Tabs */}
-          <div className="mb-12">
+          <div className="mb-12" id="course-categories-section">
             <div className="bg-white rounded-3xl shadow-2xl border border-gray-200 p-6 overflow-x-auto">
               <div className="flex space-x-3 min-w-max">
                 {categories.map((category, index) => (

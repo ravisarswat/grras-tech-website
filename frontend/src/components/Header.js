@@ -221,17 +221,15 @@ const Header = () => {
                       </Link>
                     )}
 
-                    {/* Simple, Reliable Dropdown - No Portal */}
+                    {/* Simple, Reliable Dropdown */}
                     {item.hasDropdown && isCoursesOpen && (
                       <div 
-                        className="absolute top-full left-0 w-screen bg-white shadow-2xl border-t-4 border-orange-500 animate-in slide-in-from-top-2 duration-200"
+                        className="absolute top-full left-1/2 transform -translate-x-1/2 w-screen max-w-4xl bg-white shadow-2xl border-t-4 border-orange-500 animate-in slide-in-from-top-2 duration-200 rounded-b-2xl"
                         onMouseEnter={handleDropdownOpen}
                         onMouseLeave={() => handleDropdownClose(200)}
                         style={{
                           zIndex: 99999,
-                          marginLeft: '-50vw',
-                          left: '50%',
-                          position: 'absolute'
+                          marginTop: '4px'
                         }}
                       >
                         <div className="p-6">

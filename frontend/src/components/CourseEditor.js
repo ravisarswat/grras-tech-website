@@ -402,10 +402,21 @@ const CourseEditor = ({
                     }
                   </select>
                   
-                  <div className="mt-1 text-xs text-gray-500">
-                    <div>✅ {Object.keys(dynamicCategories).length} categories loaded from database</div>
-                    <div className="text-blue-600 font-medium">
-                      Current: {course.category ? dynamicCategories[course.category]?.name || course.category : 'None selected'}
+                  <div className="mt-1 text-xs">
+                    <div className="text-gray-500">✅ {Object.keys(dynamicCategories).length} categories loaded</div>
+                    <div className={`font-medium ${course.category ? 'text-green-600' : 'text-red-500'}`}>
+                      Current: {course.category ? (
+                        <span className="bg-green-100 px-2 py-1 rounded">
+                          {dynamicCategories[course.category]?.name || course.category}
+                        </span>
+                      ) : (
+                        <span className="bg-red-100 px-2 py-1 rounded">
+                          None selected
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-gray-400">
+                      DB Field: category = "{course.category || 'null'}"
                     </div>
                   </div>
                 </div>

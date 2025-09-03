@@ -26,6 +26,14 @@ const CourseEditor = ({
   const [activeSection, setActiveSection] = useState('basic');
   const [slugError, setSlugError] = useState('');
   
+  // Auto-sync category to categories array for backward compatibility
+  React.useEffect(() => {
+    if (course.category && (!course.categories || course.categories.length === 0)) {
+      console.log('🔄 Auto-syncing category to categories array:', course.category);
+      handleFieldUpdate('categories', [course.category]);
+    }
+  }, [course.category]);
+  
   // Get dynamic categories from content
   const dynamicCategories = content?.courseCategories || {};
 

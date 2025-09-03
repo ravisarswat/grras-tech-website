@@ -329,7 +329,14 @@ const CourseEditor = ({
                   </label>
                   <select
                     value={course.category || ''}
-                    onChange={(e) => handleFieldUpdate('category', e.target.value)}
+                    onChange={(e) => {
+                      const selectedCategory = e.target.value;
+                      // Save both formats for compatibility
+                      handleFieldUpdate('category', selectedCategory);
+                      // FIXED: Also save as categories array for frontend compatibility
+                      handleFieldUpdate('categories', selectedCategory ? [selectedCategory] : []);
+                      console.log('✅ Category updated:', { category: selectedCategory, categories: selectedCategory ? [selectedCategory] : [] });
+                    }}
                     className="form-input"
                   >
                     <option value="">Select category</option>

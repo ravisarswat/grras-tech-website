@@ -169,11 +169,15 @@ const CategoryManager = ({ content, updateContent }) => {
     const categoryName = categories[key]?.name || key;
     const courseCount = getCoursesByCategory(key).length;
     
+    console.log('🗑️ Deleting category:', key, categoryName);
+    
     const confirmMessage = courseCount > 0 
       ? `Are you sure you want to delete "${categoryName}"?\n\nThis will remove the category from ${courseCount} course(s). The courses will remain but will be unassigned from this category.`
       : `Are you sure you want to delete "${categoryName}"?`;
     
     if (window.confirm(confirmMessage)) {
+      console.log('✅ User confirmed deletion');
+      
       // Remove category
       const updatedCategories = { ...categories };
       delete updatedCategories[key];
@@ -184,6 +188,8 @@ const CategoryManager = ({ content, updateContent }) => {
         categories: (course.categories || []).filter(cat => cat !== key)
       }));
       
+      console.log('📝 Updating content:', Object.keys(updatedCategories));
+      
       updateContent('courseCategories', updatedCategories);
       updateContent('courses', updatedCourses);
       
@@ -192,7 +198,9 @@ const CategoryManager = ({ content, updateContent }) => {
         setExpandedCategory(null);
       }
       
-      alert(`✅ Category "${categoryName}" deleted successfully!`);
+      alert(`✅ Category "${categoryName}" deleted successfully! Don't forget to click "Save Changes" at the top.`);
+    } else {
+      console.log('❌ User cancelled deletion');
     }
   };
 

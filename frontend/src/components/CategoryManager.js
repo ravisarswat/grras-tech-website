@@ -97,7 +97,7 @@ const CategoryManager = ({ content, updateContent }) => {
     });
   };
 
-  // Delete Category - Fixed
+  // Delete Category - Fixed Simple Version
   const deleteCategory = (slug) => {
     const categoryName = categories[slug]?.name;
     const courseCount = getCoursesByCategory(slug).length;
@@ -115,13 +115,8 @@ const CategoryManager = ({ content, updateContent }) => {
 
     console.log('✅ User confirmed deletion');
 
-    // Create new categories object without the deleted one
-    const newCategories = {};
-    Object.keys(categories).forEach(key => {
-      if (key !== slug) {
-        newCategories[key] = categories[key];
-      }
-    });
+    // Simple delete approach - use object destructuring 
+    const { [slug]: deletedCategory, ...remainingCategories } = categories;
 
     // Remove category from all courses
     const updatedCourses = courses.map(course => ({
@@ -131,13 +126,16 @@ const CategoryManager = ({ content, updateContent }) => {
 
     console.log('📝 Deleting category:', { 
       deletedSlug: slug, 
-      remainingCategories: Object.keys(newCategories),
+      remainingCategories: Object.keys(remainingCategories),
       updatedCourses: updatedCourses.length 
     });
 
-    // Update state
-    updateContent('courseCategories', newCategories);
-    updateContent('courses', updatedCourses);
+    // Force update with completely new objects
+    const categoriesUpdate = { ...remainingCategories };
+    const coursesUpdate = [...updatedCourses];
+
+    updateContent('courseCategories', categoriesUpdate);
+    updateContent('courses', coursesUpdate);
 
     // Close expanded panel if this category was expanded
     if (expandedCategory === slug) {

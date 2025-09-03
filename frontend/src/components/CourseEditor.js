@@ -365,11 +365,15 @@ const CourseEditor = ({
                       console.log('📋 Available categories:', Object.keys(dynamicCategories));
                       console.log('🔍 Current course.category:', course.category);
                       
-                      // Update category field using proper onUpdate signature
-                      onUpdate(index, 'category', selectedCategory);
+                      // Single update with both fields to avoid race conditions
+                      const updatedCourse = {
+                        ...course,
+                        category: selectedCategory,
+                        categories: selectedCategory ? [selectedCategory] : []
+                      };
                       
-                      // Also update categories array for compatibility  
-                      onUpdate(index, 'categories', selectedCategory ? [selectedCategory] : []);
+                      // Use direct object update instead of field-by-field
+                      onUpdate(index, updatedCourse);
                       
                       console.log('✅ Category updated to:', selectedCategory);
                       console.log('✅ Categories array updated to:', selectedCategory ? [selectedCategory] : []);

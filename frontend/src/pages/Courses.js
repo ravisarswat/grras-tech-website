@@ -587,18 +587,42 @@ const Courses = () => {
 
                     {/* Enhanced Footer with Pricing CTA */}
                     <div className="space-y-4 pt-6 border-t border-gray-200">
-                      {/* Enhanced Categories */}
+                      {/* Enhanced Categories with Smart Fallback */}
                       <div className="flex flex-wrap gap-2">
-                        {course.categories && course.categories.length > 0 && (
-                          course.categories.slice(0, 2).map(catSlug => {
+                        {(() => {
+                          // Use assigned categories if available
+                          if (course.categories && course.categories.length > 0) {
+                            return course.categories.slice(0, 2).map(catSlug => {
+                              const category = categories.find(c => c.slug === catSlug);
+                              return category ? (
+                                <span key={catSlug} className="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 text-xs rounded-xl font-bold shadow-sm border border-gray-300 hover:from-orange-100 hover:to-red-100 hover:text-orange-800 transition-all duration-300">
+                                  {category.name}
+                                </span>
+                              ) : null;
+                            });
+                          }
+                          
+                          // Smart fallback: Auto-detect category from course title
+                          const title = course.title.toLowerCase();
+                          let detectedCategories = [];
+                          
+                          if (title.includes('devops')) detectedCategories.push('devops');
+                          if (title.includes('aws') || title.includes('cloud')) detectedCategories.push('aws');
+                          if (title.includes('kubernetes') || title.includes('k8s')) detectedCategories.push('kubernetes');
+                          if (title.includes('red hat') || title.includes('rhcsa') || title.includes('rhce')) detectedCategories.push('redhat');
+                          if (title.includes('security') || title.includes('cyber')) detectedCategories.push('cybersecurity');
+                          if (title.includes('data science') || title.includes('machine learning') || title.includes('java') || title.includes('salesforce') || title.includes('programming')) detectedCategories.push('programming');
+                          if (title.includes('degree') || title.includes('bca') || title.includes('mca')) detectedCategories.push('degree');
+                          
+                          return detectedCategories.slice(0, 2).map(catSlug => {
                             const category = categories.find(c => c.slug === catSlug);
                             return category ? (
-                              <span key={catSlug} className="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 text-xs rounded-xl font-bold shadow-sm border border-gray-300 hover:from-orange-100 hover:to-red-100 hover:text-orange-800 transition-all duration-300">
-                                {category.name}
+                              <span key={catSlug} className="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 text-xs rounded-xl font-bold shadow-sm border border-blue-300 hover:from-orange-100 hover:to-red-100 hover:text-orange-800 transition-all duration-300">
+                                📝 {category.name}
                               </span>
                             ) : null;
-                          })
-                        )}
+                          });
+                        })()}
                       </div>
                       
                       {/* Pricing and CTA Section */}

@@ -145,48 +145,95 @@ const Header = () => {
                         <ChevronDown className="h-4 w-4 group-hover:rotate-180 transition-transform duration-300" />
                       </button>
 
-                      {/* SIMPLE GUARANTEED VISIBLE DROPDOWN */}
+                      {/* GUARANTEED WORKING DROPDOWN */}
                       {isCoursesOpen && (
                         <div 
-                          className="absolute top-full left-1/2 transform -translate-x-1/2 w-96 bg-white border-2 border-orange-500 shadow-2xl rounded-xl p-6 mt-2"
+                          className="absolute bg-white border-2 border-orange-500 shadow-2xl rounded-lg mt-2"
                           onMouseEnter={handleDropdownOpen}
                           onMouseLeave={() => handleDropdownClose(200)}
                           style={{
+                            position: 'absolute',
+                            top: '100%',
+                            left: '-150px',
+                            width: '400px',
                             zIndex: 999999,
                             backgroundColor: 'white',
-                            minWidth: '400px'
+                            border: '2px solid #ea580c',
+                            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                            padding: '1.5rem'
                           }}
                         >
-                          <h3 className="text-xl font-bold text-orange-800 mb-4 text-center">Technology Tracks</h3>
+                          <div 
+                            style={{
+                              textAlign: 'center',
+                              fontSize: '1.25rem',
+                              fontWeight: 'bold',
+                              color: '#ea580c',
+                              marginBottom: '1rem'
+                            }}
+                          >
+                            Technology Tracks
+                          </div>
                           
-                          <div className="space-y-3">
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                             {technologyTracks.length > 0 ? (
                               technologyTracks.map((track) => (
                                 <Link
                                   key={track.id}
                                   to={track.path}
-                                  className="flex items-center justify-between p-3 bg-orange-50 hover:bg-orange-100 rounded-lg transition-colors duration-200 border border-orange-200"
                                   onClick={() => setIsCoursesOpen(false)}
+                                  style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    padding: '0.75rem',
+                                    backgroundColor: '#fff7ed',
+                                    border: '1px solid #fed7aa',
+                                    borderRadius: '0.5rem',
+                                    textDecoration: 'none',
+                                    transition: 'all 0.2s'
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.target.style.backgroundColor = '#ffedd5';
+                                    e.target.style.borderColor = '#fb923c';
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.target.style.backgroundColor = '#fff7ed';
+                                    e.target.style.borderColor = '#fed7aa';
+                                  }}
                                 >
                                   <div>
-                                    <div className="font-bold text-gray-900">{track.name}</div>
-                                    <div className="text-sm text-gray-600">{track.courseCount} courses</div>
+                                    <div style={{ fontWeight: 'bold', color: '#1f2937', fontSize: '0.9rem' }}>
+                                      {track.name}
+                                    </div>
+                                    <div style={{ color: '#6b7280', fontSize: '0.8rem' }}>
+                                      {track.courseCount} courses
+                                    </div>
                                   </div>
-                                  <ArrowRight className="h-4 w-4 text-orange-600" />
+                                  <div style={{ color: '#ea580c', fontSize: '1rem' }}>→</div>
                                 </Link>
                               ))
                             ) : (
-                              <div className="text-center text-gray-500 py-6">
+                              <div style={{ textAlign: 'center', color: '#6b7280', padding: '1.5rem' }}>
                                 Loading categories...
                               </div>
                             )}
                           </div>
                           
-                          <div className="mt-6 pt-4 border-t-2 border-orange-200 text-center">
+                          <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '2px solid #fed7aa', textAlign: 'center' }}>
                             <Link
                               to="/courses"
-                              className="inline-block px-6 py-3 bg-gradient-to-r from-orange-600 to-red-600 text-white font-bold rounded-lg hover:from-orange-700 hover:to-red-700 transition-all duration-200 shadow-lg"
                               onClick={() => setIsCoursesOpen(false)}
+                              style={{
+                                display: 'inline-block',
+                                padding: '0.75rem 1.5rem',
+                                background: 'linear-gradient(to right, #ea580c, #dc2626)',
+                                color: 'white',
+                                fontWeight: 'bold',
+                                borderRadius: '0.5rem',
+                                textDecoration: 'none',
+                                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                              }}
                             >
                               🚀 View All Courses
                             </Link>

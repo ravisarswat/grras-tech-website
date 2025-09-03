@@ -253,9 +253,19 @@ const Header = () => {
             }}
           >
             <div className="p-6 w-80 max-w-[90vw]">
-              <h3 className="font-bold text-orange-600 text-lg mb-4 border-b border-orange-200 pb-2">
-                Technology Tracks
-              </h3>
+              <div className="flex items-center mb-4 pb-3 border-b border-orange-200">
+                <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center mr-3">
+                  <BookOpen className="w-4 h-4 text-white" />
+                </div>
+                <h3 className="font-black text-orange-600 text-lg">
+                  Technology Tracks
+                </h3>
+                <div className="ml-auto">
+                  <span className="inline-flex items-center px-2 py-1 bg-orange-100 text-orange-700 text-xs font-bold rounded-full">
+                    {technologyTracks.length} Categories
+                  </span>
+                </div>
+              </div>
               
               <div className="space-y-2 max-h-80 overflow-y-auto">
                 {technologyTracks.length > 0 ? (

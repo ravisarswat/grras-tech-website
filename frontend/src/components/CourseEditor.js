@@ -367,61 +367,32 @@ const CourseEditor = ({
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Category
                   </label>
-                  {/* 100% Dynamic Category System - No Hardcoded Mappings */}
+                  {/* 🚀 FRESH DYNAMIC CATEGORY SYSTEM */}
                   <select
-                    key={`category-${course.slug || 'new'}-${Object.keys(dynamicCategories).length}`}
                     value={course.category || ''}
-                    defaultValue={course.category || ''}
                     onChange={(e) => {
-                      const value = e.target.value;
-                      console.log('CATEGORY CHANGE:', value);
-                      handleFieldUpdate('category', value);
-                      if (value) {
-                        handleFieldUpdate('categories', [value]);
-                      } else {
-                        handleFieldUpdate('categories', []);
-                      }
+                      const selectedCategorySlug = e.target.value;
+                      
+                      // Update both category fields for compatibility
+                      handleFieldUpdate('category', selectedCategorySlug);
+                      handleFieldUpdate('categories', selectedCategorySlug ? [selectedCategorySlug] : []);
+                      
+                      console.log('✅ Category updated:', {
+                        slug: selectedCategorySlug,
+                        name: selectedCategorySlug ? dynamicCategories[selectedCategorySlug]?.name : 'None'
+                      });
                     }}
                     className="form-input"
                   >
-                    <option value="">
-                      {Object.keys(dynamicCategories).length === 0 
-                        ? 'Loading categories...' 
-                        : `Select category (${Object.keys(dynamicCategories).length} available)`
-                      }
-                    </option>
-                    
-                    {Object.keys(dynamicCategories).length === 0 ? (
-                      <option disabled>No categories found - Check database connection</option>
-                    ) : (
-                      Object.entries(dynamicCategories)
-                        .sort(([, a], [, b]) => (a.order || 999) - (b.order || 999))
-                        .map(([slug, category]) => {
-                          // Dynamic icon mapping from database
-                          const getIconForCategory = (iconName) => {
-                            const iconMap = {
-                              'server': '🔴',
-                              'cloud': '☁️', 
-                              'container': '⚙️',
-                              'terminal': '🔧',
-                              'shield': '🛡️',
-                              'code': '💻',
-                              'graduation-cap': '🎓',
-                              'book': '📚',
-                              'globe': '🌐',
-                              'database': '🗄️',
-                              'settings': '⚙️'
-                            };
-                            return iconMap[iconName] || '📚';
-                          };
-                          
-                          return (
-                            <option key={slug} value={slug} data-category-name={category.name}>
-                              {getIconForCategory(category.icon)} {category.name || category.title || slug}
-                            </option>
-                          );
-                        })
-                    )}
+                    <option value="">Select Category</option>
+                    {Object.entries(dynamicCategories)
+                      .sort(([, a], [, b]) => (a.order || 999) - (b.order || 999))
+                      .map(([slug, category]) => (
+                        <option key={slug} value={slug}>
+                          {category.name || category.title || slug}
+                        </option>
+                      ))
+                    }
                   </select>
                   
                   {/* Enhanced help text with debug info */}

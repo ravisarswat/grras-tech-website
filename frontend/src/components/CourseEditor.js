@@ -203,15 +203,27 @@ const CourseEditor = ({
         {/* Quick Actions */}
         <div className="flex items-center gap-2">
           <span className="text-sm px-2 py-1 rounded-full bg-gray-100 text-gray-700">
-            {course.category === 'certification' && '🔴 Red Hat'}
-            {course.category === 'cloud' && '☁️ AWS'}
-            {course.category === 'container' && '⚙️ Kubernetes'}
-            {course.category === 'devops' && '🔧 DevOps'}
-            {course.category === 'security' && '🛡️ Cybersecurity'}
-            {course.category === 'programming' && '💻 Programming'}
-            {course.category === 'degree' && '🎓 Degree'}
-            {!course.category && '📚 Uncategorized'}
-            {course.category && !['certification', 'cloud', 'container', 'devops', 'security', 'programming', 'degree'].includes(course.category) && '📚 Other'}
+            {(() => {
+              const categorySlug = course.category || '';
+              const categoryData = dynamicCategories[categorySlug];
+              
+              if (categoryData) {
+                // Use dynamic category with proper icon
+                const iconMap = {
+                  'server': '🔴',
+                  'cloud': '☁️', 
+                  'container': '⚙️',
+                  'terminal': '🔧',
+                  'shield': '🛡️',
+                  'code': '💻',
+                  'graduation-cap': '🎓'
+                };
+                const icon = iconMap[categoryData.icon] || '📚';
+                return `${icon} ${categoryData.name}`;
+              }
+              
+              return course.category ? `📚 ${course.category}` : '📚 Uncategorized';
+            })()}
           </span>
           
           <button

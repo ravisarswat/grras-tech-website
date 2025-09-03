@@ -323,7 +323,18 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
               </div>
 
               {expandedCategory === slug && (
-                <div className="space-y-4 pt-4 border-t">
+                <div 
+                  className="space-y-4 pt-4 border-t"
+                  onKeyDown={(e) => {
+                    // Prevent keyboard events from bubbling up and closing the editor
+                    e.stopPropagation();
+                    console.log('🔤 Keyboard event in category editor:', e.key);
+                  }}
+                  onClick={(e) => {
+                    // Prevent clicks inside the form from bubbling up
+                    e.stopPropagation();
+                  }}
+                >
                   <div className="grid grid-cols-4 gap-4">
                     <div>
                       <label className="block text-sm font-medium mb-2">Name</label>

@@ -316,7 +316,18 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                     {category.visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
                   </button>
                   <button
-                    onClick={() => setExpandedCategory(expandedCategory === slug ? null : slug)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setExpandedCategory(expandedCategory === slug ? null : slug);
+                    }}
+                    onKeyDown={(e) => {
+                      e.stopPropagation();
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setExpandedCategory(expandedCategory === slug ? null : slug);
+                      }
+                    }}
                     className="p-2 hover:bg-gray-100 rounded text-blue-600"
                     title={expandedCategory === slug ? "Collapse category" : "Expand to edit category"}
                   >

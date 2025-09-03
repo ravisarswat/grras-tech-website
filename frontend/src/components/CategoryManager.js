@@ -425,6 +425,14 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                         type="text"
                         value={category.name || ''}
                         onChange={(e) => updateCategory(slug, 'name', e.target.value)}
+                        onFocus={(e) => {
+                          e.target.setAttribute('data-focused', 'true');
+                          console.log('🎯 Name field focused');
+                        }}
+                        onBlur={(e) => {
+                          e.target.removeAttribute('data-focused');
+                          console.log('👋 Name field blurred');
+                        }}
                         className="w-full border rounded p-2"
                         placeholder="Enter category name"
                         autoFocus={slug.includes('new-category')}
@@ -436,6 +444,14 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                         type="text"
                         value={category.slug}
                         onChange={(e) => updateCategory(slug, 'slug', e.target.value)}
+                        onFocus={(e) => {
+                          e.target.setAttribute('data-focused', 'true');
+                          console.log('🎯 Slug field focused');
+                        }}
+                        onBlur={(e) => {
+                          e.target.removeAttribute('data-focused');
+                          console.log('👋 Slug field blurred');
+                        }}
                         className="w-full border rounded p-2"
                         placeholder="category-url-slug"
                       />
@@ -446,6 +462,8 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                         type="number"
                         value={category.order || 1}
                         onChange={(e) => updateCategory(slug, 'order', parseInt(e.target.value))}
+                        onFocus={(e) => e.target.setAttribute('data-focused', 'true')}
+                        onBlur={(e) => e.target.removeAttribute('data-focused')}
                         className="w-full border rounded p-2"
                       />
                     </div>
@@ -455,6 +473,8 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                         type="color"
                         value={category.color || '#3B82F6'}
                         onChange={(e) => updateCategory(slug, 'color', e.target.value)}
+                        onFocus={(e) => e.target.setAttribute('data-focused', 'true')}
+                        onBlur={(e) => e.target.removeAttribute('data-focused')}
                         className="w-full border rounded p-2 h-10"
                       />
                     </div>

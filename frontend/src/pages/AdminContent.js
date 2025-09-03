@@ -427,18 +427,10 @@ const AdminContent = () => {
     console.log('   After:', newCourses[index][field]);
     console.log('   Updated Course:', newCourses[index]);
     
-    // Update content and force re-render
+    // Update content state immediately
     updateContent('courses', newCourses);
     
-    console.log('✅ updateContent called for courses');
-    
-    // Force immediate save to prevent loss
-    if (field === 'category') {
-      setTimeout(() => {
-        console.log('🔄 Force sync after category update');
-        forceSyncWithWebsite();
-      }, 100);
-    }
+    console.log('✅ updateContent called for courses - category should now persist in UI');
   };
 
   const deleteCourse = (index) => {

@@ -352,36 +352,8 @@ class ContentManager:
                 }
             },
             "courses": [
-                {
-                    "slug": "devops-training",
-                    "title": "DevOps Training", 
-                    "oneLiner": "Master Modern DevOps Practices & Cloud Technologies",
-                    "description": "Comprehensive DevOps training covering the complete DevOps lifecycle, cloud platforms, containerization, orchestration, and automation tools used in modern software development.",
-                    "duration": "6 Months",
-                    "fees": "₹45,000 (EMI Available)",
-                    "tools": ["Linux (RHCSA)", "Linux Server Administration", "Ansible", "AWS", "Terraform", "Docker", "Kubernetes", "Jenkins", "GitHub"],
-                    "visible": True,
-                    "featured": True,
-                    "order": 1,
-                    "thumbnailUrl": "",
-                    "category": "cloud",
-                    "level": "Intermediate",
-                    "mode": ["Classroom", "Online"],
-                    "highlights": ["Hands-on AWS Labs", "Real-time Projects", "Industry Mentorship", "DevOps Certification Prep"],
-                    "outcomes": [
-                        "Master AWS cloud services and deployment strategies",
-                        "Implement CI/CD pipelines using Jenkins and GitLab", 
-                        "Container orchestration with Docker and Kubernetes",
-                        "Infrastructure as Code with Terraform and Ansible"
-                    ],
-                    "eligibility": "Graduate + Basic IT Knowledge",
-                    "intake": "Monthly Batches",
-                    "seo": {
-                        "title": "DevOps Training in Jaipur - GRRAS Solutions",
-                        "description": "Learn DevOps at GRRAS Solutions Jaipur. Master AWS, Docker, Kubernetes, Jenkins and more.",
-                        "keywords": "DevOps training Jaipur, AWS certification, Docker Kubernetes course"
-                    }
-                }
+                # Default courses removed - will be managed dynamically via admin panel
+                # Courses added through admin panel will be stored here
             ],
             "menus": {
                 "header": {

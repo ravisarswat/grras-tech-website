@@ -60,14 +60,14 @@ const Header = () => {
               {navigationItems.map((item) => (
                 <div key={item.name} className="relative">
                   {item.hasDropdown ? (
-                    <div className="relative">
+                    <div className="relative group">
                       <button className="flex items-center space-x-1 text-gray-800 hover:text-orange-600 font-bold py-3 px-2">
                         <span>{item.name}</span>
                         <ChevronDown className="h-4 w-4" />
                       </button>
 
                       {/* FIXED Z-INDEX DROPDOWN */}
-                      <div className="absolute left-0 top-full mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 p-4" style={{ zIndex: 10000, position: 'absolute', top: '100%', left: '0' }}>
+                      <div className="absolute left-0 top-full mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200" style={{ zIndex: 10000, position: 'absolute', top: '100%', left: '0' }}>
                         <h3 className="font-bold text-orange-600 text-lg mb-3 border-b pb-2">Technology Tracks</h3>
                         <div className="space-y-2">
                           {technologyTracks.length > 0 ? (

@@ -273,17 +273,43 @@ const Header = () => {
                     <a
                       key={track.id}
                       href={track.path}
-                      className="flex items-center justify-between p-3 hover:bg-orange-50 rounded-lg border border-transparent hover:border-orange-200 transition-all duration-200"
+                      className="group flex items-center justify-between p-4 hover:bg-gradient-to-r hover:from-orange-50 hover:to-red-50 rounded-xl border border-transparent hover:border-orange-200 hover:shadow-md transition-all duration-300 transform hover:scale-[1.02]"
                       onClick={closeDropdown}
                       tabIndex={index + 1}
                     >
-                      <div className="flex-1">
-                        <div className="font-semibold text-gray-900 text-sm">{track.name}</div>
-                        <div className="text-xs text-gray-500">
-                          {track.courseCount > 0 ? `${track.courseCount} courses available` : 'Coming soon'}
+                      <div className="flex items-center flex-1">
+                        {track.logo ? (
+                          <img 
+                            src={track.logo} 
+                            alt={track.name}
+                            className="w-8 h-8 object-contain mr-3 group-hover:scale-110 transition-transform duration-300"
+                            onError={(e) => e.target.style.display = 'none'}
+                          />
+                        ) : (
+                          <div className="w-8 h-8 bg-gradient-to-r from-orange-100 to-red-100 rounded-lg flex items-center justify-center mr-3 group-hover:from-orange-200 group-hover:to-red-200 transition-colors duration-300">
+                            <BookOpen className="w-4 h-4 text-orange-600" />
+                          </div>
+                        )}
+                        <div className="flex-1">
+                          <div className="font-bold text-gray-900 text-sm group-hover:text-orange-700 transition-colors duration-200">
+                            {track.name}
+                          </div>
+                          <div className="text-xs text-gray-500 group-hover:text-orange-600 transition-colors duration-200">
+                            {track.courseCount > 0 ? (
+                              <span className="flex items-center">
+                                <div className="w-2 h-2 bg-green-500 rounded-full mr-1.5 animate-pulse"></div>
+                                {track.courseCount} courses available
+                              </span>
+                            ) : (
+                              <span className="flex items-center">
+                                <div className="w-2 h-2 bg-orange-400 rounded-full mr-1.5"></div>
+                                Coming soon
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
-                      <ArrowRight className="h-4 w-4 text-orange-500 flex-shrink-0 ml-2" />
+                      <ArrowRight className="h-4 w-4 text-orange-500 flex-shrink-0 ml-2 group-hover:translate-x-1 group-hover:text-red-500 transition-all duration-300" />
                     </a>
                   ))
                 ) : (

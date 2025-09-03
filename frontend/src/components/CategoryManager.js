@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Plus, Edit, Trash2, Eye, EyeOff, ChevronDown, ChevronUp, Upload } from 'lucide-react';
 import axios from 'axios';
 
 const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
   const [expandedCategory, setExpandedCategory] = useState(null);
+  const formRefs = useRef({});
 
   const categories = content?.courseCategories || {};
   const courses = content?.courses || [];

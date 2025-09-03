@@ -111,6 +111,10 @@ const Header = () => {
     { name: 'Admissions', path: '/admissions' },
     { name: 'Contact', path: '/contact' }
   ];
+    { name: 'Courses', path: '/courses', hasDropdown: true },
+    { name: 'Admissions', path: '/admissions' },
+    { name: 'Contact', path: '/contact' }
+  ];
 
   const isActivePath = (path) => {
     if (path === '/') {

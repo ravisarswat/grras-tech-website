@@ -316,6 +316,9 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                       className="p-2 text-red-600 hover:bg-red-50 rounded border border-red-200"
                       title="Delete category (requires confirmation)"
                     >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
                     <Trash2 className="h-4 w-4" />
                   </button>
                 </div>

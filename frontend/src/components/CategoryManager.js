@@ -6,7 +6,27 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
   const [expandedCategory, setExpandedCategory] = useState(null);
   const formRefs = useRef({});
 
-  const categories = content?.courseCategories || {};
+  // Add global keyboard event handler to prevent unwanted collapse
+  useEffect(() => {
+    const handleGlobalKeyDown = (e) => {
+      // Don't close panel if focus is inside any expanded form
+      if (expandedCategory && formRefs.current[expandedCategory]) {
+        const formElement = formRefs.current[expandedCategory];
+        if (formElement && formElement.contains(document.activeElement)) {
+          // If focus is inside the form, don't close on any key
+          return;
+        }
+      }
+      
+      // Only close on Escape when focus is NOT inside form
+      if (e.key === 'Escape' && expandedCategory) {
+        setExpandedCategory(null);
+      }
+    };
+
+    document.addEventListener('keydown', handleGlobalKeyDown);
+    return () => document.removeEventListener('keydown', handleGlobalKeyDown);
+  }, [expandedCategory]);
   const courses = content?.courses || [];
 
   // Sort categories by order

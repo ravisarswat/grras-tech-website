@@ -76,28 +76,43 @@ const LearningPathManager = ({ content, updateContent }) => {
   };
 
   const addCourseToPath = (pathSlug) => {
-    const path = learningPaths[pathSlug];
+    console.log('🚀 Add Course button clicked!', { pathSlug, availableCoursesCount: availableCourses.length });
     
-    // Check if there are available courses to add
-    if (availableCourses.length === 0) {
-      alert('No courses available. Please add courses first in the Courses section.');
-      return;
+    try {
+      const path = learningPaths[pathSlug];
+      console.log('📋 Learning Path:', path);
+      
+      // Check if there are available courses to add
+      if (availableCourses.length === 0) {
+        console.error('❌ No available courses');
+        alert('No courses available. Please add courses first in the Courses section.');
+        return;
+      }
+      
+      const newCourse = {
+        courseSlug: '',
+        order: (path.courses?.length || 0) + 1,
+        title: 'Select a course...',
+        duration: '4 weeks',
+        prerequisite: false
+      };
+      
+      console.log('➕ Creating new course:', newCourse);
+      
+      const newCourses = [...(path.courses || []), newCourse];
+      console.log('📚 Updated courses array:', newCourses);
+      
+      updatePath(pathSlug, 'courses', newCourses);
+      updatePath(pathSlug, 'totalCourses', newCourses.length);
+      
+      // Show success message
+      console.log(`✅ Successfully added new course slot to learning path: ${path.title}`);
+      alert(`✅ Course slot added successfully! Total courses: ${newCourses.length}`);
+      
+    } catch (error) {
+      console.error('❌ Error in addCourseToPath:', error);
+      alert(`Error adding course: ${error.message}`);
     }
-    
-    const newCourse = {
-      courseSlug: '',
-      order: (path.courses?.length || 0) + 1,
-      title: 'Select a course...',
-      duration: '4 weeks',
-      prerequisite: false
-    };
-    
-    const newCourses = [...(path.courses || []), newCourse];
-    updatePath(pathSlug, 'courses', newCourses);
-    updatePath(pathSlug, 'totalCourses', newCourses.length);
-    
-    // Show success message
-    console.log(`Added new course slot to learning path: ${path.title}`);
   };
 
   const updatePathCourse = (pathSlug, courseIndex, field, value) => {

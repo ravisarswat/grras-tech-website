@@ -102,43 +102,29 @@ const CategoryManager = ({ content, updateContent }) => {
     alert('Test delete called for: ' + slug);
   };
 
-  // Delete Category - Force Save Button Enable
+  // Delete Category - Force React Re-render
   const deleteCategory = (slug) => {
     console.log('🗑️ DELETE ATTEMPT:', slug);
-    console.log('🗑️ Available categories:', Object.keys(categories));
+    console.log('🗑️ Available categories before:', Object.keys(categories));
     
     const categoryName = categories[slug]?.name;
-    console.log('🗑️ Category name:', categoryName);
-    
     if (!categoryName) {
       alert('Category not found!');
       return;
     }
     
-    const courseCount = getCoursesByCategory(slug).length;
-    console.log('🗑️ Course count:', courseCount);
-    
-    const confirmMessage = courseCount > 0 
-      ? `Delete "${categoryName}"?\n\nThis will remove it from ${courseCount} course(s).`
-      : `Delete "${categoryName}"?`;
-    
-    if (!confirm(confirmMessage)) {
+    if (!confirm(`Delete "${categoryName}"?`)) {
       console.log('❌ User cancelled deletion');
       return;
     }
 
     console.log('✅ User confirmed deletion');
 
-    // Create new categories without deleted one
-    const newCategories = {};
-    for (const [key, value] of Object.entries(categories)) {
-      if (key !== slug) {
-        newCategories[key] = value;
-      }
-    }
+    // Create new categories using object destructuring (better for React)
+    const { [slug]: deletedCategory, ...newCategories } = categories;
     
-    console.log('🗑️ New categories keys:', Object.keys(newCategories));
-    console.log('🗑️ Deleted category removed?', !(slug in newCategories));
+    console.log('🗑️ New categories after delete:', Object.keys(newCategories));
+    console.log('🗑️ Category actually removed:', !(slug in newCategories));
     
     // Remove category from courses
     const updatedCourses = courses.map(course => ({
@@ -146,13 +132,14 @@ const CategoryManager = ({ content, updateContent }) => {
       categories: (course.categories || []).filter(cat => cat !== slug)
     }));
 
-    console.log('🗑️ Updated courses count:', updatedCourses.length);
+    // Force complete re-render by adding force update key
+    const forceUpdateCategories = {
+      ...newCategories,
+      __forceUpdate: Date.now()
+    };
 
-    // Update state
-    console.log('🗑️ Calling updateContent for categories...');
-    updateContent('courseCategories', newCategories);
-    
-    console.log('🗑️ Calling updateContent for courses...');
+    console.log('🗑️ Calling updateContent with force update...');
+    updateContent('courseCategories', forceUpdateCategories);
     updateContent('courses', updatedCourses);
 
     // Close expanded panel
@@ -160,26 +147,8 @@ const CategoryManager = ({ content, updateContent }) => {
       setExpandedCategory(null);
     }
 
-    console.log('✅ Delete operations completed');
-    
-    // Force a small delay and then check save button (fixed selector)
-    setTimeout(() => {
-      const saveButtons = Array.from(document.querySelectorAll('button')).filter(btn => 
-        btn.textContent.includes('Save Changes')
-      );
-      if (saveButtons.length > 0) {
-        const saveButton = saveButtons[0];
-        if (saveButton && saveButton.disabled) {
-          console.log('⚠️ Save button still disabled after delete - this is the bug!');
-        } else {
-          console.log('✅ Save button should now be enabled');
-        }
-      } else {
-        console.log('🔍 Save Changes button not found in DOM');
-      }
-    }, 100);
-
-    alert(`✅ Category "${categoryName}" deleted! Save Changes button should now be enabled.`);
+    console.log('✅ Delete operations completed with force update');
+    alert(`✅ Category "${categoryName}" deleted and UI should refresh!`);
   };
 
   // Get courses by category

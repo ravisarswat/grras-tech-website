@@ -379,18 +379,11 @@ const CourseEditor = ({
                     ))}
                   </select>
                   
-                  {/* Enhanced help text with debug info */}
                   <div className="mt-1 text-xs text-gray-500">
-                    {Object.keys(dynamicCategories).length > 0 ? (
-                      <div>
-                        <div>✅ {Object.keys(dynamicCategories).length} categories loaded from database</div>
-                        <div className="text-gray-400">Current selection: {course.category || 'None'}</div>
-                      </div>
-                    ) : (
-                      <div className="text-red-500">
-                        ⚠️ Categories not loading - Check ContentContext connection
-                      </div>
-                    )}
+                    <div>✅ {Object.keys(dynamicCategories).length} categories loaded from database</div>
+                    <div className="text-blue-600 font-medium">
+                      Current: {course.category ? dynamicCategories[course.category]?.name || course.category : 'None selected'}
+                    </div>
                   </div>
                 </div>
                 

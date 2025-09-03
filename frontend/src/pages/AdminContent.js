@@ -413,9 +413,32 @@ const AdminContent = () => {
   };
 
   const updateCourse = (index, field, value) => {
+    console.log('🔄 ADMIN updateCourse called:');
+    console.log('   Index:', index);
+    console.log('   Field:', field);
+    console.log('   Value:', value);
+    
     const newCourses = [...content.courses];
+    const beforeUpdate = { ...newCourses[index] };
+    
     newCourses[index] = { ...newCourses[index], [field]: value };
+    
+    console.log('   Before:', beforeUpdate[field]);
+    console.log('   After:', newCourses[index][field]);
+    console.log('   Updated Course:', newCourses[index]);
+    
+    // Update content and force re-render
     updateContent('courses', newCourses);
+    
+    console.log('✅ updateContent called for courses');
+    
+    // Force immediate save to prevent loss
+    if (field === 'category') {
+      setTimeout(() => {
+        console.log('🔄 Force sync after category update');
+        forceSyncWithWebsite();
+      }, 100);
+    }
   };
 
   const deleteCourse = (index) => {

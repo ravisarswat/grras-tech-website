@@ -162,13 +162,20 @@ const CategoryManager = ({ content, updateContent }) => {
 
     console.log('✅ Delete operations completed');
     
-    // Force a small delay and then check save button
+    // Force a small delay and then check save button (fixed selector)
     setTimeout(() => {
-      const saveButton = document.querySelector('button:contains("Save Changes")');
-      if (saveButton && saveButton.disabled) {
-        console.log('⚠️ Save button still disabled after delete - this is the bug!');
+      const saveButtons = Array.from(document.querySelectorAll('button')).filter(btn => 
+        btn.textContent.includes('Save Changes')
+      );
+      if (saveButtons.length > 0) {
+        const saveButton = saveButtons[0];
+        if (saveButton && saveButton.disabled) {
+          console.log('⚠️ Save button still disabled after delete - this is the bug!');
+        } else {
+          console.log('✅ Save button should now be enabled');
+        }
       } else {
-        console.log('✅ Save button should now be enabled');
+        console.log('🔍 Save Changes button not found in DOM');
       }
     }, 100);
 

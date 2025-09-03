@@ -97,6 +97,11 @@ const CategoryManager = ({ content, updateContent }) => {
     });
   };
 
+  // Test function
+  const testDelete = (slug) => {
+    alert('Test delete called for: ' + slug);
+  };
+
   // Delete Category - Enhanced Debug Version
   const deleteCategory = (slug) => {
     console.log('🗑️ DELETE ATTEMPT:', slug);

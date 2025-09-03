@@ -358,17 +358,54 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
 
               {expandedCategory === slug && (
                 <div 
+                  ref={(el) => formRefs.current[slug] = el}
                   className="space-y-4 pt-4 border-t bg-blue-50 p-4 rounded-lg"
-                  onKeyDown={(e) => e.stopPropagation()}
-                  onKeyUp={(e) => e.stopPropagation()}
-                  onKeyPress={(e) => e.stopPropagation()}
-                  onClick={(e) => e.stopPropagation()}
-                  onMouseDown={(e) => e.stopPropagation()}
-                  onMouseUp={(e) => e.stopPropagation()}
-                  onFocus={(e) => e.stopPropagation()}
-                  onBlur={(e) => e.stopPropagation()}
+                  // Comprehensive event stopping to prevent collapse
+                  onKeyDown={(e) => {
+                    e.stopPropagation();
+                    console.log('🔑 Form keydown stopped:', e.key);
+                  }}
+                  onKeyUp={(e) => {
+                    e.stopPropagation();
+                    console.log('🔑 Form keyup stopped:', e.key);
+                  }}
+                  onKeyPress={(e) => {
+                    e.stopPropagation();
+                  }}
+                  onPaste={(e) => {
+                    e.stopPropagation();
+                    console.log('📋 Paste event stopped');
+                  }}
+                  onInput={(e) => {
+                    e.stopPropagation();
+                  }}
+                  onChange={(e) => {
+                    e.stopPropagation();
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent any click handlers
+                  }}
+                  onMouseDown={(e) => {
+                    e.stopPropagation();
+                  }}
+                  onMouseUp={(e) => {
+                    e.stopPropagation();
+                  }}
+                  onFocus={(e) => {
+                    e.stopPropagation();
+                  }}
+                  onBlur={(e) => {
+                    // Only stop propagation, don't close panel on blur within form
+                    e.stopPropagation();
+                  }}
                   style={{ isolation: 'isolate' }}
                 >
+                  <div className="bg-green-100 border border-green-300 rounded p-2 mb-4">
+                    <p className="text-green-800 text-sm font-medium">
+                      🔒 Protected Form: This panel will stay open while you type, paste, or edit. Only Escape key (when not focused on inputs) or clicking the collapse button will close it.
+                    </p>
+                  </div>
+                  
                   <div className="grid grid-cols-4 gap-4">
                     <div>
                       <label className="block text-sm font-medium mb-2">Name</label>
@@ -376,9 +413,31 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                         type="text"
                         value={category.name || ''}
                         onChange={(e) => updateCategory(slug, 'name', e.target.value)}
-                        onKeyDown={(e) => e.stopPropagation()}
-                        onKeyUp={(e) => e.stopPropagation()}
-                        onKeyPress={(e) => e.stopPropagation()}
+                        // Comprehensive event stopping for all input events
+                        onKeyDown={(e) => {
+                          e.stopPropagation();
+                          console.log('🔤 Name input keydown:', e.key);
+                        }}
+                        onKeyUp={(e) => {
+                          e.stopPropagation();
+                        }}
+                        onKeyPress={(e) => {
+                          e.stopPropagation();
+                        }}
+                        onPaste={(e) => {
+                          e.stopPropagation();
+                          console.log('📋 Name input paste');
+                        }}
+                        onInput={(e) => {
+                          e.stopPropagation();
+                        }}
+                        onFocus={(e) => {
+                          e.stopPropagation();
+                          console.log('🎯 Name input focused');
+                        }}
+                        onBlur={(e) => {
+                          e.stopPropagation();
+                        }}
                         className="w-full border rounded p-2"
                         placeholder="Enter category name"
                         autoFocus={slug.includes('new-category')}
@@ -393,6 +452,10 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                         onKeyDown={(e) => e.stopPropagation()}
                         onKeyUp={(e) => e.stopPropagation()}
                         onKeyPress={(e) => e.stopPropagation()}
+                        onPaste={(e) => e.stopPropagation()}
+                        onInput={(e) => e.stopPropagation()}
+                        onFocus={(e) => e.stopPropagation()}
+                        onBlur={(e) => e.stopPropagation()}
                         className="w-full border rounded p-2"
                         placeholder="category-url-slug"
                       />
@@ -403,6 +466,12 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                         type="number"
                         value={category.order || 1}
                         onChange={(e) => updateCategory(slug, 'order', parseInt(e.target.value))}
+                        onKeyDown={(e) => e.stopPropagation()}
+                        onKeyUp={(e) => e.stopPropagation()}
+                        onKeyPress={(e) => e.stopPropagation()}
+                        onInput={(e) => e.stopPropagation()}
+                        onFocus={(e) => e.stopPropagation()}
+                        onBlur={(e) => e.stopPropagation()}
                         className="w-full border rounded p-2"
                       />
                     </div>
@@ -412,6 +481,10 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                         type="color"
                         value={category.color || '#3B82F6'}
                         onChange={(e) => updateCategory(slug, 'color', e.target.value)}
+                        onKeyDown={(e) => e.stopPropagation()}
+                        onInput={(e) => e.stopPropagation()}
+                        onFocus={(e) => e.stopPropagation()}
+                        onBlur={(e) => e.stopPropagation()}
                         className="w-full border rounded p-2 h-10"
                       />
                     </div>
@@ -423,6 +496,13 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                       type="url"
                       value={category.logo || ''}
                       onChange={(e) => updateCategory(slug, 'logo', e.target.value)}
+                      onKeyDown={(e) => e.stopPropagation()}
+                      onKeyUp={(e) => e.stopPropagation()}
+                      onKeyPress={(e) => e.stopPropagation()}
+                      onPaste={(e) => e.stopPropagation()}
+                      onInput={(e) => e.stopPropagation()}
+                      onFocus={(e) => e.stopPropagation()}
+                      onBlur={(e) => e.stopPropagation()}
                       className="w-full border rounded p-2"
                       placeholder="https://example.com/logo.png"
                     />
@@ -434,11 +514,34 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                     <textarea
                       value={category.description}
                       onChange={(e) => updateCategory(slug, 'description', e.target.value)}
-                      onKeyDown={(e) => e.stopPropagation()}
-                      onKeyUp={(e) => e.stopPropagation()}
-                      onKeyPress={(e) => e.stopPropagation()}
+                      // Most critical for textarea - all events that could trigger collapse
+                      onKeyDown={(e) => {
+                        e.stopPropagation();
+                        console.log('📝 Description keydown:', e.key);
+                      }}
+                      onKeyUp={(e) => {
+                        e.stopPropagation();
+                      }}
+                      onKeyPress={(e) => {
+                        e.stopPropagation();
+                      }}
+                      onPaste={(e) => {
+                        e.stopPropagation();
+                        console.log('📋 Description paste');
+                      }}
+                      onInput={(e) => {
+                        e.stopPropagation();
+                      }}
+                      onFocus={(e) => {
+                        e.stopPropagation();
+                        console.log('🎯 Description focused');
+                      }}
+                      onBlur={(e) => {
+                        e.stopPropagation();
+                      }}
                       className="w-full border rounded p-2"
                       rows="2"
+                      placeholder="Enter category description"
                     />
                   </div>
 
@@ -451,7 +554,10 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                         <div key={course.slug} className="flex items-center justify-between bg-gray-50 p-3 rounded">
                           <span className="font-medium">{course.title}</span>
                           <button
-                            onClick={() => removeCourseFromCategory(slug, course.slug)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              removeCourseFromCategory(slug, course.slug);
+                            }}
                             className="text-red-600 hover:text-red-700"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -461,11 +567,15 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                       
                       <select
                         onChange={(e) => {
+                          e.stopPropagation();
                           if (e.target.value) {
                             assignCourseToCategory(slug, e.target.value);
                             e.target.value = '';
                           }
                         }}
+                        onKeyDown={(e) => e.stopPropagation()}
+                        onFocus={(e) => e.stopPropagation()}
+                        onBlur={(e) => e.stopPropagation()}
                         className="w-full border rounded p-2"
                       >
                         <option value="">Add a course...</option>
@@ -478,6 +588,13 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                           ))}
                       </select>
                     </div>
+                  </div>
+
+                  {/* Save reminder */}
+                  <div className="bg-yellow-100 border border-yellow-300 rounded p-3 mt-4">
+                    <p className="text-yellow-800 text-sm">
+                      💡 <strong>Remember:</strong> Click "Save Changes" at the top to save your category edits to the database.
+                    </p>
                   </div>
                 </div>
               )}

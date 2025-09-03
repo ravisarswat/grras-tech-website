@@ -82,51 +82,14 @@ const Header = () => {
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex justify-between items-center py-4">
-            {/* COMPANY LOGO */}
             <Link to="/" className="flex items-center group relative">
-              <div className="flex flex-col items-center">
-                <div className="relative">
-                  <div className="absolute -inset-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl opacity-0 group-hover:opacity-20 transition-all duration-500 blur-sm"></div>
-                  {/* GRRAS Original Logo as SVG */}
-                  <div className="relative w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center group-hover:scale-110 transition-all duration-500 border-2 border-orange-100">
-                    <svg width="48" height="48" viewBox="0 0 200 120" className="drop-shadow-md">
-                      {/* GRRAS Logo Recreation based on your actual logo */}
-                      <defs>
-                        <linearGradient id="redGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#ff4444" />
-                          <stop offset="100%" stopColor="#cc0000" />
-                        </linearGradient>
-                        <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#44ff44" />
-                          <stop offset="100%" stopColor="#00cc00" />
-                        </linearGradient>
-                        <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#6699ff" />
-                          <stop offset="100%" stopColor="#0066cc" />
-                        </linearGradient>
-                      </defs>
-                      
-                      {/* Three diamond shapes like in your logo */}
-                      <rect x="80" y="15" width="20" height="20" rx="4" fill="url(#redGradient)" transform="rotate(45 90 25)"/>
-                      <rect x="60" y="35" width="18" height="18" rx="3" fill="url(#greenGradient)" transform="rotate(45 69 44)"/>
-                      <rect x="100" y="35" width="18" height="18" rx="3" fill="url(#blueGradient)" transform="rotate(45 109 44)"/>
-                      
-                      {/* "grras" text in lowercase bold */}
-                      <text x="100" y="85" 
-                            fontSize="28" 
-                            fontFamily="Arial, sans-serif" 
-                            fontWeight="900" 
-                            fill="#000000" 
-                            textAnchor="middle"
-                            dominantBaseline="middle">
-                        grras
-                      </text>
-                    </svg>
-                  </div>
-                </div>
-                <span className="text-sm font-black text-transparent bg-gradient-to-r from-orange-600 via-red-600 to-orange-700 bg-clip-text -mt-1 tracking-wide group-hover:scale-105 transition-all duration-300">
-                  Solutions
-                </span>
+              <div className="relative">
+                <div className="absolute -inset-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl opacity-0 group-hover:opacity-20 transition-all duration-500 blur-sm"></div>
+                <img 
+                  src="https://customer-assets.emergentagent.com/job_grras-course-manager/artifacts/9kv3gbea_black%20logo.jpg" 
+                  alt="GRRAS" 
+                  className="h-16 w-auto transition-all duration-500 group-hover:scale-110 group-hover:brightness-110 relative z-10 drop-shadow-lg" 
+                />
               </div>
             </Link>
 

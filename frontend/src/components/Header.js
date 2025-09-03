@@ -37,7 +37,14 @@ const Header = () => {
     };
   }, [dropdownTimeout]);
 
-  // Close dropdown when clicking outside
+  // Close dropdown on navigation
+  useEffect(() => {
+    setIsCoursesOpen(false);
+    setIsMenuOpen(false);
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+    }
+  }, [location.pathname, dropdownTimeout]);
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (isCoursesOpen && !event.target.closest('nav')) {

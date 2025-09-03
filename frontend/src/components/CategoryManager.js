@@ -148,14 +148,9 @@ const CategoryManager = ({ content, updateContent }) => {
 
     console.log('🗑️ Updated courses count:', updatedCourses.length);
 
-    // Update state with timestamp to force change detection
-    const timestampedCategories = {
-      ...newCategories,
-      _lastModified: new Date().toISOString()
-    };
-
+    // Update state
     console.log('🗑️ Calling updateContent for categories...');
-    updateContent('courseCategories', timestampedCategories);
+    updateContent('courseCategories', newCategories);
     
     console.log('🗑️ Calling updateContent for courses...');
     updateContent('courses', updatedCourses);

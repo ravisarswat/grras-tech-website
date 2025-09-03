@@ -128,6 +128,15 @@ const Header = () => {
                       <button
                         className="flex items-center space-x-2 text-gray-800 hover:text-orange-600 font-bold py-3 px-2 rounded-xl transition-all duration-300 hover:bg-orange-50 hover:shadow-md group relative"
                         onMouseEnter={() => setIsCoursesOpen(true)}
+                        onMouseLeave={(e) => {
+                          // Delay close to allow moving to dropdown
+                          setTimeout(() => {
+                            const dropdown = document.querySelector('[data-dropdown="courses"]');
+                            if (dropdown && !dropdown.matches(':hover') && !e.currentTarget.matches(':hover')) {
+                              setIsCoursesOpen(false);
+                            }
+                          }, 100);
+                        }}
                       >
                         <span className="text-base">{item.name}</span>
                         <ChevronDown className="h-4 w-4 group-hover:rotate-180 transition-transform duration-300" />

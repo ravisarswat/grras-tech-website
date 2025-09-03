@@ -139,17 +139,17 @@ const Header = () => {
               </div>
             </Link>
 
-            <nav className="hidden lg:flex items-center space-x-8">
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-6">
               {navigationItems.map((item) => (
                 <div key={item.name} className="relative">
                   {item.hasDropdown ? (
                     <div className="relative">
                       <button
                         ref={coursesButtonRef}
-                        className="flex items-center space-x-1 text-gray-800 hover:text-orange-600 font-bold py-3 px-2 rounded-xl transition-all duration-200"
+                        className="flex items-center space-x-1 text-gray-800 hover:text-orange-600 font-semibold py-3 px-3 rounded-xl transition-all duration-200 group"
                         onMouseEnter={openDropdown}
                         onMouseLeave={() => {
-                          // Delay close to allow moving to dropdown
                           setTimeout(() => {
                             if (!dropdownRef.current?.matches(':hover') && !coursesButtonRef.current?.matches(':hover')) {
                               closeDropdown();
@@ -158,8 +158,13 @@ const Header = () => {
                         }}
                         onClick={openDropdown}
                       >
-                        <span>{item.name}</span>
-                        <ChevronDown className="h-4 w-4" />
+                        <span className="text-base">{item.name}</span>
+                        <ChevronDown className="h-4 w-4 group-hover:rotate-180 transition-transform duration-300" />
+                        
+                        {/* Active indicator for dropdown */}
+                        {isActivePath(item.path) && (
+                          <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-full"></span>
+                        )}
                       </button>
                     </div>
                   ) : (

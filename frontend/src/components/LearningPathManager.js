@@ -410,10 +410,19 @@ const LearningPathManager = ({ content, updateContent }) => {
                       <h4 className="text-lg font-medium text-gray-900">Course Progression</h4>
                       <button
                         onClick={() => addCourseToPath(pathSlug)}
-                        className="btn-outline btn-sm flex items-center gap-2"
+                        className={`btn-outline btn-sm flex items-center gap-2 ${
+                          availableCourses.length === 0 
+                            ? 'opacity-50 cursor-not-allowed' 
+                            : 'hover:bg-blue-50 hover:border-blue-300'
+                        }`}
+                        disabled={availableCourses.length === 0}
+                        title={availableCourses.length === 0 
+                          ? 'No courses available. Add courses first in the Courses section.' 
+                          : `Add course from ${availableCourses.length} available courses`
+                        }
                       >
                         <Plus className="h-4 w-4" />
-                        Add Course
+                        Add Course ({availableCourses.length})
                       </button>
                     </div>
                     

@@ -1,0 +1,36 @@
+{
+  "timestamp": "2025-09-03T06:49:33.630087",
+  "backend_url": "https://ecstatic-jackson.preview.emergentagent.com",
+  "total_tests": 8,
+  "passed_tests": 8,
+  "failed_tests": 0,
+  "success_rate": "100.0%",
+  "test_results": {
+    "api_health_check": true,
+    "cms_content_endpoint": true,
+    "courses_api": true,
+    "individual_course": true,
+    "dynamic_categories": true,
+    "course_counts": true,
+    "pricing_data": true,
+    "contact_form": true
+  },
+  "errors": [],
+  "critical_issues": [],
+  "course_analysis": {
+    "total_courses": 15,
+    "categories": {
+      "count": 4,
+      "distribution": {
+        "": 8,
+        "cloud": 4,
+        "security": 1,
+        "certification": 2
+      }
+    },
+    "pricing_analysis": {
+      "courses_with_pricing": 15,
+      "courses_without_pricing": 0
+    }
+  }
+}

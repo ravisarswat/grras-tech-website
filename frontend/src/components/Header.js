@@ -221,80 +221,64 @@ const Header = () => {
                       </Link>
                     )}
 
-                    {/* Simple, Reliable Dropdown */}
+                    {/* Bulletproof Simple Dropdown */}
                     {item.hasDropdown && isCoursesOpen && (
                       <div 
-                        className="absolute top-full left-1/2 transform -translate-x-1/2 w-screen max-w-4xl bg-white shadow-2xl border-t-4 border-orange-500 animate-in slide-in-from-top-2 duration-200 rounded-b-2xl"
+                        className="absolute top-full left-0 right-0 bg-white shadow-xl border-t-4 border-orange-500 z-50"
                         onMouseEnter={handleDropdownOpen}
                         onMouseLeave={() => handleDropdownClose(200)}
                         style={{
-                          zIndex: 99999,
-                          marginTop: '4px'
+                          position: 'absolute',
+                          top: '100%',
+                          left: '0',
+                          right: '0',
+                          zIndex: '999999',
+                          minHeight: '200px'
                         }}
                       >
-                        <div className="p-6">
+                        <div className="container mx-auto px-4 py-6">
                           {/* Simple Header */}
-                          <div className="bg-gradient-to-r from-orange-100 to-red-100 px-6 py-4 mb-4 rounded-xl">
-                            <div className="flex items-center space-x-3">
-                              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center">
-                                <BookOpen className="h-5 w-5 text-white" />
-                              </div>
-                              <div>
-                                <h3 className="text-xl font-bold text-orange-800">Technology Tracks</h3>
-                                <p className="text-sm text-gray-600">Choose your career path</p>
-                              </div>
-                            </div>
+                          <div className="bg-orange-50 px-4 py-3 mb-4 rounded-lg">
+                            <h3 className="text-lg font-bold text-orange-800 flex items-center">
+                              <BookOpen className="h-5 w-5 mr-2" />
+                              Technology Tracks
+                            </h3>
                           </div>
 
-                          {/* Simple Categories Grid */}
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                          {/* Simple Categories List */}
+                          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                             {technologyTracks.length > 0 ? (
                               technologyTracks.map((track) => (
                                 <Link
                                   key={track.id}
                                   to={track.path}
-                                  className="group flex items-center space-x-3 p-3 rounded-xl border border-gray-200 bg-white hover:bg-orange-50 hover:border-orange-300 transition-all duration-200"
+                                  className="block p-3 rounded-lg border border-gray-200 hover:border-orange-300 hover:bg-orange-50 transition-colors duration-200"
                                   onClick={() => setIsCoursesOpen(false)}
                                 >
-                                  <div className="w-12 h-12 rounded-xl bg-gray-100 group-hover:bg-orange-100 flex items-center justify-center">
-                                    {track.logo ? (
-                                      <img 
-                                        src={track.logo} 
-                                        alt={track.name}
-                                        className="w-7 h-7 object-contain"
-                                      />
-                                    ) : (
-                                      <BookOpen className="h-6 w-6 text-orange-600" />
-                                    )}
+                                  <div className="font-semibold text-gray-900 mb-1">
+                                    {track.name}
                                   </div>
-                                  <div className="flex-1">
-                                    <h4 className="font-semibold text-gray-900 group-hover:text-orange-700">
-                                      {track.name}
-                                    </h4>
-                                    <p className="text-sm text-gray-600">
-                                      {track.courseCount} course{track.courseCount !== 1 ? 's' : ''}
-                                    </p>
+                                  <div className="text-sm text-gray-600">
+                                    {track.courseCount} courses
                                   </div>
-                                  <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-orange-600" />
                                 </Link>
                               ))
                             ) : (
-                              <div className="col-span-2 text-center py-8 text-gray-500">
+                              <div className="col-span-full text-center py-8 text-gray-500">
                                 <BookOpen className="h-12 w-12 mx-auto mb-3 text-gray-300" />
-                                <p>No categories available</p>
+                                <p>Loading categories...</p>
                               </div>
                             )}
                           </div>
 
                           {/* Simple Footer */}
-                          <div className="pt-4 border-t border-gray-200 flex justify-between items-center">
-                            <span className="text-sm text-gray-600">Explore all courses</span>
+                          <div className="mt-6 pt-4 border-t border-gray-200 text-center">
                             <Link
                               to="/courses"
-                              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-600 to-red-600 text-white text-sm font-semibold rounded-xl hover:from-orange-700 hover:to-red-700 transition-all duration-200"
+                              className="inline-flex items-center px-6 py-2 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 transition-colors duration-200"
                               onClick={() => setIsCoursesOpen(false)}
                             >
-                              View All
+                              View All Courses
                               <ArrowRight className="ml-2 h-4 w-4" />
                             </Link>
                           </div>

@@ -21,7 +21,7 @@ import {
 import { toast } from 'sonner';
 import SEO from '../components/SEO';
 import SettingsTab from '../components/SettingsTab';
-import CourseEditor from '../components/CourseEditor';
+import CourseManager from '../components/CourseManager';
 import FooterTab from '../components/FooterTab';
 import CategoryManager from '../components/CategoryManager';
 import LearningPathManager from '../components/LearningPathManager';

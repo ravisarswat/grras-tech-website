@@ -293,7 +293,8 @@ const Header = () => {
               left: `${dropdownPosition.left}px`,
               zIndex: 100000,
               width: 'max-content',
-              maxWidth: '90vw'
+              maxWidth: '95vw',
+              minWidth: '280px'
             }}
             onMouseEnter={() => {
               // Keep dropdown open when hovering

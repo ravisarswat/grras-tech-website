@@ -110,6 +110,7 @@ const Header = () => {
     { name: 'Courses', path: '/courses', hasDropdown: true },
     { name: 'Learning Paths', path: '/learning-paths' },
     { name: 'Blog', path: '/blog' },
+    { name: 'Testimonials', path: '/testimonials' },
     { name: 'Admissions', path: '/admissions' },
     { name: 'Contact', path: '/contact' }
   ];

@@ -27,6 +27,8 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
     document.addEventListener('keydown', handleGlobalKeyDown);
     return () => document.removeEventListener('keydown', handleGlobalKeyDown);
   }, [expandedCategory]);
+
+  const categories = content?.courseCategories || {};
   const courses = content?.courses || [];
 
   // Sort categories by order

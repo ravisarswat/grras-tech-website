@@ -82,18 +82,27 @@ const Header = () => {
     closeDropdown();
   }, [location.pathname]);
 
-  // Get categories for dropdown
+  // Get categories and courses for dropdown
   const courseCategories = content?.courseCategories || {};
+  const courses = content?.courses || [];
+  
   const technologyTracks = Object.entries(courseCategories)
     .filter(([, category]) => category.visible !== false)
     .sort(([, a], [, b]) => (a.order || 999) - (b.order || 999))
-    .map(([slug, category]) => ({
-      id: slug,
-      name: category.name,
-      path: `/courses?tab=${slug}`,
-      courseCount: category.courseCount || 0,
-      logo: category.logo
-    }));
+    .map(([slug, category]) => {
+      // Count actual courses in this category
+      const courseCount = courses.filter(course => 
+        course.categories && course.categories.includes(slug)
+      ).length;
+      
+      return {
+        id: slug,
+        name: category.name,
+        path: `/courses?tab=${slug}`,
+        courseCount: courseCount,
+        logo: category.logo
+      };
+    });
 
   const navigationItems = [
     { name: 'Home', path: '/' },

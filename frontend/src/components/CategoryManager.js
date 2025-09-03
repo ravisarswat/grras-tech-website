@@ -450,7 +450,7 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
                           <span className="font-medium">{course.title}</span>
                           <button
                             onClick={(e) => {
-                              e.stopPropagation();
+                              e.stopPropagation(); // Only stop this specific event
                               removeCourseFromCategory(slug, course.slug);
                             }}
                             className="text-red-600 hover:text-red-700"

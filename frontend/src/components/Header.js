@@ -146,13 +146,6 @@ const Header = () => {
                   alt="GRRAS Solutions" 
                   className="h-16 sm:h-20 w-auto transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 relative z-10 drop-shadow-2xl filter rounded-xl sm:rounded-2xl p-1.5 sm:p-2 bg-gradient-to-r from-gray-900/90 to-black/90 backdrop-blur-sm" 
                 />
-                
-                {/* Premium brand name */}
-                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-                  <span className="text-[10px] font-black text-gray-600 group-hover:text-orange-600 transition-colors duration-500 tracking-wider uppercase">
-                    Solutions
-                  </span>
-                </div>
               </div>
             </Link>
 

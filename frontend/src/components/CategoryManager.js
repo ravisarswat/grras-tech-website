@@ -73,22 +73,30 @@ const CategoryManager = ({ content, updateContent, saveContent, saving }) => {
     const current = categories[key];
     if (!current) return;
 
+    console.log('📝 Updating category:', { key, field, value });
+
     if (field === 'name') {
       const autoSlug = generateSlug(value || '');
       const updated = { ...current, name: value, slug: autoSlug };
-      updateContent('courseCategories', { ...categories, [key]: updated });
+      const updatedCategories = { ...categories, [key]: updated };
+      updateContent('courseCategories', updatedCategories);
+      console.log('✅ Name and slug updated');
       return;
     }
 
     // Slug field readOnly hai; fir bhi kabhi programmatically change karna ho:
     if (field === 'slug') {
       const updated = { ...current, slug: generateSlug(value || '') };
-      updateContent('courseCategories', { ...categories, [key]: updated });
+      const updatedCategories = { ...categories, [key]: updated };
+      updateContent('courseCategories', updatedCategories);
+      console.log('✅ Slug updated');
       return;
     }
 
     const updated = { ...current, [field]: value };
-    updateContent('courseCategories', { ...categories, [key]: updated });
+    const updatedCategories = { ...categories, [key]: updated };
+    updateContent('courseCategories', updatedCategories);
+    console.log('✅ Field updated:', field);
   };
 
   // ---------------- Permanent fix: Sync Key (key ≡ slug) ----------------

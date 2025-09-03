@@ -7,6 +7,7 @@ import { useContent } from '../contexts/ContentContext';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
+  const [dropdownTimeout, setDropdownTimeout] = useState(null);
   const [isMobileCoursesOpen, setIsMobileCoursesOpen] = useState(false);
   const { content } = useContent();
   const location = useLocation();

@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { Toaster } from 'sonner';
 import './App.css';
 import useScrollToTop from './hooks/useScrollToTop';
-import { ContentProvider } from './contexts/ContentContext';
 
 // Components
 import Header from './components/Header';
@@ -22,9 +21,12 @@ import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
-import AdminLeads from './pages/AdminLeads';
-import AdminContent from './pages/AdminContent';
 import NotFound from './pages/NotFound';
+
+// Static Data
+import { categories } from './data/categories';
+import { courses } from './data/courses';
+import blogPosts from './data/blog';
 
 function AppContent() {
   useScrollToTop();

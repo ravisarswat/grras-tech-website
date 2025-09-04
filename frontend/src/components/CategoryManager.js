@@ -205,6 +205,72 @@ const CategoryManager = ({ content, updateContent }) => {
     }
   };
 
+  // Sync All Category Slugs
+  const syncAllCategorySlugs = () => {
+    if (!confirm('Sync all category slugs based on current names? This will update URLs and may affect existing links.')) {
+      return;
+    }
+
+    const updatedCategories = {};
+    const slugMappings = {}; // old slug -> new slug
+    let hasChanges = false;
+
+    // First pass: create new categories with updated slugs
+    Object.entries(categories).forEach(([oldSlug, category]) => {
+      const newSlug = generateSlug(category.name);
+      
+      if (newSlug !== oldSlug) {
+        hasChanges = true;
+        slugMappings[oldSlug] = newSlug;
+        console.log(`🔄 Slug sync: "${oldSlug}" -> "${newSlug}"`);
+      }
+      
+      updatedCategories[newSlug] = {
+        ...category,
+        slug: newSlug,
+        modifiedAt: new Date().toISOString()
+      };
+    });
+
+    if (!hasChanges) {
+      alert('✅ All category slugs are already synced!');
+      return;
+    }
+
+    // Second pass: update all courses that reference old slugs
+    const updatedCourses = courses.map(course => {
+      let courseUpdated = false;
+      const newCategories = (course.categories || []).map(catSlug => {
+        if (slugMappings[catSlug]) {
+          courseUpdated = true;
+          return slugMappings[catSlug];
+        }
+        return catSlug;
+      });
+
+      const newCategory = course.category && slugMappings[course.category] 
+        ? slugMappings[course.category] 
+        : course.category;
+
+      if (courseUpdated || newCategory !== course.category) {
+        return {
+          ...course,
+          categories: newCategories,
+          category: newCategory,
+          modifiedAt: new Date().toISOString()
+        };
+      }
+      return course;
+    });
+
+    // Update both categories and courses
+    updateContent('courseCategories', updatedCategories);
+    updateContent('courses', updatedCourses);
+
+    const changesCount = Object.keys(slugMappings).length;
+    alert(`✅ Synced ${changesCount} category slugs!\n\n${Object.entries(slugMappings).map(([old, new_]) => `"${old}" → "${new_}"`).join('\n')}`);
+  };
+
   // Get courses by category
   const getCoursesByCategory = (slug) => {
     return courses.filter(course => 

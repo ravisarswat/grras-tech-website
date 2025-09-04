@@ -75,64 +75,105 @@ const CourseCategoriesGrid = () => {
               <Link
                 key={categorySlug}
                 to={courseTabLink}
-                className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+                className="group relative bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] hover:-translate-y-1"
               >
-                {/* Category Icon & Header */}
-                <div className="flex items-center mb-6">
-                  <div 
-                    className="w-16 h-16 rounded-2xl flex items-center justify-center text-white mr-4 group-hover:scale-110 transition-transform"
-                    style={{ backgroundColor: category.color }}
-                  >
-                    <IconComponent className="h-8 w-8" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-red-600 transition-colors">
-                      {category.name}
-                    </h3>
-                    <p className="text-sm text-gray-500 flex items-center gap-1">
-                      <BookOpen className="h-4 w-4" />
-                      {categoryCoursesCount} course{categoryCoursesCount !== 1 ? 's' : ''}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Category Description */}
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  {category.description}
-                </p>
-
-                {/* Course Previews */}
-                {(() => {
-                  const categoryCourses = courses.filter(course => 
-                    course.categories && course.categories.includes(categorySlug)
-                  );
-                  
-                  return categoryCourses.length > 0 && (
-                    <div className="mb-6">
-                      <div className="space-y-2">
-                        {categoryCourses.slice(0, 3).map((course) => (
-                          <div key={course.slug} className="flex items-center text-sm text-gray-600">
-                            <div className="w-2 h-2 bg-red-500 rounded-full mr-3"></div>
-                            <span>{course.title}</span>
-                          </div>
-                        ))}
-                        {categoryCourses.length > 3 && (
-                          <div className="flex items-center text-sm text-gray-400">
-                            <div className="w-2 h-2 bg-gray-300 rounded-full mr-3"></div>
-                            <span>+{categoryCourses.length - 3} more courses</span>
-                          </div>
-                        )}
+                {/* Background Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-orange-50/30 via-white to-red-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                {/* Floating Decorative Elements */}
+                <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-orange-100/20 to-red-100/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-br from-red-100/20 to-orange-100/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100"></div>
+                
+                <div className="relative z-10 p-8 h-full flex flex-col">
+                  {/* Category Icon & Header */}
+                  <div className="flex items-start mb-6">
+                    <div className="relative">
+                      {/* Icon Background with Glow Effect */}
+                      <div className="absolute -inset-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-500"></div>
+                      <div 
+                        className="relative w-16 h-16 rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-all duration-300"
+                        style={{ 
+                          background: `linear-gradient(135deg, ${category.color}, ${category.color}dd)`,
+                          boxShadow: `0 8px 32px ${category.color}40`
+                        }}
+                      >
+                        <IconComponent className="h-8 w-8 group-hover:scale-110 transition-transform duration-300" />
                       </div>
                     </div>
-                  );
-                })()}
+                    
+                    <div className="ml-4 flex-1">
+                      <h3 className="text-xl font-black text-gray-900 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-orange-600 group-hover:to-red-600 group-hover:bg-clip-text transition-all duration-300 mb-2">
+                        {category.name}
+                      </h3>
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-orange-100 to-red-100 rounded-full">
+                          <BookOpen className="h-3 w-3 text-orange-600" />
+                          <span className="text-xs font-bold text-orange-800">
+                            {categoryCoursesCount} course{categoryCoursesCount !== 1 ? 's' : ''}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full">
+                          <Users className="h-3 w-3 text-green-600" />
+                          <span className="text-xs font-bold text-green-800">Popular</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-                {/* View Category Link */}
-                <div className="flex items-center justify-between">
-                  <span className="text-red-600 font-medium group-hover:text-red-700">
-                    Explore Category
-                  </span>
-                  <ArrowRight className="h-5 w-5 text-red-600 group-hover:text-red-700 group-hover:translate-x-1 transition-all" />
+                  {/* Category Description */}
+                  <p className="text-gray-600 mb-6 leading-relaxed text-sm group-hover:text-gray-700 transition-colors duration-300 flex-grow">
+                    {category.description}
+                  </p>
+
+                  {/* Enhanced Course Previews */}
+                  {(() => {
+                    const categoryCourses = courses.filter(course => 
+                      course.categories && course.categories.includes(categorySlug)
+                    );
+                    
+                    return categoryCourses.length > 0 && (
+                      <div className="mb-6">
+                        <h4 className="text-sm font-bold text-gray-900 mb-3 flex items-center">
+                          <Target className="h-4 w-4 mr-2 text-orange-600" />
+                          Featured Courses:
+                        </h4>
+                        <div className="space-y-2">
+                          {categoryCourses.slice(0, 3).map((course, index) => (
+                            <div key={course.slug} className="flex items-center text-sm text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
+                              <div className="w-2 h-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-full mr-3 shadow-sm group-hover:scale-125 transition-transform duration-300" style={{ animationDelay: `${index * 100}ms` }}></div>
+                              <span className="font-medium truncate">{course.title}</span>
+                            </div>
+                          ))}
+                          {categoryCourses.length > 3 && (
+                            <div className="flex items-center text-sm">
+                              <div className="w-2 h-2 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full mr-3"></div>
+                              <span className="text-gray-500 font-medium">+{categoryCourses.length - 3} more specialized courses</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })()}
+
+                  {/* Enhanced CTA Section */}
+                  <div className="mt-auto">
+                    <div className="flex items-center justify-between p-4 bg-gradient-to-r from-orange-50 to-red-50 rounded-2xl border border-orange-100 group-hover:from-orange-100 group-hover:to-red-100 group-hover:border-orange-200 transition-all duration-300">
+                      <div>
+                        <span className="text-orange-700 font-black group-hover:text-orange-800 transition-colors text-sm">
+                          Explore Category
+                        </span>
+                        <p className="text-xs text-orange-600 group-hover:text-orange-700 transition-colors">
+                          Start your learning journey
+                        </p>
+                      </div>
+                      <div className="relative">
+                        <div className="absolute -inset-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-full blur opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                        <div className="relative w-10 h-10 bg-gradient-to-r from-orange-600 to-red-600 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
+                          <ArrowRight className="h-5 w-5 text-white group-hover:translate-x-0.5 transition-transform duration-300" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </Link>
             );

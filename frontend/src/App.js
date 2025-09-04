@@ -66,6 +66,9 @@ function AppContent() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           
+          {/* Admin Routes */}
+          <Route path="/admin/leads" element={<AdminLeads />} />
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

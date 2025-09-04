@@ -299,7 +299,34 @@ const BlogPost = () => {
 
   return (
     <>
-      <BlogPostSEO post={currentPost} />
+      <EnhancedSEO
+        title={`${post.title} | GRRAS Solutions Blog`}
+        description={post.excerpt}
+        canonical={`https://www.grras.tech/blog/${post.slug}`}
+        type="article"
+        image={getFeaturedImage(post)}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "headline": post.title,
+          "image": getFeaturedImage(post),
+          "author": {
+            "@type": "Organization",
+            "name": post.author || "GRRAS Solutions"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "GRRAS Solutions Training Institute",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.grras.tech/static/media/grras-logo.png"
+            }
+          },
+          "datePublished": post.publishedAt,
+          "dateModified": post.updatedAt || post.publishedAt,
+          "description": post.excerpt
+        }}
+      />
       
       <div className="min-h-screen bg-gray-50">
         {/* Header */}

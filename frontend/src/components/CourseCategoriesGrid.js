@@ -12,12 +12,14 @@ import {
   Users,
   Target
 } from 'lucide-react';
-import { useContent } from '../contexts/ContentContext';
+
+// Static Data
+import { categories } from '../data/categories';
+import { courses } from '../data/courses';
 
 const CourseCategoriesGrid = () => {
-  const { content } = useContent();
-  const courseCategories = content?.courseCategories || {};
-  const courses = content?.courses || [];
+  const courseCategories = categories;
+  const coursesData = courses;
 
   // Icon mapping for categories
   const iconMap = {

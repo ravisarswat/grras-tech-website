@@ -38,7 +38,12 @@ export const ContentProvider = ({ children }) => {
           phones: ["090019 91227"],
           emails: ["online@grras.com"],
           social: {
-            whatsapp: "https://wa.me/919001991227"
+            whatsapp: "https://wa.me/919001991227",
+            facebook: "https://www.facebook.com/grrassolutionss",
+            instagram: "https://www.instagram.com/grrassolutionss/",
+            youtube: "https://www.youtube.com/@grrassolutions",
+            linkedin: "https://www.linkedin.com/company/grrassolutions",  
+            twitter: "https://twitter.com/grrassolutions"
           },
           stats: {
             yearsOfExcellence: "18+"

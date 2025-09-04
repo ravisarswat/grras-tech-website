@@ -436,11 +436,11 @@ const CourseDetail = () => {
       </div>
 
       {/* Railway Compatible PDF */}
-      {showEnhancedSyllabus && (
+      {showSyllabusModal && (
         <RailwayCompatiblePDF
           courseSlug={course.slug}
           courseName={course.title || course.name || 'Course'}
-          onClose={() => setShowEnhancedSyllabus(false)}
+          onClose={() => setShowSyllabusModal(false)}
         />
       )}
     </>

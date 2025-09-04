@@ -13,7 +13,7 @@ import {
   Briefcase,
   Info
 } from 'lucide-react';
-import SEO, { CoursePageSEO } from '../components/SEO';
+import EnhancedSEO from '../components/EnhancedSEO';
 import SyllabusModal from '../components/SyllabusModal';
 import { courses } from '../data/courses';
 

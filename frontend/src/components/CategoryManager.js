@@ -314,16 +314,25 @@ const CategoryManager = ({ content, updateContent }) => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Categories</h2>
-        <button
-          onClick={() => {
-            resetForm();
-            setShowAddForm(true);
-          }}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2"
-        >
-          <Plus className="h-4 w-4" />
-          Add Category
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={syncAllCategorySlugs}
+            className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 flex items-center gap-2 text-sm"
+            title="Sync all category slugs with current names"
+          >
+            🔄 Sync All Slugs
+          </button>
+          <button
+            onClick={() => {
+              resetForm();
+              setShowAddForm(true);
+            }}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2"
+          >
+            <Plus className="h-4 w-4" />
+            Add Category
+          </button>
+        </div>
       </div>
 
       {/* Add Category Form Modal */}

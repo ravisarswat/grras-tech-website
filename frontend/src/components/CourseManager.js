@@ -421,6 +421,27 @@ const CourseManager = ({ content, updateContent }) => {
                     ))}
                   </div>
                 </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Course Highlights</label>
+                  <input
+                    type="text"
+                    value={newCourse.highlights.join(', ')}
+                    onChange={(e) => {
+                      const highlightsArray = e.target.value.split(',').map(item => item.trim()).filter(item => item);
+                      setNewCourse({...newCourse, highlights: highlightsArray});
+                    }}
+                    className="w-full border rounded p-2"
+                    placeholder="User & group management, Storage & networking basics, System services, SELinux & firewalld"
+                  />
+                  <div className="flex flex-wrap gap-1 mt-2">
+                    {newCourse.highlights.map((highlight, index) => (
+                      <span key={index} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                        {highlight}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">

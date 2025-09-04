@@ -168,7 +168,7 @@ const CourseDetail = () => {
                   </div>
                   
                   <button
-                    onClick={() => setShowSyllabusModal(true)}
+                    onClick={() => setShowEnhancedSyllabus(true)}
                     className="btn-primary w-full text-center mb-4"
                   >
                     <Download className="mr-2 h-5 w-5" />

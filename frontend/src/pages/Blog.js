@@ -483,9 +483,9 @@ const Blog = () => {
                     <h3 className="text-lg font-semibold text-gray-900 mb-4">Popular Tags</h3>
                     <div className="flex flex-wrap gap-2">
                       {Object.entries(tags)
-                        .sort(([,a], [,b]) => b - a)
+                        .sort(([,a], [,b]) => (b.count || b) - (a.count || a))
                         .slice(0, 20)
-                        .map(([tag, count]) => (
+                        .map(([tag, tagData]) => (
                           <button
                             key={tag}
                             onClick={() => handleTagFilter(tag)}
@@ -495,7 +495,7 @@ const Blog = () => {
                                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                             }`}
                           >
-                            #{tag} ({count})
+                            #{tag} ({tagData.count || tagData})
                           </button>
                         ))}
                     </div>

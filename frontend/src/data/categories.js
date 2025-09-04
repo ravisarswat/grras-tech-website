@@ -17,7 +17,7 @@ export const categories = {
     "createdBy": "dynamic-category-creator"
   },
   "aws-cloud-platform": {
-    "name": "Cloud Platform",
+    "name": "AWS Cloud",
     "title": "AWS Cloud Platform", 
     "slug": "aws-cloud-platform",
     "description": "Amazon Web Services cloud computing certifications and solutions architect training",

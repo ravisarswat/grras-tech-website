@@ -80,7 +80,7 @@ ${allPages.map(page => `  <url>
 </urlset>`;
   
   // Write sitemap to public directory
-  const outputPath = path.join(__dirname, '../frontend/public/sitemap.xml');
+  const outputPath = path.join(__dirname, 'public/sitemap.xml');
   fs.writeFileSync(outputPath, sitemapXml);
   
   console.log(`✅ Sitemap generated successfully at: ${outputPath}`);

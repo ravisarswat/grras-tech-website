@@ -127,7 +127,7 @@ const Courses = () => {
       };
 
       const processedCourses = coursesData
-        .filter(course => course.visible !== false)
+        .filter(course => course.visible !== false && course.title && course.slug)
         .map(course => ({
           ...course,
           oneLiner: course.oneLiner || course.tagline || 'Professional Training Course',

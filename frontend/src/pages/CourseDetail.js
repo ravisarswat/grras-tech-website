@@ -96,7 +96,13 @@ const CourseDetail = () => {
 
   return (
     <>
-      <CoursePageSEO course={course} tools={course.tools || []} />
+      <EnhancedSEO
+        title={`${course.title} | GRRAS Solutions Training Institute`}
+        description={course.description}
+        canonical={`https://www.grras.tech/courses/${course.slug}`}
+        type="article"
+        course={course}
+      />
       
       <div className="min-h-screen bg-gray-50">
         {/* Hero Section */}

@@ -78,6 +78,13 @@ const CourseManager = ({ content, updateContent }) => {
       ...newCourse,
       slug: slug,
       categories: newCourse.category ? [newCourse.category] : [],
+      // Ensure fees field is set from price if empty
+      fees: newCourse.fees || newCourse.price || 'Contact for pricing',
+      // Ensure required arrays exist
+      highlights: newCourse.highlights || [],
+      tools: newCourse.tools || [],
+      learningOutcomes: newCourse.learningOutcomes || [],
+      careerRoles: newCourse.careerRoles || [],
       createdAt: new Date().toISOString(),
       modifiedAt: new Date().toISOString()
     };

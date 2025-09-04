@@ -617,7 +617,7 @@ const CourseManager = ({ content, updateContent }) => {
         </div>
       )}
 
-      {sortedCourses.length === 0 ? (
+      {filteredCourses.length === 0 ? (
         <div className="text-center py-12 bg-gray-50 rounded-lg">
           <p className="text-gray-500 mb-4">No courses yet</p>
           <button
@@ -632,7 +632,7 @@ const CourseManager = ({ content, updateContent }) => {
         </div>
       ) : (
         <div className="space-y-4">
-          {sortedCourses.map((course) => (
+          {filteredCourses.map((course) => (
             <div key={course.slug} className="bg-white border rounded-lg p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-4">

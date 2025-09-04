@@ -75,7 +75,7 @@ const CategoryManager = ({ content, updateContent }) => {
     alert(`✅ Category "${newCategory.name}" added successfully!`);
   };
 
-  // Update Category with Slug Sync (Fixed for name field)
+  // Update Category (No automatic slug sync)
   const updateCategory = (slug, field, value) => {
     const updated = { ...categories[slug] };
     
@@ -91,59 +91,11 @@ const CategoryManager = ({ content, updateContent }) => {
 
     console.log('📝 Updating category:', slug, field, value);
 
-    // Regular update (slug sync will be handled separately for name field)
+    // Simple update - no automatic slug sync
     updateContent('courseCategories', {
       ...categories,
       [slug]: updated
     });
-  };
-
-  // Handle Name Change with Slug Sync (called onBlur)
-  const handleNameChangeComplete = (slug) => {
-    const category = categories[slug];
-    if (!category || !category.name?.trim()) return;
-
-    const newSlug = generateSlug(category.name);
-    
-    // Check if slug actually needs to change
-    if (newSlug === slug) return;
-    
-    // Check for conflicts
-    if (categories[newSlug]) {
-      alert(`❌ Category with slug "${newSlug}" already exists! Please use a different name.`);
-      // Reset name to original
-      const original = categories[slug];
-      updateContent('courseCategories', {
-        ...categories,
-        [slug]: { ...original, name: original.name }
-      });
-      return;
-    }
-
-    console.log('🔄 Slug change detected:', { oldSlug: slug, newSlug, name: category.name });
-    
-    // Create new categories object with updated slug
-    const { [slug]: oldCategory, ...otherCategories } = categories;
-    const newCategories = {
-      ...otherCategories,
-      [newSlug]: { ...category, slug: newSlug, modifiedAt: new Date().toISOString() }
-    };
-
-    // Update courses that reference this category
-    const updatedCourses = courses.map(course => ({
-      ...course,
-      categories: (course.categories || []).map(catSlug => 
-        catSlug === slug ? newSlug : catSlug
-      ),
-      category: course.category === slug ? newSlug : course.category,
-      modifiedAt: new Date().toISOString()
-    }));
-
-    // Update both categories and courses
-    updateContent('courseCategories', newCategories);
-    updateContent('courses', updatedCourses);
-
-    alert(`✅ Category renamed successfully!\n\n🏷️ Name: "${category.name}"\n🔗 New URL: /courses?tab=${newSlug}`);
   };
 
   // Test function

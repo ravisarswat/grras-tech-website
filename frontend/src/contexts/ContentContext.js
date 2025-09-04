@@ -74,7 +74,7 @@ export const ContentProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    loadContent();
+    loadStaticContent();
   }, []);
 
   const refreshContent = () => {

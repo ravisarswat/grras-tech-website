@@ -102,7 +102,7 @@ const CategoryManager = ({ content, updateContent }) => {
     alert('Test delete called for: ' + slug);
   };
 
-  // Delete Category - Simplified Working Version
+  // Delete Category - Direct Simple Approach
   const deleteCategory = (slug) => {
     console.log('🗑️ DELETE ATTEMPT:', slug);
     
@@ -118,40 +118,27 @@ const CategoryManager = ({ content, updateContent }) => {
 
     console.log('✅ User confirmed deletion');
 
-    // Create new categories object by filtering out the deleted category
-    const newCategories = {};
-    Object.keys(categories).forEach(key => {
-      if (key !== slug) {
-        newCategories[key] = categories[key];
-      }
-    });
+    // Simple direct approach - filter out deleted category
+    const filteredCategories = Object.fromEntries(
+      Object.entries(categories).filter(([key, value]) => key !== slug)
+    );
     
-    console.log('🗑️ Old categories keys:', Object.keys(categories));
-    console.log('🗑️ New categories keys:', Object.keys(newCategories));
+    console.log('🗑️ Filtered categories:', Object.keys(filteredCategories));
     
-    // Remove category from courses
-    const updatedCourses = courses.map(course => ({
+    // Remove from courses too
+    const filteredCourses = courses.map(course => ({
       ...course,
       categories: (course.categories || []).filter(cat => cat !== slug)
     }));
 
-    console.log('🗑️ Updating content...');
+    // Direct updateContent calls
+    updateContent('courseCategories', filteredCategories);
+    updateContent('courses', filteredCourses);
     
-    // Update categories first, then courses
-    updateContent('courseCategories', newCategories);
-    
-    // Wait a bit then update courses
-    setTimeout(() => {
-      updateContent('courses', updatedCourses);
-    }, 100);
+    // Force state refresh
+    setExpandedCategory(null);
 
-    // Force component re-render by updating state
-    setTimeout(() => {
-      // Trigger re-render to ensure UI updates
-      setExpandedCategory(null);
-    }, 200);
-
-    console.log('✅ Delete operations completed');
+    console.log('✅ Category deleted successfully');
     alert(`✅ Category "${categoryName}" deleted!`);
   };
 

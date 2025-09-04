@@ -37,7 +37,7 @@ const Blog = () => {
       // Apply category filter
       if (selectedCategory) {
         filteredPosts = filteredPosts.filter(post => 
-          post.category.toLowerCase() === selectedCategory.toLowerCase()
+          post.category && post.category.toLowerCase() === selectedCategory.toLowerCase()
         );
       }
       

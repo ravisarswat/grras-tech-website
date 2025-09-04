@@ -78,7 +78,7 @@ export const ContentProvider = ({ children }) => {
   }, []);
 
   const refreshContent = () => {
-    loadContent();
+    loadStaticContent();
   };
 
   const getCourses = () => {

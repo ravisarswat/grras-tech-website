@@ -104,6 +104,150 @@ export const courses = [
     "overview": "Industry-standard Linux system administration certification with comprehensive hands-on training."
   },
   {
+    "slug": "rhce-red-hat-certified-engineer",
+    "title": "RHCE - Red Hat Certified Engineer",
+    "oneLiner": "Advanced Red Hat engineering certification with automation focus",
+    "description": "RHCE (Red Hat Certified Engineer) certification validates advanced system administration skills including automation with Ansible.",
+    "duration": "8-10 Weeks",
+    "fees": "₹45,000 (Including Exam)",
+    "price": "₹45,000",
+    "tools": [
+      "Red Hat Enterprise Linux",
+      "Ansible",
+      "System Services",
+      "Network Services",
+      "Security"
+    ],
+    "visible": true,
+    "featured": true,
+    "order": 3,
+    "thumbnailUrl": "",
+    "category": "red-hat-technologies",
+    "categories": ["red-hat-technologies"],
+    "level": "Advanced",
+    "mode": "Classroom, Online, Hybrid",
+    "highlights": [
+      "Advanced system administration",
+      "Ansible automation",
+      "Network services configuration",
+      "Security implementation",
+      "System optimization",
+      "Real-world scenarios"
+    ],
+    "learningOutcomes": [
+      "Automate tasks with Ansible",
+      "Configure advanced network services",
+      "Implement security policies",
+      "Manage complex RHEL environments"
+    ],
+    "careerRoles": [
+      "Red Hat Certified Engineer",
+      "Senior Linux Administrator",
+      "DevOps Engineer",
+      "Infrastructure Architect"
+    ],
+    "eligibility": "RHCSA certification required",
+    "intake": "Monthly Batches",
+    "certificationIncluded": true,
+    "overview": "Advanced Red Hat certification focusing on automation and complex system management."
+  },
+  {
+    "slug": "do188-red-hat-openshift-development",
+    "title": "DO188 - Red Hat OpenShift Development I",
+    "oneLiner": "Container application development with OpenShift",
+    "description": "DO188 teaches developers how to containerize applications and deploy them on Red Hat OpenShift Container Platform.",
+    "duration": "5 Days (40 Hours)",
+    "fees": "₹35,000 (Including Materials)",
+    "price": "₹35,000",
+    "tools": [
+      "Red Hat OpenShift",
+      "Docker",
+      "Podman",
+      "Kubernetes",
+      "Container Registry"
+    ],
+    "visible": true,
+    "featured": true,
+    "order": 4,
+    "thumbnailUrl": "",
+    "category": "red-hat-technologies",
+    "categories": ["red-hat-technologies"],
+    "level": "Intermediate",
+    "mode": "Classroom, Online, Hybrid",
+    "highlights": [
+      "Container development",
+      "OpenShift deployment",
+      "Application lifecycle",
+      "CI/CD pipelines",
+      "Container registries",
+      "Hands-on labs"
+    ],
+    "learningOutcomes": [
+      "Containerize applications with Podman",
+      "Deploy apps on OpenShift",
+      "Manage application lifecycle",
+      "Implement CI/CD workflows"
+    ],
+    "careerRoles": [
+      "OpenShift Developer",
+      "Container Developer",
+      "DevOps Engineer",
+      "Application Developer"
+    ],
+    "eligibility": "Basic Linux and development knowledge",
+    "intake": "Monthly Batches",
+    "certificationIncluded": true,
+    "overview": "Comprehensive OpenShift development training for containerized applications."
+  },
+  {
+    "slug": "do280-red-hat-openshift-administration",
+    "title": "DO280 - Red Hat OpenShift Administration I",
+    "oneLiner": "OpenShift cluster administration and management",
+    "description": "DO280 provides system administrators with the skills to manage Red Hat OpenShift Container Platform clusters.",
+    "duration": "5 Days (40 Hours)",
+    "fees": "₹40,000 (Including Materials)",
+    "price": "₹40,000",
+    "tools": [
+      "Red Hat OpenShift",
+      "Kubernetes",
+      "CLI Tools",
+      "Web Console",
+      "Cluster Management"
+    ],
+    "visible": true,
+    "featured": true,
+    "order": 5,
+    "thumbnailUrl": "",
+    "category": "red-hat-technologies",
+    "categories": ["red-hat-technologies"],
+    "level": "Advanced",
+    "mode": "Classroom, Online, Hybrid",
+    "highlights": [
+      "Cluster administration",
+      "User and project management",
+      "Network and storage config",
+      "Security policies",
+      "Monitoring and logging",
+      "Troubleshooting"
+    ],
+    "learningOutcomes": [
+      "Install and configure OpenShift clusters",
+      "Manage users and projects",
+      "Configure networking and storage",
+      "Monitor cluster health and performance"
+    ],
+    "careerRoles": [
+      "OpenShift Administrator",
+      "Kubernetes Administrator",
+      "Platform Engineer",
+      "Cloud Infrastructure Engineer"
+    ],
+    "eligibility": "RHCSA and container experience recommended",
+    "intake": "Monthly Batches",
+    "certificationIncluded": true,
+    "overview": "Professional OpenShift administration training for enterprise environments."
+  },
+  {
     "slug": "aws-solutions-architect-associate",
     "title": "AWS Solutions Architect Associate",
     "oneLiner": "Design and deploy scalable AWS cloud solutions", 
@@ -122,7 +266,7 @@ export const courses = [
     ],
     "visible": true,
     "featured": true,
-    "order": 3,
+    "order": 6,
     "thumbnailUrl": "",
     "category": "aws-cloud-platform",
     "categories": ["aws-cloud-platform"],
@@ -171,7 +315,7 @@ export const courses = [
     ],
     "visible": true,
     "featured": true,
-    "order": 4,
+    "order": 7,
     "thumbnailUrl": "",
     "category": "devops-engineering",
     "categories": ["devops-engineering"],
@@ -221,7 +365,7 @@ export const courses = [
     ],
     "visible": true,
     "featured": true,
-    "order": 5,
+    "order": 8,
     "thumbnailUrl": "",
     "category": "data-science-ai",
     "categories": ["data-science-ai"],

@@ -1,0 +1,27 @@
+{
+  "backup_timestamp": "2025-09-04T08:25:29.421504",
+  "database_type": "local",
+  "original_courseCategories": {
+    "general": {
+      "name": "General Courses",
+      "description": "Foundational IT and programming courses",
+      "color": "#3B82F6"
+    },
+    "cloud": {
+      "name": "Cloud Computing",
+      "description": "AWS, Azure, and cloud technologies",
+      "color": "#10B981"
+    },
+    "security": {
+      "name": "Cybersecurity",
+      "description": "Security and ethical hacking courses",
+      "color": "#EF4444"
+    },
+    "certification": {
+      "name": "Professional Certifications",
+      "description": "Industry certification preparation",
+      "color": "#F59E0B"
+    }
+  },
+  "document_id": "68b6a861e58f879580730c14"
+}

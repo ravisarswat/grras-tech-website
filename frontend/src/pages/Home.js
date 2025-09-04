@@ -87,8 +87,8 @@ const Home = () => {
   }, []);
 
   // Get popular courses configuration from CMS
-  const popularCoursesConfig = content?.pages?.home?.popularCourses || {};
-  const allCourses = content?.courses || [];
+  const popularCoursesConfig = {};
+  const allCourses = courses;
   
   // Generate popular courses based on CMS configuration
   const getPopularCourses = () => {

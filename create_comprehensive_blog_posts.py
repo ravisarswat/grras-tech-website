@@ -8,7 +8,7 @@ import requests
 import json
 from datetime import datetime, timedelta
 
-BASE_URL = "https://react-cms-fix.preview.emergentagent.com/api"
+BASE_URL = "https://grras-academy.preview.emergentagent.com/api"
 
 def get_admin_token():
     """Get admin authentication token"""
@@ -150,7 +150,7 @@ def main():
     
     print(f"\n🎉 Blog Creation Summary:")
     print(f"✅ Successfully created: {success_count}/{len(blog_posts)} blog posts")
-    print(f"🌐 Blog Page: https://react-cms-fix.preview.emergentagent.com/blog")
+    print(f"🌐 Blog Page: https://grras-academy.preview.emergentagent.com/blog")
 
 if __name__ == "__main__":
     main()

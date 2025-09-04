@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.INFO)
 async def manual_category_cleanup():
     """Manual category cleanup with correct token"""
     
-    backend_url = "https://react-cms-fix.preview.emergentagent.com"
+    backend_url = "https://grras-academy.preview.emergentagent.com"
     api_base = f"{backend_url}/api"
     
     # Known working admin token

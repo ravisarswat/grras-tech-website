@@ -22,7 +22,7 @@ DATABASE_NAME = "grras_database"
 COLLECTION_NAME = "content"
 
 # Backend API URL
-BACKEND_URL = "https://react-cms-fix.preview.emergentagent.com"
+BACKEND_URL = "https://grras-academy.preview.emergentagent.com"
 ADMIN_PASSWORD = "grras-admin"
 
 class DatabaseDiagnostic:

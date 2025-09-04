@@ -1,6 +1,6 @@
 {
   "timestamp": "2025-09-02T14:10:35.956941",
-  "backend_url": "https://react-cms-fix.preview.emergentagent.com",
+  "backend_url": "https://grras-academy.preview.emergentagent.com",
   "test_type": "Course Cleanup Verification",
   "total_tests": 7,
   "passed_tests": 6,

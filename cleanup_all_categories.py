@@ -17,7 +17,7 @@ async def cleanup_all_categories():
     """Remove all categories from the production Railway database via API"""
     
     # Production backend URL
-    backend_url = "https://react-cms-fix.preview.emergentagent.com"
+    backend_url = "https://grras-academy.preview.emergentagent.com"
     api_base = f"{backend_url}/api"
     
     logging.info(f"🔗 Connecting to production backend: {backend_url}")

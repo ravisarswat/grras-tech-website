@@ -84,7 +84,7 @@ Sync Status: ✅ WORKING
 
 ```bash
 # Check courses in API
-curl -s "https://react-cms-fix.preview.emergentagent.com/api/courses" | python3 -c "
+curl -s "https://grras-academy.preview.emergentagent.com/api/courses" | python3 -c "
 import json, sys
 data = json.load(sys.stdin)
 print(f'Total courses: {len(data.get(\"courses\", []))}')

@@ -71,49 +71,25 @@ const BlogPost = () => {
   };
 
   const getExcerpt = (post) => {
-    return post.excerpt || post.summary || post.content?.substring(0, 200) + '...';
+    return post.excerpt || post.summary || post.description || '';
   };
 
-  const sharePost = (platform) => {
-    const url = window.location.href;
-    const title = post?.title || '';
-    
-    let shareUrl = '';
-    
-    switch (platform) {
-      case 'facebook':
-        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-        break;
-      case 'twitter':
-        shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
-        break;
-      case 'linkedin':
-        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
-        break;
-      default:
-        return;
-    }
-    
-    window.open(shareUrl, '_blank', 'width=600,height=400');
-  };
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      alert('Link copied to clipboard!');
-    });
-  };
+  const shareUrl = encodeURIComponent(window.location.href);
+  const shareTitle = encodeURIComponent(post?.title || '');
 
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 rounded mb-4"></div>
-            <div className="h-64 bg-gray-200 rounded mb-6"></div>
-            <div className="space-y-3">
-              <div className="h-4 bg-gray-200 rounded"></div>
-              <div className="h-4 bg-gray-200 rounded"></div>
-              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+            <div className="h-8 bg-gray-300 rounded mb-4"></div>
+            <div className="h-4 bg-gray-300 rounded mb-2"></div>
+            <div className="h-4 bg-gray-300 rounded mb-8"></div>
+            <div className="h-64 bg-gray-300 rounded mb-8"></div>
+            <div className="space-y-4">
+              <div className="h-4 bg-gray-300 rounded"></div>
+              <div className="h-4 bg-gray-300 rounded"></div>
+              <div className="h-4 bg-gray-300 rounded w-3/4"></div>
             </div>
           </div>
         </div>
@@ -121,181 +97,26 @@ const BlogPost = () => {
     );
   }
 
-  if (error) {
+  if (error || !post) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="max-w-md mx-auto text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">404</h1>
-          <h2 className="text-xl font-semibold text-gray-700 mb-4">{error}</h2>
-          <p className="text-gray-600 mb-6">
-            The blog post you're looking for doesn't exist or has been moved.
-          </p>
-          <Link to="/blog" className="btn-primary">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Blog
-          </Link>
+      <div className="min-h-screen bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">
+              {error || 'Blog post not found'}
+            </h1>
+            <Link 
+              to="/blog" 
+              className="inline-flex items-center text-red-600 hover:text-red-700 font-medium"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Blog
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
-
-  if (!post) {
-    return null;
-  }
-
-  // Sample blog posts data (in real app, this would come from API/CMS)
-  const blogPosts = {
-    'what-is-devops-beginners-guide-2025': {
-      title: 'What is DevOps? A Beginner\'s Guide (2025)',
-      excerpt: 'DevOps is revolutionizing software development. Learn what DevOps is, why it matters, and how to start your DevOps career in 2025.',
-      content: `
-        <p>DevOps has become one of the most sought-after skills in the technology industry. But what exactly is DevOps, and why is it so important?</p>
-
-        <h2>What is DevOps?</h2>
-        <p>DevOps is a set of practices that combines software development (Dev) and IT operations (Ops). It aims to shorten the systems development life cycle and provide continuous delivery with high software quality.</p>
-
-        <h2>Key DevOps Practices</h2>
-        <ul>
-          <li><strong>Continuous Integration (CI):</strong> Regularly merging code changes into a shared repository</li>
-          <li><strong>Continuous Deployment (CD):</strong> Automatically deploying code changes to production</li>
-          <li><strong>Infrastructure as Code:</strong> Managing infrastructure through code rather than manual processes</li>
-          <li><strong>Monitoring and Logging:</strong> Continuous monitoring of applications and infrastructure</li>
-        </ul>
-
-        <h2>Popular DevOps Tools</h2>
-        <p>The DevOps ecosystem includes various tools for different purposes:</p>
-        <ul>
-          <li><strong>Version Control:</strong> Git, GitHub, GitLab</li>
-          <li><strong>CI/CD:</strong> Jenkins, GitLab CI, GitHub Actions</li>
-          <li><strong>Containerization:</strong> Docker, Kubernetes</li>
-          <li><strong>Cloud Platforms:</strong> AWS, Azure, Google Cloud</li>
-          <li><strong>Configuration Management:</strong> Ansible, Terraform</li>
-        </ul>
-
-        <h2>DevOps Career Opportunities</h2>
-        <p>DevOps professionals are in high demand with excellent salary prospects. Common DevOps roles include:</p>
-        <ul>
-          <li>DevOps Engineer</li>
-          <li>Site Reliability Engineer (SRE)</li>
-          <li>Cloud Engineer</li>
-          <li>Infrastructure Engineer</li>
-          <li>Platform Engineer</li>
-        </ul>
-
-        <h2>Getting Started with DevOps</h2>
-        <p>If you're interested in starting a DevOps career, here's a learning path:</p>
-        <ol>
-          <li>Learn Linux fundamentals</li>
-          <li>Understand networking and security basics</li>
-          <li>Master a cloud platform (AWS recommended)</li>
-          <li>Learn containerization with Docker</li>
-          <li>Practice with CI/CD pipelines</li>
-          <li>Get hands-on experience with real projects</li>
-        </ol>
-
-        <p>At GRRAS Solutions, our comprehensive DevOps training program covers all these aspects with hands-on labs and real-world projects.</p>
-      `,
-      author: 'GRRAS Team',
-      date: '2025-01-15',
-      readTime: '8 min read',
-      category: 'DevOps',
-      tags: ['DevOps', 'Career', 'Technology', 'AWS', 'Cloud'],
-      image: 'https://images.pexels.com/photos/8728559/pexels-photo-8728559.jpeg',
-      featured_image: 'https://images.pexels.com/photos/8728559/pexels-photo-8728559.jpeg'
-    },
-    'why-bca-industry-training-future': {
-      title: 'Why BCA with Industry Training is the Future',
-      excerpt: 'Traditional BCA programs are evolving. Discover how industry-integrated BCA degrees prepare you for modern tech careers.',
-      content: `
-        <p>The Bachelor of Computer Applications (BCA) degree is undergoing a transformation. Traditional academic programs are being enhanced with industry training to create job-ready graduates.</p>
-
-        <h2>The Evolution of BCA Education</h2>
-        <p>Modern BCA programs now include:</p>
-        <ul>
-          <li>Cloud computing specializations</li>
-          <li>DevOps methodology training</li>
-          <li>AI and Machine Learning foundations</li>
-          <li>Practical project work</li>
-          <li>Industry internships</li>
-        </ul>
-
-        <h2>Why Industry Integration Matters</h2>
-        <p>Industry-integrated BCA programs bridge the gap between academic theory and practical application, ensuring graduates are immediately productive in their roles.</p>
-
-        <h2>Career Opportunities</h2>
-        <p>Graduates with industry-integrated BCA degrees can pursue roles such as:</p>
-        <ul>
-          <li>Software Developer</li>
-          <li>Cloud Engineer</li>
-          <li>System Administrator</li>
-          <li>Technical Support Specialist</li>
-        </ul>
-      `,
-      author: 'Dr. Rajesh Sharma',
-      date: '2025-01-12',
-      readTime: '6 min read',
-      category: 'Education',
-      tags: ['BCA', 'Education', 'Career', 'Industry Training'],
-      image: 'https://images.pexels.com/photos/7789851/pexels-photo-7789851.jpeg',
-      featured_image: 'https://images.pexels.com/photos/7789851/pexels-photo-7789851.jpeg'
-    },
-    'top-5-skills-data-science-careers-india': {
-      title: 'Top 5 Skills for Data Science Careers in India',
-      excerpt: 'Master these essential data science skills to land high-paying jobs in India\'s booming tech market.',
-      content: `
-        <p>Data Science is one of the fastest-growing fields in India. Here are the top 5 skills you need to succeed:</p>
-
-        <h2>1. Python Programming</h2>
-        <p>Python is the most popular language for data science, with libraries like Pandas, NumPy, and Scikit-learn.</p>
-
-        <h2>2. Statistics and Mathematics</h2>
-        <p>Strong foundation in statistics is crucial for understanding data patterns and building predictive models.</p>
-
-        <h2>3. Machine Learning</h2>
-        <p>Understanding ML algorithms and their applications is essential for modern data science roles.</p>
-
-        <h2>4. Data Visualization</h2>
-        <p>Tools like Matplotlib, Seaborn, and Tableau help communicate insights effectively.</p>
-
-        <h2>5. SQL and Database Management</h2>
-        <p>Most data is stored in databases, making SQL a fundamental skill for data scientists.</p>
-      `,
-      author: 'Prof. Priya Agarwal',
-      date: '2025-01-10',
-      readTime: '7 min read',
-      category: 'Data Science',
-      tags: ['Data Science', 'Python', 'Machine Learning', 'Career'],
-      image: 'https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg',
-      featured_image: 'https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg'
-    }
-  };
-
-  // Force use of API data when available, fallback to hardcoded only if API fails
-  const currentPost = post ? post : (error ? blogPosts[slug] : null);
-
-  if (!currentPost) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center">
-          <BookOpen className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Post Not Found</h1>
-          <p className="text-gray-600 mb-6">The blog post you're looking for doesn't exist.</p>
-          <Link to="/blog" className="btn-primary">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Blog
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
-
-
-  const localRelatedPosts = relatedPosts.length > 0 ? relatedPosts : 
-    Object.entries(blogPosts)
-      .filter(([postSlug, _]) => postSlug !== slug)
-      .slice(0, 3)
-      .map(([postSlug, post]) => ({ slug: postSlug, ...post }));
 
   return (
     <>
@@ -329,190 +150,196 @@ const BlogPost = () => {
       />
       
       <div className="min-h-screen bg-gray-50">
-        {/* Header */}
-        <div className="bg-white border-b border-gray-200">
+        {/* Back Navigation */}
+        <div className="bg-white border-b">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <Link 
-              to="/blog"
+              to="/blog" 
               className="inline-flex items-center text-gray-600 hover:text-red-600 transition-colors"
             >
-              <ArrowLeft className="mr-2 h-4 w-4" />
+              <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Blog
             </Link>
           </div>
         </div>
 
-        {/* Article */}
-        <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* Hero Section */}
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-8 animate-fade-in-up">
-            {/* Featured Image */}
-            <div className="relative h-64 md:h-80 overflow-hidden">
-              <img 
-                src={getFeaturedImage(currentPost)} 
-                alt={currentPost.title}
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  e.target.src = 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg';
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-              <div className="absolute bottom-4 left-4">
-                <div className="inline-block bg-white bg-opacity-20 backdrop-blur-sm px-3 py-1 rounded-full text-white text-sm font-medium">
-                  {currentPost.category}
-                </div>
-              </div>
-            </div>
-            
-            <div className="p-8">
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                {currentPost.title}
+        {/* Article Header */}
+        <div className="bg-white">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="text-center mb-8">
+              {post.category && (
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 mb-4">
+                  {post.category}
+                </span>
+              )}
+              
+              <h1 className="text-4xl font-bold text-gray-900 mb-4 leading-tight">
+                {post.title}
               </h1>
               
               <p className="text-xl text-gray-600 mb-6 leading-relaxed">
-                {currentPost.excerpt}
+                {getExcerpt(post)}
               </p>
               
-              <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500 border-t border-gray-100 pt-6">
-                <div className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  <span className="font-medium">{currentPost.author}</span>
+              <div className="flex items-center justify-center space-x-6 text-sm text-gray-500">
+                <div className="flex items-center">
+                  <User className="w-4 h-4 mr-1" />
+                  {post.author || 'GRRAS Team'}
                 </div>
-                
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  <span>{formatDate(currentPost.date)}</span>
+                <div className="flex items-center">
+                  <Calendar className="w-4 h-4 mr-1" />
+                  {formatDate(post.publishedAt)}
                 </div>
-                
-                <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4" />
-                  <span>{currentPost.readTime}</span>
+                <div className="flex items-center">
+                  <Clock className="w-4 h-4 mr-1" />
+                  {post.readTime || '5 min read'}
                 </div>
-                
-                <button className="flex items-center gap-2 text-red-600 hover:text-red-700 transition-colors">
-                  <Share2 className="h-4 w-4" />
-                  <span>Share</span>
-                </button>
               </div>
             </div>
-          </div>
 
-          {/* Content */}
-          <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 animate-fade-in-up">
-            <div 
-              className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-ul:text-gray-700 prose-ol:text-gray-700 prose-strong:text-gray-900"
-              dangerouslySetInnerHTML={{ __html: currentPost.content }}
-            />
-          </div>
-
-          {/* Tags */}
-          <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 animate-fade-in-up">
-            <div className="flex items-center gap-2 mb-4">
-              <Tag className="h-5 w-5 text-gray-400" />
-              <span className="font-medium text-gray-900">Tags:</span>
-            </div>
-            
-            <div className="flex flex-wrap gap-2">
-              {currentPost.tags.map((tag, index) => (
-                <span 
-                  key={index}
-                  className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors cursor-pointer"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Author Bio */}
-          <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 animate-fade-in-up">
-            <div className="flex items-start gap-4">
-              <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-orange-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-                {currentPost.author.charAt(0)}
+            {/* Featured Image */}
+            {getFeaturedImage(post) && (
+              <div className="mb-8">
+                <img
+                  src={getFeaturedImage(post)}
+                  alt={post.title}
+                  className="w-full h-96 object-cover rounded-lg shadow-lg"
+                />
               </div>
-              
-              <div className="flex-grow">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">
-                  About {currentPost.author}
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {currentPost.author === 'GRRAS Team' 
-                    ? 'The GRRAS Solutions team consists of industry experts and experienced educators dedicated to providing quality IT training and career guidance.'
-                    : 'An experienced educator and industry expert at GRRAS Solutions Training Institute, committed to student success and industry-relevant education.'
-                  }
-                </p>
+            )}
+          </div>
+        </div>
+
+        {/* Article Content */}
+        <div className="bg-white">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="prose prose-lg max-w-none">
+              <div className="text-gray-800 leading-relaxed">
+                {getContent(post).split('\n\n').map((paragraph, index) => (
+                  <p key={index} className="mb-6">
+                    {paragraph}
+                  </p>
+                ))}
               </div>
             </div>
-          </div>
 
-          {/* Related Posts */}
-          {localRelatedPosts.length > 0 && (
-            <div className="bg-white rounded-2xl shadow-lg p-8 animate-fade-in-up">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Related Articles
-              </h3>
-              
-              <div className="grid md:grid-cols-3 gap-6">
-                {localRelatedPosts.map((post, index) => (
-                  <Link
-                    key={index}
-                    to={`/blog/${post.slug}`}
-                    className="block group hover:shadow-lg transition-shadow rounded-lg overflow-hidden border border-gray-100"
+            {/* Tags */}
+            {post.tags && post.tags.length > 0 && (
+              <div className="mt-12 pt-8 border-t border-gray-200">
+                <div className="flex items-center">
+                  <Tag className="w-4 h-4 mr-2 text-gray-500" />
+                  <span className="text-sm font-medium text-gray-700 mr-4">Tags:</span>
+                  <div className="flex flex-wrap gap-2">
+                    {post.tags.map((tag, index) => (
+                      <span
+                        key={index}
+                        className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Share Section */}
+            <div className="mt-8 pt-8 border-t border-gray-200">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-900">Share this article</h3>
+                <div className="flex space-x-4">
+                  <a
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-700 transition-colors"
                   >
-                    <div className="relative h-32 overflow-hidden bg-gray-100">
-                      <img 
-                        src={getFeaturedImage(post)} 
-                        alt={post.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        onError={(e) => {
-                          e.target.src = 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg';
-                        }}
-                      />
+                    <Facebook className="w-5 h-5" />
+                  </a>
+                  <a
+                    href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-400 hover:text-blue-500 transition-colors"
+                  >
+                    <Twitter className="w-5 h-5" />
+                  </a>
+                  <a
+                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-700 hover:text-blue-800 transition-colors"
+                  >
+                    <Linkedin className="w-5 h-5" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Related Posts */}
+        {relatedPosts.length > 0 && (
+          <div className="bg-gray-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+              <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+                Related Articles
+              </h2>
+              
+              <div className="grid md:grid-cols-3 gap-8">
+                {relatedPosts.map((relatedPost) => (
+                  <Link
+                    key={relatedPost.slug}
+                    to={`/blog/${relatedPost.slug}`}
+                    className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow group"
+                  >
+                    <div className="aspect-video bg-gray-200">
+                      {getFeaturedImage(relatedPost) && (
+                        <img
+                          src={getFeaturedImage(relatedPost)}
+                          alt={relatedPost.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      )}
                     </div>
                     
-                    <div className="p-4">
-                      <h4 className="font-medium text-gray-900 mb-2 group-hover:text-red-600 transition-colors line-clamp-2">
-                        {post.title}
-                      </h4>
+                    <div className="p-6">
+                      {relatedPost.category && (
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 mb-3">
+                          {relatedPost.category}
+                        </span>
+                      )}
                       
-                      <div className="flex items-center gap-2 text-xs text-gray-500">
-                        <Calendar className="h-3 w-3" />
-                        <span>{formatDate(post.date)}</span>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-red-600 transition-colors">
+                        {relatedPost.title}
+                      </h3>
+                      
+                      <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                        {getExcerpt(relatedPost)}
+                      </p>
+                      
+                      <div className="flex items-center text-xs text-gray-500">
+                        <Calendar className="w-3 h-3 mr-1" />
+                        {formatDate(relatedPost.publishedAt)}
                       </div>
                     </div>
                   </Link>
                 ))}
               </div>
-            </div>
-          )}
-
-          {/* CTA Section */}
-          <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-8 text-center border border-red-100 mt-8 animate-fade-in-up">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              Ready to Start Your Tech Career?
-            </h3>
-            <p className="text-gray-600 mb-6">
-              Transform your passion for technology into a successful career with our industry-relevant training programs.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/courses"
-                className="btn-primary"
-              >
-                Explore Our Courses
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
               
-              <Link
-                to="/contact"
-                className="btn-outline"
-              >
-                Talk to Counselor
-              </Link>
+              <div className="text-center mt-12">
+                <Link
+                  to="/blog"
+                  className="inline-flex items-center px-6 py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-colors"
+                >
+                  <BookOpen className="w-4 h-4 mr-2" />
+                  View All Articles
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Link>
+              </div>
             </div>
           </div>
-        </article>
+        )}
       </div>
     </>
   );

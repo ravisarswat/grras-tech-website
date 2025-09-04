@@ -15,10 +15,7 @@ import {
 } from 'lucide-react';
 import SEO, { CoursePageSEO } from '../components/SEO';
 import SyllabusModal from '../components/SyllabusModal';
-import axios from 'axios';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+import { courses } from '../data/courses';
 
 const CourseDetail = () => {
   const { slug } = useParams();
@@ -31,34 +28,39 @@ const CourseDetail = () => {
     fetchCourseDetails();
   }, [slug]);
 
-  const fetchCourseDetails = async () => {
+  const fetchCourseDetails = () => {
     try {
-      const response = await axios.get(`${API}/courses/${slug}`);
-      const courseData = response.data;
+      // Find course in static data
+      const foundCourse = courses.find(c => c.slug === slug);
       
-      // Use ONLY CMS data - no static fallbacks
+      if (!foundCourse) {
+        setError('Course not found');
+        setLoading(false);
+        return;
+      }
+      
+      // Prepare course data with defaults
       const courseWithDefaults = {
-        ...courseData,
-        // Ensure arrays exist but don't override with static data
-        highlights: courseData.highlights || [],
-        learningOutcomes: courseData.learningOutcomes || courseData.outcomes || [],
-        careerRoles: courseData.careerRoles || [],
-        tools: courseData.tools || [],
-        mode: courseData.mode || [],
-        // Ensure seo object exists
-        seo: courseData.seo || {},
+        ...foundCourse,
+        // Ensure arrays exist
+        highlights: foundCourse.highlights || [],
+        learningOutcomes: foundCourse.learningOutcomes || [],
+        careerRoles: foundCourse.careerRoles || [],
+        tools: foundCourse.tools || [],
+        mode: Array.isArray(foundCourse.mode) ? foundCourse.mode : foundCourse.mode ? foundCourse.mode.split(', ') : [],
         // Set defaults for missing optional fields
-        overview: courseData.overview || courseData.description || '',
-        certificateInfo: courseData.certificateInfo || '',
-        batchesInfo: courseData.batchesInfo || '',
-        eligibility: courseData.eligibility || 'Contact for details',
-        level: courseData.level || 'All Levels',
-        category: courseData.category || 'Training'
+        overview: foundCourse.overview || foundCourse.description || '',
+        certificateInfo: foundCourse.certificateInfo || '',
+        batchesInfo: foundCourse.batchesInfo || '',
+        eligibility: foundCourse.eligibility || 'Contact for details',
+        level: foundCourse.level || 'All Levels',
+        category: foundCourse.category || 'Training',
+        fees: foundCourse.fees || foundCourse.price || 'Contact for Details'
       };
       
       setCourse(courseWithDefaults);
     } catch (error) {
-      console.error('Error fetching course:', error);
+      console.error('Error loading course:', error);
       setError('Course not found');
     } finally {
       setLoading(false);

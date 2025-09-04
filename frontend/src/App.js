@@ -22,6 +22,7 @@ import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
 import NotFound from './pages/NotFound';
 import AdminLeads from './pages/AdminLeads';
+import Placements from './pages/Placements';
 
 // Static Data
 import { categories } from './data/categories';

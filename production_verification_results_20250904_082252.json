@@ -1,0 +1,67 @@
+{
+  "timestamp": "2025-09-04T08:22:49.228014",
+  "tests": {
+    "api_health": {
+      "status": "PASS",
+      "response": {
+        "status": "healthy",
+        "database": "connected",
+        "timestamp": "2025-09-04T08:22:49.329839"
+      },
+      "response_time_ms": 102.497
+    },
+    "admin_auth": {
+      "status": "PASS",
+      "message": "Login successful",
+      "token_received": true
+    },
+    "content_api": {
+      "status": "FAIL",
+      "error": "Old categories found: ['general', 'cloud', 'security', 'certification']",
+      "total_categories": 4,
+      "categories": [
+        "general",
+        "cloud",
+        "security",
+        "certification"
+      ]
+    },
+    "database_verification": {
+      "status": "PASS",
+      "total_categories": 10,
+      "categories": [
+        "red-hat-technologies",
+        "aws-cloud-platform",
+        "kubernetes-ecosystem",
+        "devops-engineering",
+        "cybersecurity-ethical-hacking",
+        "programming-development",
+        "server-administration-networking",
+        "degree-programs",
+        "c1",
+        "demo"
+      ],
+      "cleanup_timestamp": "2025-09-04T08:21:36.717763",
+      "old_categories_removed": true
+    },
+    "frontend_simulation": {
+      "status": "PASS",
+      "total_categories": 4,
+      "visible_categories": 4,
+      "category_names": [
+        "general",
+        "cloud",
+        "security",
+        "certification"
+      ],
+      "empty_state": false
+    }
+  },
+  "summary": {
+    "total_tests": 5,
+    "passed_tests": 4,
+    "failed_tests": 1,
+    "success_rate": "80.0%",
+    "overall_status": "FAIL"
+  }
+}

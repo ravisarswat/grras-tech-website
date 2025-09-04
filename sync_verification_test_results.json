@@ -1,0 +1,642 @@
+{
+  "timestamp": "2025-09-04T08:40:11.332395",
+  "backend_url": "https://react-cms-fix.preview.emergentagent.com",
+  "total_tests": 5,
+  "passed_tests": 5,
+  "failed_tests": 0,
+  "success_rate": "100.0%",
+  "test_results": {
+    "courses_endpoint_visible_only": true,
+    "admin_authentication": true,
+    "content_save_operation": true,
+    "sync_verification_fix": true,
+    "course_count_comparison": true
+  },
+  "course_data": {
+    "api_courses": [
+      {
+        "slug": "devops-training",
+        "title": "DevOps Training",
+        "oneLiner": "Master Modern DevOps Practices & Cloud Technologies",
+        "description": "Comprehensive DevOps training covering the complete DevOps lifecycle, cloud platforms, containerization, orchestration, and automation tools used in modern software development.",
+        "duration": "6 Months",
+        "fees": "\u20b920,000 (EMI Available)",
+        "tools": [
+          "Linux (RHCSA)",
+          "Linux Server Administration",
+          "Ansible",
+          "AWS",
+          "Terraform",
+          "Docker",
+          "Kubernetes",
+          "Jenkins",
+          "GitHub"
+        ],
+        "visible": true,
+        "featured": true,
+        "order": 1,
+        "thumbnailUrl": "",
+        "category": "",
+        "level": "Professional Level",
+        "mode": [
+          "Classroom",
+          "Online"
+        ],
+        "highlights": [
+          "Hands-on AWS Labs",
+          "Real-time Projects",
+          "Industry Mentorship",
+          "DevOps Certification Prep"
+        ],
+        "outcomes": [
+          "Master AWS cloud services and deployment strategies",
+          "Implement CI/CD pipelines using Jenkins and GitLab",
+          "Container orchestration with Docker and Kubernetes",
+          "Infrastructure as Code with Terraform and Ansible"
+        ],
+        "eligibility": "Graduate + Basic IT Knowledge",
+        "intake": "Monthly Batches",
+        "seo": {
+          "title": "DevOps Training in Jaipur - GRRAS Solutions",
+          "description": "Learn DevOps at GRRAS Solutions Jaipur. Master AWS, Docker, Kubernetes, Jenkins and more.",
+          "keywords": "DevOps training Jaipur, AWS certification, Docker Kubernetes course"
+        }
+      },
+      {
+        "slug": "bca-degree",
+        "title": "BCA Degree Program",
+        "oneLiner": "Industry-Integrated Bachelor Degree Program",
+        "description": "A comprehensive 3-year BCA degree program designed with industry integration, covering modern technologies like cloud computing, DevOps, and AI/ML along with traditional computer science fundamentals.",
+        "duration": "3 Years",
+        "fees": "Contact for Details",
+        "tools": [
+          "Programming in C",
+          "Java",
+          "DBMS",
+          "Web Technologies",
+          "Cloud & DevOps Basics",
+          "AI/ML Basics"
+        ],
+        "visible": true,
+        "featured": true,
+        "order": 2,
+        "thumbnailUrl": "",
+        "category": "",
+        "level": "Beginner to Advanced",
+        "mode": [
+          "Classroom"
+        ],
+        "highlights": [
+          "UGC Recognized Degree",
+          "Industry Integration",
+          "Cloud & DevOps Specialization",
+          "Placement Assistance"
+        ],
+        "outcomes": [
+          "Strong foundation in computer science and programming",
+          "Expertise in modern technologies and cloud platforms",
+          "Industry-ready skills for software development roles"
+        ],
+        "eligibility": "12th Pass (Any Stream)",
+        "intake": "July & January",
+        "seo": {
+          "title": "BCA Degree Program in Jaipur - GRRAS Solutions",
+          "description": "Industry-integrated BCA degree at GRRAS Solutions with cloud computing and DevOps specializations.",
+          "keywords": "BCA degree Jaipur, computer applications course, IT degree program"
+        }
+      },
+      {
+        "slug": "redhat-certifications",
+        "title": "Red Hat Certifications",
+        "oneLiner": "Official Red Hat Training & Certification Programs",
+        "description": "Official Red Hat authorized training covering RHCSA, RHCE, and OpenShift certifications with hands-on lab experience and expert instruction from certified trainers.",
+        "duration": "4-6 Months",
+        "fees": "\u20b935,000 - \u20b965,000 (Per Certification)",
+        "tools": [
+          "RHCSA",
+          "RHCE",
+          "DO188 (OpenShift Dev)",
+          "DO280 (OpenShift Admin)",
+          "OpenShift with AI"
+        ],
+        "visible": true,
+        "featured": true,
+        "order": 3,
+        "thumbnailUrl": "",
+        "category": "",
+        "level": "Intermediate",
+        "mode": [
+          "Classroom",
+          "Online"
+        ],
+        "highlights": [
+          "Official Red Hat Training",
+          "Certified Instructors",
+          "Hands-on Lab Environment",
+          "Exam Vouchers Included"
+        ],
+        "outcomes": [
+          "Master Red Hat Enterprise Linux administration",
+          "Advanced system administration and automation",
+          "OpenShift container platform expertise"
+        ],
+        "eligibility": "Basic Linux Knowledge",
+        "intake": "Monthly",
+        "seo": {
+          "title": "Red Hat Certification Training in Jaipur - GRRAS Solutions",
+          "description": "Official Red Hat RHCSA, RHCE, OpenShift training with certified instructors at GRRAS Solutions.",
+          "keywords": "Red Hat certification Jaipur, RHCSA RHCE training, OpenShift course"
+        }
+      },
+      {
+        "slug": "data-science-machine-learning",
+        "title": "Data Science & Machine Learning",
+        "oneLiner": "Complete Data Science & Machine Learning Program",
+        "description": "Comprehensive data science program covering statistics, Python programming, machine learning algorithms, deep learning, and real-world project implementation.",
+        "duration": "8 Months",
+        "fees": "\u20b955,000 (EMI Available)",
+        "tools": [
+          "Python",
+          "Statistics",
+          "Pandas & NumPy",
+          "Scikit-learn",
+          "TensorFlow/Keras"
+        ],
+        "visible": true,
+        "featured": true,
+        "order": 4,
+        "thumbnailUrl": "",
+        "category": "",
+        "level": "Beginner to Advanced",
+        "mode": [
+          "Classroom",
+          "Online"
+        ],
+        "highlights": [
+          "Python & R Programming",
+          "Real Dataset Projects",
+          "Industry Mentorship",
+          "Portfolio Development"
+        ],
+        "outcomes": [
+          "Master Python for data science and analytics",
+          "Implement machine learning algorithms from scratch",
+          "Work with real datasets and business problems"
+        ],
+        "eligibility": "Graduate (Any Stream)",
+        "intake": "Bi-monthly",
+        "seo": {
+          "title": "Data Science & Machine Learning Course in Jaipur - GRRAS Solutions",
+          "description": "Complete Data Science and ML training with Python, statistics, and real projects at GRRAS Solutions.",
+          "keywords": "Data Science course Jaipur, Machine Learning training, Python data analytics"
+        }
+      },
+      {
+        "slug": "java-salesforce",
+        "title": "Java & Salesforce",
+        "oneLiner": "Enterprise Development Mastery",
+        "description": "Master Java programming and Salesforce development for enterprise applications with hands-on projects and industry certification preparation.",
+        "duration": "6 Months",
+        "fees": "\u20b940,000 (EMI Available)",
+        "tools": [
+          "Core Java",
+          "Advanced Java",
+          "Salesforce Admin",
+          "Salesforce Developer"
+        ],
+        "visible": true,
+        "featured": true,
+        "order": 5,
+        "thumbnailUrl": "",
+        "category": "",
+        "level": "Intermediate",
+        "mode": [
+          "Classroom",
+          "Online"
+        ],
+        "highlights": [
+          "Core & Advanced Java",
+          "Salesforce Admin & Dev",
+          "Project Work",
+          "Certification Prep"
+        ],
+        "outcomes": [
+          "Master Java programming fundamentals and advanced concepts",
+          "Develop Salesforce applications and customizations",
+          "Build enterprise-grade applications with best practices"
+        ],
+        "eligibility": "Graduate + Basic Programming Knowledge",
+        "intake": "Monthly Batches",
+        "seo": {
+          "title": "Java & Salesforce Training in Jaipur - GRRAS Solutions",
+          "description": "Master Java programming and Salesforce development at GRRAS Solutions with hands-on projects and certification.",
+          "keywords": "Java training Jaipur, Salesforce developer course, enterprise programming"
+        }
+      },
+      {
+        "slug": "python",
+        "title": "Python",
+        "oneLiner": "Versatile Programming Language",
+        "description": "Complete Python programming from basics to advanced with web development, automation, and data handling capabilities.",
+        "duration": "4 Months",
+        "fees": "\u20b925,000 (EMI Available)",
+        "tools": [
+          "Python Core",
+          "OOP in Python",
+          "NumPy",
+          "Pandas",
+          "Flask/Django Basics"
+        ],
+        "visible": true,
+        "featured": true,
+        "order": 6,
+        "thumbnailUrl": "",
+        "category": "",
+        "level": "Beginner to Intermediate",
+        "mode": [
+          "Classroom",
+          "Online"
+        ],
+        "highlights": [
+          "Core Python",
+          "Web Development",
+          "Automation",
+          "Career Guidance"
+        ],
+        "outcomes": [
+          "Master Python programming from basics to advanced",
+          "Build web applications using Flask/Django",
+          "Automate tasks and work with data libraries"
+        ],
+        "eligibility": "12th Pass + Basic Computer Knowledge",
+        "intake": "Monthly Batches",
+        "seo": {
+          "title": "Python Programming Course in Jaipur - GRRAS Solutions",
+          "description": "Learn Python programming from basics to advanced at GRRAS Solutions with web development and automation.",
+          "keywords": "Python course Jaipur, Python programming training, web development"
+        }
+      },
+      {
+        "slug": "c-cpp-dsa",
+        "title": "C/C++ & DSA",
+        "oneLiner": "Foundation Programming Excellence",
+        "description": "Master C/C++ programming with data structures and algorithms, building strong programming foundations for competitive coding and software development.",
+        "duration": "5 Months",
+        "fees": "\u20b920,000 (EMI Available)",
+        "tools": [
+          "C",
+          "C++ (OOP)",
+          "Data Structures",
+          "Algorithms",
+          "Problem Solving"
+        ],
+        "visible": true,
+        "featured": true,
+        "order": 7,
+        "thumbnailUrl": "",
+        "category": "",
+        "level": "Beginner",
+        "mode": [
+          "Classroom",
+          "Online"
+        ],
+        "highlights": [
+          "C/C++ Mastery",
+          "DSA Concepts",
+          "Problem Solving",
+          "Coding Practice"
+        ],
+        "outcomes": [
+          "Master C and C++ programming languages",
+          "Understand data structures and algorithm implementation",
+          "Develop strong problem-solving and competitive coding skills"
+        ],
+        "eligibility": "12th Pass + Mathematics Background",
+        "intake": "Monthly Batches",
+        "seo": {
+          "title": "C/C++ & DSA Course in Jaipur - GRRAS Solutions",
+          "description": "Learn C/C++ programming with data structures and algorithms at GRRAS Solutions for strong coding foundations.",
+          "keywords": "C++ course Jaipur, data structures algorithms, programming fundamentals"
+        }
+      },
+      {
+        "slug": "cyber-security",
+        "title": "Cyber Security",
+        "oneLiner": "Learn the essentials of Cyber Security and Ethical Hacking",
+        "description": "Comprehensive cyber security training covering ethical hacking, penetration testing, network security, and digital forensics with hands-on lab experience.",
+        "duration": "6 Months",
+        "fees": "Contact for latest fee",
+        "tools": [
+          "Kali Linux",
+          "Wireshark",
+          "Metasploit",
+          "Nmap",
+          "Burp Suite"
+        ],
+        "visible": true,
+        "featured": true,
+        "order": 8,
+        "thumbnailUrl": "",
+        "category": "",
+        "level": "Intermediate",
+        "mode": [
+          "Classroom",
+          "Online"
+        ],
+        "highlights": [
+          "Ethical Hacking",
+          "Penetration Testing",
+          "Security Assessment",
+          "Certification Prep"
+        ],
+        "outcomes": [
+          "Master cyber security fundamentals and ethical hacking techniques",
+          "Perform vulnerability assessments and penetration testing",
+          "Implement security measures and incident response procedures"
+        ],
+        "eligibility": "Graduate + Basic IT Knowledge",
+        "intake": "Monthly Batches",
+        "seo": {
+          "title": "Cyber Security & Ethical Hacking Course in Jaipur - GRRAS Solutions",
+          "description": "Learn cyber security and ethical hacking at GRRAS Solutions with hands-on training in Kali Linux, penetration testing, and security tools.",
+          "keywords": "cyber security course Jaipur, ethical hacking training, penetration testing course"
+        }
+      },
+      {
+        "title": "AWS Cloud Practitioner Certification Training",
+        "slug": "aws-cloud-practitioner-certification",
+        "duration": "6-8 weeks",
+        "fees": "\u20b915,000",
+        "level": "Beginner to Intermediate",
+        "category": "cloud",
+        "description": "Master AWS Cloud fundamentals and prepare for AWS Certified Cloud Practitioner exam",
+        "overview": "Master AWS Cloud fundamentals and prepare for AWS Certified Cloud Practitioner exam",
+        "tools": [
+          "AWS Console",
+          "Cloud Computing",
+          "AWS Services",
+          "Cloud Security"
+        ],
+        "highlights": [
+          "AWS Cloud concepts and services",
+          "Security and compliance basics",
+          "Billing and pricing models",
+          "Hands-on AWS practice",
+          "Exam preparation"
+        ],
+        "eligibility": "Basic computer knowledge and interest in cloud computing",
+        "visible": true,
+        "order": 9,
+        "learningOutcomes": [
+          "Understand AWS Cloud concepts",
+          "Learn AWS services",
+          "Master security basics",
+          "Prepare for certification exam"
+        ],
+        "careerRoles": [
+          "Cloud Support Associate",
+          "AWS Cloud Practitioner",
+          "Cloud Operations Specialist"
+        ]
+      },
+      {
+        "title": "AWS Solutions Architect Associate Certification",
+        "slug": "aws-solutions-architect-associate",
+        "duration": "8-10 weeks",
+        "fees": "\u20b925,000",
+        "level": "Intermediate to Advanced",
+        "category": "cloud",
+        "description": "Design and deploy secure, scalable AWS applications. Prepare for Solutions Architect Associate exam",
+        "overview": "Design and deploy secure, scalable AWS applications. Prepare for Solutions Architect Associate exam",
+        "tools": [
+          "AWS EC2",
+          "S3",
+          "VPC",
+          "IAM",
+          "CloudFormation",
+          "Lambda"
+        ],
+        "highlights": [
+          "Design secure architectures",
+          "Resilient and scalable systems",
+          "High-performing architectures",
+          "Cost optimization",
+          "Real-world projects"
+        ],
+        "eligibility": "AWS Cloud Practitioner knowledge or equivalent experience",
+        "visible": true,
+        "order": 10,
+        "learningOutcomes": [
+          "Design secure AWS architectures",
+          "Build scalable systems",
+          "Optimize costs",
+          "Deploy applications"
+        ],
+        "careerRoles": [
+          "Solutions Architect",
+          "Cloud Architect",
+          "AWS Consultant"
+        ]
+      },
+      {
+        "title": "CKA - Certified Kubernetes Administrator",
+        "slug": "cka-certified-kubernetes-administrator",
+        "duration": "6-8 weeks",
+        "fees": "\u20b920,000",
+        "level": "Intermediate to Advanced",
+        "category": "cloud",
+        "description": "Master Kubernetes administration and prepare for CKA certification exam",
+        "overview": "Master Kubernetes administration and prepare for CKA certification exam",
+        "tools": [
+          "Kubernetes",
+          "kubectl",
+          "Docker",
+          "Container Runtime",
+          "etcd"
+        ],
+        "highlights": [
+          "Cluster architecture and installation",
+          "Workloads and scheduling",
+          "Services and networking",
+          "Storage management",
+          "Troubleshooting"
+        ],
+        "eligibility": "Basic Linux knowledge and container concepts",
+        "visible": true,
+        "order": 11,
+        "learningOutcomes": [
+          "Manage Kubernetes clusters",
+          "Deploy applications",
+          "Configure networking",
+          "Handle storage"
+        ],
+        "careerRoles": [
+          "Kubernetes Administrator",
+          "DevOps Engineer",
+          "Container Specialist"
+        ]
+      },
+      {
+        "title": "CKS - Certified Kubernetes Security Specialist",
+        "slug": "cks-certified-kubernetes-security",
+        "duration": "4-6 weeks",
+        "fees": "\u20b922,000",
+        "level": "Advanced",
+        "category": "security",
+        "description": "Master Kubernetes security and prepare for CKS certification exam",
+        "overview": "Master Kubernetes security and prepare for CKS certification exam",
+        "tools": [
+          "Kubernetes",
+          "Security Tools",
+          "Network Policies",
+          "RBAC",
+          "Pod Security"
+        ],
+        "highlights": [
+          "Cluster hardening",
+          "System hardening",
+          "Microservice vulnerabilities",
+          "Supply chain security",
+          "Runtime security"
+        ],
+        "eligibility": "CKA certification or equivalent Kubernetes experience",
+        "visible": true,
+        "order": 12,
+        "learningOutcomes": [
+          "Secure Kubernetes clusters",
+          "Implement security policies",
+          "Monitor threats",
+          "Audit systems"
+        ],
+        "careerRoles": [
+          "Security Engineer",
+          "DevSecOps Engineer",
+          "Kubernetes Security Specialist"
+        ]
+      },
+      {
+        "title": "RHCSA - Red Hat System Administrator Certification",
+        "slug": "rhcsa-red-hat-system-administrator",
+        "duration": "6-8 weeks",
+        "fees": "\u20b918,000",
+        "level": "Beginner to Intermediate",
+        "category": "certification",
+        "description": "Master Linux system administration with Red Hat Enterprise Linux",
+        "overview": "Master Linux system administration with Red Hat Enterprise Linux",
+        "tools": [
+          "RHEL",
+          "Linux Command Line",
+          "systemd",
+          "Network Configuration",
+          "Storage Management"
+        ],
+        "highlights": [
+          "System administration tasks",
+          "User and group management",
+          "File systems and storage",
+          "Network configuration",
+          "System monitoring"
+        ],
+        "eligibility": "Basic computer knowledge, no prior Linux experience required",
+        "visible": true,
+        "order": 13,
+        "learningOutcomes": [
+          "Manage Linux systems",
+          "Configure networks",
+          "Handle storage",
+          "Monitor performance"
+        ],
+        "careerRoles": [
+          "System Administrator",
+          "Linux Administrator",
+          "IT Support Specialist"
+        ]
+      },
+      {
+        "title": "RHCE - Red Hat Certified Engineer",
+        "slug": "rhce-red-hat-certified-engineer",
+        "duration": "8-10 weeks",
+        "fees": "\u20b925,000",
+        "level": "Advanced",
+        "category": "certification",
+        "description": "Advanced Linux automation with Ansible and Red Hat technologies",
+        "overview": "Advanced Linux automation with Ansible and Red Hat technologies",
+        "tools": [
+          "Ansible",
+          "RHEL",
+          "Automation",
+          "Playbooks",
+          "Linux Administration"
+        ],
+        "highlights": [
+          "Automation with Ansible",
+          "Advanced system administration",
+          "Network services",
+          "Security implementation",
+          "Performance tuning"
+        ],
+        "eligibility": "RHCSA certification or equivalent Linux experience",
+        "visible": true,
+        "order": 14,
+        "learningOutcomes": [
+          "Automate with Ansible",
+          "Manage complex systems",
+          "Deploy services",
+          "Optimize performance"
+        ],
+        "careerRoles": [
+          "DevOps Engineer",
+          "Automation Engineer",
+          "Senior System Administrator"
+        ]
+      },
+      {
+        "title": "DO188 - Red Hat OpenShift Development I",
+        "slug": "do188-red-hat-openshift-development",
+        "duration": "4-6 weeks",
+        "fees": "\u20b920,000",
+        "level": "Intermediate",
+        "category": "cloud",
+        "description": "Introduction to containers with Podman and OpenShift development",
+        "overview": "Introduction to containers with Podman and OpenShift development",
+        "tools": [
+          "Podman",
+          "OpenShift",
+          "Containers",
+          "Kubernetes",
+          "Container Registry"
+        ],
+        "highlights": [
+          "Container fundamentals",
+          "Podman container management",
+          "OpenShift development",
+          "Container images",
+          "Application deployment"
+        ],
+        "eligibility": "Basic Linux knowledge and programming concepts",
+        "visible": true,
+        "order": 15,
+        "learningOutcomes": [
+          "Build containers",
+          "Deploy on OpenShift",
+          "Manage applications",
+          "Use registries"
+        ],
+        "careerRoles": [
+          "Container Developer",
+          "OpenShift Developer",
+          "Cloud Application Developer"
+        ]
+      }
+    ],
+    "visible_count": 15,
+    "hidden_in_response": 0,
+    "cms_total": 15,
+    "cms_visible": 15,
+    "cms_hidden": 0,
+    "save_response_count": 15,
+    "sync_response_count": 15
+  },
+  "errors": [],
+  "sync_verification_status": "FIXED - Sync verification working correctly"
+}

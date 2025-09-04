@@ -17,11 +17,12 @@ import HeroSlider from '../components/HeroSlider';
 import CourseSearchBar from '../components/CourseSearchBar';
 import CourseCategoriesGrid from '../components/CourseCategoriesGrid';
 import LearningPathsPreview from '../components/LearningPathsPreview';
-import { useContent } from '../contexts/ContentContext';
 
+// Static Data Imports
+import { categories } from '../data/categories';
+import { courses } from '../data/courses';
 
 const Home = () => {
-  const { content } = useContent();
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [stats, setStats] = useState({
     years: 0,

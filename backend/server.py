@@ -66,6 +66,46 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Security Headers Middleware
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    
+    # Security Headers - Start with Report-Only CSP
+    response.headers["Content-Security-Policy-Report-Only"] = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; "
+        "font-src 'self' https://fonts.gstatic.com; "
+        "img-src 'self' data: https: blob:; "
+        "connect-src 'self' https://www.grras.tech https://grras-academy-1.preview.emergentagent.com; "
+        "frame-src 'self' https://www.google.com; "
+        "object-src 'none'; "
+        "base-uri 'self'; "
+        "form-action 'self'; "
+        "upgrade-insecure-requests"
+    )
+    
+    # Strict Transport Security (HSTS)
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    
+    # X-Frame-Options
+    response.headers["X-Frame-Options"] = "DENY"
+    
+    # Referrer Policy
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    
+    # Permissions Policy
+    response.headers["Permissions-Policy"] = (
+        "geolocation=(), microphone=(), camera=(), payment=(), usb=(), "
+        "magnetometer=(), gyroscope=(), accelerometer=()"
+    )
+    
+    # X-Content-Type-Options
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    
+    return response
+
 # Security
 security = HTTPBearer()
 

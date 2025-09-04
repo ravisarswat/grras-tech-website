@@ -338,6 +338,13 @@ const CategoryManager = ({ content, updateContent }) => {
         <h2 className="text-2xl font-bold">Categories</h2>
         <div className="flex items-center gap-3">
           <button
+            onClick={fixAWSCloudPlatformSlug}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center gap-2 text-sm"
+            title="Fix AWS Cloud Platform slug issue"
+          >
+            🔧 Fix AWS Slug
+          </button>
+          <button
             onClick={syncAllCategorySlugs}
             className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 flex items-center gap-2 text-sm"
             title="Sync all category slugs with current names"

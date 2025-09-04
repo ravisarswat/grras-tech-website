@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Calendar, Clock, User, Tag, ArrowLeft, Share2, Facebook, Twitter, Linkedin, BookOpen, ArrowRight } from 'lucide-react';
-import SEO from '../components/SEO';
+import EnhancedSEO from '../components/EnhancedSEO';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-
-// BlogPost SEO Component - Updated for Railway deployment
-const BlogPostSEO = ({ post }) => (
-  <SEO
-    title={`${post.title} | GRRAS Solutions Blog`}
-    description={post.excerpt}
-    keywords={post.tags?.join(', ')}
-    image={post.image}
-    type="article"
-  />
-);
+// Static Data
+import { blogPosts } from '../data/blog';
 
 const BlogPost = () => {
   const { slug } = useParams();
@@ -29,25 +19,40 @@ const BlogPost = () => {
     }
   }, [slug]);
 
-  const loadBlogPost = async () => {
+  const loadBlogPost = () => {
     try {
       setLoading(true);
       setError(null);
       
-      const response = await fetch(`${BACKEND_URL}/api/blog/${slug}`);
+      // Find post in static data
+      const foundPost = blogPosts.find(p => p.slug === slug);
       
-      if (!response.ok) {
-        if (response.status === 404) {
-          setError('Blog post not found');
-        } else {
-          setError('Failed to load blog post');
-        }
+      if (!foundPost) {
+        setError('Blog post not found');
+        setLoading(false);
         return;
       }
       
-      const data = await response.json();
-      setPost(data.post);
-      setRelatedPosts(data.related_posts || []);
+      setPost(foundPost);
+      
+      // Get related posts based on category/tags
+      const related = blogPosts
+        .filter(p => 
+          p.slug !== slug && 
+          (p.category === foundPost.category || 
+           p.tags?.some(tag => foundPost.tags?.includes(tag)))
+        )
+        .slice(0, 3);
+      
+      setRelatedPosts(related);
+      setLoading(false);
+      
+    } catch (error) {
+      console.error('Error loading blog post:', error);
+      setError('Failed to load blog post');
+      setLoading(false);
+    }
+  };
     } catch (error) {
       console.error('Error loading blog post:', error);
       setError('Failed to load blog post');

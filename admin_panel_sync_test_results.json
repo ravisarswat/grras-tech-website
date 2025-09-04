@@ -1,0 +1,20 @@
+{
+  "timestamp": "2025-09-04T08:41:28.018167",
+  "backend_url": "https://react-cms-fix.preview.emergentagent.com",
+  "total_tests": 5,
+  "passed_tests": 3,
+  "failed_tests": 2,
+  "success_rate": "60.0%",
+  "test_results": {
+    "admin_authentication": true,
+    "create_hidden_course": true,
+    "verify_course_counts": true,
+    "admin_save_workflow": false,
+    "sync_verification_with_hidden": false
+  },
+  "errors": [
+    "Count mismatch: Save response=16, API=15",
+    "Sync count mismatch: Sync=16, API=15"
+  ],
+  "admin_panel_sync_status": "NOT WORKING - Admin panel sync verification has issues"
+}

@@ -33,9 +33,8 @@ const Home = () => {
 
   // Animate stats on load
   useEffect(() => {
-    // Get years from CMS content, fallback to 18 if not available
-    const yearsOfExcellence = content?.institute?.stats?.yearsOfExcellence || '18+';
-    const yearsNumber = parseInt(yearsOfExcellence.replace('+', ''));
+    // Static years value
+    const yearsNumber = 18;
     
     const targetStats = { years: yearsNumber, students: 5000, certifications: 1500, placement: 95 };
     

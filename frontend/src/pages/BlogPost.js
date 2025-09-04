@@ -53,13 +53,6 @@ const BlogPost = () => {
       setLoading(false);
     }
   };
-    } catch (error) {
-      console.error('Error loading blog post:', error);
-      setError('Failed to load blog post');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {

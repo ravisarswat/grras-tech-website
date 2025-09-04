@@ -435,13 +435,14 @@ const CourseDetail = () => {
         </section>
       </div>
 
-      {/* Syllabus Modal */}
-      <SyllabusModal
-        isOpen={showEnhancedSyllabus}
-        onClose={() => setShowEnhancedSyllabus(false)}
-        courseSlug={course.slug}
-        courseName={course.title || course.name || 'Course'}
-      />
+      {/* Enhanced Syllabus Download */}
+      {showEnhancedSyllabus && (
+        <EnhancedSyllabusDownload
+          courseSlug={course.slug}
+          courseName={course.title || course.name || 'Course'}
+          onClose={() => setShowEnhancedSyllabus(false)}
+        />
+      )}
     </>
   );
 };

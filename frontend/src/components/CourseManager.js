@@ -86,6 +86,12 @@ const CourseManager = ({ content, updateContent }) => {
       ...newCourse,
       slug: slug,
       categories: newCourse.category ? [newCourse.category] : [],
+      // Ensure visible is always set to true by default
+      visible: newCourse.visible !== false,
+      // Ensure required fields exist
+      title: newCourse.title || '',
+      description: newCourse.description || 'Course description will be updated soon.',
+      overview: newCourse.overview || 'Detailed course overview will be provided.',
       // Ensure fees field is set from price if empty
       fees: newCourse.fees || newCourse.price || 'Contact for pricing',
       // Ensure required arrays exist

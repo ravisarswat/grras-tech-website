@@ -112,7 +112,7 @@ const CourseManager = ({ content, updateContent }) => {
     updateContent('courses', updatedCourses);
   };
 
-  // Delete Course - Fixed with Meta Update
+  // Delete Course - Simplified Working Version
   const deleteCourse = (slug) => {
     const course = courses.find(c => c.slug === slug);
     const courseName = course?.title;
@@ -124,22 +124,12 @@ const CourseManager = ({ content, updateContent }) => {
     console.log('🗑️ Deleting course:', slug, courseName);
     updateContent('courses', updatedCourses);
 
-    // 🔥 CRITICAL FIX: Force meta update so Save Changes button activates
-    const meta = content?.meta || {};
-    updateContent('meta', {
-      ...meta,
-      lastModified: new Date().toISOString(),
-      modifiedBy: 'admin-delete',
-      changeType: 'course-delete',
-      deletedCourse: slug
-    });
-
     // Close expanded panel
     if (expandedCourse === slug) {
       setExpandedCourse(null);
     }
 
-    alert(`✅ Course "${courseName}" deleted! Save Changes button is now enabled.`);
+    alert(`✅ Course "${courseName}" deleted!`);
   };
 
   // Add highlight

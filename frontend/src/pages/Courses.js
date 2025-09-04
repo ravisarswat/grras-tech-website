@@ -404,27 +404,26 @@ const Courses = () => {
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
               {filteredCourses.map((course, index) => (
-                <div key={course.slug} className="group bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden hover:border-orange-200 transform hover:scale-[1.05] hover:-translate-y-2 relative">
-                  {/* Enhanced Header with gradient and glow effect */}
-                  <div className="h-3 bg-gradient-to-r from-orange-500 via-red-500 to-orange-600 relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-400 animate-pulse opacity-50"></div>
-                  </div>
+                <div key={course.slug} className="group bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden hover:border-orange-200 transform hover:scale-[1.02] relative">
+                  {/* Modern Header with gradient */}
+                  <div className="h-2 bg-gradient-to-r from-orange-500 via-red-500 to-orange-600"></div>
                   
-                  <div className="p-4 sm:p-6 lg:p-8">
-                    <div className="flex items-start justify-between mb-6">
+                  <div className="p-4">
+                    {/* Course Header */}
+                    <div className="flex items-start justify-between mb-3">
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-lg sm:text-xl lg:text-2xl font-black text-gray-900 mb-3 sm:mb-4 leading-tight group-hover:text-orange-700 transition-colors duration-300 line-clamp-2">
+                        <h3 className="text-lg font-bold text-gray-900 mb-2 leading-tight group-hover:text-orange-700 transition-colors duration-300 line-clamp-2">
                           {course.title}
                         </h3>
-                        <p className="text-gray-600 text-base leading-relaxed line-clamp-3 group-hover:text-gray-700 transition-colors duration-300">
+                        <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 group-hover:text-gray-700 transition-colors duration-300">
                           {course.oneLiner}
                         </p>
                       </div>
-                      <div className="ml-6 flex-shrink-0">
-                        <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-gradient-to-br from-orange-100 via-red-50 to-orange-100 rounded-xl sm:rounded-2xl flex items-center justify-center group-hover:from-orange-200 group-hover:to-red-200 transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-6 shadow-lg">
-                          <span className="text-xl sm:text-2xl lg:text-3xl group-hover:scale-125 transition-transform duration-500 filter drop-shadow-sm">
+                      <div className="ml-3 flex-shrink-0">
+                        <div className="w-10 h-10 bg-gradient-to-br from-orange-100 to-red-100 rounded-xl flex items-center justify-center group-hover:from-orange-200 group-hover:to-red-200 transition-all duration-300 transform group-hover:scale-110">
+                          <span className="text-lg">
                             {course.icon || (() => {
                               const title = course.title.toLowerCase();
                               if (title.includes('devops')) return '🚀';
@@ -442,62 +441,103 @@ const Courses = () => {
                       </div>
                     </div>
 
-                    {/* Enhanced Course Meta with Pricing */}
-                    <div className="space-y-4 mb-6">
-                      {/* Pricing Display - Premium Style */}
-                      {course.fees && (
-                        <div className="bg-gradient-to-r from-green-50 via-emerald-50 to-green-50 rounded-2xl p-4 border-2 border-green-200 shadow-lg relative overflow-hidden">
-                          <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-green-400/10 to-emerald-400/10 rounded-full -mr-10 -mt-10"></div>
-                          <div className="relative z-10">
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <p className="text-2xl font-black text-green-800 mb-1">
-                                  {course.fees}
-                                </p>
-                                <p className="text-sm text-green-600 font-semibold">
-                                  💳 EMI Options Available
-                                </p>
-                              </div>
-                              <div className="text-right">
-                                <div className="inline-flex items-center px-3 py-1 bg-green-100 rounded-full">
-                                  <span className="text-xs font-bold text-green-700">Best Value</span>
-                                </div>
-                              </div>
-                            </div>
+                    {/* Compact Pricing */}
+                    {course.fees && (
+                      <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-3 mb-3 border border-green-200">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-lg font-bold text-green-800">
+                              {course.fees}
+                            </p>
+                            <p className="text-xs text-green-600 font-medium">
+                              💳 EMI Available
+                            </p>
+                          </div>
+                          <div className="inline-flex items-center px-2 py-1 bg-green-100 rounded-full">
+                            <span className="text-xs font-bold text-green-700">Best Value</span>
                           </div>
                         </div>
-                      )}
-                      
-                      {/* Duration and Level */}
-                      <div className="flex items-center space-x-3">
-                        <div className="flex items-center px-4 py-2 bg-gradient-to-r from-orange-50 to-red-50 rounded-2xl text-sm text-orange-800 font-bold border border-orange-200 shadow-sm">
-                          <Clock className="h-4 w-4 mr-2" />
-                          <span>{course.duration || 'Self-paced'}</span>
-                        </div>
-                        <div className="flex items-center px-4 py-2 bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl text-sm text-red-800 font-bold border border-red-200 shadow-sm">
-                          <Users className="h-4 w-4 mr-2" />
-                          <span>{course.level}</span>
-                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Duration and Level - Compact */}
+                    <div className="flex items-center space-x-2 mb-3">
+                      <div className="flex items-center px-2 py-1 bg-gradient-to-r from-orange-50 to-red-50 rounded-lg text-xs text-orange-800 font-medium border border-orange-200">
+                        <Clock className="h-3 w-3 mr-1" />
+                        <span>{course.duration || 'Self-paced'}</span>
+                      </div>
+                      <div className="flex items-center px-2 py-1 bg-gradient-to-r from-red-50 to-orange-50 rounded-lg text-xs text-red-800 font-medium border border-red-200">
+                        <Users className="h-3 w-3 mr-1" />
+                        <span>{course.level}</span>
                       </div>
                     </div>
 
-                    {/* Enhanced Key Highlights */}
+                    {/* Compact Key Highlights */}
                     {course.highlights && course.highlights.length > 0 && (
-                      <div className="mb-8">
-                        <h4 className="font-black text-gray-900 mb-4 text-base flex items-center">
-                          <div className="w-6 h-6 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mr-3">
+                      <div className="mb-4">
+                        <h4 className="font-bold text-gray-900 mb-2 text-sm flex items-center">
+                          <div className="w-4 h-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mr-2">
                             <span className="text-white text-xs">✓</span>
                           </div>
-                          What You'll Master:
+                          What You'll Learn:
                         </h4>
-                        <ul className="text-sm text-gray-700 space-y-3">
-                          {course.highlights.slice(0, 3).map((highlight, index) => (
-                            <li key={index} className="flex items-start group-hover:translate-x-1 transition-transform duration-300">
-                              <div className="w-2 h-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-full mt-2.5 mr-4 flex-shrink-0 shadow-sm"></div>
+                        <ul className="text-xs text-gray-700 space-y-1">
+                          {course.highlights.slice(0, 2).map((highlight, index) => (
+                            <li key={index} className="flex items-start">
+                              <div className="w-1.5 h-1.5 bg-gradient-to-r from-orange-500 to-red-500 rounded-full mt-1.5 mr-2 flex-shrink-0"></div>
                               <span className="leading-relaxed font-medium">{highlight}</span>
                             </li>
                           ))}
+                          {course.highlights.length > 2 && (
+                            <li className="text-orange-600 font-medium text-xs">
+                              +{course.highlights.length - 2} more topics
+                            </li>
+                          )}
                         </ul>
+                      </div>
+                    )}
+
+                    {/* Category Badge */}
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="inline-flex items-center px-2 py-1 bg-blue-100 rounded-full">
+                        <span className="text-xs font-medium text-blue-800 capitalize">
+                          {categories.find(c => c.id === course.category)?.name || course.category}
+                        </span>
+                      </div>
+                      {course.featured && (
+                        <div className="inline-flex items-center px-2 py-1 bg-yellow-100 rounded-full">
+                          <Star className="h-3 w-3 text-yellow-600 mr-1" />
+                          <span className="text-xs font-bold text-yellow-700">Popular</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Action Button - Compact */}
+                    <Link
+                      to={`/courses/${course.slug}`}
+                      className="block w-full text-center bg-gradient-to-r from-orange-600 to-red-600 text-white font-bold py-2 px-4 rounded-xl hover:from-orange-700 hover:to-red-700 transition-all duration-300 transform group-hover:scale-105 shadow-lg text-sm"
+                    >
+                      <div className="flex items-center justify-center">
+                        <span>Enroll Now</span>
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+                      </div>
+                    </Link>
+
+                    {/* Compact Additional Info */}
+                    <div className="mt-3 flex items-center justify-between text-xs text-gray-500">
+                      <div className="flex items-center">
+                        <Award className="h-3 w-3 mr-1" />
+                        <span>Certificate</span>
+                      </div>
+                      <div className="flex items-center">
+                        <BookOpen className="h-3 w-3 mr-1" />
+                        <span>{course.mode || 'Online + Offline'}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
                       </div>
                     )}
 

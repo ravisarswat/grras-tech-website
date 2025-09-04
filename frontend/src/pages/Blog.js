@@ -54,7 +54,7 @@ const Blog = () => {
       // Apply tag filter
       if (selectedTag) {
         filteredPosts = filteredPosts.filter(post =>
-          post.tags.some(tag => tag.toLowerCase() === selectedTag.toLowerCase())
+          post.tags && post.tags.some(tag => tag.toLowerCase() === selectedTag.toLowerCase())
         );
       }
       

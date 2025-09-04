@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Plus, Trash2, Eye, EyeOff, ChevronDown, ChevronUp, X, DollarSign, Clock, Users } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Plus, Trash2, Edit3, Eye, EyeOff, Save, X, Search, Filter, BookOpen, Clock, Users, Star, ChevronDown, ChevronRight } from 'lucide-react';
 
 const CourseManager = ({ content, updateContent }) => {
   const [expandedCourse, setExpandedCourse] = useState(null);

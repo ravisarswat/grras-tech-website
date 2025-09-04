@@ -599,10 +599,10 @@ const CourseManager = ({ content, updateContent }) => {
                   </button>
                   
                   <button
-                    onClick={() => setExpandedCourse(expandedCourse === course.slug ? null : course.slug)}
+                    onClick={() => toggleExpanded(course.slug)}
                     className="p-2 hover:bg-gray-100 rounded text-blue-600"
                   >
-                    {expandedCourse === course.slug ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                    {expandedCourses.has(course.slug) ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                   </button>
                   
                   <button

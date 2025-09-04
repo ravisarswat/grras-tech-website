@@ -14,8 +14,6 @@ import Courses from './pages/Courses';
 import EnhancedCourses from './pages/EnhancedCourses';
 import CategoryCoursePage from './pages/CategoryCoursePage';
 import CourseDetail from './pages/CourseDetail';
-import LearningPaths from './pages/LearningPaths';
-import LearningPathDetail from './pages/LearningPathDetail';
 import Admissions from './pages/Admissions';
 import Testimonials from './pages/Testimonials';
 import Blog from './pages/Blog';

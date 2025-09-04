@@ -117,6 +117,19 @@ const HeroSlider = () => {
           
           {/* Left Content */}
           <div className="text-center lg:text-left animate-fade-in-up flex flex-col justify-center items-center lg:items-start self-center w-full">
+            
+            {/* Awards Banner */}
+            <div className="flex flex-wrap justify-center lg:justify-start gap-2 mb-4 lg:mb-6">
+              <div className="flex items-center gap-2 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full px-4 py-2 shadow-lg">
+                <span className="text-yellow-800 text-sm">🏆</span>
+                <span className="text-yellow-900 font-bold text-xs lg:text-sm">Award Winning Institute</span>
+              </div>
+              <div className="flex items-center gap-2 bg-gradient-to-r from-red-400 to-red-500 rounded-full px-4 py-2 shadow-lg">
+                <span className="text-white text-sm">🎖️</span>
+                <span className="text-white font-bold text-xs lg:text-sm">Best Red Hat Partner Since 2007</span>
+              </div>
+            </div>
+
             {/* Icon */}
             <div className="flex justify-center lg:justify-start mb-4 lg:mb-6">
               <div className="w-16 h-16 lg:w-20 lg:h-20 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center backdrop-blur-sm p-3">

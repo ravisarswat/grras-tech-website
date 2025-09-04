@@ -167,6 +167,52 @@ const CategoryManager = ({ content, updateContent }) => {
     }
   };
 
+  // Direct Fix for AWS Cloud Platform Slug Issue
+  const fixAWSCloudPlatformSlug = () => {
+    const oldSlug = 'aws-cloud-platform';
+    const category = categories[oldSlug];
+    
+    if (!category) {
+      alert('AWS Cloud Platform category not found!');
+      return;
+    }
+
+    const newSlug = 'cloud-platform';
+    
+    console.log('🔧 Direct fix for AWS Cloud Platform slug');
+    console.log('📊 Old slug:', oldSlug);
+    console.log('📊 New slug:', newSlug);
+    
+    // Create new categories object
+    const { [oldSlug]: oldCategory, ...otherCategories } = categories;
+    const updatedCategories = {
+      ...otherCategories,
+      [newSlug]: {
+        ...category,
+        slug: newSlug,
+        name: 'Cloud Platform',
+        title: 'Cloud Platform',
+        modifiedAt: new Date().toISOString()
+      }
+    };
+
+    // Update courses that reference old slug
+    const updatedCourses = courses.map(course => ({
+      ...course,
+      categories: (course.categories || []).map(catSlug => 
+        catSlug === oldSlug ? newSlug : catSlug
+      ),
+      category: course.category === oldSlug ? newSlug : course.category,
+      modifiedAt: new Date().toISOString()
+    }));
+
+    // Force update
+    updateContent('courseCategories', updatedCategories);
+    updateContent('courses', updatedCourses);
+    
+    alert('✅ AWS Cloud Platform slug fixed!\n\n🔗 New URL: /courses?tab=cloud-platform');
+  };
+
   // Sync All Category Slugs - Enhanced Debug Version
   const syncAllCategorySlugs = () => {
     console.log('🔄 Starting syncAllCategorySlugs...');

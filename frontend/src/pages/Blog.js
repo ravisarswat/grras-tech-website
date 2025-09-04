@@ -188,7 +188,7 @@ const Blog = () => {
   };
 
   const getFeaturedImage = (post) => {
-    return post.featured_image || post.coverImage || 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg';
+    return post.image || post.featured_image || post.coverImage || 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg';
   };
 
   return (

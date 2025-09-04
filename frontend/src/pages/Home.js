@@ -311,28 +311,77 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section id="stats-section" className="py-20 gradient-bg-primary">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Enhanced Stats Section with Awards */}
+      <section id="stats-section" className="py-20 gradient-bg-primary relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute top-0 left-0 w-64 h-64 bg-gradient-to-br from-yellow-400/10 to-orange-400/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-gradient-to-br from-red-400/10 to-orange-400/10 rounded-full blur-3xl"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          {/* Awards Section */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-4 mb-6">
+              <div className="flex items-center gap-2 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full px-6 py-3 shadow-xl">
+                <span className="text-2xl">🏆</span>
+                <span className="text-yellow-900 font-black text-lg">Award Winning Institute</span>
+              </div>
+              <div className="flex items-center gap-2 bg-gradient-to-r from-red-500 to-red-600 rounded-full px-6 py-3 shadow-xl">
+                <span className="text-2xl">🎖️</span>
+                <span className="text-white font-black text-lg">Since 2007</span>
+              </div>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
+              Best Red Hat Training Partner
+            </h2>
+            <p className="text-red-100 text-xl max-w-3xl mx-auto">
+              Recognized for excellence in IT training and certification with multiple industry awards
+            </p>
+          </div>
+
+          {/* Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="animate-fade-in-up">
               <div className="stats-number">{stats.years}+</div>
-              <p className="text-white text-lg">Years of Excellence</p>
+              <p className="text-white text-lg font-semibold">Years of Excellence</p>
+              <p className="text-red-200 text-sm">Since 2007</p>
             </div>
             
             <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               <div className="stats-number">{stats.students.toLocaleString()}+</div>
-              <p className="text-white text-lg">Students Trained</p>
+              <p className="text-white text-lg font-semibold">Students Trained</p>
+              <p className="text-red-200 text-sm">Across India</p>
             </div>
             
             <div className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
               <div className="stats-number">{stats.certifications.toLocaleString()}+</div>
-              <p className="text-white text-lg">Certifications</p>
+              <p className="text-white text-lg font-semibold">Certifications</p>
+              <p className="text-red-200 text-sm">Red Hat & AWS</p>
             </div>
             
             <div className="animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
               <div className="stats-number">{stats.placement}%</div>
-              <p className="text-white text-lg">Placement Rate</p>
+              <p className="text-white text-lg font-semibold">Placement Rate</p>
+              <p className="text-red-200 text-sm">Industry Best</p>
+            </div>
+          </div>
+
+          {/* Awards List */}
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20">
+              <div className="text-4xl mb-4">🥇</div>
+              <h3 className="text-white font-bold text-lg mb-2">Best Training Partner</h3>
+              <p className="text-red-200 text-sm">Red Hat India Recognition</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20">
+              <div className="text-4xl mb-4">⭐</div>
+              <h3 className="text-white font-bold text-lg mb-2">Excellence in Education</h3>
+              <p className="text-red-200 text-sm">Industry Standards Award</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20">
+              <div className="text-4xl mb-4">🎯</div>
+              <h3 className="text-white font-bold text-lg mb-2">High Placement Success</h3>
+              <p className="text-red-200 text-sm">Consistent 95% Rate</p>
             </div>
           </div>
         </div>

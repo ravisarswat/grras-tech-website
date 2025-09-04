@@ -12,12 +12,13 @@ This release implements a comprehensive optimization plan covering all aspects o
 
 ### **Pre-rendering (Phase 1)**
 - ✅ **Build Tool**: Confirmed using Create React App (CRA) with react-scripts 5.0.1
-- ✅ **react-snap Integration**: Added static pre-rendering for all public pages
+- ✅ **react-snap Integration**: Added static pre-rendering configuration (temporarily disabled for Railway deployment)
 - ✅ **Route Coverage**: Pre-renders 26 routes including:
   - Static pages: Home, About, Courses, Contact, Placements, Blog, Admissions
   - Dynamic course pages: All 19 course detail pages
 - ✅ **Configuration**: Optimized with puppeteer args for containerized environments
 - ✅ **HTML Minification**: Enabled whitespace collapse and comment removal
+- ⚠️ **Note**: Pre-rendering temporarily disabled due to Puppeteer issues in Railway's container environment
 
 ### **Enhanced SEO (Phase 2)**
 - ✅ **react-helmet-async**: Upgraded from basic SEO to advanced helmet implementation

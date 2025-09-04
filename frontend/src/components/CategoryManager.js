@@ -131,10 +131,11 @@ const CategoryManager = ({ content, updateContent }) => {
     updateContent('courseCategories', newCategories);
     updateContent('courses', updatedCourses);
 
-    // Close expanded panel
-    if (expandedCategory === slug) {
+    // Force component re-render by updating state
+    setTimeout(() => {
+      // Trigger re-render to ensure UI updates
       setExpandedCategory(null);
-    }
+    }, 0);
 
     console.log('✅ Delete operations completed');
     alert(`✅ Category "${categoryName}" deleted!`);

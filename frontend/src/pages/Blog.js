@@ -160,28 +160,12 @@ const Blog = () => {
     setSubscribing(true);
     
     try {
-      const response = await fetch(`${BACKEND_URL}/api/newsletter/subscribe`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 
-          email: newsletterEmail,
-          source: 'blog_page',
-          subscribed_at: new Date().toISOString()
-        })
-      });
-      
-      if (response.ok) {
-        toast.success('Successfully subscribed to our newsletter!');
-        setNewsletterEmail('');
-      } else {
-        const error = await response.json();
-        toast.error(error.detail || 'Failed to subscribe. Please try again.');
-      }
+      // For static version, just show success message
+      toast.success('Thank you for subscribing to our newsletter!');
+      setNewsletterEmail('');
     } catch (error) {
       console.error('Newsletter subscription error:', error);
-      toast.error('Network error. Please check your connection and try again.');
+      toast.error('Failed to subscribe. Please try again.');
     } finally {
       setSubscribing(false);
     }

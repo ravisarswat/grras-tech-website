@@ -568,6 +568,7 @@ const CategoryManager = ({ content, updateContent }) => {
                         type="text"
                         value={category.name}
                         onChange={(e) => updateCategory(slug, 'name', e.target.value)}
+                        onBlur={() => handleNameChangeComplete(slug)}
                         className="w-full border rounded p-2"
                       />
                     </div>

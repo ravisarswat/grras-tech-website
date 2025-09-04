@@ -381,7 +381,7 @@ const CourseDetail = () => {
                   </h3>
                   <div className="space-y-3">
                     <button
-                      onClick={() => setShowSyllabusModal(true)}
+                      onClick={() => setShowEnhancedSyllabus(true)}
                       className="btn-primary w-full text-center"
                     >
                       <Download className="mr-2 h-4 w-4" />

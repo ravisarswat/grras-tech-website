@@ -64,7 +64,7 @@ const CourseCategoriesGrid = () => {
           {featuredCategories.map(([categorySlug, category]) => {
             const IconComponent = iconMap[category.icon] || BookOpen;
             // Calculate course count by checking which courses have this category assigned
-            const categoryCoursesCount = courses.filter(course => 
+            const categoryCoursesCount = coursesData.filter(course => 
               course.categories && course.categories.includes(categorySlug)
             ).length;
             

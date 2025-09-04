@@ -242,14 +242,19 @@ async def force_sync(admin_verified: bool = Depends(verify_admin_token)):
             is_draft=False
         )
         
-        courses_count = len(updated_content.get('courses', []))
-        logging.info(f"✅ Force sync completed - {courses_count} courses synchronized")
+        # Count only visible courses for sync verification
+        all_courses = updated_content.get('courses', [])
+        visible_courses_count = len([
+            course for course in all_courses 
+            if course.get("visible", True)
+        ])
+        logging.info(f"✅ Force sync completed - {visible_courses_count} visible courses synchronized (total: {len(all_courses)})")
         
         return {
             "message": "Force synchronization completed successfully",
             "timestamp": datetime.utcnow().isoformat(),
             "forceSyncId": current_content.get('forceSyncId'),
-            "coursesCount": courses_count,
+            "coursesCount": visible_courses_count,
             "lastSync": current_content.get('lastForceSync')
         }
     except Exception as e:

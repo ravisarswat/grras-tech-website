@@ -75,7 +75,7 @@ const CategoryManager = ({ content, updateContent }) => {
     alert(`✅ Category "${newCategory.name}" added successfully!`);
   };
 
-  // Update Category
+  // Update Category with Slug Sync
   const updateCategory = (slug, field, value) => {
     const updated = { ...categories[slug] };
     
@@ -91,6 +91,45 @@ const CategoryManager = ({ content, updateContent }) => {
 
     console.log('📝 Updating category:', slug, field, value);
 
+    // Special handling for name changes - also update slug
+    if (field === 'name' && value.trim()) {
+      const newSlug = generateSlug(value);
+      
+      // Check if new slug is different and doesn't conflict
+      if (newSlug !== slug) {
+        if (categories[newSlug]) {
+          alert(`Category with slug "${newSlug}" already exists! Please use a different name.`);
+          return;
+        }
+
+        console.log('🔄 Slug change detected:', { oldSlug: slug, newSlug, name: value });
+        
+        // Create new categories object with updated slug
+        const { [slug]: oldCategory, ...otherCategories } = categories;
+        const newCategories = {
+          ...otherCategories,
+          [newSlug]: { ...updated, slug: newSlug }
+        };
+
+        // Update courses that reference this category
+        const updatedCourses = courses.map(course => ({
+          ...course,
+          categories: (course.categories || []).map(catSlug => 
+            catSlug === slug ? newSlug : catSlug
+          ),
+          category: course.category === slug ? newSlug : course.category
+        }));
+
+        // Update both categories and courses
+        updateContent('courseCategories', newCategories);
+        updateContent('courses', updatedCourses);
+
+        alert(`✅ Category renamed! Slug updated from "${slug}" to "${newSlug}"\n\n🔗 New URL: /courses?tab=${newSlug}`);
+        return;
+      }
+    }
+
+    // Regular update (non-name field)
     updateContent('courseCategories', {
       ...categories,
       [slug]: updated

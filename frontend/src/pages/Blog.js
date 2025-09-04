@@ -64,8 +64,6 @@ const Blog = () => {
       const endIndex = startIndex + postsPerPage;
       const paginatedPosts = filteredPosts.slice(startIndex, endIndex);
       
-      console.log('Paginated Posts:', paginatedPosts);
-      
       setPosts(paginatedPosts);
       setPagination({
         currentPage,

@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 // Import static data (we'll need to adjust for Node.js)
-const coursesPath = path.join(__dirname, '../frontend/src/data/courses.js');
-const blogPath = path.join(__dirname, '../frontend/src/data/blog.js');
+const coursesPath = path.join(__dirname, 'src/data/courses.js');
+const blogPath = path.join(__dirname, 'src/data/blog.js');
 
 // Function to safely import ES modules in Node.js context
 const importStaticData = () => {

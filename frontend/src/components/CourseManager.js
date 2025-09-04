@@ -34,7 +34,14 @@ const CourseManager = ({ content, updateContent }) => {
   const courses = content?.courses || [];
   const categories = content?.courseCategories || {};
 
-  // Simple slug generator
+  useEffect(() => {
+    if (courses.length > 0) {
+      const maxOrder = Math.max(0, ...courses.map(c => c.order || 0));
+      setNewCourse(prev => ({ ...prev, order: maxOrder + 1 }));
+    }
+  }, [courses]);
+
+  // Generate slug from title
   const generateSlug = (title) => {
     return title
       .toLowerCase()

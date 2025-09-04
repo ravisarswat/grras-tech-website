@@ -339,7 +339,18 @@ const AdminContent = () => {
     newContent._lastModified = new Date().toISOString();
     
     console.log('🔄 Setting new content with timestamp:', newContent._lastModified);
+    
+    // Force React state update for delete operations
     setContent(newContent);
+    
+    // For delete operations, force an additional re-render to ensure UI updates
+    if (Array.isArray(value) && value.length < (content[path] || []).length) {
+      console.log('🗑️ Delete operation detected, forcing re-render');
+      // Force additional state update to ensure components re-render
+      setTimeout(() => {
+        setContent(prevContent => ({ ...prevContent, _forceUpdate: Date.now() }));
+      }, 0);
+    }
     
     // Log if changes should be detected
     setTimeout(() => {

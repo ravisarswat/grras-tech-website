@@ -31,8 +31,13 @@ const Blog = () => {
     try {
       setLoading(true);
       
+      console.log('Blog Posts Array:', blogPosts);
+      console.log('Blog Posts Length:', blogPosts.length);
+      
       // Filter static blog posts
       let filteredPosts = [...blogPosts];
+      
+      console.log('Filtered Posts:', filteredPosts);
       
       // Apply category filter
       if (selectedCategory) {
@@ -63,6 +68,8 @@ const Blog = () => {
       const startIndex = (currentPage - 1) * postsPerPage;
       const endIndex = startIndex + postsPerPage;
       const paginatedPosts = filteredPosts.slice(startIndex, endIndex);
+      
+      console.log('Paginated Posts:', paginatedPosts);
       
       setPosts(paginatedPosts);
       setPagination({

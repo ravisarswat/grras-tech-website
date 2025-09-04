@@ -41,9 +41,7 @@ export const ContentProvider = ({ children }) => {
             whatsapp: "https://wa.me/919001991227",
             facebook: "https://www.facebook.com/grrassolutionss",
             instagram: "https://www.instagram.com/grrassolutionss/",
-            youtube: "https://www.youtube.com/@grrassolutions",
-            linkedin: "https://www.linkedin.com/company/grrassolutions",  
-            twitter: "https://twitter.com/grrassolutions"
+            youtube: "https://www.youtube.com/@techronravi"
           },
           stats: {
             yearsOfExcellence: "18+"

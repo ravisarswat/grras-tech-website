@@ -25,13 +25,6 @@ const Courses = () => {
     try {
       setLoading(true);
       
-      // Convert categories object to array format
-      const categoryArray = Object.entries(staticCategories).map(([slug, category]) => ({
-        ...category,
-        slug: slug,
-        id: slug
-      }));
-      
       // Filter visible courses and add default values
       const visibleCourses = staticCourses
         .filter(course => course.visible !== false && course.title && course.slug)
@@ -45,8 +38,31 @@ const Courses = () => {
           careerRoles: course.careerRoles || []
         }));
       
+      // Convert categories object to array format with counts
+      const categoryArray = Object.entries(staticCategories).map(([slug, category]) => {
+        const count = visibleCourses.filter(course => course.category === slug).length;
+        return {
+          ...category,
+          slug: slug,
+          id: slug,
+          count: count
+        };
+      });
+      
+      // Add "All Courses" category
+      const categoriesWithAll = [
+        {
+          id: 'all',
+          slug: 'all',
+          name: 'All Courses',
+          title: 'All Courses',
+          count: visibleCourses.length
+        },
+        ...categoryArray.filter(cat => cat.count > 0) // Only show categories with courses
+      ];
+      
       setCourses(visibleCourses);
-      setCategories(categoryArray);
+      setCategories(categoriesWithAll);
       setFilteredCourses(visibleCourses);
       setLoading(false);
       

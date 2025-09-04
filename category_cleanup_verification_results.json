@@ -1,6 +1,6 @@
 {
   "timestamp": "2025-09-02T14:25:59.298663",
-  "backend_url": "https://training-portal-10.preview.emergentagent.com",
+  "backend_url": "https://react-cms-fix.preview.emergentagent.com",
   "test_type": "Category Cleanup Verification",
   "total_tests": 6,
   "passed_tests": 5,

@@ -21,7 +21,7 @@ DATABASE_NAME = "grras_database"
 COLLECTION_NAME = "content"
 
 # Backend API URL (from frontend .env)
-BACKEND_URL = "https://training-portal-10.preview.emergentagent.com"
+BACKEND_URL = "https://react-cms-fix.preview.emergentagent.com"
 ADMIN_PASSWORD = "grras-admin"
 
 class ProductionVerificationTest:

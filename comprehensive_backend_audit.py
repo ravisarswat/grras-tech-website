@@ -18,7 +18,7 @@ from typing import Dict, Any, List
 
 class GRRASBackendAuditor:
     def __init__(self):
-        self.backend_url = "https://training-portal-10.preview.emergentagent.com"
+        self.backend_url = "https://react-cms-fix.preview.emergentagent.com"
         self.api_base = f"{self.backend_url}/api"
         self.session = None
         self.admin_token = None

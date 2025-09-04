@@ -8,7 +8,7 @@ import aiohttp
 import json
 
 async def debug_bulk_delete():
-    backend_url = 'https://training-portal-10.preview.emergentagent.com'
+    backend_url = 'https://react-cms-fix.preview.emergentagent.com'
     
     async with aiohttp.ClientSession() as session:
         # Get admin token

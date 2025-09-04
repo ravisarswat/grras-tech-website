@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 class CourseValidationTester:
     def __init__(self):
         # Use production backend URL as specified in review request
-        self.backend_url = "https://training-portal-10.preview.emergentagent.com"
+        self.backend_url = "https://react-cms-fix.preview.emergentagent.com"
         self.api_base = f"{self.backend_url}/api"
         self.session = None
         self.admin_token = None

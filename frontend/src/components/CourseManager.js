@@ -322,296 +322,331 @@ const CourseManager = ({ content, updateContent }) => {
 
       {/* Add Course Form Modal */}
       {showAddForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold">Add New Course</h3>
-              <button
-                onClick={() => setShowAddForm(false)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <X className="h-5 w-5" />
-              </button>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-6xl max-h-[95vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 rounded-t-xl">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">Add New Course</h3>
+                  <p className="text-gray-600">Create a comprehensive course with all details</p>
+                </div>
+                <button
+                  onClick={() => setShowAddForm(false)}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <X className="h-6 w-6 text-gray-500" />
+                </button>
+              </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Title *</label>
-                  <input
-                    type="text"
-                    value={newCourse.title}
-                    onChange={(e) => setNewCourse({...newCourse, title: e.target.value})}
-                    className="w-full border rounded p-2"
-                    placeholder="e.g. Complete DevOps Mastery"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Category</label>
-                  <select
-                    value={newCourse.category}
-                    onChange={(e) => setNewCourse({...newCourse, category: e.target.value})}
-                    className="w-full border rounded p-2"
-                  >
-                    <option value="">Select Category</option>
-                    {Object.entries(categories).map(([slug, category]) => (
-                      <option key={slug} value={slug}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-2">Description</label>
-                <textarea
-                  value={newCourse.description}
-                  onChange={(e) => setNewCourse({...newCourse, description: e.target.value})}
-                  className="w-full border rounded p-2"
-                  rows="3"
-                  placeholder="Brief course description..."
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-2">Overview</label>
-                <textarea
-                  value={newCourse.overview}
-                  onChange={(e) => setNewCourse({...newCourse, overview: e.target.value})}
-                  className="w-full border rounded p-2"
-                  rows="4"
-                  placeholder="Detailed course overview..."
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-2">One Liner (Course Summary)</label>
-                <input
-                  type="text"
-                  value={newCourse.oneLiner}
-                  onChange={(e) => setNewCourse({...newCourse, oneLiner: e.target.value})}
-                  className="w-full border rounded p-2"
-                  placeholder="Professional rhcsa - red hat system administrator certification training..."
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-2">Eligibility Requirements</label>
-                <input
-                  type="text"
-                  value={newCourse.eligibility}
-                  onChange={(e) => setNewCourse({...newCourse, eligibility: e.target.value})}
-                  className="w-full border rounded p-2"
-                  placeholder="12th Pass/Graduate with basic computer knowledge"
-                />
-              </div>
-
-              <div className="grid grid-cols-4 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Price (Display)</label>
-                  <input
-                    type="text"
-                    value={newCourse.price}
-                    onChange={(e) => setNewCourse({...newCourse, price: e.target.value})}
-                    className="w-full border rounded p-2"
-                    placeholder="e.g. ₹25,000"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Fees (Course Fee)</label>
-                  <input
-                    type="text"
-                    value={newCourse.fees}
-                    onChange={(e) => setNewCourse({...newCourse, fees: e.target.value})}
-                    className="w-full border rounded p-2"
-                    placeholder="e.g. ₹30000 (Including Exam)"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Duration</label>
-                  <input
-                    type="text"
-                    value={newCourse.duration}
-                    onChange={(e) => setNewCourse({...newCourse, duration: e.target.value})}
-                    className="w-full border rounded p-2"
-                    placeholder="e.g. 6-8 weeks"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Level</label>
-                  <select
-                    value={newCourse.level}
-                    onChange={(e) => setNewCourse({...newCourse, level: e.target.value})}
-                    className="w-full border rounded p-2"
-                  >
-                    <option value="Beginner">Beginner</option>
-                    <option value="Intermediate">Intermediate</option>
-                    <option value="Advanced">Advanced</option>
-                    <option value="Professional Level">Professional Level</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Mode</label>
-                  <input
-                    type="text"
-                    value={newCourse.mode}
-                    onChange={(e) => setNewCourse({...newCourse, mode: e.target.value})}
-                    className="w-full border rounded p-2"
-                    placeholder="Classroom, Online, Hybrid"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Order</label>
-                  <input
-                    type="number"
-                    value={newCourse.order}
-                    onChange={(e) => setNewCourse({...newCourse, order: parseInt(e.target.value) || 1})}
-                    className="w-full border rounded p-2"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Certificate Included</label>
-                  <select
-                    value={newCourse.certificationIncluded}
-                    onChange={(e) => setNewCourse({...newCourse, certificationIncluded: e.target.value === 'true'})}
-                    className="w-full border rounded p-2"
-                  >
-                    <option value="false">No</option>
-                    <option value="true">Yes</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Array Fields - Comma Separated Input */}
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Tools & Technologies</label>
-                  <input
-                    type="text"
-                    value={newCourse.tools.join(', ')}
-                    onChange={(e) => {
-                      const toolsArray = e.target.value.split(',').map(item => item.trim()).filter(item => item);
-                      setNewCourse({...newCourse, tools: toolsArray});
-                    }}
-                    className="w-full border rounded p-2"
-                    placeholder="React, Node.js, MongoDB, Docker, Kubernetes"
-                  />
-                  <div className="flex flex-wrap gap-1 mt-2">
-                    {newCourse.tools.map((tool, index) => (
-                      <span key={index} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                        {tool}
-                      </span>
-                    ))}
+            {/* Modal Content */}
+            <div className="px-6 py-6 space-y-8">
+              {/* Basic Information Section */}
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
+                <h4 className="text-lg font-semibold text-blue-900 mb-4 flex items-center gap-2">
+                  <BookOpen className="h-5 w-5" />
+                  Basic Information
+                </h4>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Course Title *</label>
+                    <input
+                      type="text"
+                      value={newCourse.title}
+                      onChange={(e) => setNewCourse({...newCourse, title: e.target.value})}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                      placeholder="e.g. Complete DevOps Mastery Training"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Category</label>
+                    <select
+                      value={newCourse.category}
+                      onChange={(e) => setNewCourse({...newCourse, category: e.target.value})}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Select Category</option>
+                      {Object.entries(categories).map(([slug, category]) => (
+                        <option key={slug} value={slug}>{category.name}</option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium mb-2">Learning Outcomes (What You'll Learn)</label>
+                <div className="mt-6">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Course Description</label>
                   <textarea
-                    value={newCourse.learningOutcomes.join(', ')}
-                    onChange={(e) => {
-                      const outcomesArray = e.target.value.split(',').map(item => item.trim()).filter(item => item);
-                      setNewCourse({...newCourse, learningOutcomes: outcomesArray});
-                    }}
-                    className="w-full border rounded p-2"
+                    value={newCourse.description}
+                    onChange={(e) => setNewCourse({...newCourse, description: e.target.value})}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     rows="3"
-                    placeholder="Manage RHEL systems and users, Configure local storage and file systems, Control services processes and boot sequence"
+                    placeholder="Brief description of the course..."
                   />
-                  <div className="flex flex-wrap gap-1 mt-2">
-                    {newCourse.learningOutcomes.map((outcome, index) => (
-                      <span key={index} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                        {outcome}
-                      </span>
-                    ))}
+                </div>
+
+                <div className="mt-6">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Detailed Overview</label>
+                  <textarea
+                    value={newCourse.overview}
+                    onChange={(e) => setNewCourse({...newCourse, overview: e.target.value})}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    rows="4"
+                    placeholder="Comprehensive course overview and learning objectives..."
+                  />
+                </div>
+
+                <div className="mt-6">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">One Liner (Marketing Tagline)</label>
+                  <input
+                    type="text"
+                    value={newCourse.oneLiner}
+                    onChange={(e) => setNewCourse({...newCourse, oneLiner: e.target.value})}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    placeholder="Professional certification training with hands-on experience..."
+                  />
+                </div>
+              </div>
+
+              {/* Course Details Section */}
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-xl border border-green-200">
+                <h4 className="text-lg font-semibold text-green-900 mb-4 flex items-center gap-2">
+                  <Clock className="h-5 w-5" />
+                  Course Details
+                </h4>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Price (Display)</label>
+                    <input
+                      type="text"
+                      value={newCourse.price}
+                      onChange={(e) => setNewCourse({...newCourse, price: e.target.value})}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      placeholder="₹25,000"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Actual Fees</label>
+                    <input
+                      type="text"
+                      value={newCourse.fees}
+                      onChange={(e) => setNewCourse({...newCourse, fees: e.target.value})}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      placeholder="₹30000 (Including Exam)"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Duration</label>
+                    <input
+                      type="text"
+                      value={newCourse.duration}
+                      onChange={(e) => setNewCourse({...newCourse, duration: e.target.value})}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      placeholder="6-8 weeks"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Level</label>
+                    <select
+                      value={newCourse.level}
+                      onChange={(e) => setNewCourse({...newCourse, level: e.target.value})}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    >
+                      <option value="Beginner">Beginner</option>
+                      <option value="Intermediate">Intermediate</option>
+                      <option value="Advanced">Advanced</option>
+                      <option value="Professional Level">Professional Level</option>
+                    </select>
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium mb-2">Career Opportunities</label>
-                  <input
-                    type="text"
-                    value={newCourse.careerRoles.join(', ')}
-                    onChange={(e) => {
-                      const rolesArray = e.target.value.split(',').map(item => item.trim()).filter(item => item);
-                      setNewCourse({...newCourse, careerRoles: rolesArray});
-                    }}
-                    className="w-full border rounded p-2"
-                    placeholder="Linux System Administrator, Junior DevOps Engineer, Support Engineer"
-                  />
-                  <div className="flex flex-wrap gap-1 mt-2">
-                    {newCourse.careerRoles.map((role, index) => (
-                      <span key={index} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                        {role}
-                      </span>
-                    ))}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Mode</label>
+                    <input
+                      type="text"
+                      value={newCourse.mode}
+                      onChange={(e) => setNewCourse({...newCourse, mode: e.target.value})}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      placeholder="Classroom, Online, Hybrid"
+                    />
                   </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">Course Highlights</label>
-                  <input
-                    type="text"
-                    value={newCourse.highlights.join(', ')}
-                    onChange={(e) => {
-                      const highlightsArray = e.target.value.split(',').map(item => item.trim()).filter(item => item);
-                      setNewCourse({...newCourse, highlights: highlightsArray});
-                    }}
-                    className="w-full border rounded p-2"
-                    placeholder="User & group management, Storage & networking basics, System services, SELinux & firewalld"
-                  />
-                  <div className="flex flex-wrap gap-1 mt-2">
-                    {newCourse.highlights.map((highlight, index) => (
-                      <span key={index} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                        {highlight}
-                      </span>
-                    ))}
+                  
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Eligibility</label>
+                    <input
+                      type="text"
+                      value={newCourse.eligibility}
+                      onChange={(e) => setNewCourse({...newCourse, eligibility: e.target.value})}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      placeholder="12th Pass/Graduate with basic computer knowledge"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Order</label>
+                    <input
+                      type="number"
+                      value={newCourse.order}
+                      onChange={(e) => setNewCourse({...newCourse, order: parseInt(e.target.value) || 1})}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    />
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Visible</label>
-                  <select
-                    value={newCourse.visible}
-                    onChange={(e) => setNewCourse({...newCourse, visible: e.target.value === 'true'})}
-                    className="w-full border rounded p-2"
-                  >
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                  </select>
+              {/* Course Content Section */}
+              <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-xl border border-purple-200">
+                <h4 className="text-lg font-semibold text-purple-900 mb-4 flex items-center gap-2">
+                  <Star className="h-5 w-5" />
+                  Course Content (Comma-separated)
+                </h4>
+                
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Tools & Technologies</label>
+                    <input
+                      type="text"
+                      value={newCourse.tools.join(', ')}
+                      onChange={(e) => handleArrayField('tools', e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      placeholder="React, Node.js, MongoDB, Docker, Kubernetes, AWS"
+                    />
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {newCourse.tools.map((tool, index) => (
+                        <span key={index} className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                          {tool}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Learning Outcomes (What You'll Learn)</label>
+                    <textarea
+                      value={newCourse.learningOutcomes.join(', ')}
+                      onChange={(e) => handleArrayField('learningOutcomes', e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      rows="3"
+                      placeholder="Manage RHEL systems and users, Configure local storage and file systems, Control services processes and boot sequence"
+                    />
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {newCourse.learningOutcomes.map((outcome, index) => (
+                        <span key={index} className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                          {outcome}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Course Highlights</label>
+                    <input
+                      type="text"
+                      value={newCourse.highlights.join(', ')}
+                      onChange={(e) => handleArrayField('highlights', e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      placeholder="User & group management, Storage & networking basics, System services, SELinux & firewalld"
+                    />
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {newCourse.highlights.map((highlight, index) => (
+                        <span key={index} className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+                          {highlight}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Career Opportunities</label>
+                    <input
+                      type="text"
+                      value={newCourse.careerRoles.join(', ')}
+                      onChange={(e) => handleArrayField('careerRoles', e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      placeholder="Linux System Administrator, Junior DevOps Engineer, Support Engineer"
+                    />
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {newCourse.careerRoles.map((role, index) => (
+                        <span key={index} className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
+                          {role}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Featured</label>
-                  <select
-                    value={newCourse.featured}
-                    onChange={(e) => setNewCourse({...newCourse, featured: e.target.value === 'true'})}
-                    className="w-full border rounded p-2"
-                  >
-                    <option value="false">No</option>
-                    <option value="true">Yes</option>
-                  </select>
+              </div>
+
+              {/* Settings Section */}
+              <div className="bg-gradient-to-r from-gray-50 to-slate-50 p-6 rounded-xl border border-gray-200">
+                <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                  <Users className="h-5 w-5" />
+                  Course Settings
+                </h4>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Visibility</label>
+                    <select
+                      value={newCourse.visible}
+                      onChange={(e) => setNewCourse({...newCourse, visible: e.target.value === 'true'})}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                    >
+                      <option value="true">✅ Visible (Published)</option>
+                      <option value="false">❌ Hidden (Draft)</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Featured Course</label>
+                    <select
+                      value={newCourse.featured}
+                      onChange={(e) => setNewCourse({...newCourse, featured: e.target.value === 'true'})}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                    >
+                      <option value="false">⭐ Regular Course</option>
+                      <option value="true">🌟 Featured Course</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Certificate Included</label>
+                    <select
+                      value={newCourse.certificationIncluded}
+                      onChange={(e) => setNewCourse({...newCourse, certificationIncluded: e.target.value === 'true'})}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                    >
+                      <option value="false">📄 No Certificate</option>
+                      <option value="true">🏆 Certificate Included</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="flex justify-end gap-2 mt-6">
-              <button
-                onClick={() => setShowAddForm(false)}
-                className="px-4 py-2 border rounded-lg hover:bg-gray-50"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={addCourse}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-              >
-                Add Course
-              </button>
+            {/* Modal Footer */}
+            <div className="sticky bottom-0 bg-white border-t border-gray-200 px-6 py-4 rounded-b-xl">
+              <div className="flex justify-end gap-4">
+                <button
+                  onClick={() => setShowAddForm(false)}
+                  className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={addCourse}
+                  className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all font-semibold shadow-lg flex items-center gap-2"
+                >
+                  <Save className="h-4 w-4" />
+                  Create Course
+                </button>
+              </div>
             </div>
           </div>
         </div>

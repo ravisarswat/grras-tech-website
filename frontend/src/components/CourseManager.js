@@ -265,7 +265,7 @@ const CourseManager = ({ content, updateContent }) => {
 
               <div className="grid grid-cols-4 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Price</label>
+                  <label className="block text-sm font-medium mb-2">Price (Display)</label>
                   <input
                     type="text"
                     value={newCourse.price}
@@ -275,13 +275,23 @@ const CourseManager = ({ content, updateContent }) => {
                   />
                 </div>
                 <div>
+                  <label className="block text-sm font-medium mb-2">Fees (Course Fee)</label>
+                  <input
+                    type="text"
+                    value={newCourse.fees}
+                    onChange={(e) => setNewCourse({...newCourse, fees: e.target.value})}
+                    className="w-full border rounded p-2"
+                    placeholder="e.g. ₹30000 (Including Exam)"
+                  />
+                </div>
+                <div>
                   <label className="block text-sm font-medium mb-2">Duration</label>
                   <input
                     type="text"
                     value={newCourse.duration}
                     onChange={(e) => setNewCourse({...newCourse, duration: e.target.value})}
                     className="w-full border rounded p-2"
-                    placeholder="e.g. 3 Months"
+                    placeholder="e.g. 6-8 weeks"
                   />
                 </div>
                 <div>
@@ -294,7 +304,21 @@ const CourseManager = ({ content, updateContent }) => {
                     <option value="Beginner">Beginner</option>
                     <option value="Intermediate">Intermediate</option>
                     <option value="Advanced">Advanced</option>
+                    <option value="Professional Level">Professional Level</option>
                   </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Mode</label>
+                  <input
+                    type="text"
+                    value={newCourse.mode}
+                    onChange={(e) => setNewCourse({...newCourse, mode: e.target.value})}
+                    className="w-full border rounded p-2"
+                    placeholder="Classroom, Online, Hybrid"
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2">Order</label>
@@ -304,6 +328,17 @@ const CourseManager = ({ content, updateContent }) => {
                     onChange={(e) => setNewCourse({...newCourse, order: parseInt(e.target.value) || 1})}
                     className="w-full border rounded p-2"
                   />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Certificate Included</label>
+                  <select
+                    value={newCourse.certificationIncluded}
+                    onChange={(e) => setNewCourse({...newCourse, certificationIncluded: e.target.value === 'true'})}
+                    className="w-full border rounded p-2"
+                  >
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                  </select>
                 </div>
               </div>
 

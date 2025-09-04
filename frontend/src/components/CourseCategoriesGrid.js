@@ -100,13 +100,27 @@ const CourseCategoriesGrid = () => {
                       {/* Icon Background with Glow Effect */}
                       <div className="absolute -inset-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-500"></div>
                       <div 
-                        className="relative w-16 h-16 rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-all duration-300"
+                        className="relative w-16 h-16 rounded-2xl flex items-center justify-center bg-white shadow-lg group-hover:scale-110 transition-all duration-300 border-2 border-gray-100"
                         style={{ 
-                          background: `linear-gradient(135deg, ${category.color}, ${category.color}dd)`,
-                          boxShadow: `0 8px 32px ${category.color}40`
+                          boxShadow: `0 8px 32px ${category.color}20`
                         }}
                       >
-                        <IconComponent className="h-8 w-8 group-hover:scale-110 transition-transform duration-300" />
+                        {category.logo_url || category.logo ? (
+                          <img 
+                            src={category.logo_url || category.logo} 
+                            alt={`${category.name} logo`}
+                            className="h-10 w-10 object-contain group-hover:scale-110 transition-transform duration-300"
+                            onError={(e) => {
+                              // Fallback to icon if logo fails to load
+                              e.target.style.display = 'none';
+                              e.target.nextSibling.style.display = 'block';
+                            }}
+                          />
+                        ) : null}
+                        <IconComponent 
+                          className="h-8 w-8 group-hover:scale-110 transition-transform duration-300 text-gray-600" 
+                          style={{ display: category.logo_url || category.logo ? 'none' : 'block' }}
+                        />
                       </div>
                     </div>
                     

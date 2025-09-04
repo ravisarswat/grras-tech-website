@@ -55,6 +55,7 @@ function AppContent() {
           
           {/* Other Routes */}
           <Route path="/admissions" element={<Admissions />} />
+          <Route path="/placements" element={<Placements />} />
           <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />

@@ -182,28 +182,6 @@ const Footer = () => {
                     <Youtube className="h-5 w-5" />
                   </a>
                 )}
-                {social.linkedin && (
-                  <a 
-                    href={social.linkedin} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="bg-gray-800 hover:bg-blue-700 p-2 rounded-lg transition-colors"
-                    aria-label="Connect on LinkedIn"
-                  >
-                    <Linkedin className="h-5 w-5" />
-                  </a>
-                )}
-                {social.twitter && (
-                  <a 
-                    href={social.twitter} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="bg-gray-800 hover:bg-blue-400 p-2 rounded-lg transition-colors"
-                    aria-label="Follow us on Twitter"
-                  >
-                    <Twitter className="h-5 w-5" />
-                  </a>
-                )}
                 {phones[0] && (
                   <a 
                     href={`https://wa.me/${phones[0].replace(/\D/g, '')}`}

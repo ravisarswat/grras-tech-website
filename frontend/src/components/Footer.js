@@ -27,11 +27,13 @@ const Footer = () => {
   const instituteLogo = branding.logoUrl || 'https://customer-assets.emergentagent.com/job_training-hub-29/artifacts/gl3ldkmg_white%20logo.png';
   const address = institute.address || 'A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012';
   const phones = institute.phones || ['090019 91227'];
-  const emails = institute.emails || ['info@grrassolutions.com'];
+  const emails = institute.emails || ['online@grras.com'];
   const social = institute.social || {
     facebook: 'https://www.facebook.com/grrassolutionss',
     instagram: 'https://www.instagram.com/grrassolutionss/',
-    youtube: 'https://www.youtube.com/@grrassolutions'
+    youtube: 'https://www.youtube.com/@grrassolutions',
+    linkedin: 'https://www.linkedin.com/company/grrassolutions',
+    twitter: 'https://twitter.com/grrassolutions'
   };
   
   // Footer configuration with fallbacks

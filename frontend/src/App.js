@@ -71,8 +71,7 @@ function AppContent() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
-      {/* Only show Footer if NOT on admin page */}
-      {!isAdminPage && <Footer />}
+      <Footer />
     </div>
   );
 }
@@ -81,9 +80,7 @@ function App() {
   return (
     <div className="App min-h-screen bg-gray-50">
       <Router>
-        <ContentProvider>
-          <AppContent />
-        </ContentProvider>
+        <AppContent />
       </Router>
       <Toaster position="top-right" richColors />
     </div>

@@ -241,6 +241,28 @@ const CourseManager = ({ content, updateContent }) => {
                 />
               </div>
 
+              <div>
+                <label className="block text-sm font-medium mb-2">One Liner (Course Summary)</label>
+                <input
+                  type="text"
+                  value={newCourse.oneLiner}
+                  onChange={(e) => setNewCourse({...newCourse, oneLiner: e.target.value})}
+                  className="w-full border rounded p-2"
+                  placeholder="Professional rhcsa - red hat system administrator certification training..."
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Eligibility Requirements</label>
+                <input
+                  type="text"
+                  value={newCourse.eligibility}
+                  onChange={(e) => setNewCourse({...newCourse, eligibility: e.target.value})}
+                  className="w-full border rounded p-2"
+                  placeholder="12th Pass/Graduate with basic computer knowledge"
+                />
+              </div>
+
               <div className="grid grid-cols-4 gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-2">Price</label>

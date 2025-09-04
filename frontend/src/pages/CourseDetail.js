@@ -435,14 +435,13 @@ const CourseDetail = () => {
         </section>
       </div>
 
-      {/* Railway Compatible PDF */}
-      {showSyllabusModal && (
-        <RailwayCompatiblePDF
-          courseSlug={course.slug}
-          courseName={course.title || course.name || 'Course'}
-          onClose={() => setShowSyllabusModal(false)}
-        />
-      )}
+      {/* Syllabus Modal */}
+      <SyllabusModal
+        isOpen={showSyllabusModal}
+        onClose={() => setShowSyllabusModal(false)}
+        courseSlug={course.slug}
+        courseName={course.title || course.name || 'Course'}
+      />
     </>
   );
 };

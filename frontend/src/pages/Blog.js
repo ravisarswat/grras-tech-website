@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Calendar, Clock, User, Tag, Search, Filter } from 'lucide-react';
-import SEO from '../components/SEO';
+import EnhancedSEO from '../components/EnhancedSEO';
 import { toast } from 'sonner';
 
 // Static Data
-import blogPosts from '../data/blog';
+import { blogPosts } from '../data/blog';
 
 const Blog = () => {
   const [posts, setPosts] = useState([]);

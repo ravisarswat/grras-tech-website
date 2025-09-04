@@ -6,7 +6,7 @@ import requests
 import json
 
 # Backend URL
-BACKEND_URL = "https://grras-academy.preview.emergentagent.com"
+BACKEND_URL = "https://grras-academy-1.preview.emergentagent.com"
 
 # Admin credentials
 ADMIN_PASSWORD = "grras@admin2024"

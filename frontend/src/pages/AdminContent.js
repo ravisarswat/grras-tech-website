@@ -307,7 +307,15 @@ const AdminContent = () => {
   };
 
   const hasChanges = () => {
-    return JSON.stringify(content) !== JSON.stringify(originalContent);
+    // Remove _lastModified timestamps for comparison
+    const cleanContent = JSON.parse(JSON.stringify(content));
+    const cleanOriginal = JSON.parse(JSON.stringify(originalContent));
+    
+    // Remove timestamp fields that shouldn't affect comparison
+    delete cleanContent._lastModified;
+    delete cleanOriginal._lastModified;
+    
+    return JSON.stringify(cleanContent) !== JSON.stringify(cleanOriginal);
   };
 
   const updateContent = (path, value) => {

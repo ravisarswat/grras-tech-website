@@ -97,8 +97,7 @@ const Blog = () => {
       
       setCategories(categoriesMap);
       setTags(tagsMap);
-        setTags(tagsData.tags || {});
-      }
+      
     } catch (error) {
       console.error('Error loading blog data:', error);
     } finally {

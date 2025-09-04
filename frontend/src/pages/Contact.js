@@ -35,7 +35,7 @@ const Contact = () => {
   const phones = institute.phones || ['090019 91227'];
   const emails = institute.emails || ['info@grrassolutions.com'];
   const whatsappUrl = institute.social?.whatsapp || 'https://wa.me/919001991227';
-  const googleMapUrl = institute.googleMapUrl || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.709842394473!2d75.81267307504067!3d26.87726767668179!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db596c7e24671%3A0x22f362b9b2f8c94a!2sGRRAS%20Solutions%20Training%20Institute!5e0!3m2!1sen!2sin!4v1693845612345!5m2!1sen!2sin';
+  const googleMapUrl = institute.googleMapUrl || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.0891567829144!2d75.80994227503997!3d26.871581476689873!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db5c77eb5723b%3A0x3e6a5c5a3a5a5a5a!2sGRRAS%20Solutions%20Training%20Institute!5e0!3m2!1sen!2sin!4v1693845612345!5m2!1sen!2sin';
   const social = institute.social || {};
 
   const handleInputChange = (e) => {

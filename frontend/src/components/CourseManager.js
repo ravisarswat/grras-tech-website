@@ -79,7 +79,7 @@ const CourseManager = ({ content, updateContent }) => {
     });
   };
 
-  // Add Course with full form
+  // Add new course
   const addCourse = () => {
     if (!newCourse.title.trim()) {
       alert('Course title is required!');

@@ -221,7 +221,12 @@ const Home = () => {
 
   return (
     <>
-      <SEO />
+      <EnhancedSEO 
+        title="GRRAS Solutions Training Institute | IT & Cloud Education"
+        description="GRRAS Solutions Training Institute - Empowering Students with World-Class IT & Cloud Education. Expert training in DevOps, AWS, Azure, Red Hat, Python, Data Science & more."
+        canonical="https://www.grras.tech/"
+        type="website"
+      />
       
       {/* Hero Slider Section */}
       <HeroSlider />

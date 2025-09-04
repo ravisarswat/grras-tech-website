@@ -144,25 +144,24 @@ const CourseManager = ({ content, updateContent }) => {
     updateContent('courses', updatedCourses);
   };
 
-  // Delete Course - Simplified Working Version
+  // Delete course
   const deleteCourse = (slug) => {
     const course = courses.find(c => c.slug === slug);
-    const courseName = course?.title;
+    if (!course) return;
     
-    if (!confirm(`Delete "${courseName}"?`)) return;
+    if (!confirm(`Delete "${course.title}"?`)) return;
 
     const updatedCourses = courses.filter(course => course.slug !== slug);
-
-    console.log('🗑️ Deleting course:', slug, courseName);
+    console.log('🗑️ Deleting course:', slug, course.title);
     updateContent('courses', updatedCourses);
+    
+    setExpandedCourses(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(slug);
+      return newSet;
+    });
 
-    // Force component re-render by updating state
-    setTimeout(() => {
-      // Trigger re-render to ensure UI updates
-      setExpandedCourse(null);
-    }, 0);
-
-    alert(`✅ Course "${courseName}" deleted!`);
+    alert(`✅ Course "${course.title}" deleted!`);
   };
 
   // Add highlight

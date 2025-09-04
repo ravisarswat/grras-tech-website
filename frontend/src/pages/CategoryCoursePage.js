@@ -64,7 +64,7 @@ const CategoryCoursePage = () => {
   const categoryCourses = category.courses
     ?.map(courseSlug => courses.find(c => c.slug === courseSlug))
     .filter(Boolean)
-    .filter(course => course.visible !== false) || [];
+    .filter(course => course.visible !== false && course.title && course.slug) || [];
 
   // Get featured course
   const featuredCourse = categoryCourses.find(course => course.featured) || categoryCourses[0];

@@ -53,13 +53,18 @@ const CourseCategoriesGrid = () => {
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-red-100/20 to-orange-100/20 rounded-full blur-3xl translate-x-48 translate-y-48"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
+        {/* Enhanced Section Header */}
         <div className="text-center mb-16 animate-fade-in-up">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-100 to-red-100 rounded-full mb-6">
+            <BookOpen className="h-5 w-5 text-orange-600 mr-2" />
+            <span className="text-orange-800 font-bold text-sm">Course Categories</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-6 bg-gradient-to-r from-gray-900 via-orange-800 to-red-800 bg-clip-text text-transparent">
             Explore by Category
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Find courses organized by your career interests and build expertise in high-demand technology domains
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Find courses organized by your career interests and build expertise in high-demand technology domains. 
+            <span className="text-orange-600 font-semibold"> Start your journey to success today!</span>
           </p>
         </div>
 

@@ -23,58 +23,52 @@ export const ContentProvider = ({ children }) => {
   const loadStaticContent = () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${API}/content`);
-      setContent(response.data.content);
-      setError(null);
-    } catch (error) {
-      console.error('Error loading content:', error);
-      setError('Failed to load content');
       
-      // Fallback to default content structure
-      setContent({
-        branding: {
-          logoUrl: "https://customer-assets.emergentagent.com/job_training-hub-29/artifacts/gl3ldkmg_white%20logo.png",
-          colors: {
-            primary: "#DC2626",
-            secondary: "#EA580C",
-            accent: "#16A34A"
-          }
+      // Create content structure similar to backend API
+      const staticContent = {
+        courseCategories: categories,
+        courses: courses,
+        blog: {
+          posts: blogPosts
         },
         institute: {
-          name: "GRRAS Solutions",
+          name: "GRRAS Solutions Training Institute",
+          tagline: "Empowering Students with World-Class IT & Cloud Education",
           address: "A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012",
-          phone: "090019 91227",
-          email: "info@grrassolutions.com",
+          phones: ["090019 91227"],
+          emails: ["info@grrassolutions.com"],
           social: {
-            whatsapp: "https://wa.me/919001991227",
-            instagram: "#",
-            youtube: "#"
+            whatsapp: "https://wa.me/919001991227"
+          },
+          stats: {
+            yearsOfExcellence: "18+"
           }
         },
-        home: {
-          heroHeadline: "Empowering Students with World-Class IT & Cloud Education",
-          heroSubtext: "From Degree Programs to Cutting-Edge Certifications",
-          ctaPrimaryLabel: "Explore Courses",
-          ctaPrimaryHref: "/courses",
-          ctaSecondaryLabel: "Apply Now",
-          ctaSecondaryHref: "/admissions"
+        pages: {
+          home: {
+            hero: {
+              title: "Transform Your Career with Industry-Ready IT Skills",
+              subtitle: "Join 5000+ successful graduates who landed dream jobs with our comprehensive training programs"
+            },
+            popularCourses: {
+              enabled: true,
+              limit: 6
+            }
+          }
         },
-        about: {
-          headline: "About GRRAS Solutions",
-          mission: "To provide world-class IT education and training that bridges the gap between academic learning and industry requirements.",
-          vision: "To be the leading IT training institute in India, recognized for excellence in education.",
-          body: "GRRAS Solutions Training Institute has been empowering students with world-class IT education since 2014."
-        },
-        courses: [],
-        faqs: [],
-        testimonials: [],
-        settings: {
-          seoTitle: "GRRAS Solutions Training Institute - IT & Cloud Education in Jaipur",
-          seoDescription: "Premier IT training institute in Jaipur offering BCA degree, DevOps, Red Hat certifications with placement assistance.",
-          seoKeywords: "IT training Jaipur, BCA degree, DevOps training, Red Hat certification"
+        branding: {
+          primaryColor: "#DC2626",
+          logoUrl: "/logo.png"
         }
-      });
-    } finally {
+      };
+      
+      setContent(staticContent);
+      setLoading(false);
+      setError(null);
+      
+    } catch (err) {
+      console.error('Error loading static content:', err);
+      setError(err);
       setLoading(false);
     }
   };

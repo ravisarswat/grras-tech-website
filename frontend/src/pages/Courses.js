@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { BookOpen, Clock, Users, ArrowRight, Filter } from 'lucide-react';
+import { BookOpen, Clock, Users, ArrowRight, Filter, Award, Star } from 'lucide-react';
 import SEO from '../components/SEO';
 
 // Static Data Imports

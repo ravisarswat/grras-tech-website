@@ -147,23 +147,6 @@ const Header = () => {
                   className="h-16 sm:h-20 w-auto transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 relative z-10 drop-shadow-2xl filter rounded-xl sm:rounded-2xl p-1.5 sm:p-2 bg-gradient-to-r from-gray-900/90 to-black/90 backdrop-blur-sm" 
                 />
               </div>
-              
-              {/* Awards Badge */}
-              <div className="ml-4 hidden md:flex flex-col">
-                <div className="flex items-center space-x-2 mb-1">
-                  <div className="flex items-center px-3 py-1 bg-gradient-to-r from-yellow-100 to-amber-100 rounded-full border-2 border-yellow-200 shadow-lg">
-                    <span className="text-yellow-600 mr-1">🏆</span>
-                    <span className="text-xs font-bold text-yellow-800">Award Winning</span>
-                  </div>
-                  <div className="flex items-center px-3 py-1 bg-gradient-to-r from-red-100 to-orange-100 rounded-full border-2 border-red-200 shadow-lg">
-                    <span className="text-red-600 mr-1">🎖️</span>
-                    <span className="text-xs font-bold text-red-800">Since 2007</span>
-                  </div>
-                </div>
-                <div className="text-xs font-bold text-gray-700 tracking-wide">
-                  <span className="text-red-600">Best Red Hat</span> Training Partner
-                </div>
-              </div>
             </Link>
 
             {/* Desktop Navigation */}

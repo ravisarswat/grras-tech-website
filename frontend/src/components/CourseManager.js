@@ -230,18 +230,94 @@ const CourseManager = ({ content, updateContent }) => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Courses</h2>
-        <button
-          onClick={() => {
-            resetForm();
-            setShowAddForm(true);
-          }}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2"
-        >
-          <Plus className="h-4 w-4" />
-          Add Course
-        </button>
+      {/* Header */}
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-xl shadow-lg">
+        <div className="flex justify-between items-center">
+          <div>
+            <h2 className="text-2xl font-bold mb-2">Course Management</h2>
+            <p className="text-blue-100">Manage your course catalog with advanced tools</p>
+          </div>
+          <button
+            onClick={() => setShowAddForm(true)}
+            className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors flex items-center gap-2 shadow-lg"
+          >
+            <Plus className="h-5 w-5" />
+            Add New Course
+          </button>
+        </div>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="bg-white p-4 rounded-lg shadow-md border border-gray-200">
+          <div className="flex items-center gap-3">
+            <BookOpen className="h-8 w-8 text-blue-600" />
+            <div>
+              <p className="text-sm text-gray-600">Total Courses</p>
+              <p className="text-2xl font-bold text-gray-900">{courses.length}</p>
+            </div>
+          </div>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow-md border border-gray-200">
+          <div className="flex items-center gap-3">
+            <Eye className="h-8 w-8 text-green-600" />
+            <div>
+              <p className="text-sm text-gray-600">Visible</p>
+              <p className="text-2xl font-bold text-gray-900">{courses.filter(c => c.visible !== false).length}</p>
+            </div>
+          </div>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow-md border border-gray-200">
+          <div className="flex items-center gap-3">
+            <Star className="h-8 w-8 text-yellow-600" />
+            <div>
+              <p className="text-sm text-gray-600">Featured</p>
+              <p className="text-2xl font-bold text-gray-900">{courses.filter(c => c.featured).length}</p>
+            </div>
+          </div>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow-md border border-gray-200">
+          <div className="flex items-center gap-3">
+            <Users className="h-8 w-8 text-purple-600" />
+            <div>
+              <p className="text-sm text-gray-600">Categories</p>
+              <p className="text-2xl font-bold text-gray-900">{Object.keys(categories).length}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Search and Filter */}
+      <div className="bg-white p-4 rounded-lg shadow-md border border-gray-200">
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex-1">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <input
+                type="text"
+                placeholder="Search courses..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+          </div>
+          <div className="md:w-64">
+            <div className="relative">
+              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <select
+                value={filterCategory}
+                onChange={(e) => setFilterCategory(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
+              >
+                <option value="all">All Categories</option>
+                {Object.entries(categories).map(([slug, category]) => (
+                  <option key={slug} value={slug}>{category.name}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Add Course Form Modal */}

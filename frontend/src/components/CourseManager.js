@@ -124,10 +124,11 @@ const CourseManager = ({ content, updateContent }) => {
     console.log('🗑️ Deleting course:', slug, courseName);
     updateContent('courses', updatedCourses);
 
-    // Close expanded panel
-    if (expandedCourse === slug) {
+    // Force component re-render by updating state
+    setTimeout(() => {
+      // Trigger re-render to ensure UI updates
       setExpandedCourse(null);
-    }
+    }, 0);
 
     alert(`✅ Course "${courseName}" deleted!`);
   };

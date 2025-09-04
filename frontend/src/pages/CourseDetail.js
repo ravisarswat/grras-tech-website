@@ -435,9 +435,9 @@ const CourseDetail = () => {
         </section>
       </div>
 
-      {/* Enhanced Syllabus Download */}
+      {/* Railway Compatible PDF */}
       {showEnhancedSyllabus && (
-        <EnhancedSyllabusDownload
+        <RailwayCompatiblePDF
           courseSlug={course.slug}
           courseName={course.title || course.name || 'Course'}
           onClose={() => setShowEnhancedSyllabus(false)}

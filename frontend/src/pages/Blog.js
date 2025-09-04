@@ -4,9 +4,9 @@ import { Calendar, Clock, User, Tag, Search, Filter } from 'lucide-react';
 import SEO from '../components/SEO';
 import { toast } from 'sonner';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+// Static Data
+import blogPosts from '../data/blog';
 
-// Force refresh blog data - Updated for Railway deployment
 const Blog = () => {
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState({});
@@ -24,10 +24,10 @@ const Blog = () => {
   const searchQuery = searchParams.get('search') || '';
 
   useEffect(() => {
-    loadBlogData();
+    loadStaticBlogData();
   }, [currentPage, selectedCategory, selectedTag, searchQuery]);
 
-  const loadBlogData = async () => {
+  const loadStaticBlogData = () => {
     try {
       setLoading(true);
       

@@ -14,7 +14,7 @@ import {
   Info
 } from 'lucide-react';
 import SEO, { CoursePageSEO } from '../components/SEO';
-import EnhancedSyllabusDownload from '../components/EnhancedSyllabusDownload';
+import StaticSyllabusDownload from '../components/StaticSyllabusDownload';
 import { courses } from '../data/courses';
 
 const CourseDetail = () => {

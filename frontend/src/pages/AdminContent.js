@@ -356,15 +356,24 @@ const AdminContent = () => {
       const oldKeys = Object.keys(currentValue);
       if (newKeys.length < oldKeys.length) {
         isDeleteOperation = true;
-        console.log('🗑️ Object delete operation detected, forcing re-render');
+        console.log('🗑️ Object delete operation detected (categories):', {
+          oldCount: oldKeys.length,
+          newCount: newKeys.length,
+          path: path
+        });
       }
     }
     
     if (isDeleteOperation) {
+      console.log('🔄 Forcing state update for delete operation');
       // Force additional state update to ensure components re-render
       setTimeout(() => {
-        setContent(prevContent => ({ ...prevContent, _forceUpdate: Date.now() }));
-      }, 0);
+        setContent(prevContent => {
+          const updatedContent = { ...prevContent, _forceUpdate: Date.now() };
+          console.log('🔄 Forced state update completed');
+          return updatedContent;
+        });
+      }, 50);
     }
     
     // Log if changes should be detected

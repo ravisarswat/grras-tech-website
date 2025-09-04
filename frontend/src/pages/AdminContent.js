@@ -344,8 +344,23 @@ const AdminContent = () => {
     setContent(newContent);
     
     // For delete operations, force an additional re-render to ensure UI updates
-    if (Array.isArray(value) && value.length < (content[path] || []).length) {
-      console.log('🗑️ Delete operation detected, forcing re-render');
+    const currentValue = content[path];
+    let isDeleteOperation = false;
+    
+    if (Array.isArray(value) && Array.isArray(currentValue) && value.length < currentValue.length) {
+      isDeleteOperation = true;
+      console.log('🗑️ Array delete operation detected, forcing re-render');
+    } else if (typeof value === 'object' && typeof currentValue === 'object' && value !== null && currentValue !== null) {
+      // Check if object keys are reduced (category delete)
+      const newKeys = Object.keys(value);
+      const oldKeys = Object.keys(currentValue);
+      if (newKeys.length < oldKeys.length) {
+        isDeleteOperation = true;
+        console.log('🗑️ Object delete operation detected, forcing re-render');
+      }
+    }
+    
+    if (isDeleteOperation) {
       // Force additional state update to ensure components re-render
       setTimeout(() => {
         setContent(prevContent => ({ ...prevContent, _forceUpdate: Date.now() }));

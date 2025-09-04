@@ -201,7 +201,7 @@ const CourseManager = ({ content, updateContent }) => {
     const matchesCategory = filterCategory === 'all' || 
                            (course.categories && course.categories.includes(filterCategory));
     return matchesSearch && matchesCategory;
-  });
+  }).sort((a, b) => (a.order || 0) - (b.order || 0));
 
   // Handle array field updates (comma-separated)
   const handleArrayField = (field, value) => {

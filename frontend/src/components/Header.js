@@ -124,6 +124,14 @@ const Header = () => {
 
   return (
     <>
+      {/* Skip Navigation Link for Accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-md z-50 focus:ring-2 focus:ring-blue-500"
+      >
+        Skip to main content
+      </a>
+      
       <header className="bg-white/95 backdrop-blur-2xl shadow-2xl border-b border-orange-100/50 sticky top-0 relative overflow-hidden" style={{ zIndex: 9999 }}>
         {/* Enhanced Beautiful Background Effects */}
         <div className="absolute inset-0 bg-gradient-to-r from-orange-50/40 via-white/95 to-red-50/40"></div>

@@ -102,10 +102,9 @@ const CategoryManager = ({ content, updateContent }) => {
     alert('Test delete called for: ' + slug);
   };
 
-  // Delete Category - Fixed with Meta Update
+  // Delete Category - Simplified Working Version
   const deleteCategory = (slug) => {
     console.log('🗑️ DELETE ATTEMPT:', slug);
-    console.log('🗑️ Available categories before:', Object.keys(categories));
     
     const categoryName = categories[slug]?.name;
     if (!categoryName) {
@@ -114,17 +113,13 @@ const CategoryManager = ({ content, updateContent }) => {
     }
     
     if (!confirm(`Delete "${categoryName}"?`)) {
-      console.log('❌ User cancelled deletion');
       return;
     }
 
     console.log('✅ User confirmed deletion');
 
-    // Create new categories using object destructuring (better for React)
+    // Create new categories using object destructuring
     const { [slug]: deletedCategory, ...newCategories } = categories;
-    
-    console.log('🗑️ New categories after delete:', Object.keys(newCategories));
-    console.log('🗑️ Category actually removed:', !(slug in newCategories));
     
     // Remove category from courses
     const updatedCourses = courses.map(course => ({
@@ -132,29 +127,17 @@ const CategoryManager = ({ content, updateContent }) => {
       categories: (course.categories || []).filter(cat => cat !== slug)
     }));
 
-    console.log('🗑️ Calling updateContent for categories and courses...');
+    console.log('🗑️ Updating content...');
     updateContent('courseCategories', newCategories);
     updateContent('courses', updatedCourses);
-
-    // 🔥 CRITICAL FIX: Force meta update so Save Changes button activates
-    const meta = content?.meta || {};
-    updateContent('meta', {
-      ...meta,
-      lastModified: new Date().toISOString(),
-      modifiedBy: 'admin-delete',
-      changeType: 'category-delete',
-      deletedCategory: slug
-    });
-
-    console.log('🔥 Meta updated - Save Changes button should now enable');
 
     // Close expanded panel
     if (expandedCategory === slug) {
       setExpandedCategory(null);
     }
 
-    console.log('✅ Delete operations completed with meta update');
-    alert(`✅ Category "${categoryName}" deleted! Save Changes button is now enabled.`);
+    console.log('✅ Delete operations completed');
+    alert(`✅ Category "${categoryName}" deleted!`);
   };
 
   // Get courses by category

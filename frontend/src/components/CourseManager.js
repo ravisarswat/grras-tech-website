@@ -51,7 +51,7 @@ const CourseManager = ({ content, updateContent }) => {
       .trim();
   };
 
-  // Reset new course form
+  // Reset form
   const resetForm = () => {
     const maxOrder = Math.max(0, ...courses.map(c => c.order || 0));
     setNewCourse({

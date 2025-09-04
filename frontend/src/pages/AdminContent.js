@@ -334,7 +334,14 @@ const AdminContent = () => {
   };
 
   const updateContent = (path, value) => {
-    console.log('🔄 updateContent called:', { path, valueType: typeof value, valueKeys: typeof value === 'object' ? Object.keys(value || {}) : 'N/A' });
+    console.log('🔄 updateContent called:', { 
+      path, 
+      valueType: typeof value, 
+      valueKeys: typeof value === 'object' ? Object.keys(value || {}) : 'N/A',
+      isCategories: path === 'courseCategories',
+      currentCategoriesCount: path === 'courseCategories' && content.courseCategories ? Object.keys(content.courseCategories).length : 'N/A',
+      newCategoriesCount: path === 'courseCategories' && typeof value === 'object' ? Object.keys(value || {}).length : 'N/A'
+    });
     
     // Create a deep copy to ensure change detection works
     const newContent = JSON.parse(JSON.stringify(content));
@@ -354,6 +361,11 @@ const AdminContent = () => {
     newContent._lastModified = new Date().toISOString();
     
     console.log('🔄 Setting new content with timestamp:', newContent._lastModified);
+    
+    if (path === 'courseCategories') {
+      console.log('🗑️ CATEGORY UPDATE - Before:', Object.keys(content.courseCategories || {}));
+      console.log('🗑️ CATEGORY UPDATE - After:', Object.keys(value || {}));
+    }
     
     // Force React state update for delete operations
     setContent(newContent);

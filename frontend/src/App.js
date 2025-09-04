@@ -52,10 +52,6 @@ function AppContent() {
           <Route path="/enhanced-courses" element={<EnhancedCourses />} />
           <Route path="/old-courses" element={<Courses />} />
           
-          {/* Learning Path Routes */}
-          <Route path="/learning-paths" element={<LearningPaths />} />
-          <Route path="/learning-paths/:pathSlug" element={<LearningPathDetail />} />
-          
           {/* Other Routes */}
           <Route path="/admissions" element={<Admissions />} />
           <Route path="/testimonials" element={<Testimonials />} />

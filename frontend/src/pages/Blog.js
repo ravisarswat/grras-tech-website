@@ -457,7 +457,7 @@ const Blog = () => {
                   <div className="bg-white rounded-lg p-6 shadow-sm">
                     <h3 className="text-lg font-semibold text-gray-900 mb-4">Categories</h3>
                     <div className="space-y-2">
-                      {Object.entries(categories).map(([category, count]) => (
+                      {Object.entries(categories).map(([category, categoryData]) => (
                         <button
                           key={category}
                           onClick={() => handleCategoryFilter(category)}
@@ -468,8 +468,8 @@ const Blog = () => {
                           }`}
                         >
                           <div className="flex justify-between items-center">
-                            <span className="capitalize">{category}</span>
-                            <span className="text-sm text-gray-500">({count})</span>
+                            <span className="capitalize">{categoryData.name || category}</span>
+                            <span className="text-sm text-gray-500">({categoryData.count || 0})</span>
                           </div>
                         </button>
                       ))}

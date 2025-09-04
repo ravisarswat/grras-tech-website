@@ -55,6 +55,7 @@
       "last 1 safari version"
     ]
   },
+  "// Pre-rendering Note": "React-snap temporarily disabled due to container environment issues. Can be re-enabled in local/server environments by adding 'postbuild': 'react-snap' to scripts",
   "reactSnap": {
     "include": [
       "/",

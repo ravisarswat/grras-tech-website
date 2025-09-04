@@ -1,0 +1,1033 @@
+[
+  {
+    "slug": "devops-training",
+    "title": "DevOps Training",
+    "oneLiner": "Master Modern DevOps Practices & Cloud Technologies",
+    "description": "Comprehensive DevOps training covering the complete DevOps lifecycle, cloud platforms, containerization, orchestration, and automation tools used in modern software development.",
+    "duration": "5 Months",
+    "fees": "₹20,000 (EMI Available)",
+    "tools": [
+      "Linux (RHCSA)",
+      "Linux Server Administration",
+      "Ansible",
+      "AWS",
+      "Terraform",
+      "Docker",
+      "Kubernetes",
+      "Jenkins",
+      "GitHub"
+    ],
+    "visible": true,
+    "featured": true,
+    "order": 1,
+    "thumbnailUrl": "",
+    "category": "devops-engineering",
+    "level": "Professional Level",
+    "mode": [
+      "Classroom",
+      "Online",
+      "Hybrid"
+    ],
+    "highlights": [
+      "Real-time Projects",
+      "Industry Mentorship",
+      "DevOps Certification Prep",
+      "Hands-on training with real-time DevOps projects",
+      "Learn cloud-native DevOps with AWS",
+      "Containerization and orchestration with Docker & Kubernetes",
+      "CI/CD pipeline automation using Jenkins & GitHub",
+      "Infrastructure as Code with Terraform & Ansible",
+      "Mentorship from industry DevOps experts"
+    ],
+    "outcomes": [
+      "Master AWS cloud services and deployment strategies",
+      "Implement CI/CD pipelines using Jenkins and GitLab",
+      "Container orchestration with Docker and Kubernetes",
+      "Infrastructure as Code with Terraform and Ansible"
+    ],
+    "eligibility": "12th Pass/Graduate Basic IT Knowledge",
+    "intake": "Monthly Batches",
+    "seo": {
+      "title": "DevOps Training in Jaipur - GRRAS Solutions",
+      "description": "Learn DevOps with GRRAS Solutions. Hands-on training in AWS, Docker, Kubernetes, Jenkins, Terraform, and Ansible. Get certified and boost your career with placement support.",
+      "keywords": "devops training, devops course jaipur, aws devops course, kubernetes training, docker devops training, grras devops",
+      "ogImage": ""
+    },
+    "learningOutcomes": [
+      "Build and manage automated CI/CD pipelines",
+      "Deploy and scale containerized applications using Kubernetes",
+      "Implement Infrastructure as Code (IaC) with Terraform and Ansible",
+      "Automate configuration management and provisioning",
+      "Integrate monitoring and logging into DevOps workflows",
+      "Apply DevOps practices to cloud environments (AWS)"
+    ],
+    "careerRoles": [
+      "DevOps Engineer",
+      "Site Reliability Engineer (SRE)",
+      "Cloud Engineer",
+      "Infrastructure Engineer",
+      "Build & Release Engineer",
+      "Platform Engineer"
+    ],
+    "overview": "Our DevOps Training program is designed to provide a complete understanding of DevOps practices that bridge the gap between software development and operations. With hands-on projects and cloud-based labs, you’ll master automation, CI/CD, containerization, and infrastructure as code using industry-leading tools.",
+    "certificateInfo": "Industry-recognized certificate of completion with placement support.",
+    "batchesInfo": "New batches start every month with flexible timings (weekend & weekday options).",
+    "certificate": "Certificate of completion provided",
+    "categories": [
+      "devops-engineering"
+    ],
+    "modifiedAt": "2025-09-04T11:16:07.413Z"
+  },
+  {
+    "slug": "bca-degree",
+    "title": "BCA Degree Program",
+    "oneLiner": "Industry-Integrated Bachelor Degree Program",
+    "description": "A comprehensive 3-year BCA degree program designed with industry integration, covering modern technologies like cloud computing, DevOps, and AI/ML along with traditional computer science fundamentals.",
+    "duration": "3 Years",
+    "fees": "Contact for Details",
+    "tools": [
+      "Programming in C",
+      "Java",
+      "DBMS",
+      "Web Technologies",
+      "Cloud & DevOps Basics",
+      "AI/ML Basics"
+    ],
+    "visible": true,
+    "featured": false,
+    "order": 2,
+    "thumbnailUrl": "",
+    "category": "degree-programs",
+    "level": "Undergraduate",
+    "mode": [
+      "Classroom"
+    ],
+    "highlights": [
+      "UGC Recognized Degree",
+      "Industry Integration",
+      "Cloud & DevOps Specialization",
+      "Placement Assistance"
+    ],
+    "outcomes": [
+      "Strong foundation in computer science and programming",
+      "Expertise in modern technologies and cloud platforms",
+      "Industry-ready skills for software development roles"
+    ],
+    "eligibility": "12th Pass (Any Stream)",
+    "intake": "July & January",
+    "seo": {
+      "title": "BCA Degree Program in Jaipur - GRRAS Solutions",
+      "description": "Industry-integrated BCA degree at GRRAS Solutions with cloud computing and DevOps specializations.",
+      "keywords": "BCA degree Jaipur, computer applications course, IT degree program",
+      "ogImage": ""
+    },
+    "learningOutcomes": [],
+    "careerRoles": [],
+    "overview": "A comprehensive 3-year BCA degree program designed with industry integration, covering modern technologies like cloud computing, DevOps, and AI/ML along with traditional computer science fundamentals.",
+    "certificate": "Certificate of completion provided",
+    "categories": [
+      "new-category-1756914673321",
+      "degree-programs"
+    ],
+    "modifiedAt": "2025-09-04T11:16:07.413Z"
+  },
+  {
+    "slug": "rhcsa-red-hat-system-administrator",
+    "title": "RHCSA - Red Hat System Administrator Certification",
+    "oneLiner": "Professional rhcsa - red hat system administrator certification training with hands-on experience and industry certification",
+    "description": "Official Red Hat authorized training covering RHCSA, RHCE, and OpenShift certifications with hands-on lab experience and expert instruction from certified trainers.",
+    "duration": "6-8 weeks",
+    "fees": "₹30000 (Including Exam)",
+    "tools": [
+      "Bash",
+      "SELinux",
+      "firewalld",
+      "YUM/DNF",
+      "RHEL 10",
+      "RHEL 9"
+    ],
+    "visible": true,
+    "featured": true,
+    "order": 3,
+    "thumbnailUrl": "",
+    "category": "red-hat-technologies",
+    "level": "Professional Level",
+    "mode": [
+      "Classroom",
+      "Online",
+      "Hybrid"
+    ],
+    "highlights": [
+      "User & group management",
+      "Storage & networking basics",
+      "System services",
+      "SELinux & firewalld"
+    ],
+    "outcomes": [
+      "Master Red Hat Enterprise Linux administration",
+      "Advanced system administration and automation",
+      "OpenShift container platform expertise"
+    ],
+    "eligibility": "12th Pass/Graduate with basic computer knowledge.",
+    "intake": "Monthly",
+    "seo": {
+      "title": "RHCSA Certification Training",
+      "description": "Learn essential Red Hat Enterprise Linux administration and prepare for the RHCSA exam.",
+      "keywords": "RHCSA, Red Hat Linux, Linux Administration, RHEL 9, RHEL 10 Training",
+      "ogImage": ""
+    },
+    "learningOutcomes": [
+      "Manage RHEL systems and users",
+      "Configure local storage and file systems",
+      "Control services, processes, and boot sequence",
+      "Implement basic SELinux and firewall rules"
+    ],
+    "careerRoles": [
+      "Linux System Administrator",
+      "Junior DevOps Engineer",
+      "Support Engineer"
+    ],
+    "overview": "Learn essential Linux administration skills including user management, storage, processes, and security for Red Hat Enterprise Linux.",
+    "certificateInfo": "Red Hat Certified System Administrator (RHCSA) certificate included.",
+    "batchesInfo": "New batches every month, weekday & weekend options.",
+    "certificate": "Certificate of completion provided",
+    "categories": [
+      "red-hat-technologies"
+    ],
+    "modifiedAt": "2025-09-04T11:16:07.413Z"
+  },
+  {
+    "slug": "data-science-machine-learning",
+    "title": "Data Science & Machine Learning",
+    "oneLiner": "Complete Data Science & Machine Learning Program",
+    "description": "Comprehensive data science program covering statistics, Python programming, machine learning algorithms, deep learning, and real-world project implementation.",
+    "duration": "6 Months",
+    "fees": "₹25,000 (EMI Available)",
+    "tools": [
+      "Python",
+      "Statistics",
+      "Pandas & NumPy",
+      "Scikit-learn",
+      "TensorFlow/Keras"
+    ],
+    "visible": true,
+    "featured": true,
+    "order": 4,
+    "thumbnailUrl": "",
+    "category": "programming-development",
+    "level": "Intermediate Level",
+    "mode": [
+      "Classroom",
+      "Online"
+    ],
+    "highlights": [
+      "Python & R Programming",
+      "Real Dataset Projects",
+      "Industry Mentorship",
+      "Portfolio Development"
+    ],
+    "outcomes": [
+      "Master Python for data science and analytics",
+      "Implement machine learning algorithms from scratch",
+      "Work with real datasets and business problems"
+    ],
+    "eligibility": "Graduate (Any Stream)",
+    "intake": "Bi-monthly",
+    "seo": {
+      "title": "Data Science & Machine Learning Course in Jaipur - GRRAS Solutions",
+      "description": "Complete Data Science and ML training with Python, statistics, and real projects at GRRAS Solutions.",
+      "keywords": "Data Science course Jaipur, Machine Learning training, Python data analytics",
+      "ogImage": ""
+    },
+    "learningOutcomes": [],
+    "careerRoles": [],
+    "overview": "Comprehensive data science program covering statistics, Python programming, machine learning algorithms, deep learning, and real-world project implementation.",
+    "certificate": "Certificate of completion provided",
+    "categories": [
+      "programming-development"
+    ],
+    "modifiedAt": "2025-09-04T11:16:07.413Z"
+  },
+  {
+    "slug": "cyber-security",
+    "title": "Cyber Security",
+    "oneLiner": "Learn the foundations of Cyber Security, ethical hacking, penetration testing, and defense strategies.",
+    "duration": "6 months",
+    "fees": "₹30,000 (EMI Available)",
+    "tools": [
+      "Kali Linux",
+      "Wireshark",
+      "Metasploit",
+      "Burp Suite",
+      "Nmap",
+      "Firewall & IDS",
+      "Cloud Security"
+    ],
+    "visible": true,
+    "order": 5,
+    "thumbnailUrl": "",
+    "category": "cybersecurity-ethical-hacking",
+    "level": "Foundation Level",
+    "highlights": [
+      "Learn real-world ethical hacking & penetration testing",
+      "Hands-on labs for vulnerability assessment",
+      "Training on securing networks, applications, and cloud",
+      "Industry-aligned curriculum with projects",
+      "Mentorship from certified security professionals"
+    ],
+    "outcomes": [],
+    "learningOutcomes": [
+      "Understand core concepts of information security",
+      "Perform penetration testing and vulnerability scanning",
+      "Implement firewalls, IDS/IPS, and SIEM solutions",
+      "Secure web applications and APIs from cyber threats",
+      "Design defense strategies for enterprise IT systems"
+    ],
+    "careerRoles": [
+      "Cyber Security Analyst",
+      "Ethical Hacker",
+      "Penetration Tester",
+      "Security Consultant",
+      "SOC Analyst",
+      "Cloud Security Engineer"
+    ],
+    "mode": [
+      "Classroom",
+      "Online",
+      "Hybrid"
+    ],
+    "seo": {
+      "title": "Cyber Security Training in Jaipur – GRRAS Solutions",
+      "description": "Enroll in GRRAS Solutions’ Cyber Security course in Jaipur. Learn ethical hacking, penetration testing, cloud & network security. Hands-on labs with certification and placement support.",
+      "keywords": "cyber security training, ethical hacking course, penetration testing, cyber security Jaipur, GRRAS cyber security",
+      "ogImage": ""
+    },
+    "overview": "This Cyber Security training program provides hands-on knowledge of information security, ethical hacking, penetration testing, and cloud security. Students will learn how to detect, prevent, and respond to cyber threats while mastering modern security tools and frameworks.",
+    "certificateInfo": "Industry-recognized certificate of completion with placement support.",
+    "batchesInfo": "New batches start every month with weekend and weekday options.",
+    "eligibility": "12th Pass/Graduate with basic knowledge of computers and networking.",
+    "description": "Learn the foundations of Cyber Security, ethical hacking, penetration testing, and defense strategies.",
+    "featured": false,
+    "certificate": "Certificate of completion provided",
+    "categories": [
+      "cybersecurity-ethical-hacking"
+    ],
+    "modifiedAt": "2025-09-04T11:16:07.413Z"
+  },
+  {
+    "slug": "java-salesforce",
+    "title": "Java & Salesforce (Admin + Developer)",
+    "oneLiner": "Build a strong foundation in Java programming and become a certified Salesforce professional in both Admin and Developer tracks.",
+    "duration": "6 months",
+    "fees": "₹25,000 (EMI Available)",
+    "tools": [
+      "Java SE",
+      "OOPs in Java",
+      "JDBC & Servlets",
+      "Salesforce Admin Console",
+      "Apex Programming",
+      "Visualforce Pages",
+      "Lightning Web Components (LWC)",
+      "SOQL & SOSL Queries",
+      "Salesforce App Builder"
+    ],
+    "highlights": [
+      "Step-by-step learning: Core Java → Advanced Java → Salesforce",
+      "Hands-on coding exercises and projects",
+      "Learn Salesforce Admin tasks (users, roles, workflows, automation)",
+      "Develop apps with Apex and Lightning Web Components",
+      "Prepare for Salesforce Admin & Developer certification exams",
+      "Real-world project: Build a CRM application end-to-end"
+    ],
+    "learningOutcomes": [
+      "Write clean and efficient code in Java",
+      "Apply OOPs principles to solve real problems",
+      "Understand Salesforce architecture and data model",
+      "Perform Salesforce Administration tasks",
+      "Build custom applications using Apex and LWC",
+      "Prepare for Salesforce ADM-201 and Platform Developer I certifications"
+    ],
+    "careerRoles": [
+      "Java Developer",
+      "Salesforce Admin",
+      "Salesforce Developer",
+      "CRM Specialist",
+      "Application Support Engineer",
+      "Business Analyst (CRM-focused)"
+    ],
+    "overview": "This program combines the power of Java with Salesforce CRM expertise. Students start with core Java programming to build problem-solving skills, then move to Salesforce Administration and Development. By the end, you’ll be able to manage Salesforce environments and create powerful applications on the Salesforce platform.",
+    "level": "Intermediate Level",
+    "certificateInfo": "Dual certificate – Java Programming + Salesforce (Admin/Developer) with placement support.",
+    "batchesInfo": "New batches every month with flexible weekend and weekday schedules.",
+    "category": "programming-development",
+    "thumbnailUrl": "",
+    "mode": [
+      "Classroom",
+      "Online",
+      "Hybrid"
+    ],
+    "eligibility": "12th Pass/Graduate with basic knowledge of computers and programming fundamentals.",
+    "seo": {
+      "title": "Java & Salesforce Training in Jaipur – GRRAS Solutions",
+      "description": "Become a certified Salesforce Admin & Developer with GRRAS Solutions. Includes Java foundation, Apex, LWC, Visualforce, and Salesforce Admin skills. Hands-on projects with certification guidance.",
+      "keywords": "java training, salesforce training jaipur, java & salesforce course, salesforce admin developer course, salesforce certification, grras salesforce course",
+      "ogImage": ""
+    },
+    "visible": true,
+    "featured": false,
+    "order": 6,
+    "description": "Build a strong foundation in Java programming and become a certified Salesforce professional in both Admin and Developer tracks.",
+    "certificate": "Certificate of completion provided",
+    "categories": [
+      "programming-development"
+    ],
+    "modifiedAt": "2025-09-04T11:16:07.413Z"
+  },
+  {
+    "slug": "c-cpp-dsa",
+    "title": "C / C++ & Data Structures",
+    "oneLiner": "Master C, C++ (OOP & STL), and Data Structures & Algorithms for strong problem-solving and interview readiness.",
+    "duration": "3 months",
+    "fees": "₹20,000 (EMI Available)",
+    "tools": [
+      "C",
+      "C++",
+      "GCC/Clan",
+      "STL",
+      "Git & GitHub",
+      "VS Code"
+    ],
+    "highlights": [
+      "Structured roadmap for interviews",
+      "Daily coding practice & assignments",
+      "Time/Space complexity mastery",
+      "Patterns: Two-pointer, Sliding Window, Recursion/Backtracking, DP, Graphs",
+      "Code reviews & mentorship",
+      "Mini projects in C/C++"
+    ],
+    "learningOutcomes": [
+      "Write efficient C and C++ programs using OOP & STL",
+      "Analyze complexity and optimize solutions",
+      "Implement core DSA: arrays, strings, stacks/queues, linked lists, trees, heaps, graphs, hashing",
+      "Solve standard interview problems end-to-end",
+      "Use Git/GitHub and follow clean coding practices"
+    ],
+    "careerRoles": [
+      "Software Engineer",
+      "C++ Developer",
+      "Systems/Embedded Programmer",
+      "Competitive Programmer",
+      "Application Developer"
+    ],
+    "overview": "A focused, hands-on track that builds your programming fundamentals using C, levels you up with C++ OOP & STL, and develops deep problem-solving using classic Data Structures & Algorithms. Includes daily coding practice, contests, and interview-style questions.",
+    "level": "Intermediate Level",
+    "certificateInfo": "Certificate of completion with placement guidance.",
+    "batchesInfo": "New batches every month; weekday & weekend options.",
+    "category": "programming-development",
+    "thumbnailUrl": "",
+    "mode": [
+      "Classroom",
+      "Online",
+      "Hybrid"
+    ],
+    "eligibility": "12th Pass/Graduate; basic computer knowledge.",
+    "seo": {
+      "title": "C / C++ & DSA Course in Jaipur – GRRAS Solutions",
+      "description": "Learn C, C++ (OOP & STL), and Data Structures & Algorithms with daily coding practice, interview prep, and projects. Batches every month with placement guidance.",
+      "keywords": "c course, c++ training, dsa course jaipur, data structures algorithms, grras programming",
+      "ogImage": ""
+    },
+    "visible": true,
+    "featured": false,
+    "order": 7,
+    "description": "Master C, C++ (OOP & STL), and Data Structures & Algorithms for strong problem-solving and interview readiness.",
+    "certificate": "Certificate of completion provided",
+    "categories": [
+      "programming-development"
+    ],
+    "modifiedAt": "2025-09-04T11:16:07.413Z"
+  },
+  {
+    "title": "AWS Cloud Practitioner Certification Training",
+    "slug": "aws-cloud-practitioner-certification",
+    "duration": "6-8 weeks",
+    "fees": "₹15,000",
+    "level": "Foundation Level",
+    "category": "cloud-platform",
+    "description": "Master AWS Cloud fundamentals and prepare for AWS Certified Cloud Practitioner exam",
+    "overview": "Master AWS Cloud fundamentals and prepare for AWS Certified Cloud Practitioner exam",
+    "tools": [
+      "AWS Console",
+      "Cloud Computing",
+      "AWS Services",
+      "Cloud Security"
+    ],
+    "highlights": [
+      "AWS Cloud concepts and services",
+      "Security and compliance basics",
+      "Billing and pricing models",
+      "Hands-on AWS practice",
+      "Exam preparation"
+    ],
+    "eligibility": "Basic computer knowledge and interest in cloud computing",
+    "visible": true,
+    "order": 8,
+    "learningOutcomes": [
+      "Understand AWS Cloud concepts",
+      "Learn AWS services",
+      "Master security basics",
+      "Prepare for certification exam"
+    ],
+    "careerRoles": [
+      "Cloud Support Associate",
+      "AWS Cloud Practitioner",
+      "Cloud Operations Specialist"
+    ],
+    "certificateInfo": "AWS Certified Cloud Practitioner certificate upon successful completion",
+    "oneLiner": "Professional aws cloud practitioner certification training training with hands-on experience and industry certification",
+    "mode": [],
+    "featured": false,
+    "certificate": "Certificate of completion provided",
+    "seo": {
+      "title": "AWS Cloud Practitioner Certification Training",
+      "description": "Professional aws cloud practitioner certification training training with hands-on experience and industry certification",
+      "keywords": "aws, cloud, practitioner, certification, training",
+      "ogImage": ""
+    },
+    "categories": [
+      "cloud-platform"
+    ],
+    "modifiedAt": "2025-09-04T11:16:07.413Z"
+  },
+  {
+    "title": "AWS Solutions Architect Associate Certification",
+    "slug": "aws-solutions-architect-associate",
+    "duration": "8-10 weeks",
+    "fees": "₹25,000",
+    "level": "Intermediate to Advanced",
+    "category": "cloud-platform",
+    "description": "Design and deploy secure, scalable AWS applications. Prepare for Solutions Architect Associate exam",
+    "overview": "Design and deploy secure, scalable AWS applications. Prepare for Solutions Architect Associate exam",
+    "tools": [
+      "AWS EC2",
+      "S3",
+      "VPC",
+      "IAM",
+      "CloudFormation",
+      "Lambda"
+    ],
+    "highlights": [
+      "Design secure architectures",
+      "Resilient and scalable systems",
+      "High-performing architectures",
+      "Cost optimization",
+      "Real-world projects"
+    ],
+    "eligibility": "AWS Cloud Practitioner knowledge or equivalent experience",
+    "visible": true,
+    "order": 9,
+    "learningOutcomes": [
+      "Design secure AWS architectures",
+      "Build scalable systems",
+      "Optimize costs",
+      "Deploy applications"
+    ],
+    "careerRoles": [
+      "Solutions Architect",
+      "Cloud Architect",
+      "AWS Consultant"
+    ],
+    "certificateInfo": "AWS Solutions Architect Associate certificate upon successful completion",
+    "oneLiner": "Professional aws solutions architect associate certification training with hands-on experience and industry certification",
+    "mode": [],
+    "featured": false,
+    "certificate": "Certificate of completion provided",
+    "seo": {
+      "title": "AWS Solutions Architect Associate Certification",
+      "description": "Professional aws solutions architect associate certification training with hands-on experience and industry certification",
+      "keywords": "aws, solutions, architect, associate, certification",
+      "ogImage": ""
+    },
+    "categories": [
+      "cloud-platform"
+    ],
+    "modifiedAt": "2025-09-04T11:16:07.413Z"
+  },
+  {
+    "title": "CKA - Certified Kubernetes Administrator",
+    "slug": "cka-certified-kubernetes-administrator",
+    "duration": "6-8 weeks",
+    "fees": "₹20,000",
+    "level": "Foundation Level",
+    "category": "kubernetes-ecosystem",
+    "description": "Master Kubernetes administration and prepare for CKA certification exam",
+    "overview": "Master Kubernetes administration and prepare for CKA certification exam",
+    "tools": [
+      "Kubernetes",
+      "kubectl",
+      "Docker",
+      "Container Runtime",
+      "etcd"
+    ],
+    "highlights": [
+      "Cluster architecture and installation",
+      "Workloads and scheduling",
+      "Services and networking",
+      "Storage management",
+      "Troubleshooting"
+    ],
+    "eligibility": "Basic Linux knowledge and container concepts",
+    "visible": true,
+    "order": 10,
+    "learningOutcomes": [
+      "Manage Kubernetes clusters",
+      "Deploy applications",
+      "Configure networking",
+      "Handle storage"
+    ],
+    "careerRoles": [
+      "Kubernetes Administrator",
+      "DevOps Engineer",
+      "Container Specialist"
+    ],
+    "certificateInfo": "CKA certification upon successful completion",
+    "oneLiner": "Professional cka - certified kubernetes administrator training with hands-on experience and industry certification",
+    "mode": [],
+    "featured": false,
+    "certificate": "Certificate of completion provided",
+    "seo": {
+      "title": "CKA - Certified Kubernetes Administrator",
+      "description": "Professional cka - certified kubernetes administrator training with hands-on experience and industry certification",
+      "keywords": "cka, -, certified, kubernetes, administrator",
+      "ogImage": ""
+    },
+    "categories": [
+      "kubernetes-ecosystem"
+    ],
+    "modifiedAt": "2025-09-04T11:16:07.413Z"
+  },
+  {
+    "title": "CKS - Certified Kubernetes Security Specialist",
+    "slug": "cks-certified-kubernetes-security",
+    "duration": "4-6 weeks",
+    "fees": "₹22,000",
+    "level": "Advanced",
+    "category": "kubernetes-ecosystem",
+    "description": "Master Kubernetes security and prepare for CKS certification exam",
+    "overview": "Master Kubernetes security and prepare for CKS certification exam",
+    "tools": [
+      "Kubernetes",
+      "Security Tools",
+      "Network Policies",
+      "RBAC",
+      "Pod Security"
+    ],
+    "highlights": [
+      "Cluster hardening",
+      "System hardening",
+      "Microservice vulnerabilities",
+      "Supply chain security",
+      "Runtime security"
+    ],
+    "eligibility": "CKA certification or equivalent Kubernetes experience",
+    "visible": true,
+    "order": 11,
+    "learningOutcomes": [
+      "Secure Kubernetes clusters",
+      "Implement security policies",
+      "Monitor threats",
+      "Audit systems"
+    ],
+    "careerRoles": [
+      "Security Engineer",
+      "DevSecOps Engineer",
+      "Kubernetes Security Specialist"
+    ],
+    "certificateInfo": "CKS certification upon successful completion",
+    "oneLiner": "Professional cks - certified kubernetes security specialist training with hands-on experience and industry certification",
+    "mode": [],
+    "featured": false,
+    "certificate": "Certificate of completion provided",
+    "seo": {
+      "title": "CKS - Certified Kubernetes Security Specialist",
+      "description": "Professional cks - certified kubernetes security specialist training with hands-on experience and industry certification",
+      "keywords": "cks, -, certified, kubernetes, security, specialist",
+      "ogImage": ""
+    },
+    "categories": [
+      "kubernetes-ecosystem"
+    ],
+    "modifiedAt": "2025-09-04T11:16:07.413Z"
+  },
+  {
+    "title": "RHCE - Red Hat Certified Engineer",
+    "slug": "rhce-red-hat-certified-engineer",
+    "duration": "8-10 weeks",
+    "fees": "₹25,000",
+    "level": "Professional Level",
+    "category": "red-hat-technologies",
+    "description": "Advanced Linux automation with Ansible and Red Hat technologies",
+    "overview": "Advanced Linux automation with Ansible and Red Hat technologies",
+    "tools": [
+      "Ansible",
+      "RHEL",
+      "Automation",
+      "Playbooks",
+      "Linux Administration"
+    ],
+    "highlights": [
+      "Automation with Ansible",
+      "Advanced system administration",
+      "Network services",
+      "Security implementation",
+      "Performance tuning"
+    ],
+    "eligibility": "RHCSA certification or equivalent Linux experience",
+    "visible": true,
+    "order": 12,
+    "learningOutcomes": [
+      "Automate with Ansible",
+      "Manage complex systems",
+      "Deploy services",
+      "Optimize performance"
+    ],
+    "careerRoles": [
+      "DevOps Engineer",
+      "Automation Engineer",
+      "Senior System Administrator"
+    ],
+    "certificateInfo": "RHCE certification upon successful completion",
+    "oneLiner": "Professional rhce - red hat certified engineer training with hands-on experience and industry certification",
+    "mode": [],
+    "featured": false,
+    "certificate": "Certificate of completion provided",
+    "seo": {
+      "title": "RHCE - Red Hat Certified Engineer",
+      "description": "Professional rhce - red hat certified engineer training with hands-on experience and industry certification",
+      "keywords": "rhce, -, red, hat, certified, engineer",
+      "ogImage": ""
+    },
+    "categories": [
+      "red-hat-technologies"
+    ],
+    "modifiedAt": "2025-09-04T11:16:07.413Z"
+  },
+  {
+    "title": "DO188 - Red Hat OpenShift Development I",
+    "slug": "do188-red-hat-openshift-development",
+    "duration": "4-6 weeks",
+    "fees": "₹20,000",
+    "level": "Foundation Level",
+    "category": "red-hat-technologies",
+    "description": "Introduction to containers with Podman and OpenShift development",
+    "overview": "Introduction to containers with Podman and OpenShift development",
+    "tools": [
+      "Podman",
+      "OpenShift",
+      "Containers",
+      "Kubernetes",
+      "Container Registry"
+    ],
+    "highlights": [
+      "Container fundamentals",
+      "Podman container management",
+      "OpenShift development",
+      "Container images",
+      "Application deployment"
+    ],
+    "eligibility": "Basic Linux knowledge and programming concepts",
+    "visible": true,
+    "order": 13,
+    "learningOutcomes": [
+      "Build containers",
+      "Deploy on OpenShift",
+      "Manage applications",
+      "Use registries"
+    ],
+    "careerRoles": [
+      "Container Developer",
+      "OpenShift Developer",
+      "Cloud Application Developer"
+    ],
+    "certificateInfo": "DO188 certification upon successful completion",
+    "oneLiner": "Professional do188 - red hat openshift development i training with hands-on experience and industry certification",
+    "mode": [],
+    "featured": false,
+    "certificate": "Certificate of completion provided",
+    "seo": {
+      "title": "DO188 - Red Hat OpenShift Development I",
+      "description": "Professional do188 - red hat openshift development i training with hands-on experience and industry certification",
+      "keywords": "do188, -, red, hat, openshift, development, i",
+      "ogImage": ""
+    },
+    "categories": [
+      "red-hat-technologies"
+    ],
+    "modifiedAt": "2025-09-04T11:16:07.413Z"
+  },
+  {
+    "slug": "do280-red-hat-openshift-administration",
+    "title": "DO280 – Red Hat OpenShift Administration II",
+    "oneLiner": "Learn to install, configure, secure, and operate production-grade Red Hat OpenShift clusters with day-2 administration skills.",
+    "duration": "4–6 weeks",
+    "fees": "₹22,000",
+    "tools": [
+      "OpenShift",
+      "Kubernetes",
+      "Operators",
+      "Helm",
+      "OAuth & RBAC",
+      "Routes & Ingress",
+      "Persistent Storage (CSI)",
+      "Prometheus",
+      "Grafana"
+    ],
+    "highlights": [
+      "Install and scale OpenShift clusters",
+      "Configure authentication, projects, quotas, and RBAC",
+      "Set up networking (routes, ingress, services)",
+      "Manage storage classes, PVCs, and snapshots",
+      "Work with Operators & cluster add-ons",
+      "Monitor with Prometheus & Grafana"
+    ],
+    "learningOutcomes": [
+      "Deploy and administer OpenShift clusters",
+      "Secure multi-tenant environments with RBAC, quotas, and policies",
+      "Manage apps using Operators, Helm, and Git-based workflows",
+      "Configure networking, storage, and registries",
+      "Implement monitoring, logging, backup/restore",
+      "Diagnose and resolve cluster and workload issues"
+    ],
+    "careerRoles": [
+      "OpenShift Administrator",
+      "Platform Engineer",
+      "DevOps Engineer",
+      "Site Reliability Engineer (SRE)",
+      "Cloud/Container Engineer"
+    ],
+    "overview": "Hands-on OpenShift administration covering cluster installation, user and app security, networking, storage, scaling, monitoring, and troubleshooting for real-world operations.",
+    "level": "Professional Level",
+    "certificateInfo": "DO280 (Red Hat OpenShift Administration II) exam preparation with completion certificate.",
+    "batchesInfo": "New batches every month; weekday & weekend options; fast-track available.",
+    "category": "red-hat-technologies",
+    "thumbnailUrl": "",
+    "mode": [
+      "Classroom",
+      "Online",
+      "Hybrid"
+    ],
+    "eligibility": "RHCSA-level Linux skills required; container/Kubernetes basics (DO180/DO188) recommended.",
+    "seo": {
+      "title": "DO280 – Red Hat OpenShift Administration I | GRRAS Solutions",
+      "description": "Master OpenShift cluster administration—installation, security, networking, storage, monitoring, logging, and day-2 operations. Hands-on DO280 prep by GRRAS.",
+      "keywords": "do280, red hat, openshift, administration, kubernetes, platform engineer, container platform, cluster ops",
+      "ogImage": ""
+    },
+    "visible": true,
+    "featured": false,
+    "order": 14,
+    "description": "Learn to install, configure, secure, and operate production-grade Red Hat OpenShift clusters with day-2 administration skills.",
+    "certificate": "Certificate of completion provided",
+    "categories": [
+      "red-hat-technologies"
+    ],
+    "modifiedAt": "2025-09-04T11:16:07.413Z"
+  },
+  {
+    "slug": "do317-openshift-virtualization",
+    "title": "DO317 – OpenShift Virtualization",
+    "oneLiner": "Manage virtual machines on Red Hat OpenShift with hands-on training and exam prep.",
+    "duration": "4–6 weeks",
+    "fees": "₹30,000 (Including Exam)",
+    "tools": [
+      "OpenShift Virtualization",
+      "Kubernetes",
+      "KubeVirt",
+      "QEMU/KVM",
+      "CSI Storage",
+      "SR-IOV",
+      "Operators",
+      "Ansible"
+    ],
+    "highlights": [
+      "Install & configure OpenShift Virtualization",
+      "Create, run, migrate VMs",
+      "Configure networking & storage",
+      "Integrate VMs with containers",
+      "Automate VM lifecycle",
+      "Monitor & troubleshoot"
+    ],
+    "learningOutcomes": [
+      "Deploy CNV operators",
+      "Manage VM templates & snapshots",
+      "Configure advanced networking",
+      "Scale VM workloads with containers",
+      "Apply security & quotas"
+    ],
+    "careerRoles": [
+      "OpenShift Admin",
+      "Virtualization Engineer",
+      "Cloud/DevOps Engineer"
+    ],
+    "overview": "Learn to run and manage VMs on OpenShift using OpenShift Virtualization (CNV) with real-world labs and migration scenarios.",
+    "level": "Professional Level",
+    "certificateInfo": "DO317 certification on completion",
+    "batchesInfo": "Regular, weekend & fast-track",
+    "category": "red-hat-technologies",
+    "thumbnailUrl": "",
+    "mode": [
+      "Hybrid",
+      "Classroom",
+      "Online"
+    ],
+    "eligibility": "RHCSA or Linux basics + OpenShift knowledge (DO180/DO280 recommended)",
+    "seo": {
+      "title": "DO317 – OpenShift Virtualization Training | GRRAS",
+      "description": "Learn to manage VMs on OpenShift with Red Hat DO317 training. Hands-on labs and exam prep.",
+      "keywords": "do317, openshift virtualization, red hat, kubevirt, cnv",
+      "ogImage": ""
+    },
+    "visible": true,
+    "featured": false,
+    "order": 15,
+    "description": "Manage virtual machines on Red Hat OpenShift with hands-on training and exam prep.",
+    "certificate": "Certificate of completion provided",
+    "categories": [
+      "red-hat-technologies"
+    ],
+    "modifiedAt": "2025-09-04T11:16:07.413Z"
+  },
+  {
+    "slug": "server-administration-networking",
+    "title": "Server Administration & Networking",
+    "oneLiner": "Learn core server administration and networking concepts essential for IT infrastructure and DevOps.",
+    "duration": "2 Months",
+    "fees": "₹10,000",
+    "tools": [
+      "Linux",
+      "Apache",
+      "Nginx",
+      "DNS",
+      "DHCP",
+      "SSH",
+      "FTP",
+      "Firewall",
+      "TCP/IP"
+    ],
+    "highlights": [
+      "Hands-on Linux server management",
+      "Setup DNS, DHCP, and web servers",
+      "Networking & troubleshooting labs",
+      "Security & firewall management"
+    ],
+    "learningOutcomes": [
+      "Configure and manage servers in enterprise environments",
+      "Deploy and secure web and network services",
+      "Troubleshoot real-world networking issues",
+      "Build a solid base for Cloud & DevOps tools"
+    ],
+    "careerRoles": [
+      "System Administrator",
+      "Network Administrator",
+      "IT Support Engineer"
+    ],
+    "overview": "Master server administration and networking fundamentals including Linux services, DNS, DHCP, HTTP/FTP servers, firewall, and TCP/IP networking to build a strong IT foundation.",
+    "level": "Expert",
+    "certificateInfo": "GRRAS Certificate of Completion in Server Administration & Networking",
+    "batchesInfo": "New batches every month (weekend & weekday options available)",
+    "category": "server-administration-networking",
+    "thumbnailUrl": "https://img.icons8.com/color/96/server.png",
+    "mode": [
+      "Classroom",
+      "Online",
+      "Hybrid"
+    ],
+    "eligibility": "Basic computer knowledge, familiarity with Linux commands recommended",
+    "seo": {
+      "title": "Server Administration & Networking Training | GRRAS Solutions",
+      "description": "Learn server administration, networking, DNS, DHCP, and firewall management with hands-on labs. Build a strong foundation for DevOps and Cloud careers.",
+      "keywords": "server administration, networking, Linux servers, DNS, DHCP, firewall, GRRAS training",
+      "ogImage": "https://img.icons8.com/color/256/network.png"
+    },
+    "visible": true,
+    "featured": false,
+    "order": 16,
+    "description": "Learn core server administration and networking concepts essential for IT infrastructure and DevOps.",
+    "certificate": "Certificate of completion provided",
+    "categories": [
+      "server-administration-networking"
+    ],
+    "modifiedAt": "2025-09-04T11:16:07.413Z"
+  },
+  {
+    "title": "Terraform Associate Certification (TA-003)",
+    "description": "Infrastructure as Code (IaC) masterclass using HashiCorp Terraform—real cloud projects on AWS/Azure/GCP with modules, workspaces, remote state, and CI/CD. TA-003 exam preparation included.",
+    "overview": "• IaC fundamentals: providers, resources, variables, outputs\n• State management: local, S3/Blob, Terraform Cloud; state locking\n• Modules: structure, versioning, private registry usage\n• Workspaces & multi-env (dev/stage/prod) patterns\n• Networking projects: VPC/VNet, subnets, routing, NAT, security groups/NSG\n• Compute & storage: EC2/VMs, EKS/AKS intro, S3/Blob, IAM/Role assignments\n• Policy & security basics (tags, cost controls), secrets (env vars/Key Vault/SSM)\n• CI/CD: GitHub Actions pipeline for plan/apply with approvals\n• Exam prep: TA-003 blueprint, mock tests & interview Qs",
+    "oneLiner": "Crack HashiCorp Terraform Associate (TA-003) with real AWS/Azure/GCP projects.",
+    "category": "devops-engineering",
+    "categories": [
+      "devops-engineering"
+    ],
+    "price": "₹21,830",
+    "fees": "₹18,500 + GST (18%)",
+    "duration": "4–6 weeks",
+    "level": "Intermediate",
+    "visible": true,
+    "featured": true,
+    "order": 17,
+    "highlights": [
+      "Hands-on labs every class • 8+ real IaC projects • Git-based workflow • Remote state & locking • Modules & registries • CI/CD integration • Mock tests & interview prep • Post-class doubt support"
+    ],
+    "syllabus": [],
+    "tools": [
+      "Terraform CLI",
+      "HCL",
+      "AWS (IAM",
+      "VPC",
+      "EC2",
+      "S3)",
+      "Azure (RG",
+      "VNet",
+      "VM",
+      "Storage)",
+      "GCP (VPC",
+      "Compute)",
+      "Git/GitHub",
+      "Terraform Cloud",
+      "Terragrunt (intro)",
+      "VS Code",
+      "Linux"
+    ],
+    "learningOutcomes": [
+      "• Write reusable Terraform modules and manage remote state securely\n• Implement multi-environment infra with workspaces & versioning\n• Provision VPC/VNet",
+      "subnets",
+      "routing",
+      "security",
+      "compute & storage on cloud\n• Integrate Terraform with CI/CD (plan/apply with approvals)\n• Apply best practices: variables",
+      "locals",
+      "data sources",
+      "lifecycle",
+      "policies\n• Clear TA-003 exam with confidence (mock tests included)"
+    ],
+    "careerRoles": [
+      "DevOps Engineer (IaC)",
+      "Cloud Engineer",
+      "Platform Engineer",
+      "SRE",
+      "Build & Release Engineer"
+    ],
+    "eligibility": "Basic Linux commands, Git basics, and fundamentals of any one cloud (AWS/Azure/GCP). Suitable for BCA/B.Tech students & working professionals.",
+    "mode": "Classroom, Online, Hybrid",
+    "certificationIncluded": true,
+    "slug": "terraform-associate-certification-ta-003",
+    "createdAt": "2025-09-04T09:55:05.920Z",
+    "modifiedAt": "2025-09-04T11:16:07.413Z",
+    "certificate": "Certificate of completion provided",
+    "seo": {
+      "title": "Terraform Associate Certification (TA-003)",
+      "description": "Crack HashiCorp Terraform Associate (TA-003) with real AWS/Azure/GCP projects.",
+      "keywords": "terraform, associate, certification, (ta-003)",
+      "ogImage": ""
+    }
+  }
+]

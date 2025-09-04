@@ -6,10 +6,37 @@
         <meta name="theme-color" content="#DC2626" />
         <meta name="description" content="GRRAS Solutions Training Institute - Empowering Students with World-Class IT & Cloud Education" />
         
+        <!-- Preconnect to important domains -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        
+        <!-- DNS prefetch for performance -->
+        <link rel="dns-prefetch" href="https://www.grras.tech" />
+        
+        <!-- Web font with font-display: swap -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        
         <title>GRRAS Solutions Training Institute | IT & Cloud Education</title>
+        
+        <!-- Critical CSS will be inlined here by build process -->
+        <style id="critical-css">
+          /* Critical above-the-fold styles */
+          body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+          .hero-section { background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); min-height: 60vh; }
+          .header-nav { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 50; }
+          .logo { width: 120px; height: auto; }
+          .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
+          @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        </style>
     </head>
     <body>
-        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <noscript>
+            <div style="text-align: center; padding: 2rem; font-family: Arial, sans-serif;">
+                <h1>GRRAS Solutions Training Institute</h1>
+                <p>This application requires JavaScript to run. Please enable JavaScript in your browser to access our IT & Cloud training courses.</p>
+                <p>For assistance, contact us at <a href="mailto:online@grras.com">online@grras.com</a> or call +91-8829-25-2525</p>
+            </div>
+        </noscript>
         <div id="root"></div>
     </body>
 </html>

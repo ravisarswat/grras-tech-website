@@ -31,13 +31,8 @@ const Blog = () => {
     try {
       setLoading(true);
       
-      console.log('Blog Posts Array:', blogPosts);
-      console.log('Blog Posts Length:', blogPosts.length);
-      
       // Filter static blog posts
       let filteredPosts = [...blogPosts];
-      
-      console.log('Filtered Posts:', filteredPosts);
       
       // Apply category filter
       if (selectedCategory) {

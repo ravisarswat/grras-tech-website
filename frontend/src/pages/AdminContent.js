@@ -337,10 +337,19 @@ const AdminContent = () => {
     console.log('🔄 updateContent called:', { 
       path, 
       valueType: typeof value, 
+      isFunction: typeof value === 'function',
       valueKeys: typeof value === 'object' ? Object.keys(value || {}) : 'N/A',
       isCategories: path === 'courseCategories',
-      currentCategoriesCount: path === 'courseCategories' && content.courseCategories ? Object.keys(content.courseCategories).length : 'N/A',
-      newCategoriesCount: path === 'courseCategories' && typeof value === 'object' ? Object.keys(value || {}).length : 'N/A'
+      currentCategoriesCount: path === 'courseCategories' && content.courseCategories ? Object.keys(content.courseCategories).length : 'N/A'
+    });
+    
+    // Support functional updates for React best practices
+    const newValue = typeof value === 'function' ? value(getContentValue(path)) : value;
+    
+    console.log('🔄 After function resolution:', {
+      path,
+      newValueType: typeof newValue,
+      newCategoriesCount: path === 'courseCategories' && typeof newValue === 'object' ? Object.keys(newValue || {}).length : 'N/A'
     });
     
     // Create a deep copy to ensure change detection works
@@ -355,7 +364,7 @@ const AdminContent = () => {
       current = current[keys[i]];
     }
     
-    current[keys[keys.length - 1]] = value;
+    current[keys[keys.length - 1]] = newValue;
     
     // Add a timestamp to force change detection
     newContent._lastModified = new Date().toISOString();
@@ -364,7 +373,7 @@ const AdminContent = () => {
     
     if (path === 'courseCategories') {
       console.log('🗑️ CATEGORY UPDATE - Before:', Object.keys(content.courseCategories || {}));
-      console.log('🗑️ CATEGORY UPDATE - After:', Object.keys(value || {}));
+      console.log('🗑️ CATEGORY UPDATE - After:', Object.keys(newValue || {}));
     }
     
     // Force React state update for delete operations

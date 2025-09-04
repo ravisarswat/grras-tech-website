@@ -1,0 +1,169 @@
+{
+  "backup_timestamp": "2025-09-04T08:21:22.428088",
+  "original_courseCategories": {
+    "red-hat-technologies": {
+      "name": "Red Hat Technologies",
+      "title": "Red Hat Technologies",
+      "slug": "red-hat-technologies",
+      "description": "Industry-leading Linux and OpenShift certifications with hands-on labs",
+      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg",
+      "icon": "server",
+      "color": "#EE0000",
+      "order": 1,
+      "visible": true,
+      "courses": [],
+      "featured": true,
+      "createdAt": "2025-09-02T15:02:35.473038",
+      "createdBy": "dynamic-category-creator"
+    },
+    "aws-cloud-platform": {
+      "name": "AWS Cloud Platform",
+      "title": "AWS Cloud Platform",
+      "slug": "aws-cloud-platform",
+      "description": "Amazon Web Services cloud computing certifications and solutions architect training",
+      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg",
+      "icon": "cloud",
+      "color": "#FF9900",
+      "order": 2,
+      "visible": true,
+      "courses": [],
+      "featured": true,
+      "createdAt": "2025-09-02T15:02:35.473083",
+      "createdBy": "dynamic-category-creator"
+    },
+    "kubernetes-ecosystem": {
+      "name": "Kubernetes Ecosystem",
+      "title": "Kubernetes Ecosystem",
+      "slug": "kubernetes-ecosystem",
+      "description": "Container orchestration and cloud-native technologies including CKA, CKAD certifications",
+      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/6/67/Kubernetes_logo.svg",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg",
+      "icon": "container",
+      "color": "#326CE5",
+      "order": 3,
+      "visible": true,
+      "courses": [],
+      "featured": true,
+      "createdAt": "2025-09-02T15:02:35.473113",
+      "createdBy": "dynamic-category-creator",
+      "modifiedAt": "2025-09-03T16:29:41.303Z"
+    },
+    "devops-engineering": {
+      "name": "DevOps Engineering",
+      "title": "DevOps Engineering",
+      "slug": "devops-engineering",
+      "description": "DevOps, MLOps, SecOps and automation technologies with CI/CD pipelines",
+      "logo_url": "https://cdn.worldvectorlogo.com/logos/devops-2.svg",
+      "logo": "https://cdn.worldvectorlogo.com/logos/devops-2.svg",
+      "icon": "terminal",
+      "color": "#2ECC71",
+      "order": 4,
+      "visible": true,
+      "courses": [],
+      "featured": true,
+      "createdAt": "2025-09-02T15:02:35.473141",
+      "createdBy": "dynamic-category-creator"
+    },
+    "cybersecurity-ethical-hacking": {
+      "name": "Cybersecurity & Ethical Hacking",
+      "title": "Cybersecurity & Ethical Hacking",
+      "slug": "cybersecurity-ethical-hacking",
+      "description": "Cybersecurity, ethical hacking, penetration testing and security analysis",
+      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Kali_Linux_2.0_wordmark.svg",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Kali_Linux_2.0_wordmark.svg",
+      "icon": "shield",
+      "color": "#34495E",
+      "order": 5,
+      "visible": true,
+      "courses": [],
+      "featured": true,
+      "createdAt": "2025-09-02T15:02:35.473189",
+      "createdBy": "dynamic-category-creator"
+    },
+    "programming-development": {
+      "name": "Programming & Development",
+      "title": "Programming & Development",
+      "slug": "programming-development",
+      "description": "Programming languages and software development skills including Java, Python, C++",
+      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg",
+      "icon": "code",
+      "color": "#9B59B6",
+      "order": 6,
+      "visible": true,
+      "courses": [],
+      "featured": true,
+      "createdAt": "2025-09-02T15:02:35.473215",
+      "createdBy": "dynamic-category-creator"
+    },
+    "server-administration-networking": {
+      "name": "Server Administration & Networking",
+      "slug": "server-administration-networking",
+      "description": "Learn core server administration, system management, and networking concepts essential for IT infrastructure and DevOps.",
+      "icon": "folder",
+      "color": "#20ee37",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg",
+      "visible": true,
+      "order": 8,
+      "seo": {
+        "title": "",
+        "description": "",
+        "keywords": ""
+      }
+    },
+    "degree-programs": {
+      "name": "Degree Programs",
+      "description": "Comprehensive degree and diploma programs including BCA with specializations",
+      "icon": "folder",
+      "color": "#3B82F6",
+      "logo": "https://cdn.jsdelivr.net/npm/heroicons@2.0.18/24/outline/academic-cap.svg\n",
+      "visible": true,
+      "order": 9,
+      "seo": {
+        "title": "",
+        "description": "",
+        "keywords": ""
+      },
+      "slug": "degree-programs",
+      "createdAt": "2025-09-03T18:54:20.266Z",
+      "modifiedAt": "2025-09-03T18:54:20.267Z"
+    },
+    "c1": {
+      "name": "c1",
+      "description": "",
+      "icon": "folder",
+      "color": "#3B82F6",
+      "logo": "",
+      "visible": false,
+      "order": 10,
+      "seo": {
+        "title": "",
+        "description": "",
+        "keywords": ""
+      },
+      "slug": "c1",
+      "createdAt": "2025-09-03T19:57:45.009Z",
+      "modifiedAt": "2025-09-04T06:13:07.890Z"
+    },
+    "demo": {
+      "name": "demo",
+      "description": "demo category",
+      "icon": "folder",
+      "color": "#3B82F6",
+      "logo": "",
+      "visible": false,
+      "order": 11,
+      "seo": {
+        "title": "",
+        "description": "",
+        "keywords": ""
+      },
+      "slug": "demo",
+      "createdAt": "2025-09-04T04:37:40.007Z",
+      "modifiedAt": "2025-09-04T06:13:08.910Z"
+    }
+  },
+  "document_id": "68b1dea29e926c5b9237c711"
+}

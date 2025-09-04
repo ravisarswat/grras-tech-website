@@ -31,33 +31,72 @@ const Blog = () => {
     try {
       setLoading(true);
       
-      // Load blog posts
-      const params = new URLSearchParams({
-        page: currentPage.toString(),
-        limit: '12'
+      // Filter static blog posts
+      let filteredPosts = [...blogPosts];
+      
+      // Apply category filter
+      if (selectedCategory) {
+        filteredPosts = filteredPosts.filter(post => 
+          post.category.toLowerCase() === selectedCategory.toLowerCase()
+        );
+      }
+      
+      // Apply search filter
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        filteredPosts = filteredPosts.filter(post =>
+          post.title.toLowerCase().includes(query) ||
+          post.excerpt.toLowerCase().includes(query) ||
+          post.content.toLowerCase().includes(query)
+        );
+      }
+      
+      // Apply tag filter
+      if (selectedTag) {
+        filteredPosts = filteredPosts.filter(post =>
+          post.tags.some(tag => tag.toLowerCase() === selectedTag.toLowerCase())
+        );
+      }
+      
+      // Pagination
+      const postsPerPage = 12;
+      const startIndex = (currentPage - 1) * postsPerPage;
+      const endIndex = startIndex + postsPerPage;
+      const paginatedPosts = filteredPosts.slice(startIndex, endIndex);
+      
+      setPosts(paginatedPosts);
+      setPagination({
+        currentPage,
+        totalPages: Math.ceil(filteredPosts.length / postsPerPage),
+        total: filteredPosts.length,
+        hasNext: endIndex < filteredPosts.length,
+        hasPrev: currentPage > 1
       });
       
-      if (selectedCategory) params.append('category', selectedCategory);
-      if (selectedTag) params.append('tag', selectedTag);
-      if (searchQuery) params.append('search', searchQuery);
-
-      const postsResponse = await fetch(`${BACKEND_URL}/api/blog?${params}`);
-      const postsData = await postsResponse.json();
+      // Extract categories and tags from static data
+      const categoriesMap = {};
+      const tagsMap = {};
       
-      setPosts(postsData.posts || []);
-      setPagination(postsData.pagination || {});
-
-      // Load categories and tags (only on first load)
-      if (currentPage === 1 && !selectedCategory && !selectedTag && !searchQuery) {
-        const [categoriesResponse, tagsResponse] = await Promise.all([
-          fetch(`${BACKEND_URL}/api/blog/categories`),
-          fetch(`${BACKEND_URL}/api/blog/tags`)
-        ]);
+      blogPosts.forEach(post => {
+        if (post.category) {
+          categoriesMap[post.category] = {
+            name: post.category,
+            count: blogPosts.filter(p => p.category === post.category).length
+          };
+        }
         
-        const categoriesData = await categoriesResponse.json();
-        const tagsData = await tagsResponse.json();
-        
-        setCategories(categoriesData.categories || {});
+        if (post.tags) {
+          post.tags.forEach(tag => {
+            tagsMap[tag] = {
+              name: tag,
+              count: blogPosts.filter(p => p.tags && p.tags.includes(tag)).length
+            };
+          });
+        }
+      });
+      
+      setCategories(categoriesMap);
+      setTags(tagsMap);
         setTags(tagsData.tags || {});
       }
     } catch (error) {

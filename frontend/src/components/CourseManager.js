@@ -614,7 +614,7 @@ const CourseManager = ({ content, updateContent }) => {
                 </div>
               </div>
 
-              {expandedCourse === course.slug && (
+              {expandedCourses.has(course.slug) && (
                 <div className="space-y-4 pt-4 border-t bg-gray-50 p-4 rounded-lg">
                   <div className="grid grid-cols-2 gap-4">
                     <div>

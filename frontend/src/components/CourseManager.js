@@ -617,193 +617,222 @@ const CourseManager = ({ content, updateContent }) => {
         </div>
       )}
 
+      {/* Courses List */}
       {filteredCourses.length === 0 ? (
-        <div className="text-center py-12 bg-gray-50 rounded-lg">
-          <p className="text-gray-500 mb-4">No courses yet</p>
+        <div className="text-center py-12 bg-white rounded-lg shadow-md border border-gray-200">
+          <BookOpen className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+          <p className="text-gray-500 mb-4">
+            {searchTerm || filterCategory !== 'all' ? 'No courses match your search criteria' : 'No courses yet'}
+          </p>
           <button
-            onClick={() => {
-              resetForm();
-              setShowAddForm(true);
-            }}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
+            onClick={() => setShowAddForm(true)}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2 mx-auto"
           >
-            Create First Course
+            <Plus className="h-4 w-4" />
+            Add Your First Course
           </button>
         </div>
       ) : (
         <div className="space-y-4">
-          {filteredCourses.map((course) => (
-            <div key={course.slug} className="bg-white border rounded-lg p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-4">
-                  <h3 className="text-lg font-semibold">{course.title}</h3>
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    {course.price && (
-                      <span className="flex items-center gap-1">
-                        <DollarSign className="h-3 w-3" />
-                        {course.price}
-                      </span>
-                    )}
-                    {course.duration && (
-                      <span className="flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        {course.duration}
-                      </span>
-                    )}
-                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">
-                      {course.level}
-                    </span>
+          {filteredCourses.map((course, index) => (
+            <div key={course.slug} className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+              {/* Course Header */}
+              <div className="p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4 flex-1">
+                    <button
+                      onClick={() => toggleExpanded(course.slug)}
+                      className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
+                      {expandedCourses.has(course.slug) ? 
+                        <ChevronDown className="h-4 w-4 text-gray-600" /> : 
+                        <ChevronRight className="h-4 w-4 text-gray-600" />
+                      }
+                    </button>
+                    
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-lg font-semibold text-gray-900">{course.title}</h3>
+                        {course.featured && (
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                            <Star className="h-3 w-3 mr-1" />
+                            Featured
+                          </span>
+                        )}
+                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                          course.visible !== false ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                        }`}>
+                          {course.visible !== false ? (
+                            <>
+                              <Eye className="h-3 w-3 mr-1" />
+                              Visible
+                            </>
+                          ) : (
+                            <>
+                              <EyeOff className="h-3 w-3 mr-1" />
+                              Hidden
+                            </>
+                          )}
+                        </span>
+                        {course.categories && course.categories.length > 0 && (
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            {categories[course.categories[0]]?.name || course.categories[0]}
+                          </span>
+                        )}
+                      </div>
+                      
+                      <p className="text-gray-600 text-sm line-clamp-2">{course.description}</p>
+                      
+                      <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
+                        {course.duration && (
+                          <div className="flex items-center gap-1">
+                            <Clock className="h-4 w-4" />
+                            {course.duration}
+                          </div>
+                        )}
+                        {course.fees && (
+                          <div className="flex items-center gap-1">
+                            <DollarSign className="h-4 w-4" />
+                            {course.fees}
+                          </div>
+                        )}
+                        {course.level && (
+                          <div className="flex items-center gap-1">
+                            <Users className="h-4 w-4" />
+                            {course.level}
+                          </div>
+                        )}
+                        <div className="text-xs text-gray-400">
+                          Order: {course.order || index + 1}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <span className={`px-2 py-1 rounded text-xs ${
-                    course.visible ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                  }`}>
-                    {course.visible ? 'Visible' : 'Hidden'}
-                  </span>
-                  {course.featured && (
-                    <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs">
-                      Featured
-                    </span>
-                  )}
-                </div>
-                
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => updateCourse(course.slug, 'visible', !course.visible)}
-                    className="p-2 hover:bg-gray-100 rounded"
-                  >
-                    {course.visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
-                  </button>
                   
-                  <button
-                    onClick={() => toggleExpanded(course.slug)}
-                    className="p-2 hover:bg-gray-100 rounded text-blue-600"
-                  >
-                    {expandedCourses.has(course.slug) ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                  </button>
-                  
-                  <button
-                    onClick={() => deleteCourse(course.slug)}
-                    className="p-2 text-red-600 hover:bg-red-50 rounded border border-red-200 ml-4"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => toggleVisibility(course.slug)}
+                      className={`p-2 rounded-lg transition-colors ${
+                        course.visible !== false 
+                          ? 'bg-green-100 text-green-600 hover:bg-green-200' 
+                          : 'bg-red-100 text-red-600 hover:bg-red-200'
+                      }`}
+                      title={course.visible !== false ? 'Hide Course' : 'Show Course'}
+                    >
+                      {course.visible !== false ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+                    </button>
+                    
+                    <button
+                      onClick={() => deleteCourse(course.slug)}
+                      className="p-2 bg-red-100 text-red-600 hover:bg-red-200 rounded-lg transition-colors"
+                      title="Delete Course"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
 
+              {/* Expanded Course Details */}
               {expandedCourses.has(course.slug) && (
-                <div className="space-y-4 pt-4 border-t bg-gray-50 p-4 rounded-lg">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Title</label>
-                      <input
-                        type="text"
-                        value={course.title}
-                        onChange={(e) => updateCourse(course.slug, 'title', e.target.value)}
-                        className="w-full border rounded p-2"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Category</label>
-                      <select
-                        value={course.category || ''}
-                        onChange={(e) => updateCourse(course.slug, 'category', e.target.value)}
-                        className="w-full border rounded p-2"
-                      >
-                        <option value="">Select Category</option>
-                        {Object.entries(categories).map(([slug, category]) => (
-                          <option key={slug} value={slug}>
-                            {category.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Description</label>
-                    <textarea
-                      value={course.description || ''}
-                      onChange={(e) => updateCourse(course.slug, 'description', e.target.value)}
-                      className="w-full border rounded p-2"
-                      rows="2"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-4 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Price</label>
-                      <input
-                        type="text"
-                        value={course.price || ''}
-                        onChange={(e) => updateCourse(course.slug, 'price', e.target.value)}
-                        className="w-full border rounded p-2"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Duration</label>
-                      <input
-                        type="text"
-                        value={course.duration || ''}
-                        onChange={(e) => updateCourse(course.slug, 'duration', e.target.value)}
-                        className="w-full border rounded p-2"
-                      />
+                <div className="border-t border-gray-200 bg-gray-50 p-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Basic Info */}
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-gray-900 border-b pb-2">Basic Information</h4>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Overview</label>
+                        <p className="text-sm text-gray-600 bg-white p-3 rounded border">
+                          {course.overview || 'No overview provided'}
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">One Liner</label>
+                        <p className="text-sm text-gray-600 bg-white p-3 rounded border">
+                          {course.oneLiner || 'No one liner provided'}
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Eligibility</label>
+                        <p className="text-sm text-gray-600 bg-white p-3 rounded border">
+                          {course.eligibility || 'Not specified'}
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Mode</label>
+                        <p className="text-sm text-gray-600 bg-white p-3 rounded border">
+                          {course.mode || 'Not specified'}
+                        </p>
+                      </div>
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Level</label>
-                      <select
-                        value={course.level || 'Beginner'}
-                        onChange={(e) => updateCourse(course.slug, 'level', e.target.value)}
-                        className="w-full border rounded p-2"
-                      >
-                        <option value="Beginner">Beginner</option>
-                        <option value="Intermediate">Intermediate</option>
-                        <option value="Advanced">Advanced</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Order</label>
-                      <input
-                        type="number"
-                        value={course.order || 1}
-                        onChange={(e) => updateCourse(course.slug, 'order', parseInt(e.target.value))}
-                        className="w-full border rounded p-2"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Highlights</label>
-                    <div className="space-y-2">
-                      {(course.highlights || []).map((highlight, index) => (
-                        <div key={index} className="flex items-center gap-2">
-                          <input
-                            type="text"
-                            value={highlight}
-                            onChange={(e) => {
-                              const newHighlights = [...course.highlights];
-                              newHighlights[index] = e.target.value;
-                              updateCourse(course.slug, 'highlights', newHighlights);
-                            }}
-                            className="flex-1 border rounded p-2"
-                          />
-                          <button
-                            onClick={() => removeHighlight(course.slug, index)}
-                            className="text-red-600 hover:text-red-700"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </button>
+                    {/* Arrays Display */}
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-gray-900 border-b pb-2">Course Details</h4>
+                      
+                      {course.highlights && course.highlights.length > 0 && (
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">Course Highlights</label>
+                          <div className="flex flex-wrap gap-1">
+                            {course.highlights.map((highlight, idx) => (
+                              <span key={idx} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                {highlight}
+                              </span>
+                            ))}
+                          </div>
                         </div>
-                      ))}
-                      <button
-                        onClick={() => addHighlight(course.slug)}
-                        className="w-full border-2 border-dashed border-gray-300 rounded p-2 text-gray-500 hover:border-blue-300 hover:text-blue-500"
-                      >
-                        + Add Highlight
-                      </button>
+                      )}
+                      
+                      {course.tools && course.tools.length > 0 && (
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">Tools & Technologies</label>
+                          <div className="flex flex-wrap gap-1">
+                            {course.tools.map((tool, idx) => (
+                              <span key={idx} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                {tool}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {course.learningOutcomes && course.learningOutcomes.length > 0 && (
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">Learning Outcomes</label>
+                          <div className="flex flex-wrap gap-1">
+                            {course.learningOutcomes.map((outcome, idx) => (
+                              <span key={idx} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                {outcome}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {course.careerRoles && course.careerRoles.length > 0 && (
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">Career Opportunities</label>
+                          <div className="flex flex-wrap gap-1">
+                            {course.careerRoles.map((role, idx) => (
+                              <span key={idx} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                {role}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                      <div className="pt-2 border-t">
+                        <div className="text-xs text-gray-500 space-y-1">
+                          <p>Created: {new Date(course.createdAt || Date.now()).toLocaleDateString()}</p>
+                          <p>Modified: {new Date(course.modifiedAt || Date.now()).toLocaleDateString()}</p>
+                          <p>Slug: {course.slug}</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

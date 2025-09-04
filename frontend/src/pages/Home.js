@@ -12,7 +12,7 @@ import {
   Briefcase,
   GraduationCap
 } from 'lucide-react';
-import SEO from '../components/SEO';
+import EnhancedSEO from '../components/EnhancedSEO';
 import HeroSlider from '../components/HeroSlider';
 import CourseSearchBar from '../components/CourseSearchBar';
 import CourseCategoriesGrid from '../components/CourseCategoriesGrid';

@@ -1,16 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
 
-// Railway-compatible backend URL resolution
-const getBackendUrl = () => {
-  // Try different environment variable patterns
-  return process.env.REACT_APP_BACKEND_URL || 
-         window.env?.REACT_APP_BACKEND_URL ||
-         (process.env.NODE_ENV === 'development' ? 'http://localhost:8001' : '');
-};
-
-const BACKEND_URL = getBackendUrl();
-const API = `${BACKEND_URL}/api`;
+// Static Data Imports
+import { categories } from '../data/categories';
+import { courses } from '../data/courses';
+import blogPosts from '../data/blog';
 
 const ContentContext = createContext();
 
@@ -27,7 +20,7 @@ export const ContentProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const loadContent = async () => {
+  const loadStaticContent = () => {
     try {
       setLoading(true);
       const response = await axios.get(`${API}/content`);

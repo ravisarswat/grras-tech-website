@@ -76,14 +76,16 @@ function AppContent() {
 
 function App() {
   return (
-    <div className="App min-h-screen bg-gray-50">
-      <Router>
-        <ContentProvider>
-          <AppContent />
-        </ContentProvider>
-      </Router>
-      <Toaster position="top-right" richColors />
-    </div>
+    <HelmetProvider>
+      <div className="App min-h-screen bg-gray-50">
+        <Router>
+          <ContentProvider>
+            <AppContent />
+          </ContentProvider>
+        </Router>
+        <Toaster position="top-right" richColors />
+      </div>
+    </HelmetProvider>
   );
 }
 

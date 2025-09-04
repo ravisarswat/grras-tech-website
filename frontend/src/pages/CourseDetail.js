@@ -21,7 +21,7 @@ const CourseDetail = () => {
   const { slug } = useParams();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showEnhancedSyllabus, setShowEnhancedSyllabus] = useState(false);
+  const [showSyllabusModal, setShowSyllabusModal] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { BookOpen, Clock, Users, ArrowRight, Filter } from 'lucide-react';
 import SEO from '../components/SEO';
-import axios from 'axios';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+// Static Data Imports
+import { categories as staticCategories } from '../data/categories';
+import { courses as staticCourses } from '../data/courses';
 
 const Courses = () => {
   const location = useLocation();
@@ -16,8 +16,50 @@ const Courses = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   useEffect(() => {
-    fetchData();
+    // Load static data instead of API calls
+    loadStaticData();
   }, []);
+
+  // Load static data
+  const loadStaticData = () => {
+    try {
+      setLoading(true);
+      
+      // Convert categories object to array format
+      const categoryArray = Object.entries(staticCategories).map(([slug, category]) => ({
+        ...category,
+        slug: slug,
+        id: slug
+      }));
+      
+      // Filter visible courses and add default values
+      const visibleCourses = staticCourses
+        .filter(course => course.visible !== false && course.title && course.slug)
+        .map(course => ({
+          ...course,
+          // Ensure all required fields exist
+          price: course.price || course.fees || 'Contact for pricing',
+          overview: course.overview || course.description,
+          highlights: course.highlights || [],
+          learningOutcomes: course.learningOutcomes || [],
+          careerRoles: course.careerRoles || []
+        }));
+      
+      setCourses(visibleCourses);
+      setCategories(categoryArray);
+      setFilteredCourses(visibleCourses);
+      setLoading(false);
+      
+      console.log('✅ Static data loaded:', {
+        courses: visibleCourses.length,
+        categories: categoryArray.length
+      });
+      
+    } catch (error) {
+      console.error('Error loading static data:', error);
+      setLoading(false);
+    }
+  };
 
   // Handle URL parameters for category selection
   useEffect(() => {

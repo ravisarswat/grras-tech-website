@@ -135,19 +135,6 @@ const Courses = () => {
       ));
     }
   }, [courses, selectedCategory]);
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      
-      const [coursesResponse, contentResponse] = await Promise.all([
-        axios.get(`${API}/courses`),
-        axios.get(`${API}/content`)
-      ]);
-      
-      const coursesData = coursesResponse.data.courses || [];
-      const contentData = contentResponse.data.content || {};
-      const categoriesData = contentData.courseCategories || {};
       
       // 🚀 FRESH DYNAMIC CATEGORY SYSTEM - FUTURE PROOF
       const getCourseCategories = (course) => {

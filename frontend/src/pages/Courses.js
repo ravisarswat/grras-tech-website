@@ -165,9 +165,11 @@ const Courses = () => {
 
   return (
     <>
-      <SEO 
-        title="Courses - GRRAS Solutions" 
-        description="Browse our comprehensive course catalog"
+      <EnhancedSEO 
+        title="Courses - GRRAS Solutions Training Institute" 
+        description="Browse our comprehensive course catalog - DevOps, AWS, Azure, Red Hat, Python, Data Science, Cybersecurity and more professional IT training courses"
+        canonical="https://www.grras.tech/courses"
+        type="website"
       />
       
       <div className="min-h-screen bg-gray-50">

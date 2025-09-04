@@ -538,66 +538,12 @@ const Courses = () => {
                 </div>
               ))}
             </div>
-                      </div>
-                    )}
-
-                    {/* Enhanced Footer with Pricing CTA */}
-                    <div className="space-y-4 pt-6 border-t border-gray-200">
-                      {/* 🚀 FRESH DYNAMIC CATEGORY DISPLAY */}
-                      <div className="flex flex-wrap gap-2">
-                        {course.categories && course.categories.length > 0 ? (
-                          course.categories.slice(0, 2).map(categorySlug => {
-                            const category = categories.find(c => c.slug === categorySlug);
-                            return category ? (
-                              <span 
-                                key={categorySlug} 
-                                className="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 text-xs rounded-xl font-bold shadow-sm border border-blue-300 hover:from-orange-100 hover:to-red-100 hover:text-orange-800 transition-all duration-300"
-                              >
-                                {category.name}
-                              </span>
-                            ) : null;
-                          })
-                        ) : (
-                          <span className="inline-flex items-center px-3 py-1.5 bg-gray-100 text-gray-500 text-xs rounded-xl font-medium">
-                            Uncategorized
-                          </span>
-                        )}
-                      </div>
-                      
-                      {/* Pricing and CTA Section */}
-                      <div className="flex items-center justify-between">
-                        {/* Compact Pricing */}
-                        {course.fees && (
-                          <div className="flex flex-col">
-                            <span className="text-lg font-black text-green-700 leading-tight">
-                              {course.fees.split(' ')[0]}
-                            </span>
-                            <span className="text-xs text-green-600 font-semibold">
-                              EMI Available
-                            </span>
-                          </div>
-                        )}
-                        
-                        {/* Enhanced CTA Button */}
-                        <Link
-                          to={`/courses/${course.slug}`}
-                          className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-600 via-red-600 to-orange-700 text-white text-sm font-black rounded-2xl hover:from-orange-700 hover:to-red-700 transition-all duration-500 transform hover:scale-110 shadow-2xl hover:shadow-3xl group relative overflow-hidden"
-                        >
-                          {/* Button Glow Effect */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                          
-                          <span className="relative z-10">Enroll Now</span>
-                          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-2 transition-transform duration-300 relative z-10" />
-                          
-                          {/* Sparkle effect */}
-                          <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-white rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Card hover glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-red-500/5 to-orange-500/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+          )}
+        </div>
+      </div>
+    </>
+  );
+};
                 </div>
               ))}
             </div>

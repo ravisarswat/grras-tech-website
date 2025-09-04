@@ -102,7 +102,7 @@ const CategoryManager = ({ content, updateContent }) => {
     alert('Test delete called for: ' + slug);
   };
 
-  // Delete Category - Direct Content Modification
+  // Delete Category - React State Best Practices
   const deleteCategory = (slug) => {
     console.log('🗑️ DELETE ATTEMPT:', slug);
     
@@ -118,39 +118,33 @@ const CategoryManager = ({ content, updateContent }) => {
 
     console.log('✅ User confirmed deletion for:', categoryName);
 
-    // Direct content modification approach
-    const updatedContent = { ...content };
-    
-    // Remove category directly
-    const newCategories = { ...categories };
-    delete newCategories[slug];
-    updatedContent.courseCategories = newCategories;
-    
-    // Remove category from all courses
-    if (updatedContent.courses) {
-      updatedContent.courses = updatedContent.courses.map(course => ({
+    // Use functional update for state - React best practice
+    updateContent('courseCategories', (prevCategories) => {
+      // Create immutable copy using destructuring
+      const { [slug]: deletedCategory, ...newCategories } = prevCategories || {};
+      
+      console.log('🗑️ Categories before delete:', Object.keys(prevCategories || {}));
+      console.log('🗑️ Categories after delete:', Object.keys(newCategories));
+      console.log('🗑️ Deleted category:', deletedCategory?.name);
+      
+      return newCategories;
+    });
+
+    // Update courses to remove deleted category
+    updateContent('courses', (prevCourses) => {
+      const updatedCourses = (prevCourses || []).map(course => ({
         ...course,
         categories: (course.categories || []).filter(cat => cat !== slug)
       }));
-    }
-    
-    // Add timestamp for change detection
-    updatedContent._lastModified = new Date().toISOString();
-    
-    console.log('🗑️ Direct content update:', {
-      oldCategoriesCount: Object.keys(categories).length,
-      newCategoriesCount: Object.keys(newCategories).length,
-      deletedCategory: slug
+      
+      console.log('🗑️ Updated courses count:', updatedCourses.length);
+      return updatedCourses;
     });
     
-    // Call updateContent for both
-    updateContent('courseCategories', newCategories);
-    updateContent('courses', updatedContent.courses);
-    
-    // Force refresh
+    // Force component state refresh
     setExpandedCategory(null);
 
-    console.log('✅ Category deleted successfully');
+    console.log('✅ Category deleted using React best practices');
     alert(`✅ Category "${categoryName}" deleted!`);
   };
 

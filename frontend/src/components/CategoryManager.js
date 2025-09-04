@@ -102,7 +102,7 @@ const CategoryManager = ({ content, updateContent }) => {
     alert('Test delete called for: ' + slug);
   };
 
-  // Delete Category - Direct Simple Approach
+  // Delete Category - Direct Content Modification
   const deleteCategory = (slug) => {
     console.log('🗑️ DELETE ATTEMPT:', slug);
     
@@ -116,26 +116,38 @@ const CategoryManager = ({ content, updateContent }) => {
       return;
     }
 
-    console.log('✅ User confirmed deletion');
+    console.log('✅ User confirmed deletion for:', categoryName);
 
-    // Simple direct approach - filter out deleted category
-    const filteredCategories = Object.fromEntries(
-      Object.entries(categories).filter(([key, value]) => key !== slug)
-    );
+    // Direct content modification approach
+    const updatedContent = { ...content };
     
-    console.log('🗑️ Filtered categories:', Object.keys(filteredCategories));
+    // Remove category directly
+    const newCategories = { ...categories };
+    delete newCategories[slug];
+    updatedContent.courseCategories = newCategories;
     
-    // Remove from courses too
-    const filteredCourses = courses.map(course => ({
-      ...course,
-      categories: (course.categories || []).filter(cat => cat !== slug)
-    }));
-
-    // Direct updateContent calls
-    updateContent('courseCategories', filteredCategories);
-    updateContent('courses', filteredCourses);
+    // Remove category from all courses
+    if (updatedContent.courses) {
+      updatedContent.courses = updatedContent.courses.map(course => ({
+        ...course,
+        categories: (course.categories || []).filter(cat => cat !== slug)
+      }));
+    }
     
-    // Force state refresh
+    // Add timestamp for change detection
+    updatedContent._lastModified = new Date().toISOString();
+    
+    console.log('🗑️ Direct content update:', {
+      oldCategoriesCount: Object.keys(categories).length,
+      newCategoriesCount: Object.keys(newCategories).length,
+      deletedCategory: slug
+    });
+    
+    // Call updateContent for both
+    updateContent('courseCategories', newCategories);
+    updateContent('courses', updatedContent.courses);
+    
+    // Force refresh
     setExpandedCategory(null);
 
     console.log('✅ Category deleted successfully');

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Edit3, Eye, EyeOff, Save, X, Search, Filter, BookOpen, Clock, Users, Star, ChevronDown, ChevronUp, ChevronRight } from 'lucide-react';
+import { Plus, Trash2, Edit3, Eye, EyeOff, Save, X, Search, Filter, BookOpen, Clock, Users, Star, ChevronDown, ChevronUp, ChevronRight, DollarSign } from 'lucide-react';
 
 const CourseManager = ({ content, updateContent }) => {
   const [showAddForm, setShowAddForm] = useState(false);

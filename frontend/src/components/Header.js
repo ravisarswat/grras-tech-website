@@ -197,10 +197,10 @@ const Header = () => {
                   ) : (
                     <Link
                       to={item.path}
-                      className={`relative text-gray-800 hover:text-orange-600 font-bold py-3 px-4 rounded-xl transition-all duration-300 group ${
+                      className={`relative text-gray-800 hover:text-orange-600 font-bold py-2 px-3 rounded-lg transition-all duration-300 group text-sm ${
                         isActivePath(item.path) 
-                          ? 'text-orange-600 bg-gradient-to-r from-orange-50 to-red-50 shadow-lg ring-2 ring-orange-200' 
-                          : 'hover:bg-gradient-to-r hover:from-orange-50 hover:to-red-50 hover:shadow-md'
+                          ? 'text-orange-600 bg-gradient-to-r from-orange-50 to-red-50 shadow-md ring-1 ring-orange-200' 
+                          : 'hover:bg-gradient-to-r hover:from-orange-50 hover:to-red-50 hover:shadow-sm'
                       }`}
                     >
                       <span className="relative z-10">{item.name}</span>

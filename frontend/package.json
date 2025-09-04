@@ -89,7 +89,9 @@
     "cacheAjaxRequests": false,
     "puppeteerArgs": [
       "--no-sandbox",
-      "--disable-setuid-sandbox"
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+      "--disable-gpu"
     ],
     "crawl": false,
     "minifyHtml": {

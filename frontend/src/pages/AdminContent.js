@@ -307,15 +307,30 @@ const AdminContent = () => {
   };
 
   const hasChanges = () => {
-    // Remove _lastModified timestamps for comparison
+    // Remove _lastModified and _forceUpdate timestamps for comparison
     const cleanContent = JSON.parse(JSON.stringify(content));
     const cleanOriginal = JSON.parse(JSON.stringify(originalContent));
     
     // Remove timestamp fields that shouldn't affect comparison
     delete cleanContent._lastModified;
     delete cleanOriginal._lastModified;
+    delete cleanContent._forceUpdate;
+    delete cleanOriginal._forceUpdate;
     
-    return JSON.stringify(cleanContent) !== JSON.stringify(cleanOriginal);
+    const hasChangesResult = JSON.stringify(cleanContent) !== JSON.stringify(cleanOriginal);
+    
+    // Special check for category deletions
+    if (!hasChangesResult && cleanContent.courseCategories && cleanOriginal.courseCategories) {
+      const currentCatCount = Object.keys(cleanContent.courseCategories).length;
+      const originalCatCount = Object.keys(cleanOriginal.courseCategories).length;
+      
+      if (currentCatCount !== originalCatCount) {
+        console.log('🔄 Category count change detected:', { original: originalCatCount, current: currentCatCount });
+        return true;
+      }
+    }
+    
+    return hasChangesResult;
   };
 
   const updateContent = (path, value) => {

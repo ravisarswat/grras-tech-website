@@ -8,16 +8,24 @@ const CourseManager = ({ content, updateContent }) => {
     title: '',
     description: '',
     overview: '',
+    oneLiner: '',
     category: '',
     categories: [],
     price: '',
+    fees: '',
     duration: '',
     level: 'Beginner',
     visible: true,
     featured: false,
     order: 1,
     highlights: [],
-    syllabus: []
+    syllabus: [],
+    tools: [],
+    learningOutcomes: [],
+    careerRoles: [],
+    eligibility: '',
+    mode: 'Classroom, Online, Hybrid',
+    certificationIncluded: false
   });
 
   const courses = content?.courses || [];

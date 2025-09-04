@@ -14,7 +14,7 @@ import {
   Info
 } from 'lucide-react';
 import SEO, { CoursePageSEO } from '../components/SEO';
-import RailwayCompatiblePDF from '../components/RailwayCompatiblePDF';
+import SyllabusModal from '../components/SyllabusModal';
 import { courses } from '../data/courses';
 
 const CourseDetail = () => {

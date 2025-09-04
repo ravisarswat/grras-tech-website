@@ -171,6 +171,44 @@ const CourseManager = ({ content, updateContent }) => {
     alert(`✅ Course "${course.title}" deleted!`);
   };
 
+  // Toggle course expansion
+  const toggleExpanded = (slug) => {
+    setExpandedCourses(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(slug)) {
+        newSet.delete(slug);
+      } else {
+        newSet.add(slug);
+      }
+      return newSet;
+    });
+  };
+
+  // Quick toggle visibility
+  const toggleVisibility = (slug) => {
+    const updatedCourses = courses.map(course => 
+      course.slug === slug 
+        ? { ...course, visible: !course.visible, modifiedAt: new Date().toISOString() }
+        : course
+    );
+    updateContent('courses', updatedCourses);
+  };
+
+  // Filter courses
+  const filteredCourses = courses.filter(course => {
+    const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         course.description?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = filterCategory === 'all' || 
+                           (course.categories && course.categories.includes(filterCategory));
+    return matchesSearch && matchesCategory;
+  });
+
+  // Handle array field updates (comma-separated)
+  const handleArrayField = (field, value) => {
+    const arrayValue = value.split(',').map(item => item.trim()).filter(item => item);
+    setNewCourse(prev => ({ ...prev, [field]: arrayValue }));
+  };
+
   // Add highlight
   const addHighlight = (slug) => {
     const highlight = prompt('Add highlight:');

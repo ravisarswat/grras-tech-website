@@ -357,6 +357,72 @@ const CourseManager = ({ content, updateContent }) => {
                 </div>
               </div>
 
+              {/* Array Fields - Comma Separated Input */}
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Tools & Technologies</label>
+                  <input
+                    type="text"
+                    value={newCourse.tools.join(', ')}
+                    onChange={(e) => {
+                      const toolsArray = e.target.value.split(',').map(item => item.trim()).filter(item => item);
+                      setNewCourse({...newCourse, tools: toolsArray});
+                    }}
+                    className="w-full border rounded p-2"
+                    placeholder="React, Node.js, MongoDB, Docker, Kubernetes"
+                  />
+                  <div className="flex flex-wrap gap-1 mt-2">
+                    {newCourse.tools.map((tool, index) => (
+                      <span key={index} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Learning Outcomes (What You'll Learn)</label>
+                  <textarea
+                    value={newCourse.learningOutcomes.join(', ')}
+                    onChange={(e) => {
+                      const outcomesArray = e.target.value.split(',').map(item => item.trim()).filter(item => item);
+                      setNewCourse({...newCourse, learningOutcomes: outcomesArray});
+                    }}
+                    className="w-full border rounded p-2"
+                    rows="3"
+                    placeholder="Manage RHEL systems and users, Configure local storage and file systems, Control services processes and boot sequence"
+                  />
+                  <div className="flex flex-wrap gap-1 mt-2">
+                    {newCourse.learningOutcomes.map((outcome, index) => (
+                      <span key={index} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        {outcome}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Career Opportunities</label>
+                  <input
+                    type="text"
+                    value={newCourse.careerRoles.join(', ')}
+                    onChange={(e) => {
+                      const rolesArray = e.target.value.split(',').map(item => item.trim()).filter(item => item);
+                      setNewCourse({...newCourse, careerRoles: rolesArray});
+                    }}
+                    className="w-full border rounded p-2"
+                    placeholder="Linux System Administrator, Junior DevOps Engineer, Support Engineer"
+                  />
+                  <div className="flex flex-wrap gap-1 mt-2">
+                    {newCourse.careerRoles.map((role, index) => (
+                      <span key={index} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                        {role}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-2">Visible</label>

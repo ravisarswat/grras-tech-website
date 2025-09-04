@@ -206,12 +206,19 @@ async def save_content(request: ContentRequest, admin_verified: bool = Depends(v
         
         logging.info(f"✅ Content saved successfully - AdminSyncId: {request.content.get('adminSyncId', 'N/A')}")
         
+        # Count only visible courses for sync verification
+        all_courses = updated_content.get('courses', [])
+        visible_courses_count = len([
+            course for course in all_courses 
+            if course.get("visible", True)
+        ])
+        
         return {
             "message": "Content saved successfully", 
             "content": updated_content,
             "timestamp": datetime.utcnow().isoformat(),
             "adminSyncId": request.content.get('adminSyncId'),
-            "coursesCount": len(updated_content.get('courses', []))
+            "coursesCount": visible_courses_count
         }
     except Exception as e:
         logging.error(f"Error saving content: {e}")

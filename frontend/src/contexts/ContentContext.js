@@ -36,7 +36,7 @@ export const ContentProvider = ({ children }) => {
           tagline: "Empowering Students with World-Class IT & Cloud Education",
           address: "A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012",
           phones: ["090019 91227"],
-          emails: ["info@grrassolutions.com"],
+          emails: ["online@grras.com"],
           social: {
             whatsapp: "https://wa.me/919001991227"
           },

@@ -32,13 +32,9 @@ function AppContent() {
   useScrollToTop();
   const location = useLocation();
   
-  // Check if we're on admin page
-  const isAdminPage = location.pathname.startsWith('/admin');
-  
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Only show Header if NOT on admin page */}
-      {!isAdminPage && <Header />}
+      <Header />
       <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />

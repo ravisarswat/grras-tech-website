@@ -257,8 +257,9 @@ const AdminContent = () => {
         // Wait for sync and verify
         await adminSyncUtils.waitForSync(2000);
         
-        // Verify sync status
-        const syncStatus = await adminSyncUtils.verifySyncStatus(cleanedContent.courses?.length);
+        // Verify sync status - only count visible courses since API filters them
+        const visibleCoursesCount = cleanedContent.courses?.filter(course => course.visible !== false).length;
+        const syncStatus = await adminSyncUtils.verifySyncStatus(visibleCoursesCount);
         
         if (syncStatus.synced) {
           toast.success('✅ Content saved and synced successfully! Changes are now live on website.');

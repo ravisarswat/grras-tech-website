@@ -9,6 +9,7 @@ import { ContentProvider } from './contexts/ContentContext';
 // Components
 import Header from './components/Header';
 import Footer from './components/Footer';
+import ErrorBoundary from './components/ErrorBoundary';
 import Home from './pages/Home';
 import About from './pages/About';
 import Courses from './pages/Courses';

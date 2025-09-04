@@ -9,9 +9,7 @@ import {
   Youtube,
   MessageCircle,
   ExternalLink,
-  Facebook,
-  Linkedin,
-  Twitter
+  Facebook
 } from 'lucide-react';
 import { useContent } from '../contexts/ContentContext';
 

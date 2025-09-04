@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Edit3, Eye, EyeOff, Save, X, Search, Filter, BookOpen, Clock, Users, Star, ChevronDown, ChevronRight } from 'lucide-react';
 
 const CourseManager = ({ content, updateContent }) => {
-  const [expandedCourse, setExpandedCourse] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [editingCourse, setEditingCourse] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterCategory, setFilterCategory] = useState('all');
+  const [expandedCourses, setExpandedCourses] = useState(new Set());
   const [newCourse, setNewCourse] = useState({
     title: '',
     description: '',

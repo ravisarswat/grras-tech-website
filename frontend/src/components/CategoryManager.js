@@ -118,8 +118,16 @@ const CategoryManager = ({ content, updateContent }) => {
 
     console.log('✅ User confirmed deletion');
 
-    // Create new categories using object destructuring
-    const { [slug]: deletedCategory, ...newCategories } = categories;
+    // Create new categories object by filtering out the deleted category
+    const newCategories = {};
+    Object.keys(categories).forEach(key => {
+      if (key !== slug) {
+        newCategories[key] = categories[key];
+      }
+    });
+    
+    console.log('🗑️ Old categories keys:', Object.keys(categories));
+    console.log('🗑️ New categories keys:', Object.keys(newCategories));
     
     // Remove category from courses
     const updatedCourses = courses.map(course => ({
@@ -128,14 +136,20 @@ const CategoryManager = ({ content, updateContent }) => {
     }));
 
     console.log('🗑️ Updating content...');
+    
+    // Update categories first, then courses
     updateContent('courseCategories', newCategories);
-    updateContent('courses', updatedCourses);
+    
+    // Wait a bit then update courses
+    setTimeout(() => {
+      updateContent('courses', updatedCourses);
+    }, 100);
 
     // Force component re-render by updating state
     setTimeout(() => {
       // Trigger re-render to ensure UI updates
       setExpandedCategory(null);
-    }, 0);
+    }, 200);
 
     console.log('✅ Delete operations completed');
     alert(`✅ Category "${categoryName}" deleted!`);

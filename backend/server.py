@@ -155,21 +155,12 @@ async def health_check():
 
 @api_router.post("/admin/login")
 async def admin_login(request: LoginRequest):
-    """Admin authentication"""
-    try:
-        if request.password == ADMIN_PASSWORD:
-            # Generate simple token (in production, use proper JWT)
-            token = hashlib.sha256(f"grras_admin_{ADMIN_PASSWORD}".encode()).hexdigest()
-            return {
-                "token": token,
-                "message": "Login successful",
-                "success": True
-            }
-        else:
-            raise HTTPException(status_code=401, detail="Invalid password")
-    except Exception as e:
-        logging.error(f"Login error: {e}")
-        raise HTTPException(status_code=500, detail="Login service error")
+    """Admin authentication - Simple version"""
+    if request.password == "grras-admin":
+        token = "admin_authenticated_" + hashlib.sha256("grras_admin_token".encode()).hexdigest()
+        return {"token": token, "success": True}
+    else:
+        raise HTTPException(status_code=401, detail="Wrong password")
 
 @api_router.get("/content")
 async def get_content():

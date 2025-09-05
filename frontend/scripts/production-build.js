@@ -314,10 +314,21 @@ routes.forEach((r) => {
     // Inject head content and structured data using different approach for minified HTML
     let finalHtml = TEMPLATE.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
     
-    // Replace existing title and description with new ones
-    const titleReplaced = finalHtml.replace(/<title>.*?<\/title>/i, `<title>${metadata.title}</title>`);
+    // Replace existing title and description with new ones - debug version
+    const originalHasTitle = finalHtml.includes('<title>');
+    const titleReplaced = finalHtml.replace(/<title>.*?<\/title>/i, `<title>${metadata.title}</title>`);  
+    const titleChanged = titleReplaced !== finalHtml;
+    
     const descReplaced = titleReplaced.replace(/<meta name="description" content=".*?">/i, `<meta name="description" content="${metadata.description}">`);
     finalHtml = descReplaced;
+    
+    // Debug info
+    if (route === '/courses/devops-training') {
+      console.log(`Debug for ${route}:`);
+      console.log(`  Original has title: ${originalHasTitle}`);
+      console.log(`  Title replacement worked: ${titleChanged}`);
+      console.log(`  New title: ${metadata.title}`);
+    }
     
     // Add SEO tags before </head>
     const seoTags = `

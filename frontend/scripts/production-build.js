@@ -315,8 +315,9 @@ routes.forEach((r) => {
     let finalHtml = TEMPLATE.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
     
     // Replace existing title and description with new ones
-    finalHtml = finalHtml.replace(/<title>.*?<\/title>/i, `<title>${metadata.title}</title>`);
-    finalHtml = finalHtml.replace(/<meta name="description" content=".*?">/i, `<meta name="description" content="${metadata.description}">`);
+    const titleReplaced = finalHtml.replace(/<title>.*?<\/title>/i, `<title>${metadata.title}</title>`);
+    const descReplaced = titleReplaced.replace(/<meta name="description" content=".*?">/i, `<meta name="description" content="${metadata.description}">`);
+    finalHtml = descReplaced;
     
     // Add SEO tags before </head>
     const seoTags = `

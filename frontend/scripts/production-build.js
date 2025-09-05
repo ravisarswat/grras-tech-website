@@ -395,7 +395,35 @@ routes.forEach((r) => {
       React.createElement(StaticRouter, { location: route }, React.createElement(AppRoutes))
     );
 
-    const finalHtml = inject(TEMPLATE, appHtml, metadata);
+    // Generate enhanced head tags
+    const headContent = headTags({
+      title: metadata.title,
+      description: metadata.description,
+      path: route,
+      ogImage: metadata.ogImage
+    });
+    
+    // Generate JSON-LD structured data
+    let jsonLdContent = '';
+    if (route.startsWith('/courses/')) {
+      // Individual course page
+      const slug = route.replace('/courses/', '');
+      const courseData = courses.find(c => c.slug === slug);
+      jsonLdContent = courseJsonLd({
+        name: metadata.title.replace(' | GRRAS Solutions Training Institute', ''),
+        description: metadata.description,
+        path: route,
+        courseData: courseData
+      });
+    } else {
+      // Other pages - use organization schema
+      jsonLdContent = organizationJsonLd();
+    }
+    
+    // Inject head content and structured data
+    const finalHtml = TEMPLATE
+      .replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`)
+      .replace('<!--head-->', headContent + '\n' + jsonLdContent);
 
     const outDir = path.join(BUILD_DIR, route === '/' ? '' : route);
     ensureDir(outDir);
@@ -406,10 +434,17 @@ routes.forEach((r) => {
     
   } catch (error) {
     console.error(`❌ Failed to prerender ${route}:`, error.message);
-    // Write fallback template
+    // Write fallback template with basic SEO
+    const headContent = headTags({
+      title: metadata.title || 'GRRAS Solutions Training Institute',
+      description: metadata.description || 'Professional IT training and certification courses',
+      path: route
+    });
+    const fallbackHtml = TEMPLATE.replace('<!--head-->', headContent + '\n' + organizationJsonLd());
+    
     const outDir = path.join(BUILD_DIR, route === '/' ? '' : route);
     ensureDir(outDir);
-    fs.writeFileSync(path.join(outDir, 'index.html'), TEMPLATE, 'utf8');
+    fs.writeFileSync(path.join(outDir, 'index.html'), fallbackHtml, 'utf8');
     sitemapUrls.push(route);
   }
 });

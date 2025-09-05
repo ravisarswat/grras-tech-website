@@ -47,8 +47,8 @@ try {
   const { StaticRouter } = require('react-router-dom/server');
   const { HelmetProvider } = require('react-helmet-async');
   
-  // Import our SSR app
-  const ServerApp = require('../src/ssr/ServerApp').default;
+  // Import our minimal SSR app for testing
+  const ServerApp = require('../src/ssr/MinimalServerApp').default;
   
   // Routes to prerender
   const routes = [

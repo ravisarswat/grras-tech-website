@@ -9,9 +9,11 @@ try {
   // Check if build directory exists
   const buildDir = path.join(__dirname, '..', 'frontend', 'build');
   if (!fs.existsSync(buildDir)) {
-    console.log('❌ Build directory not found. Run npm run build first.');
+    console.log('❌ Build directory not found at:', buildDir);
     process.exit(1);
   }
+  
+  console.log('✅ Found build directory at:', buildDir);
 
   // Set production environment
   process.env.NODE_ENV = 'production';

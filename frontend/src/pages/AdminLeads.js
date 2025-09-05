@@ -81,55 +81,40 @@ const AdminLeads = () => {
     e.preventDefault();
     setAuthError('');
     
-    if (!password.trim()) {
-      setAuthError('Please enter the admin password');
+    if (password !== 'grras-admin') {
+      setAuthError('Incorrect password. Use: grras-admin');
       return;
     }
     
     try {
-      console.log('🔐 Attempting admin login with password:', password);
-      console.log('🔗 API URL:', `${API}/admin/login`);
-      
-      // Use the same login endpoint as AdminContent
-      const response = await axios.post(`${API}/admin/login`, {
-        password: password.trim()
-      }, {
+      const response = await fetch(`${API}/admin/login`, {
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          password: password
+        })
       });
-
-      console.log('✅ Login response:', response.data);
-      console.log('✅ Token in response:', response.data.token);
       
-      // Check for token in response
-      const token = response.data?.token || response.data?.access_token;
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
       
-      if (token) {
-        console.log('✅ Token found, saving to localStorage');
-        localStorage.setItem('admin_token', token);
+      const data = await response.json();
+      
+      if (data.token && data.success) {
+        localStorage.setItem('admin_token', data.token);
         setIsAuthenticated(true);
         toast.success('Login successful!');
       } else {
-        console.error('❌ No token found in response:', response.data);
-        throw new Error(`No token in response. Received: ${JSON.stringify(response.data)}`);
+        throw new Error('No token received');
       }
+      
     } catch (error) {
-      console.error('❌ Login error:', error);
-      console.error('❌ Error response:', error.response?.data);
-      console.error('❌ Error status:', error.response?.status);
-      
-      let errorMessage = 'Login failed';
-      if (error.response?.data?.detail) {
-        errorMessage = error.response.data.detail;
-      } else if (error.response?.status === 401) {
-        errorMessage = 'Invalid password';
-      } else if (error.message) {
-        errorMessage = error.message;
-      }
-      
-      setAuthError(errorMessage);
-      toast.error(errorMessage);
+      console.error('Login failed:', error);
+      setAuthError('Login failed. Check your connection.');
+      toast.error('Login failed');
     }
   };
 

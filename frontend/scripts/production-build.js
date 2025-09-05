@@ -9,17 +9,29 @@ global.window = {
   location: { pathname: '/', href: 'https://www.grras.tech' },
   matchMedia: () => ({ matches: false, addListener: () => {}, removeListener: () => {} }),
   addEventListener: () => {},
-  removeEventListener: () => {}
+  removeEventListener: () => {},
+  innerWidth: 1024,
+  innerHeight: 768
 };
 global.document = {
-  createElement: () => ({ setAttribute: () => {}, style: {} }),
+  createElement: () => ({ 
+    setAttribute: () => {}, 
+    style: {},
+    appendChild: () => {},
+    removeChild: () => {},
+    textContent: '',
+    innerHTML: ''
+  }),
+  createTextNode: (text) => ({ textContent: text, nodeValue: text }),
   getElementById: () => null,
   querySelector: () => null,
   querySelectorAll: () => [],
   body: { appendChild: () => {}, removeChild: () => {} },
-  head: { appendChild: () => {}, removeChild: () => {} },
+  head: { appendChild: () => {}, removeChild: () => {}, firstChild: null },
+  getElementsByTagName: () => [{ appendChild: () => {}, removeChild: () => {} }],
   addEventListener: () => {},
-  removeEventListener: () => {}
+  removeEventListener: () => {},
+  hidden: false
 };
 global.navigator = { userAgent: 'SSR' };
 global.localStorage = { getItem: () => null, setItem: () => {}, removeItem: () => {} };

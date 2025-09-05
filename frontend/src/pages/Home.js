@@ -242,8 +242,7 @@ const Home = () => {
         <CourseCategoriesGrid />
       </div>
 
-      {/* Mobile Course Categories - Collapsible */}
-      <MobileCourseCategories />
+      {/* Mobile Course Categories - Removed to avoid duplication with menu */}
 
       {/* Mobile Popular Courses */}
       <MobilePopularCourses />

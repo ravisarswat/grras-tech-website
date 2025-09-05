@@ -399,6 +399,9 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Mobile Stats Section */}
+      <MobileStatsSection stats={stats} />
+
       {/* Learning Paths Preview */}
       <LearningPathsPreview />
 

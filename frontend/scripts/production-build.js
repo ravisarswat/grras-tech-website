@@ -148,8 +148,7 @@ function generateMetadata(route) {
     return {
       title: 'Student Placements | GRRAS Solutions Success Stories & Career Growth',
       description: 'Discover world-class student placements and career success stories from GRRAS Solutions graduates. 95% placement rate with top companies.',
-      canonical: `${baseUrl}/placements`,
-      jsonLd: organizationJsonLd
+      ogImage: 'https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png'
     };
   }
   
@@ -157,8 +156,7 @@ function generateMetadata(route) {
     return {
       title: 'IT Career Blog | DevOps, Cloud Computing & Technology Insights',
       description: 'Stay updated with latest IT career trends, DevOps insights, cloud computing news, and technology career guidance from GRRAS Solutions experts.',
-      canonical: `${baseUrl}/blog`,
-      jsonLd: organizationJsonLd
+      ogImage: 'https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png'
     };
   }
   
@@ -166,8 +164,7 @@ function generateMetadata(route) {
     return {
       title: 'Admissions | Join GRRAS Solutions IT Training Programs',
       description: 'Apply for admission to GRRAS Solutions IT training programs. Flexible batches, EMI options, and personalized career counseling available.',
-      canonical: `${baseUrl}/admissions`,
-      jsonLd: organizationJsonLd
+      ogImage: 'https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png'
     };
   }
   

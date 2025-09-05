@@ -112,6 +112,7 @@ security = HTTPBearer()
 
 # Admin credentials
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'grras-admin')
+logging.info(f"🔑 Admin password loaded: {ADMIN_PASSWORD}")
 
 # Pydantic models
 class LoginRequest(BaseModel):

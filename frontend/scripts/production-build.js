@@ -98,19 +98,15 @@ const sitemapUrls = [];
 
 console.log('🚀 Starting prerender (no CRA build here)…');
 
+// Remove debug logging to clean up output
 routes.forEach((r) => {
   const route = typeof r === 'string' ? r : r.path;
   const meta = typeof r === 'string' ? {} : { title: r.title, description: r.description };
 
   try {
-    console.log(`🔍 Processing route: ${route}`);
-    
     const appHtml = renderToString(
       React.createElement(StaticRouter, { location: route }, React.createElement(AppRoutes))
     );
-
-    console.log(`📏 Generated HTML length: ${appHtml.length} chars for ${route}`);
-    console.log(`🔍 First 200 chars: ${appHtml.substring(0, 200)}...`);
 
     const finalHtml = inject(TEMPLATE, appHtml, meta);
 

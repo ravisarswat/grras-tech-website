@@ -106,7 +106,7 @@ routes.forEach((r) => {
     console.log(`🔍 Processing route: ${route}`);
     
     const appHtml = renderToString(
-      React.createElement(StaticRouter, { location: route }, React.createElement(App))
+      React.createElement(StaticRouter, { location: route }, React.createElement(AppRoutes))
     );
 
     console.log(`📏 Generated HTML length: ${appHtml.length} chars for ${route}`);

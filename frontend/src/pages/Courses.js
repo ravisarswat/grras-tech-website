@@ -7,75 +7,85 @@ import EnhancedSEO from '../components/EnhancedSEO';
 import { categories as staticCategories } from '../data/categories';
 import { courses as staticCourses } from '../data/courses';
 
+// Initialize data synchronously for SSR compatibility
+const initializeStaticData = () => {
+  try {
+    // Filter visible courses and add default values
+    const visibleCourses = staticCourses
+      .filter(course => course.visible !== false && course.title && course.slug)
+      .map(course => ({
+        ...course,
+        // Ensure all required fields exist
+        price: course.price || course.fees || 'Contact for pricing',
+        overview: course.overview || course.description,
+        highlights: course.highlights || [],
+        learningOutcomes: course.learningOutcomes || [],
+        careerRoles: course.careerRoles || []
+      }));
+    
+    // Convert categories object to array format with counts
+    const categoryArray = Object.entries(staticCategories).map(([slug, category]) => {
+      const count = visibleCourses.filter(course => course.category === slug).length;
+      return {
+        ...category,
+        slug: slug,
+        id: slug,
+        count: count
+      };
+    });
+    
+    // Add "All Courses" category
+    const categoriesWithAll = [
+      {
+        id: 'all',
+        slug: 'all',
+        name: 'All Courses',
+        title: 'All Courses',
+        count: visibleCourses.length
+      },
+      ...categoryArray.filter(cat => cat.count > 0) // Only show categories with courses
+    ];
+    
+    return {
+      courses: visibleCourses,
+      categories: categoriesWithAll,
+      filteredCourses: visibleCourses
+    };
+  } catch (error) {
+    console.error('Error initializing static data:', error);
+    return {
+      courses: [],
+      categories: [],
+      filteredCourses: []
+    };
+  }
+};
+
+// Initialize data for SSR
+const initialData = initializeStaticData();
+
 const Courses = () => {
   const location = useLocation();
-  const [courses, setCourses] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [filteredCourses, setFilteredCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [courses, setCourses] = useState(initialData.courses);
+  const [categories, setCategories] = useState(initialData.categories);
+  const [filteredCourses, setFilteredCourses] = useState(initialData.filteredCourses);
+  const [loading, setLoading] = useState(false); // Start with false since data is pre-loaded
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   useEffect(() => {
-    // Load static data instead of API calls
-    loadStaticData();
-  }, []);
-
-  // Load static data
-  const loadStaticData = () => {
-    try {
-      setLoading(true);
-      
-      // Filter visible courses and add default values
-      const visibleCourses = staticCourses
-        .filter(course => course.visible !== false && course.title && course.slug)
-        .map(course => ({
-          ...course,
-          // Ensure all required fields exist
-          price: course.price || course.fees || 'Contact for pricing',
-          overview: course.overview || course.description,
-          highlights: course.highlights || [],
-          learningOutcomes: course.learningOutcomes || [],
-          careerRoles: course.careerRoles || []
-        }));
-      
-      // Convert categories object to array format with counts
-      const categoryArray = Object.entries(staticCategories).map(([slug, category]) => {
-        const count = visibleCourses.filter(course => course.category === slug).length;
-        return {
-          ...category,
-          slug: slug,
-          id: slug,
-          count: count
-        };
-      });
-      
-      // Add "All Courses" category
-      const categoriesWithAll = [
-        {
-          id: 'all',
-          slug: 'all',
-          name: 'All Courses',
-          title: 'All Courses',
-          count: visibleCourses.length
-        },
-        ...categoryArray.filter(cat => cat.count > 0) // Only show categories with courses
-      ];
-      
-      setCourses(visibleCourses);
-      setCategories(categoriesWithAll);
-      setFilteredCourses(visibleCourses);
-      setLoading(false);
-      
-      console.log('✅ Static data loaded:', {
-        courses: visibleCourses.length,
-        categories: categoryArray.length
-      });
-      
-    } catch (error) {
-      console.error('Error loading static data:', error);
-      setLoading(false);
+    // Only re-initialize if data is empty (edge case)
+    if (courses.length === 0) {
+      const freshData = initializeStaticData();
+      setCourses(freshData.courses);
+      setCategories(freshData.categories);
+      setFilteredCourses(freshData.filteredCourses);
     }
-  };
+    
+    console.log('✅ Static data loaded:', {
+      courses: courses.length,
+      categories: categories.length
+    });
+  }, []);
 
   // Handle URL parameters for category selection
   useEffect(() => {

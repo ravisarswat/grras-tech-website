@@ -770,6 +770,8 @@ async def get_leads(admin_verified: bool = Depends(verify_admin_token)):
         collection = db.leads
         leads = await collection.find({}).sort("timestamp", -1).to_list(1000)
         
+        logging.info(f"📊 Retrieved {len(leads)} leads from database")
+        
         # Convert ObjectId to string for JSON serialization
         for lead in leads:
             if "_id" in lead:

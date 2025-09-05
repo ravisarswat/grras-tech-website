@@ -100,13 +100,19 @@ const AdminLeads = () => {
       });
 
       console.log('✅ Login response:', response.data);
+      console.log('✅ Token in response:', response.data.token);
       
-      if (response.data.token) {
-        localStorage.setItem('admin_token', response.data.token);
+      // Check for token in response
+      const token = response.data?.token || response.data?.access_token;
+      
+      if (token) {
+        console.log('✅ Token found, saving to localStorage');
+        localStorage.setItem('admin_token', token);
         setIsAuthenticated(true);
         toast.success('Login successful!');
       } else {
-        throw new Error('No token received');
+        console.error('❌ No token found in response:', response.data);
+        throw new Error(`No token in response. Received: ${JSON.stringify(response.data)}`);
       }
     } catch (error) {
       console.error('❌ Login error:', error);

@@ -1,23 +1,20 @@
 #!/usr/bin/env node
 
-const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-console.log('🚀 Starting production build with SSR pre-rendering...');
+console.log('⚡ Starting SSR pre-rendering (build-only, no react-scripts)...');
 
 try {
-  // Step 1: Standard React build
-  console.log('📦 Building React app...');
-  execSync('CI=false react-scripts build', { stdio: 'inherit' });
+  // Check if build directory exists
+  const buildDir = path.join(__dirname, '..', 'build');
+  if (!fs.existsSync(buildDir)) {
+    console.log('❌ Build directory not found at:', buildDir);
+    process.exit(1);
+  }
   
-  // Step 2: Generate sitemap
-  console.log('🗺️ Generating sitemap...');
-  execSync('node generate-sitemap.js', { stdio: 'inherit' });
-  
-  // Step 3: SSR Pre-rendering
-  console.log('⚡ Starting SSR pre-rendering...');
-  
+  console.log('✅ Found build directory at:', buildDir);
+
   // Set production environment
   process.env.NODE_ENV = 'production';
   
@@ -47,7 +44,7 @@ try {
   const { StaticRouter } = require('react-router-dom/server');
   const { HelmetProvider } = require('react-helmet-async');
   
-  // Import our minimal SSR app for testing
+  // Import our minimal SSR app
   const ServerApp = require('../src/ssr/MinimalServerApp').default;
   
   // Routes to prerender
@@ -84,7 +81,6 @@ try {
     '/blog/cybersecurity-fundamentals-2025'
   ];
   
-  const buildDir = path.join(__dirname, '..', 'build');
   const indexTpl = fs.readFileSync(path.join(buildDir, 'index.html'), 'utf8');
   
   function writeRoute(route, html) {
@@ -139,29 +135,7 @@ try {
   
   console.log(`🎉 SSR prerender complete! Generated ${routes.length} route-specific pages.`);
   
-  // Step 4: Verify build
-  console.log('🔍 Verifying SSR build...');
-  const buildExists = fs.existsSync(path.join(__dirname, '../build'));
-  const indexExists = fs.existsSync(path.join(__dirname, '../build/index.html'));
-  
-  if (buildExists && indexExists) {
-    console.log('✅ Build verification successful!');
-    
-    // Check if SSR worked by looking for actual content
-    const indexContent = fs.readFileSync(path.join(__dirname, '../build/index.html'), 'utf8');
-    if (indexContent.includes('<div id="root">') && indexContent.length > 5000) {
-      console.log('✅ SSR verification successful!');
-    } else {
-      console.log('⚠️ SSR content verification - content may be minimal');
-    }
-  } else {
-    console.log('❌ Build verification failed!');
-    process.exit(1);
-  }
-  
-  console.log('🎉 Production build with SSR completed successfully!');
-  
 } catch (error) {
-  console.error('❌ Production build failed:', error.message);
+  console.error('❌ Prerender failed:', error.message);
   process.exit(1);
 }

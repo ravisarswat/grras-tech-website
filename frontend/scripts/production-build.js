@@ -116,8 +116,7 @@ function generateMetadata(route) {
     return {
       title: 'GRRAS Solutions Training Institute | IT & Cloud Certification Courses',
       description: 'Transform your career with industry-recognized IT certifications. Expert training in DevOps, AWS, Red Hat, Azure, Python, Data Science & Cybersecurity. 95% success rate.',
-      canonical: baseUrl,
-      jsonLd: organizationJsonLd
+      ogImage: 'https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png'
     };
   }
   

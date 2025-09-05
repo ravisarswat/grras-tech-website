@@ -383,9 +383,14 @@ ${jsonLdContent}`;
 <meta name="twitter:image" content="https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png">
 ${organizationJsonLd()}`;
     
-    // Insert after </style> if present, otherwise before </head>
-    if (fallbackHtml.includes('</style>')) {
-      fallbackHtml = fallbackHtml.replace('</style>', `</style>\n${fallbackSeoTags}`);
+    // Insert SEO tags after </style> using proper positioning
+    const styleEndIndex = fallbackHtml.indexOf('</style>');
+    const headEndIndex = fallbackHtml.indexOf('</head>');
+    
+    if (styleEndIndex !== -1 && headEndIndex !== -1 && styleEndIndex < headEndIndex) {
+      const beforeStyle = fallbackHtml.substring(0, styleEndIndex + 8);
+      const afterStyle = fallbackHtml.substring(styleEndIndex + 8);
+      fallbackHtml = beforeStyle + '\n' + fallbackSeoTags + afterStyle;
     } else {
       fallbackHtml = fallbackHtml.replace('</head>', `${fallbackSeoTags}\n</head>`);
     }

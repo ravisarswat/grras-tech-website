@@ -50,30 +50,10 @@ const AdminLeads = () => {
     filterLeads();
   }, [leads, searchTerm, selectedCourse, dateRange]);
 
-  const checkAuthentication = async () => {
-    try {
-      // Check if we have admin token from AdminContent login
-      const token = localStorage.getItem('admin_token');
-      if (!token) {
-        setIsAuthenticated(false);
-        setLoading(false);
-        return;
-      }
-
-      // Try to access the leads endpoint with the token
-      const response = await axios.get(`${API}/leads`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      
-      if (response.status === 200) {
-        setIsAuthenticated(true);
-        setLeads(response.data.leads || []);
-      }
-    } catch (error) {
-      console.error('Auth check failed:', error);
-      setIsAuthenticated(false);
-      localStorage.removeItem('admin_token');
-    }
+  const checkAuthentication = () => {
+    const token = localStorage.getItem('admin_token');
+    const isValid = token && token.startsWith('admin_authenticated_');
+    setIsAuthenticated(isValid);
     setLoading(false);
   };
 

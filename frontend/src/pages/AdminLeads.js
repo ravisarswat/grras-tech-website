@@ -81,18 +81,29 @@ const AdminLeads = () => {
     e.preventDefault();
     setAuthError('');
     
+    if (!password.trim()) {
+      setAuthError('Please enter the admin password');
+      return;
+    }
+    
     try {
+      console.log('🔐 Attempting admin login...');
       // Use the same login endpoint as AdminContent
       const response = await axios.post(`${API}/admin/login`, {
-        password: password
+        password: password.trim()
       });
 
+      console.log('✅ Login response:', response.data);
+      
       if (response.data.token) {
         localStorage.setItem('admin_token', response.data.token);
         setIsAuthenticated(true);
         toast.success('Login successful!');
+      } else {
+        throw new Error('No token received');
       }
     } catch (error) {
+      console.error('❌ Login error:', error);
       const errorMessage = error.response?.data?.detail || 'Login failed. Please check your password.';
       setAuthError(errorMessage);
       toast.error(errorMessage);

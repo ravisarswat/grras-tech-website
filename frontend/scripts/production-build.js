@@ -280,7 +280,12 @@ function organizationJsonLd() {
     }
   };
   
-  return `<script type="application/ld+json">${JSON.stringify(jsonLd, null, 2)}</script>`;
+  // Properly escape JSON-LD for HTML injection
+  const escapedJson = JSON.stringify(jsonLd, null, 2)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026');
+  return `<script type="application/ld+json">${escapedJson}</script>`;
 }
 
 const sitemapUrls = [];

@@ -29,7 +29,12 @@ try {
     ],
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     ignore: [/node_modules/],
-    plugins: []
+    plugins: [
+      // Ignore CSS imports in SSR
+      ['babel-plugin-transform-require-ignore', {
+        extensions: ['.css', '.scss', '.sass', '.less']
+      }]
+    ]
   });
   
   const React = require('react');

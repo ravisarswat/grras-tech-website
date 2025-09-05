@@ -21,6 +21,17 @@ try {
   // Set production environment
   process.env.NODE_ENV = 'production';
   
+  // Mock CSS and asset imports for SSR
+  require.extensions['.css'] = () => {};
+  require.extensions['.scss'] = () => {};
+  require.extensions['.sass'] = () => {};
+  require.extensions['.less'] = () => {};
+  require.extensions['.png'] = () => {};
+  require.extensions['.jpg'] = () => {};
+  require.extensions['.jpeg'] = () => {};
+  require.extensions['.gif'] = () => {};
+  require.extensions['.svg'] = () => {};
+  
   // Setup Babel for JSX/ES6 compilation
   require('@babel/register')({
     presets: [
@@ -28,13 +39,7 @@ try {
       ['@babel/preset-react', { runtime: 'automatic' }]
     ],
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    ignore: [/node_modules/],
-    plugins: [
-      // Ignore CSS imports in SSR
-      ['babel-plugin-transform-require-ignore', {
-        extensions: ['.css', '.scss', '.sass', '.less']
-      }]
-    ]
+    ignore: [/node_modules/]
   });
   
   const React = require('react');

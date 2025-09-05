@@ -235,8 +235,13 @@ const Home = () => {
       {/* Course Search Bar */}
       <CourseSearchBar />
 
-      {/* Course Categories Grid */}
-      <CourseCategoriesGrid />
+      {/* Course Categories Grid - Desktop */}
+      <div className="hidden lg:block">
+        <CourseCategoriesGrid />
+      </div>
+
+      {/* Mobile Course Categories - Collapsible */}
+      <MobileCourseCategories />
 
       {/* Featured Courses Section */}
       <section className="py-20 bg-gray-50">

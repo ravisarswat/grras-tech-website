@@ -9,32 +9,43 @@ import {
   BookOpen
 } from 'lucide-react';
 
-const MobileStatsSection = ({ stats }) => {
+const MobileStatsSection = ({ stats = {} }) => {
+  // Default stats with proper values
+  const defaultStats = {
+    years: 18,
+    students: 5000,
+    certifications: 50,
+    placement: 95
+  };
+  
+  // Merge provided stats with defaults
+  const finalStats = { ...defaultStats, ...stats };
+
   const statItems = [
     {
       icon: <Award className="h-6 w-6" />,
-      value: `${stats.years}+`,
+      value: `${finalStats.years}+`,
       label: "Years of Excellence",
       description: "Since 2007",
       color: "from-orange-500 to-red-500"
     },
     {
       icon: <Users className="h-6 w-6" />,
-      value: `${stats.students}+`,
+      value: `${finalStats.students}+`,
       label: "Students Trained",
       description: "Across India",
       color: "from-blue-500 to-cyan-500"
     },
     {
       icon: <GraduationCap className="h-6 w-6" />,
-      value: `${stats.certifications}+`,
+      value: `${finalStats.certifications}+`,
       label: "Certifications",
       description: "Red Hat & AWS",
       color: "from-green-500 to-emerald-500"
     },
     {
       icon: <TrendingUp className="h-6 w-6" />,
-      value: `${stats.placement}%`,
+      value: `${finalStats.placement}%`,
       label: "Placement Rate",
       description: "Industry Best",
       color: "from-purple-500 to-pink-500"

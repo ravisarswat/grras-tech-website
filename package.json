@@ -7,5 +7,11 @@
   },
   "engines": {
     "node": "20.x"
-  }
+  },
+  "main": "import_existing_categories.js",
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

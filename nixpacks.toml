@@ -1,2 +1,19 @@
-providers = ["node"]   # use only Node provider
-# no apt packages; no chromium
+providers = ["node"]
+
+[phases.setup]
+# Force: no apt packages (disables Chromium/libgtk/etc. installs)
+aptPkgs = []
+# Pin Node via nix (optional; I'll also pin via Railway env)
+nixPkgs = ["nodejs_18", "npm-9_x"]
+
+[phases.install]
+# Single install step; skip postinstall scripts (no puppeteer)
+cmds = ["npm ci --ignore-scripts"]
+
+[phases.build]
+# CRA build + optional prerender if present
+cmds = ["CI=false npx --yes react-scripts build && [ -f scripts/production-build.js ] && node scripts/production-build.js || echo 'no prerender script'"]
+
+[phases.start]
+# If our backend serves /build itself, ignore this; otherwise static serve:
+cmd = "npx serve -s build -l $PORT"

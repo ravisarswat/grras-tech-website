@@ -124,8 +124,7 @@ function generateMetadata(route) {
     return {
       title: 'About GRRAS Solutions | Leading IT Training Institute in Jaipur',
       description: 'Learn about GRRAS Solutions Training Institute - Jaipur\'s premier IT education center offering professional certification courses with industry mentorship and placement assistance.',
-      canonical: `${baseUrl}/about`,
-      jsonLd: organizationJsonLd
+      ogImage: 'https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png'
     };
   }
   

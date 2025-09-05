@@ -323,9 +323,8 @@ routes.forEach((r) => {
       finalHtml = finalHtml.replace('</head>', `<title>${metadata.title}</title>\n</head>`);
     }
     
-    // Add SEO tags before </head>
-    const seoTags = `
-<link rel="canonical" href="${ORIGIN}${route}">
+    // Add SEO tags before </head> - ensuring proper placement after </style>
+    const seoTags = `<link rel="canonical" href="${ORIGIN}${route}">
 <meta property="og:title" content="${metadata.title}">
 <meta property="og:description" content="${metadata.description}">
 <meta property="og:url" content="${ORIGIN}${route}">
@@ -338,7 +337,14 @@ routes.forEach((r) => {
 <meta name="twitter:image" content="${metadata.ogImage || 'https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png'}">
 ${jsonLdContent}`;
     
-    finalHtml = finalHtml.replace('</head>', seoTags + '\n</head>');
+    // Find the correct position to inject SEO tags - after </style> but before </head>
+    if (finalHtml.includes('</style>')) {
+      // Insert after </style> tag 
+      finalHtml = finalHtml.replace('</style>', `</style>\n${seoTags}`);
+    } else {
+      // Fallback: insert before </head>
+      finalHtml = finalHtml.replace('</head>', `${seoTags}\n</head>`);
+    }
 
     const outDir = path.join(BUILD_DIR, route === '/' ? '' : route);
     ensureDir(outDir);

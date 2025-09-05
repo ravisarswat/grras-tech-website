@@ -133,23 +133,7 @@ function generateMetadata(route) {
     return {
       title: 'IT Certification Courses | DevOps, AWS, Red Hat, Azure Training',
       description: 'Browse 19+ professional IT certification courses - DevOps, AWS, Red Hat, Azure, Python, Data Science, Cybersecurity. Industry-recognized training with hands-on labs.',
-      canonical: `${baseUrl}/courses`,
-      jsonLd: {
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        "name": "IT Certification Courses",
-        "description": "Professional IT training courses offered by GRRAS Solutions Training Institute",
-        "provider": organizationJsonLd,
-        "numberOfItems": courses.filter(c => c.visible !== false).length,
-        "itemListElement": courses.filter(c => c.visible !== false).map((course, index) => ({
-          "@type": "Course",
-          "position": index + 1,
-          "name": course.title,
-          "description": course.description || course.oneLiner,
-          "url": `${baseUrl}/courses/${course.slug}`,
-          "provider": organizationJsonLd
-        }))
-      }
+      ogImage: 'https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png'
     };
   }
   

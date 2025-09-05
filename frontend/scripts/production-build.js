@@ -292,13 +292,7 @@ routes.forEach((r) => {
       React.createElement(StaticRouter, { location: route }, React.createElement(AppRoutes))
     );
 
-    // Generate enhanced head tags
-    const headContent = headTags({
-      title: metadata.title,
-      description: metadata.description,
-      path: route,
-      ogImage: metadata.ogImage
-    });
+    // SEO metadata will be injected directly into HTML
     
     // Generate JSON-LD structured data
     let jsonLdContent = '';

@@ -369,12 +369,29 @@ ${jsonLdContent}`;
   } catch (error) {
     console.error(`❌ Failed to prerender ${route}:`, error.message);
     // Write fallback template with basic SEO
-    const headContent = headTags({
-      title: metadata.title || 'GRRAS Solutions Training Institute',
-      description: metadata.description || 'Professional IT training and certification courses',
-      path: route
-    });
-    const fallbackHtml = TEMPLATE.replace('<!--head-->', headContent + '\n' + organizationJsonLd());
+    let fallbackHtml = TEMPLATE;
+    const fallbackTitle = metadata.title || 'GRRAS Solutions Training Institute';
+    const fallbackDescription = metadata.description || 'Professional IT training and certification courses';
+    
+    // Replace existing tags and add SEO
+    fallbackHtml = fallbackHtml.replace(/<title>.*?<\/title>/i, `<title>${fallbackTitle}</title>`);
+    fallbackHtml = fallbackHtml.replace(/<meta name="description" content=".*?">/i, `<meta name="description" content="${fallbackDescription}">`);
+    
+    const fallbackSeoTags = `
+<link rel="canonical" href="${ORIGIN}${route}">
+<meta property="og:title" content="${fallbackTitle}">
+<meta property="og:description" content="${fallbackDescription}">
+<meta property="og:url" content="${ORIGIN}${route}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GRRAS Solutions Training Institute">
+<meta property="og:image" content="https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${fallbackTitle}">
+<meta name="twitter:description" content="${fallbackDescription}">
+<meta name="twitter:image" content="https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png">
+${organizationJsonLd()}`;
+    
+    fallbackHtml = fallbackHtml.replace('</head>', fallbackSeoTags + '\n</head>');
     
     const outDir = path.join(BUILD_DIR, route === '/' ? '' : route);
     ensureDir(outDir);

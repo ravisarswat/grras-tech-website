@@ -323,7 +323,7 @@ routes.forEach((r) => {
 // sitemap.xml
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${sitemapUrls.map(u => `  <url><loc>${BASE_URL}${u}</loc></url>`).join('\n')}
+${sitemapUrls.map(u => `  <url><loc>${ORIGIN}${u}</loc></url>`).join('\n')}
 </urlset>`;
 fs.writeFileSync(path.join(BUILD_DIR, 'sitemap.xml'), sitemap, 'utf8');
 

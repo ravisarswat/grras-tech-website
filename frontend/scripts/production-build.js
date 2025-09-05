@@ -1,141 +1,114 @@
-#!/usr/bin/env node
+/* eslint-disable no-console */
+process.env.NODE_ENV = 'production';
 
 const fs = require('fs');
 const path = require('path');
 
-console.log('⚡ Starting SSR pre-rendering (build-only, no react-scripts)...');
+// Mock CSS and asset imports for SSR
+require.extensions['.css'] = () => {};
+require.extensions['.scss'] = () => {};
+require.extensions['.sass'] = () => {};
+require.extensions['.less'] = () => {};
+require.extensions['.png'] = () => {};
+require.extensions['.jpg'] = () => {};
+require.extensions['.jpeg'] = () => {};
+require.extensions['.gif'] = () => {};
+require.extensions['.svg'] = () => {};
 
-try {
-  // Check if build directory exists
-  const buildDir = path.join(__dirname, '..', 'build');
-  if (!fs.existsSync(buildDir)) {
-    console.log('❌ Build directory not found at:', buildDir);
-    process.exit(1);
-  }
-  
-  console.log('✅ Found build directory at:', buildDir);
+// Allow JSX/TSX imports from src in this Node script
+require('@babel/register')({
+  presets: [
+    ['@babel/preset-env', { targets: { node: 'current' } }],
+    ['@babel/preset-react', { runtime: 'automatic' }],
+    ['@babel/preset-typescript', {}]
+  ],
+  extensions: ['.js', '.jsx', '.ts', '.tsx'],
+  ignore: [/node_modules/]
+});
 
-  // Set production environment
-  process.env.NODE_ENV = 'production';
-  
-  // Mock CSS and asset imports for SSR
-  require.extensions['.css'] = () => {};
-  require.extensions['.scss'] = () => {};
-  require.extensions['.sass'] = () => {};
-  require.extensions['.less'] = () => {};
-  require.extensions['.png'] = () => {};
-  require.extensions['.jpg'] = () => {};
-  require.extensions['.jpeg'] = () => {};
-  require.extensions['.gif'] = () => {};
-  require.extensions['.svg'] = () => {};
-  
-  // Setup Babel for JSX/ES6 compilation
-  require('@babel/register')({
-    presets: [
-      ['@babel/preset-env', { targets: { node: 'current' } }],
-      ['@babel/preset-react', { runtime: 'automatic' }]
-    ],
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    ignore: [/node_modules/]
-  });
-  
-  const React = require('react');
-  const { renderToString } = require('react-dom/server');
-  const { StaticRouter } = require('react-router-dom/server');
-  const { HelmetProvider } = require('react-helmet-async');
-  
-  // Import our minimal SSR app
-  const ServerApp = require('../src/ssr/MinimalServerApp').default;
-  
-  // Routes to prerender
-  const routes = [
-    '/',
-    '/about',
-    '/courses',
-    '/contact',
-    '/placements', 
-    '/blog',
-    '/admissions',
-    '/courses/devops-training',
-    '/courses/kubernetes-administrator-cka',
-    '/courses/docker-containerization',
-    '/courses/rhcsa-red-hat-certified-system-administrator',
-    '/courses/rhce-red-hat-certified-engineer',
-    '/courses/do188-red-hat-openshift-development',
-    '/courses/do280-red-hat-openshift-administration',
-    '/courses/aws-solutions-architect-associate',
-    '/courses/aws-sysops-administrator',
-    '/courses/aws-developer-associate',
-    '/courses/azure-fundamentals-az900',
-    '/courses/azure-administrator-az104',
-    '/courses/google-cloud-associate-engineer',
-    '/courses/python-programming-data-science',
-    '/courses/machine-learning-artificial-intelligence',
-    '/courses/full-stack-web-development',
-    '/courses/java-programming-enterprise',
-    '/courses/ethical-hacking-penetration-testing',
-    '/courses/cybersecurity-fundamentals',
-    '/blog/devops-career-opportunities-2025',
-    '/blog/aws-certification-roadmap-2025',
-    '/blog/python-programming-beginner-guide-2025',
-    '/blog/cybersecurity-fundamentals-2025'
-  ];
-  
-  const indexTpl = fs.readFileSync(path.join(buildDir, 'index.html'), 'utf8');
-  
-  function writeRoute(route, html) {
-    const outDir = path.join(buildDir, route === '/' ? '' : route);
-    fs.mkdirSync(outDir, { recursive: true });
-    fs.writeFileSync(path.join(outDir, 'index.html'), html);
-    console.log('✅ SSR prerendered:', route);
+const React = require('react');
+const { renderToString } = require('react-dom/server');
+const { StaticRouter } = require('react-router-dom/server');
+
+// Import your app
+const App = require('../src/App').default;
+
+// Routes to prerender
+const routes = require('./prerender-routes.json');
+
+const BUILD_DIR = path.resolve(__dirname, '..', 'build');
+const INDEX_HTML = path.join(BUILD_DIR, 'index.html');
+const TEMPLATE = fs.readFileSync(INDEX_HTML, 'utf8');
+
+function ensureDir(p) { fs.mkdirSync(p, { recursive: true }); }
+
+function inject(template, appHtml, meta = {}) {
+  let out = template.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
+  if (meta.title) {
+    out = out.replace(/<title>.*?<\/title>/, `<title>${meta.title}</title>`);
   }
-  
-  // Prerender each route
-  for (const route of routes) {
-    try {
-      const helmetContext = {};
-      
-      const app = React.createElement(
-        HelmetProvider, { context: helmetContext },
-        React.createElement(
-          StaticRouter, { location: route },
-          React.createElement(ServerApp, null)
-        )
+  if (meta.description) {
+    if (out.match(/<meta name="description" content=".*?">/)) {
+      out = out.replace(
+        /<meta name="description" content=".*?">/,
+        `<meta name="description" content="${meta.description}">`
       );
-      
-      const markup = renderToString(app);
-      const helmet = helmetContext.helmet || {};
-      
-      // Collect head tags from Helmet
-      const headTags = [
-        helmet.title && helmet.title.toString(),
-        helmet.meta && helmet.meta.toString(),
-        helmet.link && helmet.link.toString(),
-      ].filter(Boolean).join('\n');
-      
-      // 1) Inject SSR markup into #root
-      let outHtml = indexTpl.replace(
-        /<div id="root"><\/div>/g,
-        `<div id="root">${markup}</div>`
-      );
-      
-      // 2) Inject Helmet head tags before </head>
-      if (headTags) {
-        outHtml = outHtml.replace(/<\/head>/g, `${headTags}\n</head>`);
-      }
-      
-      writeRoute(route, outHtml);
-      
-    } catch (error) {
-      console.error(`❌ SSR failed for route ${route}:`, error.message);
-      // Fallback: write original template
-      writeRoute(route, indexTpl);
+    } else {
+      out = out.replace('</head>', `<meta name="description" content="${meta.description}"></head>`);
     }
   }
-  
-  console.log(`🎉 SSR prerender complete! Generated ${routes.length} route-specific pages.`);
-  
-} catch (error) {
-  console.error('❌ Prerender failed:', error.message);
-  process.exit(1);
+  return out;
 }
+
+const BASE_URL = 'https://www.grras.tech';
+const sitemapUrls = [];
+
+console.log('🚀 Starting prerender (no CRA build here)…');
+
+routes.forEach((r) => {
+  const route = typeof r === 'string' ? r : r.path;
+  const meta = typeof r === 'string' ? {} : { title: r.title, description: r.description };
+
+  try {
+    const appHtml = renderToString(
+      React.createElement(StaticRouter, { location: route }, React.createElement(App))
+    );
+
+    const finalHtml = inject(TEMPLATE, appHtml, meta);
+
+    const outDir = path.join(BUILD_DIR, route === '/' ? '' : route);
+    ensureDir(outDir);
+    fs.writeFileSync(path.join(outDir, 'index.html'), finalHtml, 'utf8');
+
+    sitemapUrls.push(route);
+    console.log('✅ Prerendered:', route);
+    
+  } catch (error) {
+    console.error(`❌ Failed to prerender ${route}:`, error.message);
+    // Write fallback template
+    const outDir = path.join(BUILD_DIR, route === '/' ? '' : route);
+    ensureDir(outDir);
+    fs.writeFileSync(path.join(outDir, 'index.html'), TEMPLATE, 'utf8');
+    sitemapUrls.push(route);
+  }
+});
+
+// sitemap.xml
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapUrls.map(u => `  <url><loc>${BASE_URL}${u}</loc></url>`).join('\n')}
+</urlset>`;
+fs.writeFileSync(path.join(BUILD_DIR, 'sitemap.xml'), sitemap, 'utf8');
+
+// robots.txt
+fs.writeFileSync(
+  path.join(BUILD_DIR, 'robots.txt'),
+  `User-agent: *
+Allow: /
+Sitemap: ${BASE_URL}/sitemap.xml
+`,
+  'utf8'
+);
+
+console.log('🎉 Done prerendering without calling react-scripts build.');
+console.log(`📄 Generated ${sitemapUrls.length} prerendered pages + sitemap.xml + robots.txt`);

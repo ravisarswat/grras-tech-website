@@ -1,2 +1,2 @@
 providers = ["node"]   # use only Node provider
-# (no extra apt packages required)
+# no apt packages; no chromium

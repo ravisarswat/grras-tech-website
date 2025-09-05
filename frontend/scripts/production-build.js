@@ -4,6 +4,27 @@ process.env.NODE_ENV = 'production';
 const fs = require('fs');
 const path = require('path');
 
+// Mock browser globals for SSR
+global.window = {
+  location: { pathname: '/', href: 'https://www.grras.tech' },
+  matchMedia: () => ({ matches: false, addListener: () => {}, removeListener: () => {} }),
+  addEventListener: () => {},
+  removeEventListener: () => {}
+};
+global.document = {
+  createElement: () => ({ setAttribute: () => {}, style: {} }),
+  getElementById: () => null,
+  querySelector: () => null,
+  querySelectorAll: () => [],
+  body: { appendChild: () => {}, removeChild: () => {} },
+  head: { appendChild: () => {}, removeChild: () => {} },
+  addEventListener: () => {},
+  removeEventListener: () => {}
+};
+global.navigator = { userAgent: 'SSR' };
+global.localStorage = { getItem: () => null, setItem: () => {}, removeItem: () => {} };
+global.sessionStorage = { getItem: () => null, setItem: () => {}, removeItem: () => {} };
+
 // Mock CSS and asset imports for SSR
 require.extensions['.css'] = () => {};
 require.extensions['.scss'] = () => {};

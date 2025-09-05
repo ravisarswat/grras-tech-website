@@ -318,6 +318,11 @@ routes.forEach((r) => {
     finalHtml = finalHtml.replace(/<title>.*?<\/title>/i, `<title>${metadata.title}</title>`);
     finalHtml = finalHtml.replace(/<meta name="description" content=".*?">/i, `<meta name="description" content="${metadata.description}">`);
     
+    // Ensure title tag is present (add if missing)
+    if (!finalHtml.includes('<title>')) {
+      finalHtml = finalHtml.replace('</head>', `<title>${metadata.title}</title>\n</head>`);
+    }
+    
     // Add SEO tags before </head>
     const seoTags = `
 <link rel="canonical" href="${ORIGIN}${route}">

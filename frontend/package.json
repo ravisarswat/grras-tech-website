@@ -32,6 +32,9 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.28.3",
+    "@babel/preset-react": "^7.27.1",
+    "@babel/register": "^7.28.3",
     "@tailwindcss/forms": "^0.5.7",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.33",
@@ -62,7 +65,7 @@
       "/about",
       "/courses",
       "/contact",
-      "/placements", 
+      "/placements",
       "/blog",
       "/admissions",
       "/courses/devops-training",
@@ -92,7 +95,7 @@
     "skipThirdPartyRequests": true,
     "cacheAjaxRequests": false,
     "puppeteerArgs": [
-      "--no-sandbox", 
+      "--no-sandbox",
       "--disable-setuid-sandbox",
       "--disable-dev-shm-usage",
       "--disable-gpu",

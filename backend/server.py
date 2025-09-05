@@ -896,9 +896,9 @@ async def submit_contact(
         }
         
         collection = db.leads
-        await collection.insert_one(lead_data)
+        result = await collection.insert_one(lead_data)
         
-        logging.info(f"✅ Contact form submitted: {name} ({email})")
+        logging.info(f"✅ Contact form submitted: {name} ({email}) - MongoDB ID: {result.inserted_id}")
         return {"message": "Contact form submitted successfully", "lead_id": lead_data["id"]}
     except Exception as e:
         logging.error(f"Error submitting contact form: {e}")

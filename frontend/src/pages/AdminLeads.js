@@ -321,10 +321,14 @@ const AdminLeads = () => {
               <input
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="form-input"
-                placeholder="Enter admin password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setAuthError(''); // Clear error when typing
+                }}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors"
+                placeholder="Enter: grras-admin"
                 required
+                autoComplete="current-password"
               />
             </div>
             

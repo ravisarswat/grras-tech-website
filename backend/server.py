@@ -25,6 +25,7 @@ import requests
 from io import BytesIO
 from bson import ObjectId
 from bson.errors import InvalidId
+from fastapi.staticfiles import StaticFiles
 
 # Load environment variables
 load_dotenv()

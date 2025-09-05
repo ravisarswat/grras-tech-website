@@ -74,38 +74,7 @@ const TEMPLATE = fs.readFileSync(INDEX_HTML, 'utf8');
 
 function ensureDir(p) { fs.mkdirSync(p, { recursive: true }); }
 
-function inject(template, appHtml, meta = {}) {
-  let out = template.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
-  
-  // Inject title
-  if (meta.title) {
-    out = out.replace(/<title>.*?<\/title>/, `<title>${meta.title}</title>`);
-  }
-  
-  // Inject meta description
-  if (meta.description) {
-    if (out.match(/<meta name="description" content=".*?">/)) {
-      out = out.replace(
-        /<meta name="description" content=".*?">/,
-        `<meta name="description" content="${meta.description}">`
-      );
-    } else {
-      out = out.replace('</head>', `<meta name="description" content="${meta.description}"></head>`);
-    }
-  }
-  
-  // Inject canonical URL
-  if (meta.canonical) {
-    out = out.replace('</head>', `<link rel="canonical" href="${meta.canonical}"></head>`);
-  }
-  
-  // Inject JSON-LD structured data
-  if (meta.jsonLd) {
-    out = out.replace('</head>', `<script type="application/ld+json">${JSON.stringify(meta.jsonLd)}</script></head>`);
-  }
-  
-  return out;
-}
+// Enhanced head injection handled in route rendering loop
 
 // Import courses data for metadata generation
 const { courses } = require('../src/data/courses');

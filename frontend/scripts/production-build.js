@@ -374,8 +374,11 @@ ${jsonLdContent}`;
 <meta name="twitter:image" content="https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png">
 ${organizationJsonLd()}`;
     
-    // Simple approach: Insert SEO tags before </head>
-    fallbackHtml = fallbackHtml.replace('</head>', `${fallbackSeoTags}\n</head>`);
+    // Safe approach: Insert SEO tags carefully
+    const headEndIndex = fallbackHtml.lastIndexOf('</head>');
+    if (headEndIndex !== -1) {
+      fallbackHtml = fallbackHtml.slice(0, headEndIndex) + fallbackSeoTags + '\n' + fallbackHtml.slice(headEndIndex);
+    }
     
     const outDir = path.join(BUILD_DIR, route === '/' ? '' : route);
     ensureDir(outDir);

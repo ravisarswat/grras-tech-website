@@ -103,9 +103,14 @@ routes.forEach((r) => {
   const meta = typeof r === 'string' ? {} : { title: r.title, description: r.description };
 
   try {
+    console.log(`🔍 Processing route: ${route}`);
+    
     const appHtml = renderToString(
       React.createElement(StaticRouter, { location: route }, React.createElement(App))
     );
+
+    console.log(`📏 Generated HTML length: ${appHtml.length} chars for ${route}`);
+    console.log(`🔍 First 200 chars: ${appHtml.substring(0, 200)}...`);
 
     const finalHtml = inject(TEMPLATE, appHtml, meta);
 

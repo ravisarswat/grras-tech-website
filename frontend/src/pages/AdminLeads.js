@@ -361,11 +361,7 @@ const AdminLeads = () => {
               {password.trim() ? 'Sign In' : 'Enter Password'}
             </button>
             
-            <div className="text-center">
-              <p className="text-xs text-gray-500">
-                Password: <span className="font-semibold text-red-600">grras-admin</span>
-              </p>
-            </div>
+
           </form>
         </div>
       </div>

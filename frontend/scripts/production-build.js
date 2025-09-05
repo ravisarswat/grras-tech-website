@@ -332,7 +332,7 @@ fs.writeFileSync(
   path.join(BUILD_DIR, 'robots.txt'),
   `User-agent: *
 Allow: /
-Sitemap: ${BASE_URL}/sitemap.xml
+Sitemap: ${ORIGIN}/sitemap.xml
 `,
   'utf8'
 );

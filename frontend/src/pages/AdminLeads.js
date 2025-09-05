@@ -87,10 +87,16 @@ const AdminLeads = () => {
     }
     
     try {
-      console.log('🔐 Attempting admin login...');
+      console.log('🔐 Attempting admin login with password:', password);
+      console.log('🔗 API URL:', `${API}/admin/login`);
+      
       // Use the same login endpoint as AdminContent
       const response = await axios.post(`${API}/admin/login`, {
         password: password.trim()
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
 
       console.log('✅ Login response:', response.data);
@@ -104,7 +110,18 @@ const AdminLeads = () => {
       }
     } catch (error) {
       console.error('❌ Login error:', error);
-      const errorMessage = error.response?.data?.detail || 'Login failed. Please check your password.';
+      console.error('❌ Error response:', error.response?.data);
+      console.error('❌ Error status:', error.response?.status);
+      
+      let errorMessage = 'Login failed';
+      if (error.response?.data?.detail) {
+        errorMessage = error.response.data.detail;
+      } else if (error.response?.status === 401) {
+        errorMessage = 'Invalid password';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       setAuthError(errorMessage);
       toast.error(errorMessage);
     }

@@ -403,7 +403,7 @@ const Home = () => {
       </section>
 
       {/* Mobile Stats Section */}
-      <MobileStatsSection stats={stats} />
+      <MobileStatsSection />
 
       {/* Learning Paths Preview */}
       <LearningPathsPreview />

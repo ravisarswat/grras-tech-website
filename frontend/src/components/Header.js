@@ -236,48 +236,154 @@ const Header = () => {
         </div>
       </header>
 
-      {/* MOBILE MENU */}
+      {/* ENHANCED MOBILE MENU */}
       {isMenuOpen && (
         <div className="lg:hidden bg-white border-b border-orange-100 shadow-xl">
           <div className="container mx-auto px-4 py-4">
-            <nav className="space-y-3">
+            <nav className="space-y-2">
               {navigationItems.map((item) => (
                 <div key={item.name}>
                   {item.hasDropdown ? (
-                    <div className="space-y-2">
-                      <div className="font-bold text-orange-600 text-lg px-4 py-2 border-b border-orange-200">
-                        📚 {item.name}
-                      </div>
-                      <div className="pl-4 space-y-2">
-                        {technologyTracks.map((track) => (
-                          <a
-                            key={track.id}
-                            href={track.path}
-                            className="flex items-center justify-between p-3 hover:bg-orange-50 rounded-lg transition-all duration-200"
-                            onClick={() => setIsMenuOpen(false)}
-                          >
-                            <div>
-                              <div className="font-semibold text-gray-900 text-sm">{track.name}</div>
-                              <div className="text-xs text-gray-500">
-                                {track.courseCount > 0 ? `${track.courseCount} courses` : 'Coming soon'}
+                    <div className="bg-gray-50 rounded-xl p-1">
+                      {/* Courses Header with Toggle */}
+                      <button
+                        onClick={() => {
+                          const newExpanded = new Set(mobileExpandedCategories);
+                          if (newExpanded.has('courses')) {
+                            newExpanded.delete('courses');
+                          } else {
+                            newExpanded.add('courses');
+                          }
+                          setMobileExpandedCategories(newExpanded);
+                        }}
+                        className="w-full flex items-center justify-between p-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg font-bold shadow-md"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <BookOpen className="h-5 w-5" />
+                          <span>{item.name}</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <span className="text-xs bg-white/20 px-2 py-1 rounded-full">
+                            {technologyTracks.length} categories
+                          </span>
+                          {mobileExpandedCategories.has('courses') ? (
+                            <ChevronDown className="h-5 w-5 rotate-180 transition-transform duration-300" />
+                          ) : (
+                            <ChevronDown className="h-5 w-5 transition-transform duration-300" />
+                          )}
+                        </div>
+                      </button>
+
+                      {/* Expandable Course Categories */}
+                      {mobileExpandedCategories.has('courses') && (
+                        <div className="mt-2 space-y-2 max-h-64 overflow-y-auto">
+                          {technologyTracks.map((track) => {
+                            const isExpanded = mobileExpandedCategories.has(track.id);
+                            
+                            // Get category logo
+                            const getCategoryLogo = (trackId) => {
+                              const logoMap = {
+                                'red-hat-technologies': 'https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg',
+                                'aws-cloud-platform': 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg',
+                                'devops-engineering': 'https://upload.wikimedia.org/wikipedia/commons/0/05/Devops-toolchain.svg',
+                                'microsoft-azure': 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Microsoft_Azure.svg',
+                                'google-cloud-platform': 'https://upload.wikimedia.org/wikipedia/commons/5/51/Google_Cloud_logo.svg',
+                                'data-science-ai': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/1200px-Scikit_learn_logo_small.svg.png'
+                              };
+                              return logoMap[trackId];
+                            };
+
+                            return (
+                              <div key={track.id} className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                                {/* Category Header */}
+                                <button
+                                  onClick={() => {
+                                    const newExpanded = new Set(mobileExpandedCategories);
+                                    if (newExpanded.has(track.id)) {
+                                      newExpanded.delete(track.id);
+                                    } else {
+                                      newExpanded.add(track.id);
+                                    }
+                                    setMobileExpandedCategories(newExpanded);
+                                  }}
+                                  className="w-full p-3 flex items-center justify-between hover:bg-gray-50 transition-colors"
+                                >
+                                  <div className="flex items-center space-x-3">
+                                    {/* Category Logo */}
+                                    <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
+                                      {getCategoryLogo(track.id) ? (
+                                        <img 
+                                          src={getCategoryLogo(track.id)} 
+                                          alt={track.name}
+                                          className="w-6 h-6 object-contain"
+                                        />
+                                      ) : (
+                                        <BookOpen className="h-5 w-5 text-gray-500" />
+                                      )}
+                                    </div>
+                                    
+                                    {/* Category Info */}
+                                    <div className="text-left">
+                                      <div className="font-semibold text-gray-900 text-sm">{track.name}</div>
+                                      <div className="text-xs text-gray-500">
+                                        {track.courseCount > 0 ? `${track.courseCount} courses` : 'Coming soon'}
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="flex items-center space-x-2">
+                                    {track.courseCount >= 3 && (
+                                      <span className="bg-orange-100 text-orange-700 px-2 py-1 rounded-full text-xs font-medium">
+                                        Popular
+                                      </span>
+                                    )}
+                                    {isExpanded ? (
+                                      <ChevronDown className="h-4 w-4 text-gray-400 rotate-180 transition-transform duration-300" />
+                                    ) : (
+                                      <ChevronDown className="h-4 w-4 text-gray-400 transition-transform duration-300" />
+                                    )}
+                                  </div>
+                                </button>
+
+                                {/* Expanded Category Content */}
+                                {isExpanded && (
+                                  <div className="border-t border-gray-100 bg-gray-50 p-3">
+                                    <div className="space-y-2">
+                                      <Link
+                                        to={track.path}
+                                        className="block w-full p-3 bg-gradient-to-r from-orange-500 to-red-500 text-white text-center rounded-lg font-semibold text-sm hover:from-orange-600 hover:to-red-600 transition-all duration-300"
+                                        onClick={() => setIsMenuOpen(false)}
+                                      >
+                                        View All {track.courseCount} Courses
+                                      </Link>
+                                      <p className="text-xs text-gray-600 leading-relaxed px-1">
+                                        Explore {track.name.toLowerCase()} with hands-on training and industry certification.
+                                      </p>
+                                    </div>
+                                  </div>
+                                )}
                               </div>
-                            </div>
-                            <ArrowRight className="h-4 w-4 text-orange-500" />
-                          </a>
-                        ))}
-                      </div>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
                   ) : (
                     <Link
                       to={item.path}
-                      className={`block px-4 py-3 text-lg font-bold rounded-lg transition-all duration-300 ${
+                      className={`flex items-center space-x-3 px-4 py-3 rounded-lg font-semibold transition-all duration-300 ${
                         isActivePath(item.path)
-                          ? 'text-orange-600 bg-gradient-to-r from-orange-50 to-red-50'
+                          ? 'text-orange-600 bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200'
                           : 'text-gray-800 hover:text-orange-600 hover:bg-orange-50'
                       }`}
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      {item.name}
+                      <div className="w-6 h-6 rounded-md bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">
+                          {item.name.charAt(0)}
+                        </span>
+                      </div>
+                      <span>{item.name}</span>
                     </Link>
                   )}
                 </div>

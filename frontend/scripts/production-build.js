@@ -198,8 +198,7 @@ function generateMetadata(route) {
   return {
     title: 'GRRAS Solutions Training Institute | IT & Cloud Education',
     description: 'Professional IT training and certification courses with industry mentorship and placement assistance.',
-    canonical: `${baseUrl}${route}`,
-    jsonLd: organizationJsonLd
+    ogImage: 'https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png'
   };
 }
 const ORIGIN = process.env.PUBLIC_CANONICAL_ORIGIN || 'https://www.grras.tech';

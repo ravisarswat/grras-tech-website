@@ -323,8 +323,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Enhanced Stats Section with Awards */}
-      <section id="stats-section" className="py-20 gradient-bg-primary relative overflow-hidden">
+      {/* Enhanced Stats Section with Awards - Desktop */}
+      <section id="stats-section" className="hidden lg:block py-20 gradient-bg-primary relative overflow-hidden">
         {/* Background decorative elements */}
         <div className="absolute top-0 left-0 w-64 h-64 bg-gradient-to-br from-yellow-400/10 to-orange-400/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 right-0 w-64 h-64 bg-gradient-to-br from-red-400/10 to-orange-400/10 rounded-full blur-3xl"></div>

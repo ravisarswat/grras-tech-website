@@ -3,11 +3,11 @@ FROM node:20-alpine AS build
 WORKDIR /app
 
 # Install deps (CI-friendly, lockfile respected)
-COPY frontend/package*.json ./
+COPY package*.json ./
 RUN npm ci --legacy-peer-deps
 
 # Copy source and build
-COPY frontend/ .
+COPY . .
 RUN npm run build
 
 # Optional: prerender only if script exists (must NOT re-run build inside)

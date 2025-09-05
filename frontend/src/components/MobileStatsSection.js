@@ -14,7 +14,7 @@ const MobileStatsSection = () => {
   const finalStats = {
     years: 18,
     students: 5000,
-    certifications: 50,
+    certifications: 1500,
     placement: 95
   };
 

@@ -449,10 +449,37 @@ routes.forEach((r) => {
   }
 });
 
-// sitemap.xml
+// Enhanced sitemap.xml generation
+const lastmod = new Date().toISOString().slice(0, 10);
+const sitemapUrls_enhanced = sitemapUrls.map(route => {
+  let priority = '0.8';
+  let changefreq = 'weekly';
+  
+  if (route === '/') {
+    priority = '1.0';
+    changefreq = 'daily';
+  } else if (route === '/courses') {
+    priority = '0.9';
+    changefreq = 'daily';
+  } else if (route.startsWith('/courses/')) {
+    priority = '0.8';
+    changefreq = 'weekly';
+  } else if (route.startsWith('/blog/')) {
+    priority = '0.7';
+    changefreq = 'monthly';
+  }
+  
+  return `  <url>
+    <loc>${ORIGIN}${route}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority}</priority>
+  </url>`;
+});
+
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${sitemapUrls.map(u => `  <url><loc>${ORIGIN}${u}</loc></url>`).join('\n')}
+${sitemapUrls_enhanced.join('\n')}
 </urlset>`;
 fs.writeFileSync(path.join(BUILD_DIR, 'sitemap.xml'), sitemap, 'utf8');
 

@@ -63,8 +63,8 @@ const React = require('react');
 const { renderToString } = require('react-dom/server');
 const { StaticRouter } = require('react-router-dom/server');
 
-// Import your app
-const App = require('../src/App').default;
+// Import your app routes (without BrowserRouter)
+const AppRoutes = require('../src/AppRoutes').default;
 
 // Routes to prerender
 const routes = require('./prerender-routes.json');

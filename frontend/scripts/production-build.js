@@ -291,24 +291,24 @@ const sitemapUrls = [];
 
 console.log('🚀 Starting prerender (no CRA build here)…');
 
-// Remove debug logging to clean up output
+// Generate prerendered pages with enhanced SEO metadata
 routes.forEach((r) => {
   const route = typeof r === 'string' ? r : r.path;
-  const meta = typeof r === 'string' ? {} : { title: r.title, description: r.description };
+  const metadata = generateMetadata(route);
 
   try {
     const appHtml = renderToString(
       React.createElement(StaticRouter, { location: route }, React.createElement(AppRoutes))
     );
 
-    const finalHtml = inject(TEMPLATE, appHtml, meta);
+    const finalHtml = inject(TEMPLATE, appHtml, metadata);
 
     const outDir = path.join(BUILD_DIR, route === '/' ? '' : route);
     ensureDir(outDir);
     fs.writeFileSync(path.join(outDir, 'index.html'), finalHtml, 'utf8');
 
     sitemapUrls.push(route);
-    console.log('✅ Prerendered:', route);
+    console.log('✅ Prerendered:', route, `(${metadata.title})`);
     
   } catch (error) {
     console.error(`❌ Failed to prerender ${route}:`, error.message);

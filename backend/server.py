@@ -1316,11 +1316,19 @@ async def get_all_blog_posts_admin(admin_verified: bool = Depends(verify_admin_t
 # Include API router
 app.include_router(api_router)
 
-# Root endpoint
-@app.get("/")
-async def root():
-    """API Root - Redirect to health check"""
-    return RedirectResponse(url="/api/health")
+# Mount static files from frontend build directory
+static_build_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend", "build")
+if os.path.exists(static_build_path):
+    app.mount("/", StaticFiles(directory=static_build_path, html=True), name="static")
+    logging.info(f"✅ Serving static files from: {static_build_path}")
+else:
+    logging.warning(f"⚠️ Build directory not found: {static_build_path}")
+    
+    # Root endpoint fallback
+    @app.get("/")
+    async def root():
+        """API Root - Redirect to health check"""
+        return RedirectResponse(url="/api/health")
 
 if __name__ == "__main__":
     # Railway deployment

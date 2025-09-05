@@ -177,27 +177,7 @@ function generateMetadata(route) {
       return {
         title: `${course.title} | GRRAS Solutions Training Institute`,
         description: course.description || course.oneLiner || `Learn ${course.title} with hands-on training, industry mentorship, and certification preparation at GRRAS Solutions.`,
-        canonical: `${baseUrl}/courses/${course.slug}`,
-        jsonLd: {
-          "@context": "https://schema.org",
-          "@type": "Course",
-          "name": course.title,
-          "description": course.description || course.oneLiner,
-          "url": `${baseUrl}/courses/${course.slug}`,
-          "provider": organizationJsonLd,
-          "educationalLevel": course.level || "Professional",
-          "timeRequired": course.duration,
-          "offers": course.fees ? {
-            "@type": "Offer",
-            "price": course.fees.replace(/[^\d]/g, ''),
-            "priceCurrency": "INR",
-            "availability": "https://schema.org/InStock"
-          } : undefined,
-          "courseMode": Array.isArray(course.mode) ? course.mode : (course.mode ? course.mode.split(', ') : ["Classroom", "Online"]),
-          "teaches": course.highlights || course.learningOutcomes || [],
-          "applicationDeadline": "Open enrollment",
-          "startDate": "Monthly batches"
-        }
+        ogImage: 'https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png'
       };
     }
   }

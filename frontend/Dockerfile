@@ -10,6 +10,10 @@ RUN npm ci --legacy-peer-deps
 COPY . .
 RUN npm run build
 
+# Copy essential SEO files
+RUN cp public/robots.txt build/ 2>/dev/null || echo "robots.txt not found"
+RUN cp public/serve.json build/ 2>/dev/null || echo "serve.json not found"
+
 # Prerender temporarily disabled due to HTML structure corruption issue
 # RUN [ -f scripts/production-build.js ] && node scripts/production-build.js || echo "no prerender"
 RUN echo "prerender disabled - using clean build for now"

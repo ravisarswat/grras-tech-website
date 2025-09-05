@@ -287,6 +287,100 @@ function generateMetadata(route) {
   };
 }
 const ORIGIN = process.env.PUBLIC_CANONICAL_ORIGIN || 'https://www.grras.tech';
+
+// Enhanced SEO helper functions
+function headTags({ title, description, path, ogImage }) {
+  const url = `${ORIGIN}${path}`;
+  return `
+<title>${title}</title>
+<meta name="description" content="${description}">
+<link rel="canonical" href="${url}">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${description}">
+<meta property="og:url" content="${url}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GRRAS Solutions Training Institute">
+${ogImage ? `<meta property="og:image" content="${ogImage}">` : `<meta property="og:image" content="https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png">`}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${title}">
+<meta name="twitter:description" content="${description}">
+${ogImage ? `<meta name="twitter:image" content="${ogImage}">` : `<meta name="twitter:image" content="https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png">`}
+`.trim();
+}
+
+function courseJsonLd({ name, description, path, courseData }) {
+  const url = `${ORIGIN}${path}`;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": name,
+    "description": description,
+    "url": url,
+    "provider": {
+      "@type": "Organization",
+      "name": "GRRAS Solutions Training Institute",
+      "alternateName": "GRRAS Tech",
+      "url": ORIGIN,
+      "logo": "https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png",
+      "sameAs": [
+        "https://www.facebook.com/grrassolutionss",
+        "https://www.instagram.com/grrassolutionss/",
+        "https://www.youtube.com/@grrassolutions"
+      ]
+    }
+  };
+  
+  // Add course-specific data if available
+  if (courseData) {
+    if (courseData.duration) jsonLd.timeRequired = courseData.duration;
+    if (courseData.level) jsonLd.educationalLevel = courseData.level;
+    if (courseData.fees) {
+      jsonLd.offers = {
+        "@type": "Offer",
+        "price": courseData.fees.replace(/[^\d]/g, ''),
+        "priceCurrency": "INR",
+        "availability": "https://schema.org/InStock"
+      };
+    }
+    if (courseData.mode) {
+      jsonLd.courseMode = Array.isArray(courseData.mode) ? courseData.mode : courseData.mode.split(', ');
+    }
+  }
+  
+  return `<script type="application/ld+json">${JSON.stringify(jsonLd, null, 2)}</script>`;
+}
+
+function organizationJsonLd() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "GRRAS Solutions Training Institute",
+    "alternateName": "GRRAS Tech",
+    "url": ORIGIN,
+    "logo": "https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png",
+    "sameAs": [
+      "https://www.facebook.com/grrassolutionss",
+      "https://www.instagram.com/grrassolutionss/",
+      "https://www.youtube.com/@grrassolutions"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+91-9001991227",
+      "contactType": "customer service"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital",
+      "addressLocality": "Jaipur",
+      "addressRegion": "Rajasthan",
+      "postalCode": "302012",
+      "addressCountry": "IN"
+    }
+  };
+  
+  return `<script type="application/ld+json">${JSON.stringify(jsonLd, null, 2)}</script>`;
+}
+
 const sitemapUrls = [];
 
 console.log('🚀 Starting prerender (no CRA build here)…');

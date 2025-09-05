@@ -10,8 +10,9 @@ RUN npm ci --legacy-peer-deps
 COPY . .
 RUN npm run build
 
-# Optional: prerender only if script exists (must NOT re-run build inside)
-RUN [ -f scripts/production-build.js ] && node scripts/production-build.js || echo "no prerender"
+# Prerender temporarily disabled due to HTML structure corruption issue
+# RUN [ -f scripts/production-build.js ] && node scripts/production-build.js || echo "no prerender"
+RUN echo "prerender disabled - using clean build for now"
 
 # ---- Run stage (static serve) ----
 FROM node:20-alpine AS run

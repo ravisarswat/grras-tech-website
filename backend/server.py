@@ -111,7 +111,7 @@ async def add_security_headers(request: Request, call_next):
 security = HTTPBearer()
 
 # Admin credentials
-ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'grras@admin2024')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'grras-admin')
 
 # Pydantic models
 class LoginRequest(BaseModel):

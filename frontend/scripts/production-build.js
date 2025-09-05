@@ -364,8 +364,7 @@ ${jsonLdContent}`;
     fallbackHtml = fallbackHtml.replace(/<title>.*?<\/title>/i, `<title>${fallbackTitle}</title>`);
     fallbackHtml = fallbackHtml.replace(/<meta name="description" content=".*?">/i, `<meta name="description" content="${fallbackDescription}">`);
     
-    const fallbackSeoTags = `
-<link rel="canonical" href="${ORIGIN}${route}">
+    const fallbackSeoTags = `<link rel="canonical" href="${ORIGIN}${route}">
 <meta property="og:title" content="${fallbackTitle}">
 <meta property="og:description" content="${fallbackDescription}">
 <meta property="og:url" content="${ORIGIN}${route}">
@@ -378,7 +377,12 @@ ${jsonLdContent}`;
 <meta name="twitter:image" content="https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png">
 ${organizationJsonLd()}`;
     
-    fallbackHtml = fallbackHtml.replace('</head>', fallbackSeoTags + '\n</head>');
+    // Insert after </style> if present, otherwise before </head>
+    if (fallbackHtml.includes('</style>')) {
+      fallbackHtml = fallbackHtml.replace('</style>', `</style>\n${fallbackSeoTags}`);
+    } else {
+      fallbackHtml = fallbackHtml.replace('</head>', `${fallbackSeoTags}\n</head>`);
+    }
     
     const outDir = path.join(BUILD_DIR, route === '/' ? '' : route);
     ensureDir(outDir);

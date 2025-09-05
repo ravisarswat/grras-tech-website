@@ -140,8 +140,7 @@ function generateMetadata(route) {
     return {
       title: 'Contact GRRAS Solutions | Admission Counseling & Course Information',
       description: 'Get in touch with GRRAS Solutions for course information, admission counseling, and career guidance. Call +91-9001991227 or visit our Jaipur campus.',
-      canonical: `${baseUrl}/contact`,
-      jsonLd: organizationJsonLd
+      ogImage: 'https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png'
     };
   }
   

@@ -45,7 +45,7 @@ try {
   const { HelmetProvider } = require('react-helmet-async');
   
   // Import our minimal SSR app
-  const ServerApp = require('../frontend/src/ssr/MinimalServerApp').default;
+  const ServerApp = require('../src/ssr/MinimalServerApp').default;
   
   // Routes to prerender
   const routes = [

@@ -16,6 +16,7 @@ import EnhancedSEO from '../components/EnhancedSEO';
 import HeroSlider from '../components/HeroSlider';
 import CourseSearchBar from '../components/CourseSearchBar';
 import CourseCategoriesGrid from '../components/CourseCategoriesGrid';
+import MobileCourseCategories from '../components/MobileCourseCategories';
 import LearningPathsPreview from '../components/LearningPathsPreview';
 
 // Static Data Imports

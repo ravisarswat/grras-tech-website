@@ -190,18 +190,7 @@ function generateMetadata(route) {
     return {
       title: `${blogTitle} | GRRAS Solutions Blog`,
       description: `Read about ${blogTitle.toLowerCase()} and stay updated with latest IT career insights, trends, and professional guidance from GRRAS Solutions experts.`,
-      canonical: `${baseUrl}/blog/${slug}`,
-      jsonLd: {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": blogTitle,
-        "url": `${baseUrl}/blog/${slug}`,
-        "publisher": organizationJsonLd,
-        "author": {
-          "@type": "Organization",
-          "name": "GRRAS Solutions Training Institute"
-        }
-      }
+      ogImage: 'https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png'
     };
   }
   

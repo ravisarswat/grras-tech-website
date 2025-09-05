@@ -14,9 +14,8 @@ RUN npm run build
 RUN cp public/robots.txt build/ 2>/dev/null || echo "robots.txt not found"
 RUN cp public/serve.json build/ 2>/dev/null || echo "serve.json not found"
 
-# Prerender temporarily disabled due to HTML structure corruption issue
-# RUN [ -f scripts/production-build.js ] && node scripts/production-build.js || echo "no prerender"
-RUN echo "prerender disabled - using clean build for now"
+# Fixed prerender with proper HTML escaping  
+RUN [ -f scripts/production-build.js ] && node scripts/production-build.js || echo "no prerender script found"
 
 # ---- Run stage (static serve) ----
 FROM node:20-alpine AS run

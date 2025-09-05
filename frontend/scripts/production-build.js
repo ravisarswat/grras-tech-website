@@ -339,3 +339,14 @@ Sitemap: ${BASE_URL}/sitemap.xml
 
 console.log('🎉 Done prerendering without calling react-scripts build.');
 console.log(`📄 Generated ${sitemapUrls.length} prerendered pages + sitemap.xml + robots.txt`);
+
+// Debug: List all generated HTML files
+console.log('\n---- built HTML routes ----');
+const { execSync } = require('child_process');
+try {
+  const htmlFiles = execSync('find build -name index.html | sort', { encoding: 'utf8' });
+  console.log(htmlFiles.trim());
+} catch (error) {
+  console.log('Could not list HTML files:', error.message);
+}
+console.log('---------------------------\n');

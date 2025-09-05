@@ -70,7 +70,16 @@ const routes = require('./prerender-routes.json');
 
 const BUILD_DIR = path.resolve(__dirname, '..', 'build');
 const INDEX_HTML = path.join(BUILD_DIR, 'index.html');
-const TEMPLATE = fs.readFileSync(INDEX_HTML, 'utf8');
+
+// Read the template file safely
+let TEMPLATE;
+try {
+  TEMPLATE = fs.readFileSync(INDEX_HTML, 'utf8');
+  console.log('✅ Template loaded successfully');
+} catch (error) {
+  console.error('❌ Failed to load template:', error.message);
+  process.exit(1);
+}
 
 function ensureDir(p) { fs.mkdirSync(p, { recursive: true }); }
 

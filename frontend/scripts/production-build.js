@@ -203,25 +203,7 @@ function generateMetadata(route) {
 }
 const ORIGIN = process.env.PUBLIC_CANONICAL_ORIGIN || 'https://www.grras.tech';
 
-// Enhanced SEO helper functions
-function headTags({ title, description, path, ogImage }) {
-  const url = `${ORIGIN}${path}`;
-  return `
-<title>${title}</title>
-<meta name="description" content="${description}">
-<link rel="canonical" href="${url}">
-<meta property="og:title" content="${title}">
-<meta property="og:description" content="${description}">
-<meta property="og:url" content="${url}">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="GRRAS Solutions Training Institute">
-${ogImage ? `<meta property="og:image" content="${ogImage}">` : `<meta property="og:image" content="https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png">`}
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="${title}">
-<meta name="twitter:description" content="${description}">
-${ogImage ? `<meta name="twitter:image" content="${ogImage}">` : `<meta name="twitter:image" content="https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png">`}
-`.trim();
-}
+// SEO injection happens directly in the main loop now
 
 function courseJsonLd({ name, description, path, courseData }) {
   const url = `${ORIGIN}${path}`;

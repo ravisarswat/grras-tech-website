@@ -18,9 +18,6 @@ import BlogPost from '../pages/BlogPost';
 import Contact from '../pages/Contact';
 import AdminLeads from '../pages/AdminLeads';
 
-// Import CSS (this won't actually load in Node.js but prevents errors)
-import '../App.css';
-
 const ServerApp = () => {
   return (
     <div className="App min-h-screen bg-gray-50">

@@ -17,55 +17,66 @@ import EnhancedSEO from '../components/EnhancedSEO';
 import SyllabusModal from '../components/SyllabusModal';
 import { courses } from '../data/courses';
 
+// Initialize course data synchronously for SSR compatibility
+const initializeCourseData = (slug) => {
+  try {
+    // Find course in static data
+    const foundCourse = courses.find(c => c.slug === slug);
+    
+    if (!foundCourse) {
+      return { course: null, error: 'Course not found' };
+    }
+    
+    // Prepare course data with defaults
+    const courseWithDefaults = {
+      ...foundCourse,
+      // Ensure arrays exist
+      highlights: foundCourse.highlights || [],
+      learningOutcomes: foundCourse.learningOutcomes || [],
+      careerRoles: foundCourse.careerRoles || [],
+      tools: foundCourse.tools || [],
+      mode: Array.isArray(foundCourse.mode) ? foundCourse.mode : foundCourse.mode ? foundCourse.mode.split(', ') : [],
+      // Set defaults for missing optional fields
+      overview: foundCourse.overview || foundCourse.description || '',
+      certificateInfo: foundCourse.certificateInfo || '',
+      batchesInfo: foundCourse.batchesInfo || '',
+      eligibility: foundCourse.eligibility || 'Contact for details',
+      level: foundCourse.level || 'All Levels',
+      category: foundCourse.category || 'Training',
+      fees: foundCourse.fees || foundCourse.price || 'Contact for Details'
+    };
+    
+    return { course: courseWithDefaults, error: null };
+  } catch (error) {
+    console.error('Error initializing course data:', error);
+    return { course: null, error: 'Course not found' };
+  }
+};
+
 const CourseDetail = () => {
   const { slug } = useParams();
-  const [course, setCourse] = useState(null);
-  const [loading, setLoading] = useState(true);
+  
+  // Initialize data for SSR compatibility
+  const initialCourseData = slug ? initializeCourseData(slug) : { course: null, error: 'No course slug provided' };
+  
+  const [course, setCourse] = useState(initialCourseData.course);
+  const [loading, setLoading] = useState(false); // Start with false since data is pre-loaded
   const [showSyllabusModal, setShowSyllabusModal] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(initialCourseData.error);
 
   useEffect(() => {
-    fetchCourseDetails();
-  }, [slug]);
-
-  const fetchCourseDetails = () => {
-    try {
-      // Find course in static data
-      const foundCourse = courses.find(c => c.slug === slug);
-      
-      if (!foundCourse) {
-        setError('Course not found');
-        setLoading(false);
-        return;
-      }
-      
-      // Prepare course data with defaults
-      const courseWithDefaults = {
-        ...foundCourse,
-        // Ensure arrays exist
-        highlights: foundCourse.highlights || [],
-        learningOutcomes: foundCourse.learningOutcomes || [],
-        careerRoles: foundCourse.careerRoles || [],
-        tools: foundCourse.tools || [],
-        mode: Array.isArray(foundCourse.mode) ? foundCourse.mode : foundCourse.mode ? foundCourse.mode.split(', ') : [],
-        // Set defaults for missing optional fields
-        overview: foundCourse.overview || foundCourse.description || '',
-        certificateInfo: foundCourse.certificateInfo || '',
-        batchesInfo: foundCourse.batchesInfo || '',
-        eligibility: foundCourse.eligibility || 'Contact for details',
-        level: foundCourse.level || 'All Levels',
-        category: foundCourse.category || 'Training',
-        fees: foundCourse.fees || foundCourse.price || 'Contact for Details'
-      };
-      
-      setCourse(courseWithDefaults);
-    } catch (error) {
-      console.error('Error loading course:', error);
-      setError('Course not found');
-    } finally {
-      setLoading(false);
+    // Only fetch if course data is missing or slug changed
+    if (!course && slug) {
+      const freshData = initializeCourseData(slug);
+      setCourse(freshData.course);
+      setError(freshData.error);
+    } else if (course && course.slug !== slug) {
+      // Slug changed, fetch new course data
+      const freshData = initializeCourseData(slug);
+      setCourse(freshData.course);
+      setError(freshData.error);
     }
-  };
+  }, [slug, course]);
 
   if (loading) {
     return (

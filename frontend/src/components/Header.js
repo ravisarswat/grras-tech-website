@@ -219,13 +219,16 @@ const Header = () => {
 
             {/* Mobile Menu Button */}
             <button
-              className="lg:hidden p-3 rounded-2xl bg-gradient-to-br from-orange-50 via-white to-red-50 hover:from-orange-100 hover:to-red-100 border-2 border-orange-200 transition-all duration-500 hover:shadow-xl hover:scale-110 group relative overflow-hidden"
+              className="lg:hidden p-2.5 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group relative overflow-hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
+              {/* Background glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-400 opacity-0 group-hover:opacity-50 transition-opacity duration-300 blur-sm"></div>
+              
               {isMenuOpen ? (
-                <X className="h-6 w-6 text-orange-600 transition-all duration-300 group-hover:rotate-90 relative z-10" />
+                <X className="h-6 w-6 text-white transition-all duration-300 group-hover:rotate-90 relative z-10" />
               ) : (
-                <Menu className="h-6 w-6 text-orange-600 transition-all duration-300 group-hover:scale-110 relative z-10" />
+                <Menu className="h-6 w-6 text-white transition-all duration-300 group-hover:scale-110 relative z-10" />
               )}
             </button>
           </div>

@@ -286,6 +286,7 @@ function generateMetadata(route) {
     jsonLd: organizationJsonLd
   };
 }
+const BASE_URL = 'https://www.grras.tech';
 const sitemapUrls = [];
 
 console.log('🚀 Starting prerender (no CRA build here)…');

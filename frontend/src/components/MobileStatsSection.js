@@ -9,17 +9,14 @@ import {
   BookOpen
 } from 'lucide-react';
 
-const MobileStatsSection = ({ stats = {} }) => {
-  // Default stats with proper values
-  const defaultStats = {
+const MobileStatsSection = () => {
+  // Fixed stats values - no animation needed on mobile
+  const finalStats = {
     years: 18,
     students: 5000,
     certifications: 50,
     placement: 95
   };
-  
-  // Merge provided stats with defaults
-  const finalStats = { ...defaultStats, ...stats };
 
   const statItems = [
     {

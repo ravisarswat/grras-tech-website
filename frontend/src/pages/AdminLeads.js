@@ -339,15 +339,16 @@ const AdminLeads = () => {
             
             <button
               type="submit"
-              className="btn-primary w-full flex items-center justify-center gap-2"
+              disabled={!password.trim()}
+              className="w-full bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
             >
               <LogIn className="h-4 w-4" />
-              Sign In
+              {password.trim() ? 'Sign In' : 'Enter Password'}
             </button>
             
             <div className="text-center">
               <p className="text-xs text-gray-500">
-                Use the same password as Admin Content (grras-admin)
+                Password: <span className="font-semibold text-red-600">grras-admin</span>
               </p>
             </div>
           </form>

@@ -119,13 +119,13 @@ try {
       
       // 1) Inject SSR markup into #root
       let outHtml = indexTpl.replace(
-        '<div id="root"></div>',
+        /<div id="root"><\/div>/g,
         `<div id="root">${markup}</div>`
       );
       
       // 2) Inject Helmet head tags before </head>
       if (headTags) {
-        outHtml = outHtml.replace('</head>', `${headTags}\n</head>`);
+        outHtml = outHtml.replace(/<\/head>/g, `${headTags}\n</head>`);
       }
       
       writeRoute(route, outHtml);

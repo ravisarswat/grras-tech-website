@@ -335,10 +335,29 @@ routes.forEach((r) => {
       jsonLdContent = organizationJsonLd();
     }
     
-    // Inject head content and structured data
-    const finalHtml = TEMPLATE
-      .replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`)
-      .replace('<!--head-->', headContent + '\n' + jsonLdContent);
+    // Inject head content and structured data using different approach for minified HTML
+    let finalHtml = TEMPLATE.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
+    
+    // Replace existing title and description with new ones
+    finalHtml = finalHtml.replace(/<title>.*?<\/title>/i, `<title>${metadata.title}</title>`);
+    finalHtml = finalHtml.replace(/<meta name="description" content=".*?">/i, `<meta name="description" content="${metadata.description}">`);
+    
+    // Add SEO tags before </head>
+    const seoTags = `
+<link rel="canonical" href="${ORIGIN}${route}">
+<meta property="og:title" content="${metadata.title}">
+<meta property="og:description" content="${metadata.description}">
+<meta property="og:url" content="${ORIGIN}${route}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GRRAS Solutions Training Institute">
+<meta property="og:image" content="${metadata.ogImage || 'https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png'}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${metadata.title}">
+<meta name="twitter:description" content="${metadata.description}">
+<meta name="twitter:image" content="${metadata.ogImage || 'https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png'}">
+${jsonLdContent}`;
+    
+    finalHtml = finalHtml.replace('</head>', seoTags + '\n</head>');
 
     const outDir = path.join(BUILD_DIR, route === '/' ? '' : route);
     ensureDir(outDir);

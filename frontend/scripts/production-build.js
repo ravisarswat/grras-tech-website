@@ -337,20 +337,8 @@ routes.forEach((r) => {
 <meta name="twitter:image" content="${metadata.ogImage || 'https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png'}">
 ${jsonLdContent}`;
     
-    // Insert SEO tags in the correct location - after </style> and before </head>
-    // First locate the </style> tag position
-    const styleEndIndex = finalHtml.indexOf('</style>');
-    const headEndIndex = finalHtml.indexOf('</head>');
-    
-    if (styleEndIndex !== -1 && headEndIndex !== -1 && styleEndIndex < headEndIndex) {
-      // Insert after </style> tag
-      const beforeStyle = finalHtml.substring(0, styleEndIndex + 8); // 8 = length of '</style>'
-      const afterStyle = finalHtml.substring(styleEndIndex + 8);
-      finalHtml = beforeStyle + '\n' + seoTags + afterStyle;
-    } else {
-      // Fallback: insert before </head>
-      finalHtml = finalHtml.replace('</head>', `${seoTags}\n</head>`);
-    }
+    // Simple approach: Insert SEO tags just before </head>
+    finalHtml = finalHtml.replace('</head>', `${seoTags}\n</head>`);
 
     const outDir = path.join(BUILD_DIR, route === '/' ? '' : route);
     ensureDir(outDir);

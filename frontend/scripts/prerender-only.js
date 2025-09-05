@@ -7,7 +7,7 @@ console.log('⚡ Starting SSR pre-rendering (build-only, no react-scripts)...');
 
 try {
   // Check if build directory exists
-  const buildDir = path.join(__dirname, '..', 'frontend', 'build');
+  const buildDir = path.join(__dirname, '..', 'build');
   if (!fs.existsSync(buildDir)) {
     console.log('❌ Build directory not found at:', buildDir);
     process.exit(1);

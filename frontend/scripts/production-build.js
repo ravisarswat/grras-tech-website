@@ -337,8 +337,11 @@ routes.forEach((r) => {
 <meta name="twitter:image" content="${metadata.ogImage || 'https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png'}">
 ${jsonLdContent}`;
     
-    // Simple approach: Insert SEO tags just before </head>
-    finalHtml = finalHtml.replace('</head>', `${seoTags}\n</head>`);
+    // Very safe approach: Insert SEO tags using a more careful method
+    const headEndIndex = finalHtml.lastIndexOf('</head>');
+    if (headEndIndex !== -1) {
+      finalHtml = finalHtml.slice(0, headEndIndex) + seoTags + '\n' + finalHtml.slice(headEndIndex);
+    }
 
     const outDir = path.join(BUILD_DIR, route === '/' ? '' : route);
     ensureDir(outDir);

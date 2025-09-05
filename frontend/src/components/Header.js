@@ -8,6 +8,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
+  const [mobileExpandedCategories, setMobileExpandedCategories] = useState(new Set()); // Track expanded categories in mobile menu
   const coursesButtonRef = useRef(null);
   const dropdownRef = useRef(null);
   const location = useLocation();

@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-09-06T18:16:56.868498",
+  "backend_url": "https://grras-web-revamp.preview.emergentagent.com",
+  "total_tests": 6,
+  "passed_tests": 6,
+  "failed_tests": 0,
+  "success_rate": "100.0%",
+  "test_results": {
+    "api_health": true,
+    "admin_login_simple": true,
+    "admin_login_main": true,
+    "simple_leads_retrieval": true,
+    "contact_form_submission": true,
+    "leads_storage_verification": true,
+    "mongodb_connection": true
+  },
+  "errors": [],
+  "critical_issues": [],
+  "leads_count_before": 5,
+  "leads_count_after": 6,
+  "admin_token_obtained": true
+}

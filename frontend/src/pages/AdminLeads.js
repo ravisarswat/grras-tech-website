@@ -26,9 +26,6 @@ const AdminLeads = () => {
     setIsAuthenticated(false);
   };
 
-
-
-
   return (
     <div>
       <SEO 

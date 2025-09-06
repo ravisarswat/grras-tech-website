@@ -335,9 +335,9 @@ const Placements = () => {
 
                     {/* Student Info */}
                     <div className="text-center mb-4">
-                      <h3 className="text-xl font-black text-gray-900 mb-1">{student.name}</h3>
-                      <p className="text-red-600 font-bold text-lg mb-2">{student.package}</p>
-                      <p className="text-gray-600 font-semibold">{student.position}</p>
+                      <h3 className="text-xl font-black text-gray-900 mb-1">{placement.name}</h3>
+                      <p className="text-red-600 font-bold text-lg mb-2">{placement.package}</p>
+                      <p className="text-gray-600 font-semibold">{placement.position}</p>
                     </div>
 
                     {/* Company Info */}

@@ -344,16 +344,16 @@ const Placements = () => {
                     <div className="bg-gray-50 rounded-2xl p-4 mb-4 group-hover:bg-white transition-colors duration-300">
                       <div className="flex items-center justify-between mb-2">
                         <img 
-                          src={student.companyLogo} 
-                          alt={student.company}
+                          src={placement.companyLogo} 
+                          alt={placement.company}
                           className="h-8 object-contain"
                         />
                         <div className="flex items-center text-gray-500 text-sm">
                           <MapPin className="h-4 w-4 mr-1" />
-                          {student.location}
+                          {placement.location}
                         </div>
                       </div>
-                      <p className="font-bold text-gray-900">{student.company}</p>
+                      <p className="font-bold text-gray-900">{placement.company}</p>
                     </div>
 
                     {/* Course Badge */}

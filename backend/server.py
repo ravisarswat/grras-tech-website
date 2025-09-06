@@ -110,8 +110,8 @@ async def add_security_headers(request: Request, call_next):
 # Security
 security = HTTPBearer()
 
-# Admin credentials
-ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'grras-admin')
+# Simple Admin System
+SIMPLE_ADMIN_TOKEN = "grras_admin_2025_verified"
 
 # Pydantic models
 class LoginRequest(BaseModel):
@@ -133,7 +133,7 @@ def verify_admin_token(credentials: HTTPAuthorizationCredentials = Depends(secur
     token = credentials.credentials
     
     # Simple token verification (in production, use proper JWT)
-    expected_token = hashlib.sha256(f"grras_admin_{ADMIN_PASSWORD}".encode()).hexdigest()
+    expected_token = hashlib.sha256(f"grras_admin_{SIMPLE_ADMIN_TOKEN}".encode()).hexdigest()
     if token != expected_token:
         raise HTTPException(status_code=401, detail="Invalid admin token")
     

@@ -1,60 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Users, 
-  Download, 
-  Search, 
-  Calendar,
-  Mail,
-  Phone,
-  BookOpen,
-  RefreshCw,
-  AlertCircle,
-  LogIn,
-  Trash2,
-  CheckSquare,
-  Square
-} from 'lucide-react';
-import { toast } from 'sonner';
+import SimpleAdminLogin from '../components/SimpleAdminLogin';
+import SimpleLeadsManager from '../components/SimpleLeadsManager';
 import SEO from '../components/SEO';
-import axios from 'axios';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
 
 const AdminLeads = () => {
-  const [leads, setLeads] = useState([]);
-  const [filteredLeads, setFilteredLeads] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [password, setPassword] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCourse, setSelectedCourse] = useState('all');
-  const [dateRange, setDateRange] = useState('all');
-  const [authError, setAuthError] = useState('');
-  const [selectedLeads, setSelectedLeads] = useState(new Set());
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [leadsToDelete, setLeadsToDelete] = useState([]);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
-    checkAuthentication();
+    // Check if already logged in
+    const savedToken = localStorage.getItem('simple_admin_token');
+    if (savedToken) {
+      setToken(savedToken);
+      setIsAuthenticated(true);
+    }
   }, []);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      fetchLeads();
-    }
-  }, [isAuthenticated]);
+  const handleLoginSuccess = (newToken) => {
+    setToken(newToken);
+    setIsAuthenticated(true);
+  };
 
-  useEffect(() => {
-    filterLeads();
-  }, [leads, searchTerm, selectedCourse, dateRange]);
-
-  const checkAuthentication = () => {
-    const token = localStorage.getItem('admin_token');
-    const isValid = token && token.startsWith('admin_authenticated_');
-    setIsAuthenticated(isValid);
-    setLoading(false);
+  const handleLogout = () => {
+    setToken(null);
+    setIsAuthenticated(false);
   };
 
   const handleLogin = async (e) => {

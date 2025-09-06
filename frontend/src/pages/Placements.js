@@ -87,7 +87,7 @@ const Placements = () => {
       photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/8nfgkxsf_Aman%20Tiwari.jpeg",
       location: "Mumbai",
       year: "2024",
-      companyLogo: "https://logo.clearbit.com/navbackoffice.com",
+      companyLogo: "https://via.placeholder.com/80x40/7C3AED/FFFFFF?text=BackOffice",
       testimonial: "GRRAS provided excellent practical training and placement support!"
     },
     {

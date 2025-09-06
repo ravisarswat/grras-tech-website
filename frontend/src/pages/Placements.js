@@ -100,7 +100,7 @@ const Placements = () => {
       photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/ay4grwc9_%20Shubham%20Koli.jpeg",
       location: "Chennai",
       year: "2024",
-      companyLogo: "https://logo.clearbit.com/i4consulting.com",
+      companyLogo: "https://via.placeholder.com/80x40/059669/FFFFFF?text=i4Consulting",
       testimonial: "From student to consultant - GRRAS made my career transformation possible!"
     },
     {

@@ -323,8 +323,8 @@ const Placements = () => {
                     <div className="relative mb-6">
                       <div className="w-24 h-24 mx-auto rounded-full overflow-hidden border-4 border-gradient-to-r from-red-500 to-orange-500 shadow-lg">
                         <img 
-                          src={student.photo} 
-                          alt={student.name}
+                          src={placement.photo} 
+                          alt={placement.name}
                           className="w-full h-full object-cover"
                         />
                       </div>

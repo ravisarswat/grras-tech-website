@@ -16,7 +16,6 @@ import {
 import SEO from '../components/SEO';
 
 const Placements = () => {
-  const [selectedFilter, setSelectedFilter] = useState('all');
   const [animatedStats, setAnimatedStats] = useState({
     totalPlacements: 0,
     averagePackage: 0,

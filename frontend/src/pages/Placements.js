@@ -373,7 +373,7 @@ const Placements = () => {
                     {/* Year Badge */}
                     <div className="absolute top-4 right-4">
                       <span className="bg-gradient-to-r from-yellow-400 to-orange-400 text-yellow-900 px-2 py-1 rounded-full text-xs font-bold shadow-lg">
-                        {student.year}
+                        {placement.year}
                       </span>
                     </div>
                   </div>

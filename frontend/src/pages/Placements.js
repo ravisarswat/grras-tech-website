@@ -74,7 +74,7 @@ const Placements = () => {
       photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/c7d2clp1_Akshat%20Mehra.jpeg",
       location: "Delhi",
       year: "2024", 
-      companyLogo: "https://emizentech.com/assets/images/logo.png",
+      companyLogo: "https://logo.clearbit.com/emizentech.com",
       testimonial: "Amazing hands-on training that prepared me for real-world challenges!"
     },
     {

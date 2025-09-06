@@ -127,6 +127,22 @@ export const categories = {
     "featured": true,
     "createdAt": "2025-09-02T15:02:35.473038", 
     "createdBy": "dynamic-category-creator"
+  },
+  "degree-program": {
+    "name": "Degree Program",
+    "title": "Degree Program",
+    "slug": "degree-program",
+    "description": "Professional undergraduate and postgraduate degree programs in Computer Applications",
+    "logo_url": "https://upload.wikimedia.org/wikipedia/commons/5/57/Graduation_hat.svg",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/5/57/Graduation_hat.svg",
+    "icon": "graduation-cap",
+    "color": "#4A90E2",
+    "order": 9,
+    "visible": true,
+    "courses": [],
+    "featured": true,
+    "createdAt": "2025-09-06T12:00:00.000000",
+    "createdBy": "degree-program-creator"
   }
 };
 

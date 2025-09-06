@@ -126,7 +126,7 @@ const Placements = () => {
       photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/6l3x1s4o_Amit%20Kumar%20.png",
       location: "Bangalore",
       year: "2024", 
-      companyLogo: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg",
+      companyLogo: "https://www.wolfram.com/common/images/wolfram-logo.svg",
       testimonial: "GRRAS comprehensive training helped me secure this research role at Wolfram!"
     }
   ];

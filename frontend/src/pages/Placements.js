@@ -84,7 +84,7 @@ const Placements = () => {
       position: "IT Specialist",
       package: "₹10 LPA",
       course: "System Administration", 
-      photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&w=150&h=150&fit=crop&crop=face",
+      photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/8nfgkxsf_Aman%20Tiwari.jpeg",
       location: "Mumbai",
       year: "2024",
       companyLogo: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg",

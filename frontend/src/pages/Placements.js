@@ -366,7 +366,7 @@ const Placements = () => {
                     {/* Testimonial */}
                     <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-4 border-l-4 border-red-500">
                       <p className="text-gray-700 text-sm italic leading-relaxed">
-                        "{student.testimonial}"
+                        "{placement.testimonial}"
                       </p>
                     </div>
 

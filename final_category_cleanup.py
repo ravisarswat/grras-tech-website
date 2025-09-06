@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.INFO)
 async def final_category_cleanup():
     """Final cleanup of all categories"""
     
-    backend_url = "https://grras-seo-optimize.preview.emergentagent.com"
+    backend_url = "https://grras-web-revamp.preview.emergentagent.com"
     api_base = f"{backend_url}/api"
     
     # Get admin token first

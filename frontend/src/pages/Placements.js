@@ -385,7 +385,7 @@ const Placements = () => {
             <div className="text-center mt-12">
               <button className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-red-600 to-orange-600 text-white font-bold rounded-2xl hover:from-red-700 hover:to-orange-700 transition-all duration-300 transform hover:scale-105 shadow-xl group">
                 <Users className="mr-3 h-5 w-5 group-hover:animate-pulse" />
-                <span className="text-lg">🌟 अगला Success Story आपका हो सकता है! 🚀</span>
+                <span className="text-lg">Your Next Success Story Awaits</span>
               </button>
             </div>
           </div>

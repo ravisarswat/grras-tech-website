@@ -58,7 +58,7 @@ const Placements = () => {
       position: "Systems Engineer",
       package: "₹18 LPA", 
       course: "DevOps Engineering",
-      photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&w=150&h=150&fit=crop&crop=face",
+      photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/eux67kjm_Tushar%20Arora.jpeg",
       location: "Pune",
       year: "2024",
       companyLogo: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",

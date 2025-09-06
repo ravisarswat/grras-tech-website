@@ -119,16 +119,16 @@ const Placements = () => {
     },
     {
       id: 8,
-      name: "Rohit Sharma",
-      company: "Accenture",
-      position: "Infrastructure Engineer", 
-      package: "₹15 LPA",
-      course: "Red Hat Linux",
+      name: "Amit Kumar",
+      company: "Wolfram Research",
+      position: "Software Engineer", 
+      package: "₹20 LPA",
+      course: "Data Science & AI",
       photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&w=150&h=150&fit=crop&crop=face",
-      location: "Gurgaon",
+      location: "Bangalore",
       year: "2024", 
       companyLogo: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg",
-      testimonial: "Great faculty and excellent placement assistance. Highly recommended!"
+      testimonial: "GRRAS comprehensive training helped me secure this research role at Wolfram!"
     }
   ];
 

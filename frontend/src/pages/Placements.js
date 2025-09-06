@@ -61,7 +61,7 @@ const Placements = () => {
       photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/eux67kjm_Tushar%20Arora.jpeg",
       location: "Pune",
       year: "2024",
-      companyLogo: "https://insightglobal.com/wp-content/uploads/2021/08/insight-global-logo.svg",
+      companyLogo: "https://logo.clearbit.com/insightglobal.com",
       testimonial: "GRRAS training gave me the technical edge to succeed at Insight!"
     },
     {

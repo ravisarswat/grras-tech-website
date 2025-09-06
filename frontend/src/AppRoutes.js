@@ -75,6 +75,7 @@ function AppContent() {
             
             {/* Admin Routes */}
             <Route path="/admin/leads" element={<AdminLeads />} />
+            <Route path="/admin-leads" element={<AdminLeads />} />
             <Route path="/admin/content" element={<AdminContent />} />
             
             <Route path="*" element={<NotFound />} />

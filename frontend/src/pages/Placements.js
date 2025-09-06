@@ -113,7 +113,7 @@ const Placements = () => {
       photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/ey7hqm9c_Girish%20Juneja.jpeg", 
       location: "Bangalore",
       year: "2024",
-      companyLogo: "https://upload.wikimedia.org/wikipedia/commons/b/b1/Tata_Consultancy_Services_Logo.svg",
+      companyLogo: "https://omegabroadcast.com/assets/images/omega-logo.png",
       testimonial: "GRRAS industry connections helped me land this specialized role!"
     },
     {

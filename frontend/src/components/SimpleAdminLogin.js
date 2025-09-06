@@ -104,6 +104,23 @@ const SimpleAdminLogin = ({ onLoginSuccess }) => {
           <p className="text-xs text-gray-500">
             Use password: <code className="bg-gray-100 px-2 py-1 rounded">grras-admin</code>
           </p>
+          
+          {/* Health Check Button */}
+          <button
+            type="button"
+            onClick={async () => {
+              try {
+                const response = await fetch(`${BACKEND_URL}/api/health`);
+                const data = await response.json();
+                alert(`Backend Status: ${data.status}\n${data.message}\nAdmin Ready: ${data.admin_ready}`);
+              } catch (err) {
+                alert(`Backend Connection Failed!\nURL: ${BACKEND_URL}\nError: ${err.message}`);
+              }
+            }}
+            className="mt-2 text-xs text-blue-600 hover:text-blue-800 underline"
+          >
+            Test Backend Connection
+          </button>
         </div>
       </div>
     </div>

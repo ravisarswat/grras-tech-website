@@ -71,7 +71,7 @@ const Placements = () => {
       position: "Software Developer",
       package: "₹14 LPA",
       course: "Full Stack Development",
-      photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&w=150&h=150&fit=crop&crop=face",
+      photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/c7d2clp1_Akshat%20Mehra.jpeg",
       location: "Delhi",
       year: "2024", 
       companyLogo: "https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg",

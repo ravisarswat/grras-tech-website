@@ -767,8 +767,9 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
         if pdf_buffer:
             pdf_buffer.close()
 
-@api_router.get("/leads")
-async def get_leads(admin_verified: bool = Depends(verify_admin_token)):
+# New Simple Leads API
+@api_router.get("/simple-leads")
+async def get_simple_leads(token: str):
     """Get all leads (Admin only)"""
     try:
         collection = db.leads

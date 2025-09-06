@@ -359,7 +359,7 @@ const Placements = () => {
                     {/* Course Badge */}
                     <div className="text-center mb-4">
                       <span className="inline-block bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">
-                        {student.course}
+                        {placement.course}
                       </span>
                     </div>
 

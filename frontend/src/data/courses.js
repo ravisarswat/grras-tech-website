@@ -470,6 +470,116 @@ export const courses = [
     "intake": "Monthly Batches",
     "certificationIncluded": true,
     "overview": "Foundation cybersecurity training for beginners."
+  },
+
+  // Degree Program Courses
+  {
+    "slug": "bachelor-computer-applications-bca",
+    "title": "Bachelor of Computer Applications (BCA)",
+    "oneLiner": "3-Year Professional Degree Program in Computer Applications",
+    "description": "Comprehensive 3-year undergraduate degree program in Computer Applications covering programming, software development, database management, web technologies, and modern IT skills. Affiliated with recognized university with industry-oriented curriculum.",
+    "duration": "3 Years (6 Semesters)",
+    "fees": "₹45,000 per year (Total: ₹1,35,000)",
+    "price": "₹1,35,000",
+    "tools": ["C/C++", "Java", "Python", "HTML/CSS/JavaScript", "MySQL", "PHP", "Android Development", "Data Structures"],
+    "visible": true,
+    "featured": true,
+    "order": 20,
+    "category": "degree-program",
+    "categories": ["degree-program"],
+    "level": "Undergraduate",
+    "mode": "Classroom",
+    "highlights": [
+      "University Affiliated Degree",
+      "Industry-Oriented Curriculum", 
+      "Project-Based Learning",
+      "Internship Opportunities",
+      "Career Guidance & Placement",
+      "Modern Lab Infrastructure",
+      "Expert Faculty"
+    ],
+    "learningOutcomes": [
+      "Master programming languages (C, C++, Java, Python)",
+      "Develop web applications and mobile apps",
+      "Design and manage databases",
+      "Understand software engineering principles",
+      "Build real-world projects and applications"
+    ],
+    "careerRoles": [
+      "Software Developer",
+      "Web Developer", 
+      "Database Administrator",
+      "System Analyst",
+      "IT Consultant",
+      "Technical Support Engineer"
+    ],
+    "eligibility": "10+2 pass with Mathematics as subject (Any stream - Science/Commerce/Arts)",
+    "intake": "Annual Admission (July intake)",
+    "certificationIncluded": true,
+    "overview": "Complete 3-year BCA degree program with modern IT curriculum, hands-on training, and career placement support.",
+    "syllabus": {
+      "semester1": ["Fundamentals of IT", "Programming in C", "Mathematics", "English", "Environmental Studies"],
+      "semester2": ["Data Structures", "C++ Programming", "Computer Organization", "Statistics", "Communication Skills"],
+      "semester3": ["Java Programming", "Database Management", "Web Technologies", "Software Engineering", "Accounting"],
+      "semester4": ["Python Programming", "Computer Networks", "Operating Systems", "Project Management", "Economics"],
+      "semester5": ["Android Development", "Cloud Computing", "Cyber Security", "Minor Project", "Elective"],
+      "semester6": ["Major Project", "Industrial Training", "Entrepreneurship", "Seminar", "Viva Voce"]
+    }
+  },
+  {
+    "slug": "master-computer-applications-mca",
+    "title": "Master of Computer Applications (MCA)",
+    "oneLiner": "2-Year Advanced Degree Program in Computer Applications",
+    "description": "Advanced 2-year postgraduate degree program in Computer Applications with specialization in modern technologies like AI/ML, Cloud Computing, Data Science, and Full-Stack Development. University affiliated with research-oriented curriculum.",
+    "duration": "2 Years (4 Semesters)",
+    "fees": "₹55,000 per year (Total: ₹1,10,000)",
+    "price": "₹1,10,000",
+    "tools": [
+      "Advanced Java", "Python", "Machine Learning", "React/Angular", "Node.js", 
+      "AWS/Azure", "Docker", "Kubernetes", "MongoDB", "PostgreSQL", "Git/GitHub"
+    ],
+    "visible": true,
+    "featured": true,
+    "order": 21,
+    "category": "degree-program",
+    "categories": ["degree-program"],
+    "level": "Postgraduate",
+    "mode": "Classroom",
+    "highlights": [
+      "University Affiliated Master's Degree",
+      "Specialization in AI/ML & Cloud",
+      "Industry Live Projects",
+      "Research & Development Focus",
+      "Guaranteed Placement Assistance",
+      "Expert Industry Mentors",
+      "Modern Technology Stack"
+    ],
+    "learningOutcomes": [
+      "Master advanced programming and software architecture",
+      "Develop AI/ML applications and data science solutions",
+      "Build scalable cloud-native applications",
+      "Lead software development teams",
+      "Conduct research in emerging technologies"
+    ],
+    "careerRoles": [
+      "Senior Software Engineer",
+      "Data Scientist",
+      "AI/ML Engineer",
+      "Cloud Solutions Architect",
+      "Technical Lead",
+      "Product Manager",
+      "Research & Development Engineer"
+    ],
+    "eligibility": "Bachelor's degree (BCA/B.Tech/B.Sc. IT/Computer Science) with minimum 50% marks",
+    "intake": "Annual Admission (July intake)",
+    "certificationIncluded": true,
+    "overview": "Advanced 2-year MCA degree with specialization in cutting-edge technologies, research opportunities, and industry leadership training.",
+    "syllabus": {
+      "semester1": ["Advanced Programming", "Data Structures & Algorithms", "Database Systems", "Computer Networks", "Research Methodology"],
+      "semester2": ["Software Engineering", "Web Technologies", "Machine Learning", "Cloud Computing", "System Analysis & Design"],
+      "semester3": ["Artificial Intelligence", "Big Data Analytics", "Mobile App Development", "DevOps & Containerization", "Minor Project"],
+      "semester4": ["Major Project", "Industrial Training", "Emerging Technologies", "Entrepreneurship Development", "Dissertation"]
+    }
   }
 ];
 

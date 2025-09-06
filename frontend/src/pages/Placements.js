@@ -110,7 +110,7 @@ const Placements = () => {
       position: "Broadcast Engineer",
       package: "₹13 LPA",
       course: "Network & Systems",
-      photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&w=150&h=150&fit=crop&crop=face", 
+      photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/ey7hqm9c_Girish%20Juneja.jpeg", 
       location: "Bangalore",
       year: "2024",
       companyLogo: "https://upload.wikimedia.org/wikipedia/commons/b/b1/Tata_Consultancy_Services_Logo.svg",

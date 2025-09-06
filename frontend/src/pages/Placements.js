@@ -300,26 +300,15 @@ const Placements = () => {
           </div>
         </section>
 
-        {/* Filter Section */}
-        <section className="py-8 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-wrap justify-center gap-4">
-              {filterOptions.map((option) => (
-                <button
-                  key={option.value}
-                  onClick={() => setSelectedFilter(option.value)}
-                  className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-                    selectedFilter === option.value
-                      ? 'bg-gradient-to-r from-red-600 to-orange-600 text-white shadow-lg'
-                      : 'bg-white text-gray-700 hover:bg-gray-100 shadow-md'
-                  }`}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* Simple Section Header */}
+        <div className="text-center mb-12">
+          <h3 className="text-2xl font-bold text-gray-900 mb-4">
+            🎯 Our Recent Placements
+          </h3>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Meet our successful students who transformed their careers with GRRAS training
+          </p>
+        </div>
 
         {/* Placement Cards Section */}
         <section className="py-16 bg-gray-50">

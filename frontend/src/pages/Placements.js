@@ -35,7 +35,7 @@ const Placements = () => {
       photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/b2yyaj6d_Kamlesh%20Choudhary.jpeg",
       location: "Jaipur",
       year: "2024",
-      companyLogo: "https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg",
+      companyLogo: "https://figmentglobal.com/wp-content/uploads/2021/09/figment-logo.png",
       testimonial: "GRRAS training helped me secure this amazing opportunity at Figment Global Solutions!"
     },
     {

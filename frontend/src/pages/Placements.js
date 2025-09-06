@@ -309,7 +309,7 @@ const Placements = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {filteredPlacements.map((student, index) => (
+              {placementData.map((placement, index) => (
                 <div 
                   key={student.id}
                   className="group bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 relative overflow-hidden"

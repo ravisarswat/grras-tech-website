@@ -770,21 +770,37 @@ async def generate_syllabus(slug: str, name: str = Form(...), email: str = Form(
 # New Simple Leads API
 @api_router.get("/simple-leads")
 async def get_simple_leads(token: str):
-    """Get all leads (Admin only)"""
+    """New simple leads retrieval"""
+    # Simple token check
+    expected_token = hashlib.sha256(f"grras_admin_{SIMPLE_ADMIN_TOKEN}".encode()).hexdigest()
+    if token != expected_token:
+        return {"success": False, "message": "Access denied"}
+    
     try:
+        # Direct MongoDB access
         collection = db.leads
-        leads = await collection.find({}).sort("timestamp", -1).to_list(1000)
+        leads_cursor = collection.find({}).sort("timestamp", -1).limit(500)
+        leads = await leads_cursor.to_list(length=500)
         
-        logging.info(f"📊 Retrieved {len(leads)} leads from database")
-        
-        # Convert ObjectId to string for JSON serialization
+        # Clean up data for frontend
+        clean_leads = []
         for lead in leads:
-            if "_id" in lead:
-                lead["_id"] = str(lead["_id"])
+            clean_lead = {
+                "id": str(lead.get("_id", lead.get("id", "unknown"))),
+                "name": lead.get("name", "No Name"),
+                "email": lead.get("email", "No Email"),
+                "phone": lead.get("phone", "No Phone"),
+                "message": lead.get("message", "No Message"),
+                "course": lead.get("course", "General"),
+                "timestamp": str(lead.get("timestamp", "Unknown Date")),
+                "source": lead.get("source", "website")
+            }
+            clean_leads.append(clean_lead)
         
         return {
-            "leads": leads,
-            "total": len(leads),
+            "success": True,
+            "leads": clean_leads,
+            "total": len(clean_leads),
             "timestamp": datetime.utcnow().isoformat()
         }
     except Exception as e:

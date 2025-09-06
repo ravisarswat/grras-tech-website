@@ -5047,6 +5047,18 @@ backend:
       - working: true
         agent: "testing"
         comment: "Sync verification fix successfully implemented and tested. Modified /api/content POST endpoint (line 214) and /api/admin/force-sync endpoint (line 238) to count only visible courses in responses. All course counts now match perfectly between API and admin operations (15 visible courses). The 'sync verification failed' error has been completely eliminated. Admin panel sync operations work seamlessly without count mismatch issues."
+  
+  - task: "Admin Leads Functionality"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Admin leads functionality comprehensively tested and verified working perfectly. All 6 tests passed (100% success rate): ✅ API health check (/api/health) responding correctly with MongoDB connected. ✅ Admin authentication working via both /api/simple-login and /api/admin/login with password 'grras-admin'. ✅ Leads retrieval (/api/simple-leads) working correctly with token authentication. ✅ Contact form submission (/api/contact) successfully storing leads in database. ✅ Leads storage verification confirmed - new lead found in database after form submission (count increased from 5 to 6). ✅ All API endpoints responding correctly. Backend server health excellent, MongoDB connection stable, admin authentication functional, and leads management fully operational."
 
 frontend:
   - task: "Admin Panel Sync Verification"

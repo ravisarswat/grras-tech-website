@@ -13,27 +13,52 @@ const SimpleAdminLogin = ({ onLoginSuccess }) => {
     setLoading(true);
     setError('');
 
-    try {
-      const response = await fetch(`${BACKEND_URL}/api/simple-login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ password })
-      });
+    // Try multiple endpoints for reliability
+    const endpoints = [
+      `${BACKEND_URL}/api/admin/login`,
+      `${BACKEND_URL}/api/simple-login`
+    ];
 
-      const data = await response.json();
-      
-      if (data.success && data.token) {
-        localStorage.setItem('simple_admin_token', data.token);
-        onLoginSuccess(data.token);
-      } else {
-        setError('Invalid password');
+    for (const endpoint of endpoints) {
+      try {
+        console.log(`Trying login at: ${endpoint}`);
+        
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ password })
+        });
+
+        if (!response.ok) {
+          console.log(`${endpoint} failed with status: ${response.status}`);
+          continue;
+        }
+
+        const data = await response.json();
+        console.log(`${endpoint} response:`, data);
+        
+        if (data.success && data.token) {
+          localStorage.setItem('simple_admin_token', data.token);
+          onLoginSuccess(data.token);
+          setLoading(false);
+          return;
+        } else if (data.token) {
+          // Handle old format response
+          localStorage.setItem('simple_admin_token', data.token);
+          onLoginSuccess(data.token);
+          setLoading(false);
+          return;
+        }
+      } catch (err) {
+        console.error(`${endpoint} error:`, err);
+        continue;
       }
-    } catch (err) {
-      setError('Connection failed. Check backend.');
     }
     
+    // If all endpoints failed
+    setError(`Connection failed. Backend: ${BACKEND_URL}`);
     setLoading(false);
   };
 

@@ -26,46 +26,7 @@ const AdminLeads = () => {
     setIsAuthenticated(false);
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setAuthError('');
-    
-    if (password !== 'grras-admin') {
-      setAuthError('Incorrect password. Use: grras-admin');
-      return;
-    }
-    
-    try {
-      const response = await fetch(`${API}/admin/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          password: password
-        })
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-      
-      const data = await response.json();
-      
-      if (data.token && data.success) {
-        localStorage.setItem('admin_token', data.token);
-        setIsAuthenticated(true);
-        toast.success('Login successful!');
-      } else {
-        throw new Error('No token received');
-      }
-      
-    } catch (error) {
-      console.error('Login failed:', error);
-      setAuthError('Login failed. Check your connection.');
-      toast.error('Login failed');
-    }
-  };
+
 
   const fetchLeads = async () => {
     try {

@@ -179,20 +179,7 @@ const Placements = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const filterOptions = [
-    { value: 'all', label: 'All Placements' },
-    { value: '2024', label: '2024 Batch' },
-    { value: 'high-package', label: 'High Package (₹20L+)' },
-    { value: 'tech-giants', label: 'Tech Giants' }
-  ];
-
-  const filteredPlacements = placementData.filter(placement => {
-    if (selectedFilter === 'all') return true;
-    if (selectedFilter === '2024') return placement.year === '2024';
-    if (selectedFilter === 'high-package') return parseInt(placement.package.replace(/[^\d]/g, '')) >= 20;
-    if (selectedFilter === 'tech-giants') return ['Microsoft', 'Google', 'Amazon Web Services', 'IBM'].includes(placement.company);
-    return true;
-  });
+  // Show all placements - no filtering needed
 
   return (
     <>

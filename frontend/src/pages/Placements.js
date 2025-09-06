@@ -48,7 +48,7 @@ const Placements = () => {
       photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/ur7tsori_Piyush%20Sharma.jpeg",
       location: "Bangalore", 
       year: "2024",
-      companyLogo: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg",
+      companyLogo: "https://granicus.com/wp-content/uploads/2021/06/granicus-logo.svg",
       testimonial: "The hands-on AWS training helped me secure this amazing role!"
     },
     {

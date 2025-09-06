@@ -343,19 +343,13 @@ const Placements = () => {
                     {/* Company Info */}
                     <div className="bg-gray-50 rounded-2xl p-4 mb-4 group-hover:bg-white transition-colors duration-300">
                       <div className="flex items-center justify-center space-x-3">
-                        {placement.companyLogo && (
-                          <div className="w-10 h-10 bg-white rounded-lg p-1.5 shadow-sm flex items-center justify-center">
-                            <img 
-                              src={placement.companyLogo} 
-                              alt={`${placement.company} logo`}
-                              className="max-w-full max-h-full object-contain"
-                              onError={(e) => {
-                                // Hide the image container if logo fails to load
-                                e.target.parentElement.style.display = 'none';
-                              }}
-                            />
-                          </div>
-                        )}
+                        <div className="w-16 h-8 bg-white rounded-lg p-1 shadow-sm flex items-center justify-center border">
+                          <img 
+                            src={placement.companyLogo} 
+                            alt={`${placement.company} logo`}
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
                         <div className="flex-1 text-center">
                           <p className="font-bold text-gray-900 text-sm leading-tight">{placement.company}</p>
                         </div>

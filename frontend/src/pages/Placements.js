@@ -123,7 +123,7 @@ const Placements = () => {
       position: "Software Engineer", 
       package: "₹20 LPA",
       course: "Data Science & AI",
-      photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&w=150&h=150&fit=crop&crop=face",
+      photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/6l3x1s4o_Amit%20Kumar%20.png",
       location: "Bangalore",
       year: "2024", 
       companyLogo: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg",

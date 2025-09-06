@@ -45,7 +45,7 @@ const Placements = () => {
       position: "Cloud Engineer",
       package: "₹15 LPA",
       course: "AWS Cloud Platform",
-      photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&w=150&h=150&fit=crop&crop=face",
+      photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/ur7tsori_Piyush%20Sharma.jpeg",
       location: "Bangalore", 
       year: "2024",
       companyLogo: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg",

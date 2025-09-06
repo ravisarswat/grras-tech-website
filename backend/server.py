@@ -153,18 +153,21 @@ async def health_check():
         logging.error(f"Health check failed: {e}")
         return {"status": "unhealthy", "error": str(e), "timestamp": datetime.utcnow().isoformat()}
 
-# New Simple Admin Login
+# Multiple Admin Login Endpoints for reliability
+@api_router.post("/admin/login")
+async def admin_login_main(request: LoginRequest):
+    """Main admin login endpoint"""
+    if request.password == "grras-admin":
+        simple_token = hashlib.sha256(f"grras_admin_{SIMPLE_ADMIN_TOKEN}".encode()).hexdigest()
+        return {"success": True, "token": simple_token, "message": "Login successful"}
+    raise HTTPException(status_code=401, detail="Invalid password")
+
 @api_router.post("/simple-login")
 async def simple_admin_login(request: LoginRequest):
-    """Brand new simple admin login"""
+    """Backup admin login endpoint"""
     if request.password == "grras-admin":
-        # Generate simple fixed token
         simple_token = hashlib.sha256(f"grras_admin_{SIMPLE_ADMIN_TOKEN}".encode()).hexdigest()
-        return {
-            "success": True,
-            "token": simple_token,
-            "message": "Welcome Admin"
-        }
+        return {"success": True, "token": simple_token, "message": "Welcome Admin"}
     return {"success": False, "message": "Invalid password"}
 
 @api_router.get("/content")

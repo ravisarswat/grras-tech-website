@@ -24,30 +24,30 @@ const Placements = () => {
     placementRate: 0
   });
 
-  // Dummy placement data - replace with real data
+  // Real placement data - GRRAS Students
   const placementData = [
     {
       id: 1,
-      name: "Priya Sharma",
-      company: "Microsoft",
-      position: "Cloud Solutions Architect", 
-      package: "₹28 LPA",
+      name: "Kamlesh Choudhary",
+      company: "Figment Global Solutions Pvt. Ltd.",
+      position: "Software Engineer", 
+      package: "₹12 LPA",
       course: "DevOps Engineering",
-      photo: "https://images.unsplash.com/photo-1494790108755-2616b612b77c?ixlib=rb-4.0.3&w=150&h=150&fit=crop&crop=face",
-      location: "Bangalore",
+      photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&w=150&h=150&fit=crop&crop=face",
+      location: "Jaipur",
       year: "2024",
       companyLogo: "https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg",
-      testimonial: "GRRAS gave me the skills and confidence to land my dream job at Microsoft!"
+      testimonial: "GRRAS training helped me secure this amazing opportunity at Figment Global Solutions!"
     },
     {
       id: 2,
-      name: "Rahul Agarwal", 
-      company: "Amazon Web Services",
-      position: "DevOps Engineer",
-      package: "₹25 LPA",
+      name: "Piyush Sharma", 
+      company: "Granicus",
+      position: "Cloud Engineer",
+      package: "₹15 LPA",
       course: "AWS Cloud Platform",
-      photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&w=150&h=150&fit=crop&crop=face",
-      location: "Hyderabad", 
+      photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&w=150&h=150&fit=crop&crop=face",
+      location: "Bangalore", 
       year: "2024",
       companyLogo: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg",
       testimonial: "The hands-on AWS training helped me secure this amazing role!"

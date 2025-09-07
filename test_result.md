@@ -5095,6 +5095,18 @@ backend:
         agent: "testing"
         comment: "Admin leads functionality comprehensively tested and verified working perfectly. All 6 tests passed (100% success rate): ✅ API health check (/api/health) responding correctly with MongoDB connected. ✅ Admin authentication working via both /api/simple-login and /api/admin/login with password 'grras-admin'. ✅ Leads retrieval (/api/simple-leads) working correctly with token authentication. ✅ Contact form submission (/api/contact) successfully storing leads in database. ✅ Leads storage verification confirmed - new lead found in database after form submission (count increased from 5 to 6). ✅ All API endpoints responding correctly. Backend server health excellent, MongoDB connection stable, admin authentication functional, and leads management fully operational."
 
+  - task: "Contact Form Functionality"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Contact form functionality comprehensively tested after recent layout changes. ✅ POST /api/contact endpoint working correctly with FormData (multipart/form-data). ✅ Lead storage verified - submissions properly stored in MongoDB database with correct structure. ✅ Response handling working correctly - returns proper success message and lead_id. ✅ Basic validation working for required fields (name, email, phone). ⚠️ Minor: Email format validation could be improved (currently accepts invalid email formats). ✅ No regressions detected after layout improvements. Test data used: Amit Sharma, amit.sharma@example.com, 9876543210. Core functionality working perfectly, only minor validation enhancement needed."
+
 frontend:
   - task: "Admin Panel Sync Verification"
     implemented: true

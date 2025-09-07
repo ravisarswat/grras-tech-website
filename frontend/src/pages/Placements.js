@@ -208,9 +208,7 @@ const Placements = () => {
               </div>
 
               <h1 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
-                Student 
-                <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent"> Success </span>
-                Stories
+                GRRAS Student Placements
               </h1>
               
               <p className="text-xl md:text-2xl text-red-100 mb-8 max-w-4xl mx-auto leading-relaxed">

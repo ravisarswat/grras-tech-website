@@ -48,7 +48,7 @@ const Placements = () => {
       photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/ur7tsori_Piyush%20Sharma.jpeg",
       location: "Bangalore", 
       year: "2024",
-      companyLogo: "https://via.placeholder.com/80x40/10B981/FFFFFF?text=Granicus",
+      certifications: ["AWS Certified Solutions Architect", "AWS Certified DevOps Engineer", "Microsoft Azure Fundamentals"],
       testimonial: "The hands-on AWS training helped me secure this amazing role!"
     },
     {

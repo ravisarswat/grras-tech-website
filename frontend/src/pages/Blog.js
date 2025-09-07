@@ -277,6 +277,13 @@ const Blog = () => {
                 </div>
               )}
 
+              {/* Latest Articles Section */}
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                  Latest Articles
+                </h2>
+              </div>
+
               {/* Blog Posts Grid */}
               {loading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">

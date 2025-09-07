@@ -38,12 +38,52 @@ function AppContent() {
   useScrollToTop();
   const location = useLocation();
   
+  // Register service worker for caching
+  useEffect(() => {
+    if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('SW registered: ', registration);
+          })
+          .catch((registrationError) => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
+  }, []);
+
+  // Performance monitoring
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.performance) {
+      // Log Core Web Vitals
+      const observer = new PerformanceObserver((list) => {
+        list.getEntries().forEach((entry) => {
+          if (entry.entryType === 'navigation') {
+            console.log('Navigation timing:', {
+              domContentLoaded: entry.domContentLoadedEventEnd - entry.domContentLoadedEventStart,
+              loadComplete: entry.loadEventEnd - entry.loadEventStart,
+              firstPaint: entry.responseEnd - entry.requestStart
+            });
+          }
+        });
+      });
+      
+      try {
+        observer.observe({ entryTypes: ['navigation'] });
+      } catch (e) {
+        console.log('Performance observer not supported');
+      }
+    }
+  }, []);
+  
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex-grow" id="main-content">
         <ErrorBoundary>
-          <Routes>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             

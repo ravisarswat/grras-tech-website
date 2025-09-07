@@ -194,8 +194,8 @@ const Blog = () => {
   return (
     <>
       <EnhancedSEO 
-        title="Blog - Latest Tech Insights & Career Guidance | GRRAS Solutions"
-        description="Stay updated with latest technology trends, career guidance, course updates, and success stories from GRRAS Solutions Training Institute."
+        title="GRRAS Blog – IT & Cloud Learning Resources"
+        description="Read expert blogs from GRRAS Solutions on DevOps, Cloud, Red Hat, Data Science, Cyber Security & career growth in IT."
         canonical="https://www.grras.tech/blog"
         type="website"
       />

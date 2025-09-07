@@ -14,7 +14,7 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-BACKEND_URL = "https://grras-layout-fix.preview.emergentagent.com"
+BACKEND_URL = "https://seo-enhancement-1.preview.emergentagent.com"
 ADMIN_PASSWORD = "grras-admin"
 
 def get_admin_token():

@@ -79,7 +79,7 @@ async def add_security_headers(request: Request, call_next):
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; "
         "font-src 'self' https://fonts.gstatic.com; "
         "img-src 'self' data: https: blob:; "
-        "connect-src 'self' https://www.grras.tech https://grras-layout-fix.preview.emergentagent.com; "
+        "connect-src 'self' https://www.grras.tech https://seo-enhancement-1.preview.emergentagent.com; "
         "frame-src 'self' https://www.google.com; "
         "object-src 'none'; "
         "base-uri 'self'; "

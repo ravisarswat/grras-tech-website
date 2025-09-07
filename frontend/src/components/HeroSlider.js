@@ -21,6 +21,48 @@ import {
 const HeroSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [imagesLoaded, setImagesLoaded] = useState(new Set());
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const sliderRef = React.useRef(null);
+
+  // Intersection observer for lazy loading
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsIntersecting(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sliderRef.current) {
+      observer.observe(sliderRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Preload critical images
+  const preloadCriticalImages = React.useCallback(() => {
+    const criticalImages = [
+      "https://cdn.worldvectorlogo.com/logos/red-hat-1.svg",
+      "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
+    ];
+
+    criticalImages.forEach((src) => {
+      const img = new Image();
+      img.onload = () => {
+        setImagesLoaded(prev => new Set([...prev, src]));
+      };
+      img.src = src;
+    });
+  }, []);
+
+  React.useEffect(() => {
+    preloadCriticalImages();
+  }, [preloadCriticalImages]);
 
   const slides = [
     {
@@ -33,8 +75,11 @@ const HeroSlider = () => {
       background: "bg-gradient-to-br from-red-600 via-red-500 to-orange-500",
       icon: React.createElement('img', { 
         src: "https://cdn.worldvectorlogo.com/logos/red-hat-1.svg", 
-        alt: "Red Hat", 
-        className: "w-full h-full object-contain" 
+        alt: "Red Hat Training and Certification at GRRAS Jaipur",
+        className: "w-full h-full object-contain",
+        loading: currentSlide === 0 ? "eager" : "lazy",
+        decoding: "async",
+        style: { contentVisibility: 'auto', containIntrinsicSize: '48px 48px' }
       }),
       stats: ["100% Certified Trainers", "Real Lab Environment", "Job-Ready Skills"]
     },

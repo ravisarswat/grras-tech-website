@@ -2,9 +2,10 @@ import React from 'react';
 
 const LoadingSpinner = ({ 
   size = 'md', 
-  color = 'blue', 
+  color = 'orange', 
   className = '',
-  text = '' 
+  text = 'Loading...',
+  fullPage = false
 }) => {
   const sizeClasses = {
     sm: 'w-4 h-4',
@@ -21,8 +22,12 @@ const LoadingSpinner = ({
     orange: 'border-orange-500'
   };
 
+  const containerClasses = fullPage 
+    ? 'fixed inset-0 flex flex-col items-center justify-center bg-white bg-opacity-80 backdrop-blur-sm z-50'
+    : 'flex flex-col items-center justify-center py-12';
+
   return (
-    <div className={`flex flex-col items-center justify-center ${className}`}>
+    <div className={`${containerClasses} ${className}`}>
       <div
         className={`
           ${sizeClasses[size]} 
@@ -30,13 +35,19 @@ const LoadingSpinner = ({
           border-2 border-t-transparent 
           rounded-full 
           animate-spin
+          will-change-transform
         `}
         role="status"
-        aria-label="Loading"
+        aria-label={text || "Loading"}
+        style={{ 
+          contain: 'layout style paint',
+          contentVisibility: 'auto'
+        }}
       />
       {text && (
-        <p className="mt-2 text-sm text-gray-600">{text}</p>
+        <p className="mt-3 text-sm text-gray-600 font-medium">{text}</p>
       )}
+      <div className="sr-only">Content is loading, please wait...</div>
     </div>
   );
 };

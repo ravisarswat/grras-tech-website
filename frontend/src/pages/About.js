@@ -237,7 +237,7 @@ const About = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16 animate-fade-in-up">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Our Core Values
+                Our Industry Partnerships
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                 The principles that guide our approach to education and student success

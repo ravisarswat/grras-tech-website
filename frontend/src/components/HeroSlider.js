@@ -4,7 +4,8 @@ import {
   ArrowRight, 
   Star,
   Award,
-  Shield
+  Shield,
+  GraduationCap
 } from 'lucide-react';
 
 const HeroSlider = () => {

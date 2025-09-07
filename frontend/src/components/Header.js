@@ -247,9 +247,9 @@ const Header = () => {
 
       {/* ENHANCED MOBILE MENU */}
       {isMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-orange-100 shadow-xl">
+        <div className="lg:hidden bg-white border-b border-orange-100 shadow-xl" id="mobile-menu">
           <div className="container mx-auto px-4 py-4">
-            <nav className="space-y-2">
+            <nav className="space-y-2" role="navigation" aria-label="Mobile navigation">
               {navigationItems.map((item) => (
                 <div key={item.name}>
                   {item.hasDropdown ? (

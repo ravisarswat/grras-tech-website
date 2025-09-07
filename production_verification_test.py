@@ -21,7 +21,7 @@ DATABASE_NAME = "grras_database"
 COLLECTION_NAME = "content"
 
 # Backend API URL (from frontend .env)
-BACKEND_URL = "https://grras-web-revamp.preview.emergentagent.com"
+BACKEND_URL = "https://grras-layout-fix.preview.emergentagent.com"
 ADMIN_PASSWORD = "grras-admin"
 
 class ProductionVerificationTest:

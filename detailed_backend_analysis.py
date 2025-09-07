@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 class DetailedBackendAnalyzer:
     def __init__(self):
         # Backend URL from review request
-        self.backend_url = "https://grras-web-revamp.preview.emergentagent.com"
+        self.backend_url = "https://grras-layout-fix.preview.emergentagent.com"
         self.api_base = f"{self.backend_url}/api"
         self.session = None
         self.admin_token = None

@@ -297,9 +297,9 @@ const Contact = () => {
               <div className="space-y-6">
                 {/* FAQs */}
                 <div className="bg-white rounded-2xl p-8 shadow-lg animate-fade-in-up">
-                  <h3 className="text-xl font-bold text-gray-900 mb-6">
-                    Frequently Asked Questions
-                  </h3>
+                  <h2 className="text-xl font-bold text-gray-900 mb-6">
+                    Jaipur Training Center Address
+                  </h2>
                   
                   <div className="space-y-4">
                     {faqs.map((faq, index) => (

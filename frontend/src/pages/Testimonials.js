@@ -140,7 +140,7 @@ const Testimonials = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="animate-fade-in-up">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                Success Stories That Inspire
+                Student Testimonials – Success Stories from GRRAS
               </h1>
               <p className="text-xl md:text-2xl text-gray-100 mb-8 max-w-3xl mx-auto">
                 Meet our successful alumni working in top IT companies worldwide

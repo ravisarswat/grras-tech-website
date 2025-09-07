@@ -4,13 +4,7 @@ import {
   ArrowRight, 
   Star,
   Award,
-  Shield,
-  BookOpen,
-  Users,
-  Globe,
-  TrendingUp,
-  Target,
-  CheckCircle
+  Shield
 } from 'lucide-react';
 
 const HeroSlider = () => {

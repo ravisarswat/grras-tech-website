@@ -177,7 +177,7 @@ const About = () => {
               <div className="animate-fade-in-up">
                 <div className="bg-white rounded-2xl p-8 shadow-lg">
                   <div className="text-4xl mb-4">🎯</div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Our Mission & Vision</h2>
                   <p className="text-gray-700 leading-relaxed">
                     To provide world-class IT education and training that bridges the gap between 
                     academic learning and industry requirements. We are committed to nurturing 

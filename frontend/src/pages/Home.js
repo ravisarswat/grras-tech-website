@@ -324,10 +324,12 @@ const Home = () => {
             <div className="text-center mt-12">
               <Link
                 to="/courses"
-                className="btn-outline inline-flex items-center"
+                className="btn-outline inline-flex items-center focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                aria-label="View all IT training courses available at GRRAS"
+                role="button"
               >
                 View All Courses
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
               </Link>
             </div>
           )}

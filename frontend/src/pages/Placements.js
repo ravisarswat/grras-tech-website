@@ -271,7 +271,7 @@ const Placements = () => {
                 >
                   <img 
                     src={company.logo} 
-                    alt={`${company.name} logo`}
+                    alt="Top Companies Hiring GRRAS Students"
                     className="h-12 w-auto mx-auto object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
                   />
                   <div className="text-center mt-3">

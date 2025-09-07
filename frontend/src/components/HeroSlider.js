@@ -2,9 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight, 
+  ChevronLeft, 
+  ChevronRight,
+  Play,
   Star,
   Award,
   Shield,
+  BookOpen,
+  Users,
+  Globe,
+  TrendingUp,
+  Target,
+  CheckCircle,
   GraduationCap
 } from 'lucide-react';
 

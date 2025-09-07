@@ -124,7 +124,7 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
   // Export functionality
   const exportLeads = (format = 'csv') => {
     const dataToExport = selectedLeads.length > 0 
-      ? leads.filter(lead => selectedLeads.includes(lead.email || lead.id))
+      ? leads.filter(lead => selectedLeads.includes(lead.id))
       : filteredLeads;
 
     if (format === 'csv') {

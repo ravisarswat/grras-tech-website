@@ -670,8 +670,8 @@ const CourseDetail = () => {
   return (
     <>
       <EnhancedSEO
-        title={`${course.title} | GRRAS Solutions Training Institute`}
-        description={course.description}
+        title={courseSEO ? courseSEO.title : `${course.title} | GRRAS Solutions Training Institute`}
+        description={courseSEO ? courseSEO.description : course.description}
         canonical={`https://www.grras.tech/courses/${course.slug}`}
         type="article"
         course={course}

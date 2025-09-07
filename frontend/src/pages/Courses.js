@@ -176,9 +176,10 @@ const Courses = () => {
   return (
     <>
       <EnhancedSEO 
-        title="Courses - GRRAS Solutions Training Institute" 
-        description="Browse our comprehensive course catalog - DevOps, AWS, Azure, Red Hat, Python, Data Science, Cybersecurity and more professional IT training courses"
+        title="IT & Cloud Courses in Jaipur | GRRAS Solutions"
+        description="Explore top IT & Cloud training programs at GRRAS – DevOps, Red Hat, AWS, Data Science, Cyber Security, BCA & more. Hands-on learning with placements."
         canonical="https://www.grras.tech/courses"
+        keywords="IT courses, cloud training, DevOps course, Red Hat certification, AWS training, data science course, programming courses"
         type="website"
       />
       

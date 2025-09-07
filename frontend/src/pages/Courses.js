@@ -688,34 +688,166 @@ const Courses = () => {
                 </p>
               </div>
               
-              <div className="space-y-6">
-                <div className="bg-white rounded-xl p-6 shadow-sm">
-                  <h3 className="font-semibold text-gray-900 mb-2">
-                    Which IT courses are most in demand in 2025?
-                  </h3>
-                  <p className="text-gray-600">
-                    DevOps, Cloud Computing (AWS, Azure), Data Science, Cybersecurity, and AI/ML are the most in-demand IT skills. Our courses are designed to meet current market demands.
-                  </p>
-                </div>
-                
-                <div className="bg-white rounded-xl p-6 shadow-sm">
-                  <h3 className="font-semibold text-gray-900 mb-2">
-                    Does GRRAS provide beginner-friendly courses?
-                  </h3>
-                  <p className="text-gray-600">
-                    Yes, all our courses start from basics and progress to advanced levels. We provide foundation modules for students without technical backgrounds.
-                  </p>
-                </div>
-                
-                <div className="bg-white rounded-xl p-6 shadow-sm">
-                  <h3 className="font-semibold text-gray-900 mb-2">
-                    Can I switch from one course to another?
-                  </h3>
-                  <p className="text-gray-600">
-                    Yes, we provide flexibility to switch courses based on your interests and career goals. Our counselors help you choose the right path.
-                  </p>
-                </div>
-              </div>
+{(() => {
+                const categoryFAQs = {
+                  'red-hat-technologies': [
+                    {
+                      question: 'Is GRRAS an official Red Hat partner?',
+                      answer: 'Yes, GRRAS is an authorized Red Hat Training Partner with official certification programs, hands-on labs, and expert trainers.'
+                    },
+                    {
+                      question: 'What is the duration of RHCSA training?',
+                      answer: 'RHCSA training typically takes 4-6 weeks with intensive hands-on labs and practical sessions to ensure certification success.'
+                    },
+                    {
+                      question: 'Does GRRAS provide Red Hat exam vouchers?',
+                      answer: 'Yes, we provide Red Hat exam vouchers as part of our certification packages along with extensive lab access and practice tests.'
+                    }
+                  ],
+                  'aws-cloud-platform': [
+                    {
+                      question: 'Does GRRAS provide AWS certification guidance?',
+                      answer: 'Yes, we provide comprehensive AWS certification guidance with hands-on labs, practice tests, and expert mentorship for all AWS certifications.'
+                    },
+                    {
+                      question: 'What jobs can I get after AWS training?',
+                      answer: 'AWS certified professionals can work as Cloud Architects, DevOps Engineers, SysOps Administrators, and Cloud Consultants with excellent salary packages.'
+                    },
+                    {
+                      question: 'Do AWS courses include live labs?',
+                      answer: 'Yes, all AWS courses include extensive hands-on labs with real AWS services and practical projects to ensure job-ready skills.'
+                    }
+                  ],
+                  'devops-engineering': [
+                    {
+                      question: 'What skills will I learn in DevOps?',
+                      answer: 'You will learn Docker, Kubernetes, Jenkins, CI/CD pipelines, Git, Ansible, Terraform, and cloud platforms like AWS and Azure.'
+                    },
+                    {
+                      question: 'Is DevOps training beginner-friendly?',
+                      answer: 'Yes, our DevOps course starts from basics and includes foundational concepts, making it suitable for beginners with basic IT knowledge.'
+                    },
+                    {
+                      question: 'Does GRRAS provide DevOps placement support?',
+                      answer: 'Yes, we provide dedicated placement assistance with our network of companies specifically looking for DevOps professionals.'
+                    }
+                  ],
+                  'microsoft-azure': [
+                    {
+                      question: 'Which Azure certification is best for beginners?',
+                      answer: 'Azure Fundamentals (AZ-900) is perfect for beginners, followed by Azure Administrator (AZ-104) for hands-on cloud administration skills.'
+                    },
+                    {
+                      question: 'Does GRRAS provide Azure certification support?',
+                      answer: 'Yes, we provide complete certification support including study materials, practice tests, and hands-on lab sessions for Azure exams.'
+                    },
+                    {
+                      question: 'Are Azure courses practical-based?',
+                      answer: 'Yes, all Azure courses include extensive hands-on labs with real Azure services and practical scenarios to build job-ready skills.'
+                    }
+                  ],
+                  'google-cloud-platform': [
+                    {
+                      question: 'Does GRRAS offer Google Cloud certification?',
+                      answer: 'Yes, we offer comprehensive Google Cloud training aligned with official certifications including Cloud Architect and Cloud Engineer.'
+                    },
+                    {
+                      question: 'Is GCP in demand in India?',
+                      answer: 'Yes, Google Cloud Platform is increasingly in demand in India with many companies adopting GCP services for their cloud infrastructure.'
+                    },
+                    {
+                      question: 'What projects will I work on during GCP training?',
+                      answer: 'You will work on real-world projects including cloud migration, data analytics, machine learning, and serverless application development.'
+                    }
+                  ],
+                  'data-science-ai': [
+                    {
+                      question: 'Do I need coding knowledge for Data Science?',
+                      answer: 'Basic programming knowledge helps, but our course starts from Python basics and progresses to advanced data science and ML concepts.'
+                    },
+                    {
+                      question: 'What career roles can I get after Data Science training?',
+                      answer: 'You can become a Data Scientist, ML Engineer, Data Analyst, AI Specialist, or Business Intelligence Analyst with excellent growth prospects.'
+                    },
+                    {
+                      question: 'Does GRRAS provide AI project work?',
+                      answer: 'Yes, our course includes multiple real-world AI/ML projects using industry datasets to build a strong portfolio for job applications.'
+                    }
+                  ],
+                  'programming-development': [
+                    {
+                      question: 'Do programming courses include projects?',
+                      answer: 'Yes, all programming courses include multiple hands-on projects, portfolio development, and real-world application building.'
+                    },
+                    {
+                      question: 'Is Full Stack development in demand?',
+                      answer: 'Yes, Full Stack developers are highly in demand with excellent salary packages and opportunities in startups and enterprises.'
+                    },
+                    {
+                      question: 'Can I learn Java without prior coding experience?',
+                      answer: 'Yes, our Java course starts from programming fundamentals and progresses to advanced concepts suitable for complete beginners.'
+                    }
+                  ],
+                  'cyber-security': [
+                    {
+                      question: 'Does GRRAS provide CEH certification prep?',
+                      answer: 'Yes, we provide comprehensive Certified Ethical Hacker (CEH) preparation with hands-on labs and practice tests.'
+                    },
+                    {
+                      question: 'Are Cyber Security labs included?',
+                      answer: 'Yes, all Cyber Security courses include extensive hands-on labs with real-world hacking scenarios and security tools.'
+                    },
+                    {
+                      question: 'What career scope does Cyber Security offer?',
+                      answer: 'Cyber Security offers excellent career opportunities as Security Analyst, Ethical Hacker, Security Consultant, and CISO roles.'
+                    }
+                  ],
+                  'degree-program': [
+                    {
+                      question: 'Is BCA at GRRAS UGC-approved?',
+                      answer: 'Yes, our BCA degree program is UGC-approved and recognized, providing you with a valid graduate degree for career advancement.'
+                    },
+                    {
+                      question: 'Do MCA students also get internships?',
+                      answer: 'Yes, both BCA and MCA students get guaranteed internship opportunities with stipend and industry exposure.'
+                    },
+                    {
+                      question: 'What is the stipend structure?',
+                      answer: 'Students receive monthly stipends during internship periods, ranging from ₹5,000 to ₹15,000 based on performance and company.'
+                    }
+                  ]
+                };
+
+                const currentFAQs = categoryFAQs[selectedCategory] || [
+                  {
+                    question: 'Which IT courses are most in demand in 2025?',
+                    answer: 'DevOps, Cloud Computing (AWS, Azure), Data Science, Cybersecurity, and AI/ML are the most in-demand IT skills. Our courses are designed to meet current market demands.'
+                  },
+                  {
+                    question: 'Does GRRAS provide beginner-friendly courses?',
+                    answer: 'Yes, all our courses start from basics and progress to advanced levels. We provide foundation modules for students without technical backgrounds.'
+                  },
+                  {
+                    question: 'Can I switch from one course to another?',
+                    answer: 'Yes, we provide flexibility to switch courses based on your interests and career goals. Our counselors help you choose the right path.'
+                  }
+                ];
+
+                return (
+                  <div className="space-y-6">
+                    {currentFAQs.map((faq, index) => (
+                      <div key={index} className="bg-white rounded-xl p-6 shadow-sm">
+                        <h3 className="font-semibold text-gray-900 mb-2">
+                          {faq.question}
+                        </h3>
+                        <p className="text-gray-600">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()}
             </div>
           </section>
         </div>

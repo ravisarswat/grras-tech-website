@@ -360,27 +360,33 @@ const Admissions = () => {
               </p>
             </div>
             
-            <div className="space-y-8">
-              {faqs.map((category, categoryIndex) => (
-                <div key={categoryIndex} className="animate-fade-in-up" style={{ animationDelay: `${categoryIndex * 0.2}s` }}>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4 text-center">
-                    {category.category}
-                  </h3>
-                  
-                  <div className="space-y-4">
-                    {category.questions.map((faq, index) => (
-                      <div key={index} className="bg-white rounded-xl p-6 shadow-sm">
-                        <h4 className="font-medium text-gray-900 mb-2">
-                          {faq.q}
-                        </h4>
-                        <p className="text-gray-600 text-sm leading-relaxed">
-                          {faq.a}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
+            <div className="space-y-6">
+              <div className="bg-white rounded-xl p-6 shadow-sm">
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  How do I apply for a course at GRRAS?
+                </h3>
+                <p className="text-gray-600">
+                  You can apply online through our website, call us directly, or visit our campus. Our admission counselors will guide you through the entire process.
+                </p>
+              </div>
+              
+              <div className="bg-white rounded-xl p-6 shadow-sm">
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Are there scholarships available?
+                </h3>
+                <p className="text-gray-600">
+                  Yes, we offer merit-based scholarships, early bird discounts, and special scholarships for students from economically weaker sections.
+                </p>
+              </div>
+              
+              <div className="bg-white rounded-xl p-6 shadow-sm">
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Can I apply online?
+                </h3>
+                <p className="text-gray-600">
+                  Yes, you can apply online through our website. Fill out the inquiry form, and our admission team will contact you for further assistance.
+                </p>
+              </div>
             </div>
           </div>
         </section>

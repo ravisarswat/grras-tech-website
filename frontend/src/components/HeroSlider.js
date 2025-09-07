@@ -179,11 +179,22 @@ const HeroSlider = () => {
   const currentSlideData = slides[currentSlide];
 
   return (
-    <section className="relative min-h-[500px] sm:min-h-[550px] md:min-h-[500px] lg:min-h-[480px] overflow-hidden flex items-center">
-      {/* Background with current slide gradient */}
+    <section 
+      ref={sliderRef}
+      className="relative min-h-[500px] sm:min-h-[550px] md:min-h-[500px] lg:min-h-[480px] overflow-hidden flex items-center"
+      style={{ 
+        contentVisibility: 'auto',
+        containIntrinsicSize: '100vw 500px'
+      }}
+    >
+      {/* Background with current slide gradient - Optimized for LCP */}
       <div 
         className={`absolute inset-0 ${currentSlideData.background} transition-all duration-1000`}
-        style={{ transform: 'translateZ(0)', willChange: 'background' }}
+        style={{ 
+          transform: 'translateZ(0)', 
+          willChange: 'background',
+          contain: 'layout style paint'
+        }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-20"></div>
       </div>

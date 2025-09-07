@@ -359,7 +359,7 @@ const Contact = () => {
                       </div>
                     </div>
                     <h2 className="text-3xl font-black text-gray-900 mb-2">
-                      Let's Start Your Journey! 🚀
+                      Talk to a Career Counselor
                     </h2>
                     <p className="text-gray-600 font-medium">Transform your career with us - we're here to help every step of the way</p>
                   </div>

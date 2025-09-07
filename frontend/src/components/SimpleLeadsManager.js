@@ -258,44 +258,6 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
-      {/* Enhanced Header */}
-      <div className="bg-white shadow-lg border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl flex items-center justify-center">
-                <Users className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-black text-gray-900">Leads Dashboard</h1>
-                <p className="text-gray-600">Manage and track your business inquiries</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <Star className="h-4 w-4 text-yellow-500" />
-                <span className="font-semibold">{filteredLeads.length}</span> of <span className="font-semibold">{leads.length}</span> leads
-              </div>
-              <button
-                onClick={fetchLeads}
-                disabled={loading}
-                className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-xl hover:from-blue-600 hover:to-blue-700 flex items-center gap-2 shadow-md hover:shadow-lg transition-all duration-200"
-              >
-                <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-                Refresh
-              </button>
-              <button
-                onClick={handleLogout}
-                className="bg-gradient-to-r from-gray-500 to-gray-600 text-white px-4 py-2 rounded-xl hover:from-gray-600 hover:to-gray-700 flex items-center gap-2 shadow-md hover:shadow-lg transition-all duration-200"
-              >
-                <LogOut className="h-4 w-4" />
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Advanced Filters & Controls */}
       <div className="max-w-7xl mx-auto px-4 py-6">

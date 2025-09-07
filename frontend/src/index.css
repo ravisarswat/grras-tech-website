@@ -166,14 +166,16 @@ html {
   filter: grayscale(1);
 }
 
-/* Responsive image containers */
+/* Mobile-optimized image containers */
 .optimized-image-container {
   position: relative;
   overflow: hidden;
+  contain: layout style;
 }
 
 .optimized-image-container.loading img {
   opacity: 0;
+  transition: opacity 0.2s ease-out;
 }
 
 .optimized-image-container.loaded img {
@@ -182,6 +184,32 @@ html {
 
 .optimized-image-container.error {
   background-color: #f3f4f6;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  .optimized-image-container {
+    border-radius: 0.5rem; /* Reduce border radius on mobile for better performance */
+  }
+  
+  .optimized-image-container img {
+    image-rendering: optimizeSpeed; /* Prioritize speed over quality on mobile */
+  }
+}
+
+/* Slow connection optimizations */
+.slow-connection .optimized-image-container img {
+  image-rendering: optimizeSpeed;
+  filter: none; /* Remove filters on slow connections */
+}
+
+/* Fonts loaded optimization */
+.fonts-loaded body {
+  font-family: var(--font-inter);
+}
+
+.fonts-timeout body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 body {

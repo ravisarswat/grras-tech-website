@@ -35,7 +35,7 @@ const Placements = () => {
       photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/b2yyaj6d_Kamlesh%20Choudhary.jpeg",
       location: "Jaipur",
       year: "2024",
-      companyLogo: "https://via.placeholder.com/80x40/4F46E5/FFFFFF?text=Figment",
+      certifications: ["Red Hat Certified Engineer (RHCE)", "AWS Solutions Architect", "Docker & Kubernetes"],
       testimonial: "GRRAS training helped me secure this amazing opportunity at Figment Global Solutions!"
     },
     {

@@ -93,11 +93,23 @@ const HeroSlider = () => {
     return () => clearInterval(timer);
   }, [slides.length, isPlaying]);
 
-  // Auto-play only - no manual controls needed
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+  };
 
-  // Safety check for currentSlide bounds
-  const safeCurrentSlide = currentSlide >= 0 && currentSlide < slides.length ? currentSlide : 0;
-  const currentSlideData = slides[safeCurrentSlide];
+  const goToPrevious = () => {
+    setCurrentSlide((prevSlide) => (prevSlide - 1 + slides.length) % slides.length);
+  };
+
+  const goToNext = () => {
+    setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
+  };
+
+  const toggleAutoPlay = () => {
+    setIsPlaying(!isPlaying);
+  };
+
+  const currentSlideData = slides[currentSlide];
 
   // Render safety check
   if (!currentSlideData) {

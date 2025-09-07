@@ -127,7 +127,10 @@ const HeroSlider = () => {
       cta: "Become Security Expert",
       ctaLink: "/courses?category=cybersecurity",
       background: "bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-600",
-      icon: React.createElement(Shield, { className: "w-full h-full text-white" }),
+      icon: React.createElement(Shield, { 
+        className: "w-full h-full text-white",
+        'aria-label': "Cyber Security and Ethical Hacking Course Jaipur"
+      }),
       stats: ["Certified Trainers", "Real Attack Scenarios", "Hands-on Labs"]
     },
     {

@@ -202,6 +202,8 @@ const Contact = () => {
       />
       
       <div className="min-h-screen bg-gray-50">
+        {/* Spacer to account for sticky header */}
+        <div className="h-1"></div>
         {/* Hero Section - Reduced height for better UX */}
         <section className="py-12 gradient-bg-primary text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

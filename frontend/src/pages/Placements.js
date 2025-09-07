@@ -352,6 +352,25 @@ const Placements = () => {
                       </span>
                     </div>
 
+                    {/* Certifications */}
+                    {placement.certifications && (
+                      <div className="mb-4">
+                        <h4 className="text-xs font-bold text-gray-600 mb-2 text-center">🏆 International Certifications</h4>
+                        <div className="flex flex-wrap gap-1 justify-center">
+                          {placement.certifications.slice(0, 2).map((cert, index) => (
+                            <span key={index} className="inline-block bg-gradient-to-r from-green-100 to-green-200 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
+                              {cert.split(' ')[0]} {cert.split(' ')[1]}
+                            </span>
+                          ))}
+                          {placement.certifications.length > 2 && (
+                            <span className="inline-block bg-gradient-to-r from-orange-100 to-orange-200 text-orange-800 px-2 py-1 rounded-full text-xs font-medium">
+                              +{placement.certifications.length - 2} more
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
                     {/* Testimonial */}
                     <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-4 border-l-4 border-red-500">
                       <p className="text-gray-700 text-sm italic leading-relaxed">

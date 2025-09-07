@@ -4,6 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'sonner';
 import './App.css';
 import useScrollToTop from './hooks/useScrollToTop';
+import usePerformanceMonitoring from './hooks/usePerformanceMonitoring';
 import { ContentProvider } from './contexts/ContentContext';
 import LoadingSpinner from './components/LoadingSpinner';
 

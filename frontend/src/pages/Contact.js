@@ -136,7 +136,7 @@ const Contact = () => {
       details: address.split(',').map(line => line.trim()),
       action: { 
         text: 'Get Directions', 
-        href: googleMapUrl || `https://maps.google.com/?q=${encodeURIComponent(address)}` 
+        href: `https://maps.google.com/?q=${encodeURIComponent(address)}` 
       }
     },
     {

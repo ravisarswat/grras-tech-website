@@ -87,7 +87,7 @@ const Placements = () => {
       photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/8nfgkxsf_Aman%20Tiwari.jpeg",
       location: "Mumbai",
       year: "2024",
-      companyLogo: "https://via.placeholder.com/80x40/7C3AED/FFFFFF?text=BackOffice",
+      certifications: ["Red Hat Certified System Administrator (RHCSA)", "Microsoft Windows Server", "CompTIA Network+"],
       testimonial: "GRRAS provided excellent practical training and placement support!"
     },
     {
@@ -100,7 +100,7 @@ const Placements = () => {
       photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/ay4grwc9_%20Shubham%20Koli.jpeg",
       location: "Chennai",
       year: "2024",
-      companyLogo: "https://via.placeholder.com/80x40/059669/FFFFFF?text=i4Consulting",
+      certifications: ["AWS Certified Cloud Practitioner", "Microsoft Azure Administrator", "Google Cloud Associate"],
       testimonial: "From student to consultant - GRRAS made my career transformation possible!"
     },
     {
@@ -113,7 +113,7 @@ const Placements = () => {
       photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/ey7hqm9c_Girish%20Juneja.jpeg", 
       location: "Bangalore",
       year: "2024",
-      companyLogo: "https://via.placeholder.com/80x40/DB2777/FFFFFF?text=Omega",
+      certifications: ["Cisco Certified Network Associate (CCNA)", "CompTIA Security+", "Linux Professional Institute"],
       testimonial: "GRRAS industry connections helped me land this specialized role!"
     },
     {
@@ -126,7 +126,7 @@ const Placements = () => {
       photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/6l3x1s4o_Amit%20Kumar%20.png",
       location: "Bangalore",
       year: "2024", 
-      companyLogo: "https://via.placeholder.com/80x40/EA580C/FFFFFF?text=Wolfram",
+      certifications: ["AWS Certified Machine Learning", "Google Professional Data Engineer", "Microsoft AI Engineer"],
       testimonial: "GRRAS comprehensive training helped me secure this research role at Wolfram!"
     }
   ];

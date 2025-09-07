@@ -506,7 +506,7 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
                             <Phone className="h-4 w-4" />
                           </button>
                           <button
-                            onClick={() => handleDelete([lead.email || lead.id])}
+                            onClick={() => handleDelete([lead.id])}
                             className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                             title="Delete Lead"
                           >

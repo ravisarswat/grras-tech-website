@@ -5,13 +5,14 @@ const STATIC_CACHE = 'grras-static-v1.0';
 const DYNAMIC_CACHE = 'grras-dynamic-v1.0';
 const IMAGE_CACHE = 'grras-images-v1.0';
 
-// Assets to cache immediately
+// Mobile-optimized assets to cache immediately
 const STATIC_ASSETS = [
   '/',
   '/static/js/bundle.js',
+  '/static/js/main.js',
   '/static/css/main.css',
   '/manifest.json',
-  'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap',
+  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap', // Reduced font weights for mobile
   'https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png'
 ];
 

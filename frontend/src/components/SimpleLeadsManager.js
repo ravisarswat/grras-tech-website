@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Users, RefreshCw, Mail, Phone, Calendar, LogOut } from 'lucide-react';
+import { 
+  Users, RefreshCw, Mail, Phone, Calendar, LogOut, 
+  Filter, Download, Trash2, Search, CheckSquare, 
+  Square, MoreHorizontal, Eye, Edit, AlertTriangle,
+  FileText, Star, MapPin, MessageSquare, X
+} from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 

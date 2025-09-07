@@ -1,10 +1,10 @@
 {
-  "timestamp": "2025-09-02T14:26:06.447255",
+  "timestamp": "2025-09-07T13:03:44.084201",
   "backend_url": "https://grras-layout-fix.preview.emergentagent.com",
-  "total_tests": 12,
-  "passed_tests": 11,
-  "failed_tests": 1,
-  "success_rate": "91.7%",
+  "total_tests": 15,
+  "passed_tests": 13,
+  "failed_tests": 2,
+  "success_rate": "86.7%",
   "test_results": {
     "server_health": true,
     "mongodb_connection": true,
@@ -13,16 +13,20 @@
     "course_data_structure": true,
     "eligibility_widget_data": true,
     "admin_authentication": true,
-    "contact_form": false,
+    "contact_form": true,
+    "contact_form_validation": false,
+    "contact_form_lead_storage": true,
+    "contact_form_response_handling": true,
     "syllabus_generation": true,
-    "leads_management": true,
+    "leads_management": false,
     "new_courses_addition": true,
     "new_courses_verification": true,
     "new_learning_paths_addition": true,
     "new_learning_paths_verification": true
   },
   "errors": [
-    "Contact form submission failed with status 422"
+    "Contact form validation not working as expected",
+    "Leads endpoint failed with status 404"
   ],
   "critical_issues": [],
   "eligibility_widget_ready": true

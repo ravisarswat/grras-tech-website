@@ -242,7 +242,8 @@ const Home = () => {
         <CourseCategoriesGrid />
       </div>
 
-      {/* Mobile Course Categories - Removed to avoid duplication with menu */}
+      {/* Mobile Course Categories with Logos */}
+      <MobileCourseCategories />
 
       {/* Mobile Popular Courses */}
       <MobilePopularCourses />

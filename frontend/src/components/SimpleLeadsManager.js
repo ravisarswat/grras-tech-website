@@ -325,6 +325,23 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
                 <Download className="h-4 w-4" />
                 Export CSV
               </button>
+              
+              <button
+                onClick={fetchLeads}
+                disabled={loading}
+                className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-xl hover:from-blue-600 hover:to-blue-700 flex items-center gap-2 shadow-md hover:shadow-lg transition-all duration-200"
+              >
+                <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+                Refresh
+              </button>
+              
+              <button
+                onClick={handleLogout}
+                className="bg-gradient-to-r from-gray-500 to-gray-600 text-white px-4 py-2 rounded-xl hover:from-gray-600 hover:to-gray-700 flex items-center gap-2 shadow-md hover:shadow-lg transition-all duration-200"
+              >
+                <LogOut className="h-4 w-4" />
+                Logout
+              </button>
             </div>
           </div>
 

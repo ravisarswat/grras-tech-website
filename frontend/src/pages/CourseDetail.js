@@ -893,6 +893,43 @@ const CourseDetail = () => {
                     </div>
                   </div>
                 )}
+
+                {/* Course-Specific H2 Sections */}
+                {courseSEO && courseSEO.h2Sections && (
+                  <div className="space-y-8">
+                    {courseSEO.h2Sections.map((section, index) => (
+                      <div key={index} className="bg-white rounded-xl p-8 shadow-lg animate-fade-in-up">
+                        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                          {section.title}
+                        </h2>
+                        <p className="text-gray-700 leading-relaxed text-lg">
+                          {section.content}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Course-Specific FAQs */}
+                {courseSEO && courseSEO.faqs && (
+                  <div className="bg-white rounded-xl p-8 shadow-lg animate-fade-in-up">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                      Frequently Asked Questions
+                    </h2>
+                    <div className="space-y-6">
+                      {courseSEO.faqs.map((faq, index) => (
+                        <div key={index} className="bg-gray-50 rounded-xl p-6">
+                          <h3 className="font-semibold text-gray-900 mb-2">
+                            {faq.question}
+                          </h3>
+                          <p className="text-gray-600">
+                            {faq.answer}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Sidebar */}

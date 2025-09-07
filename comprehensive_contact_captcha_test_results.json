@@ -1,0 +1,31 @@
+{
+  "timestamp": "2025-09-07T13:22:35.091596",
+  "backend_url": "https://grras-layout-fix.preview.emergentagent.com",
+  "total_tests": 11,
+  "passed_tests": 11,
+  "failed_tests": 0,
+  "success_rate": "100.0%",
+  "test_results": {
+    "server_health": true,
+    "contact_form_basic": true,
+    "contact_form_with_captcha_data": true,
+    "form_validation_required_fields": true,
+    "form_validation_email_format": true,
+    "form_validation_phone_format": true,
+    "lead_storage_verification": true,
+    "response_structure_validation": true,
+    "google_maps_directions_link": true,
+    "backend_captcha_handling": true
+  },
+  "errors": [],
+  "warnings": [],
+  "critical_issues": [],
+  "captcha_functionality_status": {
+    "frontend_captcha_implemented": true,
+    "backend_accepts_captcha_field": true,
+    "backend_handles_captcha_gracefully": true,
+    "form_validation_working": true,
+    "lead_storage_working": true,
+    "overall_status": "WORKING"
+  }
+}

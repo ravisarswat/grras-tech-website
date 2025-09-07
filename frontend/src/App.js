@@ -37,6 +37,7 @@ import blogPosts from './data/blog';
 
 function AppContent() {
   useScrollToTop();
+  usePerformanceMonitoring();
   const location = useLocation();
   
   // Register service worker for caching

@@ -91,11 +91,11 @@ backend/data/media/
 *.env.local
 *.env.development
 *.env.production
--e
--e 
-# Environment files
-*.env
-*.env.*
+# Environment files - allow frontend/.env for production
+*.env.local
+*.env.development
+*.env.test
+*.env.production.local
 -e 
 # Environment files
 *.env

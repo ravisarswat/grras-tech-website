@@ -1,30 +1,33 @@
-import React from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'sonner';
 import './App.css';
 import useScrollToTop from './hooks/useScrollToTop';
 import { ContentProvider } from './contexts/ContentContext';
+import LoadingSpinner from './components/LoadingSpinner';
 
-// Components
+// Critical components (loaded immediately)
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
 import Home from './pages/Home';
-import About from './pages/About';
-import Courses from './pages/Courses';
-import EnhancedCourses from './pages/EnhancedCourses';
-import CategoryCoursePage from './pages/CategoryCoursePage';
-import CourseDetail from './pages/CourseDetail';
-import Admissions from './pages/Admissions';
-import Testimonials from './pages/Testimonials';
-import Blog from './pages/Blog';
-import BlogPost from './pages/BlogPost';
-import Contact from './pages/Contact';
-import Privacy from './pages/Privacy';
-import NotFound from './pages/NotFound';
-import AdminLeads from './pages/AdminLeads';
-import Placements from './pages/Placements';
+
+// Lazy load non-critical components for better performance
+const About = React.lazy(() => import('./pages/About'));
+const Courses = React.lazy(() => import('./pages/Courses'));
+const EnhancedCourses = React.lazy(() => import('./pages/EnhancedCourses'));
+const CategoryCoursePage = React.lazy(() => import('./pages/CategoryCoursePage'));
+const CourseDetail = React.lazy(() => import('./pages/CourseDetail'));
+const Admissions = React.lazy(() => import('./pages/Admissions'));
+const Testimonials = React.lazy(() => import('./pages/Testimonials'));
+const Blog = React.lazy(() => import('./pages/Blog'));
+const BlogPost = React.lazy(() => import('./pages/BlogPost'));
+const Contact = React.lazy(() => import('./pages/Contact'));
+const Privacy = React.lazy(() => import('./pages/Privacy'));
+const NotFound = React.lazy(() => import('./pages/NotFound'));
+const AdminLeads = React.lazy(() => import('./pages/AdminLeads'));
+const Placements = React.lazy(() => import('./pages/Placements'));
 
 // Static Data
 import { categories } from './data/categories';

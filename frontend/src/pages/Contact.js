@@ -146,8 +146,9 @@ const Contact = () => {
         icon: <CheckCircle className="h-5 w-5" />
       });
       
-      // Reset form
+      // Reset form and generate new captcha
       setFormData({ name: '', email: '', phone: '', message: '' });
+      generateNewCaptcha();
       
     } catch (error) {
       console.error('Error sending message:', error);

@@ -293,7 +293,54 @@ const Contact = () => {
             
             {/* Contact Form and Additional Info Grid */}
             <div className="grid lg:grid-cols-2 gap-8">
-              {/* Contact Form - Beautiful & Creative Design */}
+              {/* Left Column - FAQs and Office Hours */}
+              <div className="space-y-6">
+                {/* FAQs */}
+                <div className="bg-white rounded-2xl p-8 shadow-lg animate-fade-in-up">
+                  <h3 className="text-xl font-bold text-gray-900 mb-6">
+                    Frequently Asked Questions
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    {faqs.map((faq, index) => (
+                      <div key={index} className="border-b border-gray-100 pb-4 last:border-b-0 last:pb-0">
+                        <h4 className="font-medium text-gray-900 mb-2">
+                          {faq.question}
+                        </h4>
+                        <p className="text-gray-600 text-sm">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Office Hours */}
+                <div className="bg-white rounded-2xl p-8 shadow-lg animate-fade-in-up">
+                  <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                    <Clock className="h-6 w-6 text-red-500" />
+                    Office Hours
+                  </h3>
+                  
+                  <div className="space-y-3">
+                    {officeHours.map((schedule, index) => (
+                      <div key={index} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
+                        <span className="text-gray-700 font-medium">{schedule.day}</span>
+                        <span className="text-gray-600">{schedule.hours}</span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="mt-6 p-4 bg-green-50 rounded-lg">
+                    <p className="text-green-800 text-sm">
+                      <strong>Note:</strong> We're also available for online consultations outside office hours. 
+                      Contact us via WhatsApp for immediate assistance.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column - Contact Form */}
               <div className="animate-fade-in-up">
                 <div className="relative bg-gradient-to-br from-white via-orange-50/30 to-red-50/40 rounded-3xl p-8 shadow-2xl border border-orange-100/50 overflow-hidden">
                   {/* Background Pattern */}

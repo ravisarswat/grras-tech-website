@@ -345,6 +345,49 @@ const About = () => {
           </div>
         </section>
 
+        {/* FAQs Section */}
+        <section className="py-16 bg-gray-50">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12 animate-fade-in-up">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-xl text-gray-600">
+                Learn more about GRRAS Solutions and our training programs
+              </p>
+            </div>
+            
+            <div className="space-y-6">
+              <div className="bg-white rounded-xl p-6 shadow-sm">
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  When was GRRAS Solutions established?
+                </h3>
+                <p className="text-gray-600">
+                  GRRAS Solutions was established in 2007 and has been providing world-class IT education for over 18 years, becoming a trusted name in technical training.
+                </p>
+              </div>
+              
+              <div className="bg-white rounded-xl p-6 shadow-sm">
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  What makes GRRAS different from other institutes?
+                </h3>
+                <p className="text-gray-600">
+                  We are an official Red Hat Training Partner with authorized labs, experienced industry trainers, hands-on practical training, and 95% placement success rate with top IT companies.
+                </p>
+              </div>
+              
+              <div className="bg-white rounded-xl p-6 shadow-sm">
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Does GRRAS have multiple branches?
+                </h3>
+                <p className="text-gray-600">
+                  Our main campus is located in Jaipur with state-of-the-art infrastructure, modern labs, and all facilities. We focus on quality education at our primary location.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* CTA Section */}
         <section className="py-16 gradient-bg-secondary text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

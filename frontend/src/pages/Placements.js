@@ -184,8 +184,8 @@ const Placements = () => {
   return (
     <>
       <SEO 
-        title="Student Placements - Success Stories | GRRAS Solutions"
-        description="Discover the success stories of our students placed in top companies like Microsoft, Google, Amazon, IBM with excellent packages. 95% placement rate."
+        title="Student Placements – GRRAS Solutions"
+        description="Explore success stories of GRRAS students placed in top IT & Cloud companies after completing DevOps, Red Hat, Data Science, and BCA programs."
         keywords="student placements, job placements, career success, Microsoft jobs, Google jobs, AWS jobs, DevOps placements, cloud computing jobs"
       />
       

@@ -56,7 +56,11 @@ const HeroSlider = () => {
       cta: "Transform Your Career",
       ctaLink: "/courses?category=devops",
       background: "bg-gradient-to-br from-blue-600 via-cyan-500 to-green-500",
-      icon: <img src="https://cdn.worldvectorlogo.com/logos/devops-2.svg" alt="DevOps" className="w-full h-full object-contain filter brightness-0 invert" />,
+      icon: React.createElement('img', { 
+        src: "https://cdn.worldvectorlogo.com/logos/devops-2.svg", 
+        alt: "DevOps", 
+        className: "w-full h-full object-contain filter brightness-0 invert" 
+      }),
       stats: ["Industry Tools", "Real Pipelines", "Expert Mentorship"]
     },
     {

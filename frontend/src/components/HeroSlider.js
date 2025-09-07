@@ -118,30 +118,19 @@ const HeroSlider = () => {
           {/* Left Content */}
           <div className="text-center lg:text-left animate-fade-in-up flex flex-col justify-center items-center lg:items-start self-center w-full max-w-2xl mx-auto lg:mx-0">
             
-            {/* Awards Banner - Fully Responsive */}
+            {/* Awards Banner - Clean Responsive Solution */}
             <div className="w-full mb-4 lg:mb-6">
-              <div className="flex flex-col xs:flex-row gap-1.5 sm:gap-2 max-w-md mx-auto lg:mx-0">
-                <div className="flex items-center justify-center gap-1.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full px-2.5 py-1.5 shadow-lg flex-1 min-w-0">
-                  <span className="text-yellow-800 text-xs flex-shrink-0">🏆</span>
-                  <span className="text-yellow-900 font-bold text-xs text-center truncate">Award Winning</span>
+              <div className="flex flex-col sm:flex-row gap-2 justify-center lg:justify-start items-center">
+                <div className="flex items-center gap-1.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full px-3 py-1.5 shadow-lg">
+                  <span className="text-yellow-800 text-sm">🏆</span>
+                  <span className="text-yellow-900 font-bold text-xs sm:text-sm whitespace-nowrap">Award Winning Institute</span>
                 </div>
-                <div className="flex items-center justify-center gap-1.5 bg-gradient-to-r from-red-400 to-red-500 rounded-full px-2.5 py-1.5 shadow-lg flex-1 min-w-0">
-                  <span className="text-white text-xs flex-shrink-0">🎖️</span>
-                  <span className="text-white font-bold text-xs text-center truncate">Red Hat Partner</span>
-                </div>
-              </div>
-              
-              {/* Full text on larger screens */}
-              <div className="hidden sm:block">
-                <div className="flex flex-col sm:flex-row gap-2 max-w-lg mx-auto lg:mx-0 mt-2">
-                  <div className="flex items-center justify-center gap-1.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full px-3 py-2 shadow-lg flex-1">
-                    <span className="text-yellow-800 text-sm">🏆</span>
-                    <span className="text-yellow-900 font-bold text-sm">Award Winning Institute</span>
-                  </div>
-                  <div className="flex items-center justify-center gap-1.5 bg-gradient-to-r from-red-400 to-red-500 rounded-full px-3 py-2 shadow-lg flex-1">
-                    <span className="text-white text-sm">🎖️</span>
-                    <span className="text-white font-bold text-sm">Best Red Hat Partner Since 2007</span>
-                  </div>
+                <div className="flex items-center gap-1.5 bg-gradient-to-r from-red-400 to-red-500 rounded-full px-3 py-1.5 shadow-lg">
+                  <span className="text-white text-sm">🎖️</span>
+                  <span className="text-white font-bold text-xs sm:text-sm whitespace-nowrap">
+                    <span className="hidden xs:inline">Best Red Hat Partner Since 2007</span>
+                    <span className="xs:hidden">Red Hat Partner 2007</span>
+                  </span>
                 </div>
               </div>
             </div>

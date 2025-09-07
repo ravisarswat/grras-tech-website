@@ -308,6 +308,49 @@ const Testimonials = () => {
           </div>
         </section>
 
+        {/* FAQs Section */}
+        <section className="py-16 bg-white">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-xl text-gray-600">
+                Learn about our student success and support programs
+              </p>
+            </div>
+            
+            <div className="space-y-6">
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  How does GRRAS help students in their career journey?
+                </h3>
+                <p className="text-gray-600">
+                  We provide comprehensive support including hands-on training, industry certifications, placement assistance, interview preparation, and continuous mentorship throughout your career journey.
+                </p>
+              </div>
+              
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Can I talk to alumni for feedback?
+                </h3>
+                <p className="text-gray-600">
+                  Yes, we connect prospective students with our alumni for honest feedback and guidance. Contact our admission team to arrange alumni interactions.
+                </p>
+              </div>
+              
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Are these testimonials genuine?
+                </h3>
+                <p className="text-gray-600">
+                  All testimonials are from real GRRAS students who have successfully completed their programs and are working in reputed companies. We can provide verification if needed.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Call to Action */}
         <section className="py-12 bg-gray-100">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

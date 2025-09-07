@@ -121,8 +121,11 @@ const HeroSlider = () => {
           {/* Left Content */}
           <div className="text-center lg:text-left animate-fade-in-up flex flex-col justify-center items-center lg:items-start self-center w-full max-w-2xl mx-auto lg:mx-0">
             
-            {/* Awards Banner - Better Positioned */}
-            <div className="w-full mb-3 sm:mb-4 lg:mb-5">
+            {/* Awards Banner - Stable Layout */}
+            <div 
+              className="w-full mb-3 sm:mb-4 lg:mb-5"
+              style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
+            >
               <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-2 justify-center lg:justify-start items-center">
                 <div className="flex items-center gap-1.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full px-2.5 sm:px-3 py-1 sm:py-1.5 shadow-lg flex-shrink-0">
                   <span className="text-yellow-800 text-xs sm:text-sm">🏆</span>

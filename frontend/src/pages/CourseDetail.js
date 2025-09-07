@@ -705,7 +705,7 @@ const CourseDetail = () => {
                 </div>
                 
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                  {course.title || course.name}
+                  {courseSEO ? courseSEO.h1 : (course.title || course.name)}
                 </h1>
                 
                 <p className="text-xl text-gray-100 mb-6">

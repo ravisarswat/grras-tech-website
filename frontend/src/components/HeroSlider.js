@@ -111,8 +111,11 @@ const HeroSlider = () => {
       background: "bg-gradient-to-br from-blue-600 via-cyan-500 to-green-500",
       icon: React.createElement('img', { 
         src: "https://cdn.worldvectorlogo.com/logos/devops-2.svg", 
-        alt: "DevOps", 
-        className: "w-full h-full object-contain filter brightness-0 invert" 
+        alt: "DevOps Training with Docker and Kubernetes Jaipur", 
+        className: "w-full h-full object-contain filter brightness-0 invert",
+        loading: "lazy",
+        decoding: "async",
+        style: { contentVisibility: 'auto', containIntrinsicSize: '48px 48px' }
       }),
       stats: ["Industry Tools", "Real Pipelines", "Expert Mentorship"]
     },

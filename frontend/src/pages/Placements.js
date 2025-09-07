@@ -515,6 +515,49 @@ const Placements = () => {
           </div>
         </section>
 
+        {/* FAQs Section */}
+        <section className="py-16 bg-white">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-xl text-gray-600">
+                Get answers about our placement success and support process
+              </p>
+            </div>
+            
+            <div className="space-y-6">
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Which companies hire GRRAS students?
+                </h3>
+                <p className="text-gray-600">
+                  Our students are placed in top companies like TCS, Infosys, Wipro, IBM, Microsoft, Amazon, Google, and many other leading IT organizations across India and globally.
+                </p>
+              </div>
+              
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Does GRRAS guarantee job placement?
+                </h3>
+                <p className="text-gray-600">
+                  We provide 100% placement assistance with our 95% success rate. While we cannot guarantee placement, our dedicated placement team works tirelessly to ensure every student gets the right opportunity.
+                </p>
+              </div>
+              
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  How does the placement process work?
+                </h3>
+                <p className="text-gray-600">
+                  Our placement process includes resume building, interview preparation, mock interviews, soft skills training, and direct job referrals to our 100+ hiring partners.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* CTA Section */}
         <section className="py-20 bg-gradient-to-r from-red-600 to-orange-600">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

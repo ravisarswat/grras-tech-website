@@ -65,6 +65,12 @@ const MobileCourseCategories = () => {
       return 'https://upload.wikimedia.org/wikipedia/commons/5/51/Google_Cloud_logo.svg';
     } else if (category.slug === 'data-science-ai') {
       return 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/1200px-Scikit_learn_logo_small.svg.png';
+    } else if (category.slug === 'programming-development') {
+      return 'https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png';
+    } else if (category.slug === 'cyber-security') {
+      return 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Cyber-security-lock.svg';
+    } else if (category.slug === 'degree-program') {
+      return 'https://upload.wikimedia.org/wikipedia/commons/5/57/Graduation_hat.svg';
     }
     return null;
   };

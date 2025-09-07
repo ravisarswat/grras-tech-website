@@ -348,7 +348,7 @@ const Home = () => {
               </div>
             </div>
             <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
-              Best Red Hat Training Partner
+              Why Students Choose GRRAS
             </h2>
             <p className="text-red-100 text-xl max-w-3xl mx-auto">
               Recognized for excellence in IT training and certification with multiple industry awards

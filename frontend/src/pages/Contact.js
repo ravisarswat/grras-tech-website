@@ -210,20 +210,16 @@ const Contact = () => {
 
   const faqs = [
     {
-      question: 'What are the admission requirements?',
-      answer: 'For our degree programs, you need 12th pass. For professional courses, basic computer knowledge is preferred but not mandatory.'
+      question: 'Where is GRRAS Solutions located?',
+      answer: 'GRRAS Solutions is located at A-81, Singh Bhoomi Khatipura Rd, behind Marudhar Hospital, Jaipur, Rajasthan 302012. We are easily accessible by public transport.'
     },
     {
-      question: 'Do you provide placement assistance?',
-      answer: 'Yes, we provide 100% placement assistance with our network of 100+ hiring partners including top IT companies.'
+      question: 'How can I contact the admission team?',
+      answer: 'You can contact our admission team by calling 9001991227, visiting our campus, or filling out the contact form. We also have WhatsApp support for quick responses.'
     },
     {
-      question: 'Are there any EMI options for course fees?',
-      answer: 'Yes, we offer flexible EMI options for all our courses. Contact our admission team for details.'
-    },
-    {
-      question: 'What is the batch size for courses?',
-      answer: 'We maintain small batch sizes of 20-25 students to ensure personalized attention and better learning outcomes.'
+      question: 'What are the office hours?',
+      answer: 'We are open Monday-Friday 9:00 AM - 7:00 PM, Saturday 9:00 AM - 5:00 PM, and Sunday 10:00 AM - 4:00 PM. Online consultations are available outside office hours.'
     }
   ];
 

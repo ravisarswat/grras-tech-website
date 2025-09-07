@@ -61,7 +61,7 @@ const Placements = () => {
       photo: "https://customer-assets.emergentagent.com/job_grras-seo-optimize/artifacts/eux67kjm_Tushar%20Arora.jpeg",
       location: "Pune",
       year: "2024",
-      companyLogo: "https://via.placeholder.com/80x40/F59E0B/FFFFFF?text=Insight",
+      certifications: ["Red Hat Certified System Administrator (RHCSA)", "Kubernetes Administrator", "Jenkins Expert"],
       testimonial: "GRRAS training gave me the technical edge to succeed at Insight!"
     },
     {

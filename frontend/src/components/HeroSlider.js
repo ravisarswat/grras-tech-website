@@ -511,8 +511,8 @@ const HeroSlider = () => {
         </button>
 
         {/* Dots Indicator */}
-        <div className="flex items-center gap-2">
-          {slides.map((_, index) => (
+        <div className="flex items-center gap-2" role="tablist" aria-label="Slide navigation">
+          {slides.map((slide, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
@@ -521,6 +521,10 @@ const HeroSlider = () => {
                   ? 'bg-white w-6 lg:w-8' 
                   : 'bg-white bg-opacity-50 hover:bg-opacity-75'
               }`}
+              aria-label={`Go to slide ${index + 1}: ${slide.title}`}
+              aria-selected={index === currentSlide}
+              role="tab"
+              type="button"
             />
           ))}
         </div>

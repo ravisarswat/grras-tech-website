@@ -259,7 +259,7 @@ const usePerformanceMonitoring = () => {
     // Start monitoring
     initializeMonitoring();
 
-    // Monitor connection quality
+    // Mobile-specific connection monitoring
     if (navigator.connection) {
       const connection = navigator.connection;
       console.log('Connection:', {
@@ -269,10 +269,49 @@ const usePerformanceMonitoring = () => {
         saveData: connection.saveData
       });
 
-      // Adjust behavior based on connection
-      if (connection.saveData || connection.effectiveType === 'slow-2g') {
-        console.log('Data saver mode or slow connection detected');
-        // Could disable certain features or reduce image quality here
+      // Mobile-specific performance adjustments
+      if (connection.saveData || connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
+        console.log('Data saver mode or slow connection detected - optimizing for mobile');
+        
+        // Add class to document for CSS targeting
+        document.documentElement.classList.add('slow-connection');
+        
+        // Track slow connection for analytics
+        if (window.gtag) {
+          window.gtag('event', 'slow_connection', {
+            event_category: 'performance',
+            event_label: connection.effectiveType,
+            non_interaction: true
+          });
+        }
+      }
+      
+      // Monitor connection changes on mobile
+      connection.addEventListener('change', () => {
+        console.log('Connection changed:', connection.effectiveType);
+        if (window.gtag) {
+          window.gtag('event', 'connection_change', {
+            event_category: 'performance',
+            event_label: connection.effectiveType,
+            non_interaction: true
+          });
+        }
+      });
+    }
+
+    // Mobile device detection and optimization
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) {
+      console.log('Mobile device detected - applying mobile optimizations');
+      document.documentElement.classList.add('mobile-device');
+      
+      // Track mobile usage
+      if (window.gtag) {
+        window.gtag('event', 'mobile_user', {
+          event_category: 'device',
+          event_label: 'mobile',
+          non_interaction: true
+        });
       }
     }
 

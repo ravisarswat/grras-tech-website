@@ -13,7 +13,8 @@ import {
   Sparkles,
   Heart,
   Star,
-  Zap
+  Zap,
+  Shield
 } from 'lucide-react';
 import { toast } from 'sonner';
 import SEO from '../components/SEO';

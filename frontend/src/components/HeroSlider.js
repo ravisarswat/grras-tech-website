@@ -86,7 +86,9 @@ const HeroSlider = () => {
 
   // Auto-play only - no manual controls needed
 
-  const currentSlideData = slides[currentSlide];
+  // Safety check for currentSlide bounds
+  const safeCurrentSlide = currentSlide >= 0 && currentSlide < slides.length ? currentSlide : 0;
+  const currentSlideData = slides[safeCurrentSlide];
 
   return (
     <section className="relative min-h-[500px] sm:min-h-[550px] md:min-h-[500px] lg:min-h-[480px] overflow-hidden flex items-center">

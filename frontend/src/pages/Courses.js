@@ -409,7 +409,20 @@ const Courses = () => {
                       {category.logo ? (
                         <img 
                           src={category.logo} 
-                          alt={category.name}
+                          alt={(() => {
+                            const altTexts = {
+                              'red-hat-technologies': 'Red Hat Certification Training at GRRAS Jaipur',
+                              'aws-cloud-platform': 'AWS Cloud Training at GRRAS Jaipur',
+                              'devops-engineering': 'DevOps Training with Docker and Kubernetes Jaipur',
+                              'microsoft-azure': 'Microsoft Azure Certification Training Jaipur',
+                              'google-cloud-platform': 'Google Cloud Platform Training at GRRAS Jaipur',
+                              'data-science-ai': 'Data Science & AI Course at GRRAS Jaipur',
+                              'programming-development': 'Full Stack Web Development Training Jaipur',
+                              'cyber-security': 'Cyber Security and Ethical Hacking Course Jaipur',
+                              'degree-program': 'BCA Degree Program with Internship at GRRAS Jaipur'
+                            };
+                            return altTexts[category.id] || `${category.name} Training at GRRAS Jaipur`;
+                          })()}
                           className="w-7 h-7 object-contain filter group-hover:brightness-110"
                           onError={(e) => e.target.style.display = 'none'}
                         />

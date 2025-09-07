@@ -505,12 +505,12 @@ const Placements = () => {
                 <h3 className="text-2xl font-black mb-4">Ready to Get Internationally Certified?</h3>
                 <p className="text-lg mb-6 opacity-90">Join our students who increased their salary by ₹5-10 LPA with international certifications</p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button className="inline-flex items-center px-6 py-3 bg-white text-red-600 font-bold rounded-2xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
+                  <Link to="/courses" className="inline-flex items-center px-6 py-3 bg-white text-red-600 font-bold rounded-2xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
                     View Certification Courses
-                  </button>
-                  <button className="inline-flex items-center px-6 py-3 border-2 border-white text-white font-bold rounded-2xl hover:bg-white hover:text-red-600 transition-all duration-300">
+                  </Link>
+                  <Link to="/contact" className="inline-flex items-center px-6 py-3 border-2 border-white text-white font-bold rounded-2xl hover:bg-white hover:text-red-600 transition-all duration-300">
                     Talk to Career Counselor
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

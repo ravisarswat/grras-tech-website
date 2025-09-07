@@ -230,6 +230,13 @@ const Home = () => {
         canonical="https://www.grras.tech/"
         type="website"
       />
+
+      {/* Skip Navigation Links for Accessibility */}
+      <div className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:bg-white focus:p-4 focus:shadow-lg">
+        <a href="#main-content" className="text-blue-600 underline">Skip to main content</a>
+        <a href="#courses-section" className="ml-4 text-blue-600 underline">Skip to courses</a>
+        <a href="#contact-section" className="ml-4 text-blue-600 underline">Skip to contact</a>
+      </div>
       
       {/* Hero Slider Section */}
       <HeroSlider />

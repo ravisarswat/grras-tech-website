@@ -230,8 +230,8 @@ const Contact = () => {
   return (
     <>
       <SEO
-        title="Contact GRRAS Solutions - IT Training Institute in Jaipur"
-        description="Get in touch with GRRAS Solutions Training Institute in Jaipur. Call 090019 91227, visit our Khatipura campus, or send us a message for course information."
+        title="Contact GRRAS Solutions | Jaipur IT Training Institute"
+        description="Get in touch with GRRAS Solutions for admissions, course details, or career counseling. Visit our Jaipur center or call us today."
         keywords="contact GRRAS, IT training institute Jaipur, admission enquiry, course information, address phone number"
       />
       

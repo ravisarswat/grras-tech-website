@@ -118,18 +118,18 @@ const HeroSlider = () => {
           {/* Left Content */}
           <div className="text-center lg:text-left animate-fade-in-up flex flex-col justify-center items-center lg:items-start self-center w-full max-w-2xl mx-auto lg:mx-0">
             
-            {/* Awards Banner - Clean Responsive Solution */}
-            <div className="w-full mb-4 lg:mb-6">
-              <div className="flex flex-col sm:flex-row gap-2 justify-center lg:justify-start items-center">
-                <div className="flex items-center gap-1.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full px-3 py-1.5 shadow-lg">
+            {/* Awards Banner - Ultra Responsive */}
+            <div className="w-full mb-4 lg:mb-6 px-2 sm:px-0">
+              <div className="flex flex-col sm:flex-row gap-2 justify-center lg:justify-start items-center max-w-full">
+                <div className="flex items-center gap-1.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full px-2.5 sm:px-3 py-1.5 shadow-lg flex-shrink-0">
                   <span className="text-yellow-800 text-sm">🏆</span>
-                  <span className="text-yellow-900 font-bold text-xs sm:text-sm whitespace-nowrap">Award Winning Institute</span>
+                  <span className="text-yellow-900 font-bold text-xs sm:text-sm">Award Winning Institute</span>
                 </div>
-                <div className="flex items-center gap-1.5 bg-gradient-to-r from-red-400 to-red-500 rounded-full px-3 py-1.5 shadow-lg">
+                <div className="flex items-center gap-1.5 bg-gradient-to-r from-red-400 to-red-500 rounded-full px-2.5 sm:px-3 py-1.5 shadow-lg flex-shrink-0">
                   <span className="text-white text-sm">🎖️</span>
-                  <span className="text-white font-bold text-xs sm:text-sm whitespace-nowrap">
-                    <span className="hidden xs:inline">Best Red Hat Partner Since 2007</span>
-                    <span className="xs:hidden">Red Hat Partner 2007</span>
+                  <span className="text-white font-bold text-xs sm:text-sm">
+                    <span className="hidden sm:inline">Best Red Hat Partner Since 2007</span>
+                    <span className="sm:hidden">Red Hat Partner 2007</span>
                   </span>
                 </div>
               </div>

@@ -77,13 +77,22 @@ const OptimizedImage = ({
     return originalSrc;
   };
 
-  // Generate srcSet for responsive images
+  // Generate mobile-optimized srcSet for responsive images
   const generateSrcSet = (baseSrc) => {
-    if (!baseSrc || !width) return null;
+    if (!baseSrc) return null;
     
-    const sizes = [320, 640, 768, 1024, 1280, 1920];
+    // Mobile-first responsive breakpoints
+    const mobileSizes = [320, 480, 640];
+    const desktopSizes = [768, 1024, 1280, 1920];
+    
+    // Detect if likely mobile viewport
+    const isMobileViewport = typeof window !== 'undefined' && window.innerWidth <= 768;
+    
+    // Use smaller set of sizes for mobile to reduce bandwidth
+    const sizes = isMobileViewport ? mobileSizes : [...mobileSizes, ...desktopSizes];
+    
     return sizes
-      .filter(size => size <= width * 2) // Don't generate sizes larger than 2x the display size
+      .filter(size => !width || size <= width * 2) // Don't generate sizes larger than 2x the display size
       .map(size => `${getOptimizedSrc(baseSrc, size)} ${size}w`)
       .join(', ');
   };

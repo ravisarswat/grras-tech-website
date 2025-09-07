@@ -565,6 +565,82 @@ const Courses = () => {
               ))}
             </div>
           )}
+          
+          {/* Our Most Popular Certifications Section */}
+          <section className="py-16 bg-white">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Our Most Popular Certifications
+                </h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                  Industry-recognized certifications that boost your career prospects and salary
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="text-center p-4 bg-red-50 rounded-xl border border-red-100">
+                  <div className="text-3xl mb-2">🏆</div>
+                  <h3 className="font-semibold text-gray-900">Red Hat RHCSA</h3>
+                </div>
+                <div className="text-center p-4 bg-orange-50 rounded-xl border border-orange-100">
+                  <div className="text-3xl mb-2">☁️</div>
+                  <h3 className="font-semibold text-gray-900">AWS Certified</h3>
+                </div>
+                <div className="text-center p-4 bg-blue-50 rounded-xl border border-blue-100">
+                  <div className="text-3xl mb-2">🔧</div>
+                  <h3 className="font-semibold text-gray-900">DevOps Expert</h3>
+                </div>
+                <div className="text-center p-4 bg-green-50 rounded-xl border border-green-100">
+                  <div className="text-3xl mb-2">📊</div>
+                  <h3 className="font-semibold text-gray-900">Data Science</h3>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQs Section */}
+          <section className="py-16 bg-gray-50">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Frequently Asked Questions
+                </h2>
+                <p className="text-xl text-gray-600">
+                  Get answers to common questions about our IT & Cloud courses
+                </p>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="bg-white rounded-xl p-6 shadow-sm">
+                  <h3 className="font-semibold text-gray-900 mb-2">
+                    Which IT courses are most in demand in 2025?
+                  </h3>
+                  <p className="text-gray-600">
+                    DevOps, Cloud Computing (AWS, Azure), Data Science, Cybersecurity, and AI/ML are the most in-demand IT skills. Our courses are designed to meet current market demands.
+                  </p>
+                </div>
+                
+                <div className="bg-white rounded-xl p-6 shadow-sm">
+                  <h3 className="font-semibold text-gray-900 mb-2">
+                    Does GRRAS provide beginner-friendly courses?
+                  </h3>
+                  <p className="text-gray-600">
+                    Yes, all our courses start from basics and progress to advanced levels. We provide foundation modules for students without technical backgrounds.
+                  </p>
+                </div>
+                
+                <div className="bg-white rounded-xl p-6 shadow-sm">
+                  <h3 className="font-semibold text-gray-900 mb-2">
+                    Can I switch from one course to another?
+                  </h3>
+                  <p className="text-gray-600">
+                    Yes, we provide flexibility to switch courses based on your interests and career goals. Our counselors help you choose the right path.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </>

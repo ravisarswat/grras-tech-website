@@ -408,21 +408,21 @@ const HeroSlider = () => {
         {/* Previous Button */}
         <button
           onClick={goToPrevious}
-          className="w-10 h-10 lg:w-12 lg:h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all backdrop-blur-sm"
+          className="w-12 h-12 lg:w-14 lg:h-14 bg-white bg-opacity-30 rounded-full flex items-center justify-center hover:bg-opacity-50 transition-all backdrop-blur-sm shadow-lg"
         >
           <ChevronLeft className="h-5 w-5 lg:h-6 lg:w-6 text-white" />
         </button>
 
         {/* Dots Indicator */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 px-3 py-2 bg-white bg-opacity-20 rounded-full backdrop-blur-sm">
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-2 h-2 lg:w-3 lg:h-3 rounded-full transition-all duration-300 ${
+              className={`w-2.5 h-2.5 lg:w-3 lg:h-3 rounded-full transition-all duration-300 ${
                 index === currentSlide 
                   ? 'bg-white w-6 lg:w-8' 
-                  : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+                  : 'bg-white bg-opacity-60 hover:bg-opacity-80'
               }`}
             />
           ))}
@@ -431,7 +431,7 @@ const HeroSlider = () => {
         {/* Next Button */}
         <button
           onClick={goToNext}
-          className="w-10 h-10 lg:w-12 lg:h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all backdrop-blur-sm"
+          className="w-12 h-12 lg:w-14 lg:h-14 bg-white bg-opacity-30 rounded-full flex items-center justify-center hover:bg-opacity-50 transition-all backdrop-blur-sm shadow-lg"
         >
           <ChevronRight className="h-5 w-5 lg:h-6 lg:w-6 text-white" />
         </button>
@@ -439,7 +439,7 @@ const HeroSlider = () => {
         {/* Play/Pause Button */}
         <button
           onClick={toggleAutoPlay}
-          className="w-10 h-10 lg:w-12 lg:h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all backdrop-blur-sm ml-2"
+          className="w-12 h-12 lg:w-14 lg:h-14 bg-white bg-opacity-30 rounded-full flex items-center justify-center hover:bg-opacity-50 transition-all backdrop-blur-sm ml-2 shadow-lg"
         >
           <Play className={`h-4 w-4 lg:h-5 lg:w-5 text-white ${isPlaying ? 'hidden' : 'block'}`} />
           <div className={`w-2 h-2 bg-white ${isPlaying ? 'block' : 'hidden'}`}></div>

@@ -142,14 +142,14 @@ const HeroSlider = () => {
               </div>
             </div>
 
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight mb-3 lg:mb-4 text-white drop-shadow-lg">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight mb-2 sm:mb-3 lg:mb-4 text-white drop-shadow-lg">
               {currentSlideData.title}
-              <div className="text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold text-white/90 mt-1 sm:mt-2">
+              <div className="text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold text-white/90 mt-1">
                 at GRRAS Training Institute
               </div>
             </h1>
             
-            <h2 className="text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl text-gray-100 mb-3 lg:mb-4 leading-relaxed font-medium">
+            <h2 className="text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl text-gray-100 mb-4 lg:mb-6 leading-relaxed font-medium">
               {currentSlideData.subtitle}
             </h2>
             

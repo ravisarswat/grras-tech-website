@@ -1,0 +1,67 @@
+{
+  "short_name": "GRRAS",
+  "name": "GRRAS Solutions Training Institute",
+  "description": "IT & Cloud Training Institute in Jaipur - Expert training in DevOps, Red Hat, BCA Degree & Data Science",
+  "icons": [
+    {
+      "src": "https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png",
+      "sizes": "512x512", 
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "id": "grras-solutions",
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#DC2626",
+  "shortcuts": [
+    {
+      "name": "View Courses",
+      "short_name": "Courses",
+      "description": "Browse IT & Cloud training courses",
+      "url": "/courses",
+      "icons": [{ "src": "/icons/courses-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Contact Us",
+      "short_name": "Contact",
+      "description": "Get in touch with admission counselors",
+      "url": "/contact",
+      "icons": [{ "src": "/icons/contact-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Apply Now",
+      "short_name": "Apply",
+      "description": "Apply for admission",
+      "url": "/admissions",
+      "icons": [{ "src": "/icons/apply-96x96.png", "sizes": "96x96" }]
+    }
+  ],
+  "categories": ["education", "training", "technology"],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-home.png",
+      "type": "image/png",
+      "sizes": "1280x720",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshots/mobile-home.png", 
+      "type": "image/png",
+      "sizes": "720x1280",
+      "form_factor": "narrow"
+    }
+  ],
+  "prefer_related_applications": false,
+  "lang": "en-IN",
+  "dir": "ltr",
+  "orientation": "portrait-primary"
+}

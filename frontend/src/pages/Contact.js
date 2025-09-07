@@ -33,6 +33,14 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
+  
+  // Simple math captcha
+  const [captcha, setCaptcha] = useState({
+    num1: Math.floor(Math.random() * 10) + 1,
+    num2: Math.floor(Math.random() * 10) + 1,
+    userAnswer: '',
+    isValid: false
+  });
 
   // Get institute data from CMS
   const institute = content?.institute || {};

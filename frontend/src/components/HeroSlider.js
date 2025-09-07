@@ -70,16 +70,19 @@ const HeroSlider = () => {
     }
   ];
 
-  // Auto-play functionality
+  // Auto-play functionality with error handling
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!isPlaying || slides.length === 0) return;
     
     const timer = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-    }, 5000);
+      setCurrentSlide((prevSlide) => {
+        const nextSlide = (prevSlide + 1) % slides.length;
+        return nextSlide;
+      });
+    }, 4000);
 
     return () => clearInterval(timer);
-  }, [isPlaying, slides.length]);
+  }, [slides.length, isPlaying]);
 
   // Auto-play only - no manual controls needed
 

@@ -416,6 +416,49 @@ const HeroSlider = () => {
         </div>
       </div>
 
+      {/* Navigation Controls */}
+      <div className="absolute bottom-6 sm:bottom-8 lg:bottom-10 left-1/2 transform -translate-x-1/2 flex items-center gap-3 z-10">
+
+        {/* Previous Button */}
+        <button
+          onClick={goToPrevious}
+          className="w-10 h-10 lg:w-12 lg:h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all backdrop-blur-sm"
+        >
+          <ChevronLeft className="h-5 w-5 lg:h-6 lg:w-6 text-white" />
+        </button>
+
+        {/* Dots Indicator */}
+        <div className="flex items-center gap-2">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-2 h-2 lg:w-3 lg:h-3 rounded-full transition-all duration-300 ${
+                index === currentSlide 
+                  ? 'bg-white w-6 lg:w-8' 
+                  : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Next Button */}
+        <button
+          onClick={goToNext}
+          className="w-10 h-10 lg:w-12 lg:h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all backdrop-blur-sm"
+        >
+          <ChevronRight className="h-5 w-5 lg:h-6 lg:w-6 text-white" />
+        </button>
+
+        {/* Play/Pause Button */}
+        <button
+          onClick={toggleAutoPlay}
+          className="w-10 h-10 lg:w-12 lg:h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all backdrop-blur-sm ml-2"
+        >
+          <Play className={`h-4 w-4 lg:h-5 lg:w-5 text-white ${isPlaying ? 'hidden' : 'block'}`} />
+          <div className={`w-2 h-2 bg-white ${isPlaying ? 'block' : 'hidden'}`}></div>
+        </button>
+      </div>
 
     </section>
   );

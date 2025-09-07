@@ -533,17 +533,21 @@ const HeroSlider = () => {
         <button
           onClick={goToNext}
           className="w-10 h-10 lg:w-12 lg:h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all backdrop-blur-sm"
+          aria-label="Next slide"
+          type="button"
         >
-          <ChevronRight className="h-5 w-5 lg:h-6 lg:w-6 text-white" />
+          <ChevronRight className="h-5 w-5 lg:h-6 lg:w-6 text-white" aria-hidden="true" />
         </button>
 
         {/* Play/Pause Button */}
         <button
           onClick={toggleAutoPlay}
           className="w-10 h-10 lg:w-12 lg:h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all backdrop-blur-sm ml-2"
+          aria-label={isPlaying ? 'Pause slideshow' : 'Play slideshow'}
+          type="button"
         >
-          <Play className={`h-4 w-4 lg:h-5 lg:w-5 text-white ${isPlaying ? 'hidden' : 'block'}`} />
-          <div className={`w-2 h-2 bg-white ${isPlaying ? 'block' : 'hidden'}`}></div>
+          <Play className={`h-4 w-4 lg:h-5 lg:w-5 text-white ${isPlaying ? 'hidden' : 'block'}`} aria-hidden="true" />
+          <div className={`w-2 h-2 bg-white ${isPlaying ? 'block' : 'hidden'}`} aria-hidden="true"></div>
         </button>
       </div>
 

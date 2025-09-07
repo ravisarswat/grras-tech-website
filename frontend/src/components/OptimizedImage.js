@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const OptimizedImage = ({
   src,
@@ -7,17 +7,57 @@ const OptimizedImage = ({
   height,
   className = '',
   loading = 'lazy',
+  priority = false,
+  sizes = null,
+  aspectRatio = null,
+  placeholder = null,
+  fallbackSrc = null,
+  fetchPriority = 'auto',
+  onLoad = null,
+  onError = null,
   ...props
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [currentSrc, setCurrentSrc] = useState(priority ? src : (placeholder || src));
+  const imgRef = useRef(null);
+  const observerRef = useRef(null);
 
-  const handleLoad = () => {
+  // Lazy loading with Intersection Observer
+  useEffect(() => {
+    if (loading === 'lazy' && !priority && imgRef.current) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !isLoaded) {
+              setCurrentSrc(src);
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '50px 0px' }
+      );
+
+      observer.observe(imgRef.current);
+      observerRef.current = observer;
+
+      return () => observer.disconnect();
+    }
+  }, [src, loading, priority, isLoaded]);
+
+  const handleLoad = (event) => {
     setIsLoaded(true);
+    setHasError(false);
+    if (onLoad) onLoad(event);
   };
 
-  const handleError = () => {
+  const handleError = (event) => {
+    if (fallbackSrc && currentSrc !== fallbackSrc) {
+      setCurrentSrc(fallbackSrc);
+      return;
+    }
     setHasError(true);
+    if (onError) onError(event);
   };
 
   // Generate WebP and AVIF versions if original is not already optimized

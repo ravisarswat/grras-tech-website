@@ -54,15 +54,35 @@ const Contact = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    
+    if (name === 'captcha') {
+      const isValid = parseInt(value) === (captcha.num1 + captcha.num2);
+      setCaptcha(prev => ({
+        ...prev,
+        userAnswer: value,
+        isValid: isValid
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
     
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
+  };
+  
+  // Generate new captcha
+  const generateNewCaptcha = () => {
+    setCaptcha({
+      num1: Math.floor(Math.random() * 10) + 1,
+      num2: Math.floor(Math.random() * 10) + 1,
+      userAnswer: '',
+      isValid: false
+    });
   };
 
   const validateForm = () => {

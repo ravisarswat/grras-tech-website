@@ -129,8 +129,8 @@ const Testimonials = () => {
   return (
     <>
       <SEO
-        title="Student Success Stories & Testimonials - GRRAS Solutions"
-        description="Read inspiring success stories from GRRAS Solutions alumni. 95% placement rate, ₹8.2L average salary. See how our training transformed careers in top IT companies."
+        title="GRRAS Student Testimonials & Success Stories"
+        description="Hear from GRRAS students who achieved career success in DevOps, Cloud, Red Hat, and BCA programs with placement support."
         keywords="GRRAS testimonials, student success stories, placement success, IT training reviews, alumni feedback, career transformation"
       />
       

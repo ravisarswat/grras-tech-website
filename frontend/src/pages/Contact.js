@@ -484,7 +484,7 @@ const Contact = () => {
                   </div>
                 </div>
 
-                {/* Google Maps */}
+                {/* Google Maps - Optimized with lazy loading */}
                 <div className="bg-white rounded-2xl p-8 shadow-lg animate-fade-in-up">
                   <h3 className="text-xl font-bold text-gray-900 mb-6">
                     Find Us Here
@@ -492,17 +492,27 @@ const Contact = () => {
                   
                   {googleMapUrl ? (
                     <div className="rounded-lg overflow-hidden">
-                      <iframe
-                        src={googleMapUrl}
-                        width="100%"
-                        height="300"
-                        style={{ border: 0 }}
-                        allowFullScreen=""
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                        className="rounded-lg"
-                        title={`${instituteName} Location`}
-                      ></iframe>
+                      {/* Placeholder for Map with lazy loading */}
+                      <div className="relative">
+                        <iframe
+                          src={googleMapUrl}
+                          width="100%"
+                          height="300"
+                          style={{ border: 0 }}
+                          allowFullScreen=""
+                          loading="lazy"
+                          referrerPolicy="no-referrer-when-downgrade"
+                          className="rounded-lg"
+                          title={`${instituteName} Location`}
+                        ></iframe>
+                        {/* Loading placeholder overlay */}
+                        <div className="absolute inset-0 bg-gray-100 rounded-lg flex items-center justify-center opacity-0 pointer-events-none">
+                          <div className="text-center">
+                            <MapPin className="h-8 w-8 text-gray-400 mx-auto mb-2 animate-pulse" />
+                            <p className="text-gray-500 text-sm">Loading map...</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   ) : (
                     <div className="bg-gray-100 rounded-lg h-64 flex items-center justify-center">

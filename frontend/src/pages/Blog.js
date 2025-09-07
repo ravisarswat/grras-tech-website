@@ -310,7 +310,7 @@ const Blog = () => {
                       <Link to={`/blog/${post.slug}`}>
                         <img
                           src={getFeaturedImage(post)}
-                          alt={post.title}
+                          alt="GRRAS Blog on DevOps and Cloud Training"
                           className="w-full h-48 object-cover rounded-t-lg"
                           onError={(e) => {
                             e.target.src = 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg';

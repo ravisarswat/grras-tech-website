@@ -112,7 +112,7 @@ const HeroSlider = () => {
       </div>
 
       {/* Content */}
-      <div className="relative max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-8 lg:py-16 h-full flex items-center justify-center">
+      <div className="relative max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-8 lg:py-12 pb-16 sm:pb-20 lg:pb-24 h-full flex items-center justify-center">
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center justify-items-center w-full min-h-0">
           
           {/* Left Content */}

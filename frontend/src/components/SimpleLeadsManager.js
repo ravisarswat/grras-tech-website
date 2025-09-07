@@ -10,8 +10,19 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const SimpleLeadsManager = ({ token, onLogout }) => {
   const [leads, setLeads] = useState([]);
+  const [filteredLeads, setFilteredLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [selectedLeads, setSelectedLeads] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [dateFilter, setDateFilter] = useState('all');
+  const [courseFilter, setCourseFilter] = useState('all');
+  const [showBulkActions, setShowBulkActions] = useState(false);
+  const [viewMode, setViewMode] = useState('grid'); // grid or table
+  const [sortBy, setSortBy] = useState('date');
+  const [sortOrder, setSortOrder] = useState('desc');
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
   const fetchLeads = async () => {
     setLoading(true);

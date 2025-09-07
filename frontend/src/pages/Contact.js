@@ -415,23 +415,45 @@ const Contact = () => {
                       )}
                     </div>
 
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="btn-primary w-full flex items-center justify-center space-x-2"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <div className="spinner w-4 h-4 border-2"></div>
-                          <span>Sending...</span>
-                        </>
-                      ) : (
-                        <>
-                          <Send className="h-5 w-5" />
-                          <span>Send Message</span>
-                        </>
-                      )}
-                    </button>
+                    {/* Beautiful Submit Button */}
+                    <div className="pt-4">
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="group relative w-full py-4 px-8 bg-gradient-to-r from-red-500 via-orange-500 to-red-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transform transition-all duration-300 hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none overflow-hidden"
+                      >
+                        {/* Button Background Animation */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-orange-600 via-red-600 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        
+                        {/* Button Content */}
+                        <div className="relative flex items-center justify-center space-x-3">
+                          {isSubmitting ? (
+                            <>
+                              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                              <span className="text-lg">Sending your message... ✨</span>
+                            </>
+                          ) : (
+                            <>
+                              <Send className="h-5 w-5 group-hover:rotate-12 transition-transform duration-300" />
+                              <span className="text-lg">Send My Message! 🚀</span>
+                              <Heart className="h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
+                            </>
+                          )}
+                        </div>
+                        
+                        {/* Sparkle Effect */}
+                        <div className="absolute top-0 left-0 w-full h-full">
+                          <div className="absolute top-2 left-4 w-1 h-1 bg-white rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
+                          <div className="absolute bottom-2 right-6 w-1 h-1 bg-white rounded-full opacity-0 group-hover:opacity-100 animate-ping" style={{ animationDelay: '0.5s' }}></div>
+                          <div className="absolute top-3 right-8 w-1 h-1 bg-white rounded-full opacity-0 group-hover:opacity-100 animate-ping" style={{ animationDelay: '1s' }}></div>
+                        </div>
+                      </button>
+                      
+                      {/* Fun Message Below Button */}
+                      <p className="text-center text-sm text-gray-500 mt-3 font-medium">
+                        🎯 We typically respond within 2 hours!
+                      </p>
+                    </div>
                   </form>
                 </div>
               </div>

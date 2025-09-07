@@ -16,15 +16,15 @@ const STATIC_ASSETS = [
   'https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png'
 ];
 
-// Assets to cache on first visit
+// Mobile-prioritized assets to cache on first visit
 const CACHE_ON_VISIT = [
-  '/courses',
+  '/courses',    // High priority for mobile users
+  '/contact',    // High priority for mobile users
+  '/admissions', // High priority for mobile users
   '/about',
-  '/contact',
   '/placements',
   '/blog',
-  '/testimonials',
-  '/admissions'
+  '/testimonials'
 ];
 
 // Cache strategies

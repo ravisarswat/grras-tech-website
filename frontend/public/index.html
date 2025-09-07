@@ -45,9 +45,22 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         
-        <!-- Resource hints for mobile optimization -->
+        <!-- Mobile-optimized resource hints -->
         <link rel="preload" href="/static/js/main.js" as="script" fetchpriority="high" />
         <link rel="preload" href="/static/css/main.css" as="style" fetchpriority="high" />
+        
+        <!-- Critical resource preloads for mobile -->
+        <link rel="prefetch" href="/courses" />
+        <link rel="prefetch" href="/contact" />
+        <link rel="prefetch" href="/admissions" />
+        
+        <!-- Mobile-specific DNS prefetch -->
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+        
+        <!-- Preconnect for critical external resources */
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
         
         <!-- Defer non-critical scripts -->
         <script>

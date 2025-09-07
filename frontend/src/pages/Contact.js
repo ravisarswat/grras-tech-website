@@ -459,7 +459,7 @@ const Contact = () => {
               </div>
 
               {/* Additional Info */}
-              <div className="space-y-8">
+              <div className="space-y-6">
                 {/* Office Hours */}
                 <div className="bg-white rounded-2xl p-8 shadow-lg animate-fade-in-up">
                   <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">

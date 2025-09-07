@@ -218,47 +218,46 @@ const Contact = () => {
           </div>
         </section>
 
-        {/* Contact Information - Reduced padding for better spacing */}
-        <section className="py-8 bg-white">
+        {/* Main Content - Contact Form and Info Combined for Better UX */}
+        <section className="py-6 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {contactInfo.map((info, index) => (
-                <div 
-                  key={index}
-                  className="text-center p-6 rounded-xl bg-gradient-to-br from-red-50 to-orange-50 hover:shadow-lg transition-all duration-300 animate-fade-in-up"
-                  style={{ animationDelay: `${index * 0.2}s` }}
-                >
-                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-red-500 to-orange-500 rounded-full flex items-center justify-center text-white">
-                    {info.icon}
-                  </div>
-                  
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                    {info.title}
-                  </h3>
-                  
-                  <div className="text-gray-600 text-sm mb-4">
-                    {info.details.map((detail, i) => (
-                      <p key={i}>{detail}</p>
-                    ))}
-                  </div>
-                  
-                  <a
-                    href={info.action.href}
-                    target={info.action.href && info.action.href.startsWith('http') ? '_blank' : undefined}
-                    rel={info.action.href && info.action.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="inline-flex items-center text-red-600 hover:text-red-700 font-medium text-sm transition-colors"
+            {/* Contact Information Cards - Horizontal on larger screens */}
+            <div className="mb-8">
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {contactInfo.map((info, index) => (
+                  <div 
+                    key={index}
+                    className="text-center p-4 rounded-xl bg-white hover:shadow-lg transition-all duration-300 animate-fade-in-up border border-gray-100"
+                    style={{ animationDelay: `${index * 0.1}s` }}
                   >
-                    {info.action.text}
-                  </a>
-                </div>
-              ))}
+                    <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-red-500 to-orange-500 rounded-full flex items-center justify-center text-white">
+                      {info.icon}
+                    </div>
+                    
+                    <h3 className="text-base font-semibold text-gray-900 mb-2">
+                      {info.title}
+                    </h3>
+                    
+                    <div className="text-gray-600 text-xs mb-3">
+                      {info.details.map((detail, i) => (
+                        <p key={i}>{detail}</p>
+                      ))}
+                    </div>
+                    
+                    <a
+                      href={info.action.href}
+                      target={info.action.href && info.action.href.startsWith('http') ? '_blank' : undefined}
+                      rel={info.action.href && info.action.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className="inline-flex items-center text-red-600 hover:text-red-700 font-medium text-xs transition-colors"
+                    >
+                      {info.action.text}
+                    </a>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
-
-        {/* Main Content - Reduced top padding to bring form higher */}
-        <section className="py-4">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            {/* Contact Form and Additional Info Grid */}
             <div className="grid lg:grid-cols-2 gap-8">
               {/* Contact Form - Beautiful & Creative Design */}
               <div className="animate-fade-in-up">

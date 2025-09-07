@@ -202,14 +202,14 @@ const Contact = () => {
       />
       
       <div className="min-h-screen bg-gray-50">
-        {/* Hero Section */}
-        <section className="py-20 gradient-bg-primary text-white">
+        {/* Hero Section - Reduced height for better UX */}
+        <section className="py-12 gradient-bg-primary text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="animate-fade-in-up">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              <h1 className="text-3xl md:text-4xl font-bold mb-4">
                 Get in Touch
               </h1>
-              <p className="text-xl md:text-2xl text-gray-100 mb-8 max-w-3xl mx-auto">
+              <p className="text-lg md:text-xl text-gray-100 mb-6 max-w-2xl mx-auto">
                 Ready to start your IT career? Contact our admission counselors for personalized guidance
               </p>
             </div>

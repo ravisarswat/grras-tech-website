@@ -478,10 +478,10 @@ const Blog = () => {
                   </div>
                 )}
 
-                {/* Popular Tags */}
+                {/* Trending Topics */}
                 {Object.keys(tags).length > 0 && (
                   <div className="bg-white rounded-lg p-6 shadow-sm">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Popular Tags</h3>
+                    <h2 className="text-lg font-semibold text-gray-900 mb-4">Trending Topics</h2>
                     <div className="flex flex-wrap gap-2">
                       {Object.entries(tags)
                         .sort(([,a], [,b]) => (b.count || b) - (a.count || a))

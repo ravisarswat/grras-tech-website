@@ -14,21 +14,49 @@ import Footer from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
 import Home from './pages/Home';
 
-// Lazy load non-critical components for better performance
-const About = React.lazy(() => import('./pages/About'));
-const Courses = React.lazy(() => import('./pages/Courses'));
-const EnhancedCourses = React.lazy(() => import('./pages/EnhancedCourses'));
-const CategoryCoursePage = React.lazy(() => import('./pages/CategoryCoursePage'));
-const CourseDetail = React.lazy(() => import('./pages/CourseDetail'));
-const Admissions = React.lazy(() => import('./pages/Admissions'));
-const Testimonials = React.lazy(() => import('./pages/Testimonials'));
-const Blog = React.lazy(() => import('./pages/Blog'));
-const BlogPost = React.lazy(() => import('./pages/BlogPost'));
-const Contact = React.lazy(() => import('./pages/Contact'));
-const Privacy = React.lazy(() => import('./pages/Privacy'));
-const NotFound = React.lazy(() => import('./pages/NotFound'));
-const AdminLeads = React.lazy(() => import('./pages/AdminLeads'));
-const Placements = React.lazy(() => import('./pages/Placements'));
+// Mobile-optimized lazy loading with better error boundaries
+const About = React.lazy(() => 
+  import('./pages/About').catch(() => ({ default: () => <div>Error loading page</div> }))
+);
+const Courses = React.lazy(() => 
+  import('./pages/Courses').catch(() => ({ default: () => <div>Error loading page</div> }))
+);
+const EnhancedCourses = React.lazy(() => 
+  import('./pages/EnhancedCourses').catch(() => ({ default: () => <div>Error loading page</div> }))
+);
+const CategoryCoursePage = React.lazy(() => 
+  import('./pages/CategoryCoursePage').catch(() => ({ default: () => <div>Error loading page</div> }))
+);
+const CourseDetail = React.lazy(() => 
+  import('./pages/CourseDetail').catch(() => ({ default: () => <div>Error loading page</div> }))
+);
+const Admissions = React.lazy(() => 
+  import('./pages/Admissions').catch(() => ({ default: () => <div>Error loading page</div> }))
+);
+const Testimonials = React.lazy(() => 
+  import('./pages/Testimonials').catch(() => ({ default: () => <div>Error loading page</div> }))
+);
+const Blog = React.lazy(() => 
+  import('./pages/Blog').catch(() => ({ default: () => <div>Error loading page</div> }))
+);
+const BlogPost = React.lazy(() => 
+  import('./pages/BlogPost').catch(() => ({ default: () => <div>Error loading page</div> }))
+);
+const Contact = React.lazy(() => 
+  import('./pages/Contact').catch(() => ({ default: () => <div>Error loading page</div> }))
+);
+const Privacy = React.lazy(() => 
+  import('./pages/Privacy').catch(() => ({ default: () => <div>Error loading page</div> }))
+);
+const NotFound = React.lazy(() => 
+  import('./pages/NotFound').catch(() => ({ default: () => <div>Error loading page</div> }))
+);
+const AdminLeads = React.lazy(() => 
+  import('./pages/AdminLeads').catch(() => ({ default: () => <div>Error loading page</div> }))
+);
+const Placements = React.lazy(() => 
+  import('./pages/Placements').catch(() => ({ default: () => <div>Error loading page</div> }))
+);
 
 // Static Data
 import { categories } from './data/categories';

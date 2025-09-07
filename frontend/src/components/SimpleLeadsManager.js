@@ -33,7 +33,9 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
       const data = await response.json();
       
       if (data.success) {
-        setLeads(data.leads || []);
+        const leadsData = data.leads || [];
+        setLeads(leadsData);
+        setFilteredLeads(leadsData);
       } else {
         setError(data.message || 'Failed to load leads');
       }
@@ -42,6 +44,145 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
     }
     
     setLoading(false);
+  };
+
+  // Filter and Search Logic
+  useEffect(() => {
+    let filtered = [...leads];
+
+    // Search filter
+    if (searchTerm) {
+      filtered = filtered.filter(lead =>
+        lead.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        lead.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        lead.phone?.includes(searchTerm) ||
+        lead.message?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        lead.course?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Date filter
+    if (dateFilter !== 'all') {
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      
+      filtered = filtered.filter(lead => {
+        const leadDate = new Date(lead.created_at || lead.timestamp);
+        switch (dateFilter) {
+          case 'today':
+            return leadDate >= today;
+          case 'week':
+            const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+            return leadDate >= weekAgo;
+          case 'month':
+            const monthAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+            return leadDate >= monthAgo;
+          default:
+            return true;
+        }
+      });
+    }
+
+    // Course filter
+    if (courseFilter !== 'all') {
+      filtered = filtered.filter(lead => 
+        lead.course?.toLowerCase().includes(courseFilter.toLowerCase())
+      );
+    }
+
+    // Sort
+    filtered.sort((a, b) => {
+      let aVal, bVal;
+      switch (sortBy) {
+        case 'name':
+          aVal = a.name || '';
+          bVal = b.name || '';
+          break;
+        case 'email':
+          aVal = a.email || '';
+          bVal = b.email || '';
+          break;
+        case 'course':
+          aVal = a.course || '';
+          bVal = b.course || '';
+          break;
+        default: // date
+          aVal = new Date(a.created_at || a.timestamp);
+          bVal = new Date(b.created_at || b.timestamp);
+      }
+      
+      if (sortOrder === 'asc') {
+        return aVal > bVal ? 1 : -1;
+      } else {
+        return aVal < bVal ? 1 : -1;
+      }
+    });
+
+    setFilteredLeads(filtered);
+  }, [leads, searchTerm, dateFilter, courseFilter, sortBy, sortOrder]);
+
+  // Export functionality
+  const exportLeads = (format = 'csv') => {
+    const dataToExport = selectedLeads.length > 0 
+      ? leads.filter(lead => selectedLeads.includes(lead.email || lead.id))
+      : filteredLeads;
+
+    if (format === 'csv') {
+      const csvContent = [
+        ['Name', 'Email', 'Phone', 'Course', 'Message', 'Date'],
+        ...dataToExport.map(lead => [
+          lead.name || '',
+          lead.email || '',
+          lead.phone || '',
+          lead.course || '',
+          (lead.message || '').replace(/,/g, ';'),
+          formatDate(lead.created_at || lead.timestamp)
+        ])
+      ].map(row => row.join(',')).join('\n');
+
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `grras-leads-${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+  };
+
+  // Selection handlers
+  const toggleSelectAll = () => {
+    if (selectedLeads.length === filteredLeads.length) {
+      setSelectedLeads([]);
+    } else {
+      setSelectedLeads(filteredLeads.map(lead => lead.email || lead.id));
+    }
+  };
+
+  const toggleSelectLead = (leadId) => {
+    setSelectedLeads(prev => 
+      prev.includes(leadId) 
+        ? prev.filter(id => id !== leadId)
+        : [...prev, leadId]
+    );
+  };
+
+  // Delete functionality  
+  const handleDelete = (leadIds) => {
+    setDeleteTarget(leadIds);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = () => {
+    // In a real app, this would call a delete API
+    const idsToDelete = Array.isArray(deleteTarget) ? deleteTarget : [deleteTarget];
+    const updatedLeads = leads.filter(lead => 
+      !idsToDelete.includes(lead.email || lead.id)
+    );
+    setLeads(updatedLeads);
+    setSelectedLeads([]);
+    setShowDeleteModal(false);
+    setDeleteTarget(null);
   };
 
   useEffect(() => {

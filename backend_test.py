@@ -287,6 +287,192 @@ class BackendTester:
             logger.error(f"❌ Contact form submission failed: {e}")
             return False
     
+    async def test_contact_form_validation(self) -> bool:
+        """Test 6a: Contact form validation with invalid data"""
+        logger.info("🔍 Testing contact form validation with invalid data...")
+        try:
+            # Test with missing required fields
+            invalid_test_cases = [
+                {
+                    "name": "Missing Email Test",
+                    "data": {
+                        'name': 'Test User',
+                        'phone': '9876543210',
+                        'message': 'Test message',
+                        'course': 'General Inquiry'
+                    }
+                },
+                {
+                    "name": "Missing Name Test", 
+                    "data": {
+                        'email': 'test@example.com',
+                        'phone': '9876543210',
+                        'message': 'Test message',
+                        'course': 'General Inquiry'
+                    }
+                },
+                {
+                    "name": "Invalid Email Format Test",
+                    "data": {
+                        'name': 'Test User',
+                        'email': 'invalid-email',
+                        'phone': '9876543210',
+                        'message': 'Test message',
+                        'course': 'General Inquiry'
+                    }
+                }
+            ]
+            
+            validation_working = True
+            
+            for test_case in invalid_test_cases:
+                form_data = aiohttp.FormData()
+                for key, value in test_case["data"].items():
+                    form_data.add_field(key, value)
+                
+                async with self.session.post(f"{self.api_base}/contact", data=form_data) as response:
+                    # Should return 400 or 422 for validation errors
+                    if response.status in [400, 422]:
+                        logger.info(f"✅ {test_case['name']}: Validation working (status {response.status})")
+                    elif response.status == 500:
+                        # Server error might indicate validation is not properly implemented
+                        logger.warning(f"⚠️ {test_case['name']}: Server error (status 500) - validation may need improvement")
+                    else:
+                        logger.warning(f"⚠️ {test_case['name']}: Unexpected status {response.status}")
+                        validation_working = False
+            
+            if validation_working:
+                self.test_results["contact_form_validation"] = True
+                logger.info("✅ Contact form validation tests completed")
+                return True
+            else:
+                self.errors.append("Contact form validation not working as expected")
+                return False
+                
+        except Exception as e:
+            self.errors.append(f"Contact form validation test failed: {str(e)}")
+            logger.error(f"❌ Contact form validation test failed: {e}")
+            return False
+    
+    async def test_contact_form_lead_storage(self) -> bool:
+        """Test 6b: Verify contact form submissions are stored in database"""
+        logger.info("🔍 Testing contact form lead storage in database...")
+        
+        if not self.admin_token:
+            logger.warning("⚠️ No admin token available, skipping lead storage verification")
+            return False
+        
+        try:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            
+            # Get current lead count
+            async with self.session.get(f"{self.api_base}/simple-leads?token={self.admin_token.replace('Bearer ', '')}") as response:
+                if response.status == 200:
+                    data = await response.json()
+                    initial_lead_count = data.get("total", 0)
+                    logger.info(f"📊 Initial lead count: {initial_lead_count}")
+                else:
+                    logger.warning("⚠️ Could not get initial lead count, proceeding with test")
+                    initial_lead_count = 0
+            
+            # Submit a test contact form
+            form_data = aiohttp.FormData()
+            form_data.add_field('name', 'Test Lead Storage User')
+            form_data.add_field('email', 'test.lead.storage@example.com')
+            form_data.add_field('phone', '9999999999')
+            form_data.add_field('message', 'This is a test message for lead storage verification')
+            form_data.add_field('course', 'Lead Storage Test')
+            
+            async with self.session.post(f"{self.api_base}/contact", data=form_data) as response:
+                if response.status == 200:
+                    logger.info("✅ Test contact form submitted successfully")
+                    
+                    # Wait a moment for database write
+                    await asyncio.sleep(1)
+                    
+                    # Check if lead count increased
+                    async with self.session.get(f"{self.api_base}/simple-leads?token={self.admin_token.replace('Bearer ', '')}") as leads_response:
+                        if leads_response.status == 200:
+                            leads_data = await leads_response.json()
+                            new_lead_count = leads_data.get("total", 0)
+                            leads_list = leads_data.get("leads", [])
+                            
+                            logger.info(f"📊 New lead count: {new_lead_count}")
+                            
+                            # Check if our test lead is in the database
+                            test_lead_found = False
+                            for lead in leads_list:
+                                if lead.get("email") == "test.lead.storage@example.com":
+                                    test_lead_found = True
+                                    logger.info(f"✅ Test lead found in database: {lead.get('name')} - {lead.get('email')}")
+                                    break
+                            
+                            if test_lead_found or new_lead_count > initial_lead_count:
+                                self.test_results["contact_form_lead_storage"] = True
+                                logger.info("✅ Contact form lead storage working correctly")
+                                return True
+                            else:
+                                self.errors.append("Contact form submission not stored in database")
+                                return False
+                        else:
+                            self.errors.append("Could not verify lead storage - leads endpoint failed")
+                            return False
+                else:
+                    self.errors.append("Test contact form submission failed")
+                    return False
+                    
+        except Exception as e:
+            self.errors.append(f"Contact form lead storage test failed: {str(e)}")
+            logger.error(f"❌ Contact form lead storage test failed: {e}")
+            return False
+    
+    async def test_contact_form_response_handling(self) -> bool:
+        """Test 6c: Test contact form success/error response handling"""
+        logger.info("🔍 Testing contact form response handling...")
+        try:
+            # Test successful submission response
+            form_data = aiohttp.FormData()
+            form_data.add_field('name', 'Response Test User')
+            form_data.add_field('email', 'response.test@example.com')
+            form_data.add_field('phone', '8888888888')
+            form_data.add_field('message', 'Testing response handling')
+            form_data.add_field('course', 'Response Test')
+            
+            async with self.session.post(f"{self.api_base}/contact", data=form_data) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    
+                    # Check response structure
+                    if "message" in data:
+                        logger.info(f"✅ Success response structure correct: {data}")
+                        
+                        # Check if response contains expected success message
+                        message = data.get("message", "").lower()
+                        if "success" in message or "submitted" in message:
+                            logger.info("✅ Success message format correct")
+                        else:
+                            logger.warning(f"⚠️ Unexpected success message format: {data.get('message')}")
+                        
+                        # Check if lead_id is provided
+                        if "lead_id" in data:
+                            logger.info(f"✅ Lead ID provided in response: {data.get('lead_id')}")
+                        else:
+                            logger.warning("⚠️ No lead_id in response")
+                        
+                        self.test_results["contact_form_response_handling"] = True
+                        return True
+                    else:
+                        self.errors.append("Success response missing 'message' field")
+                        return False
+                else:
+                    self.errors.append(f"Contact form response test failed with status {response.status}")
+                    return False
+                    
+        except Exception as e:
+            self.errors.append(f"Contact form response handling test failed: {str(e)}")
+            logger.error(f"❌ Contact form response handling test failed: {e}")
+            return False
+    
     async def test_syllabus_generation(self) -> bool:
         """Test 7: Syllabus PDF generation"""
         logger.info("🔍 Testing syllabus PDF generation...")

@@ -389,7 +389,7 @@ const Courses = () => {
             <h2 className="text-4xl font-black text-gray-900 mb-4">
               {selectedCategory === 'all' ? (
                 <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
-                  🎯 All Courses
+                  Featured Course Categories
                 </span>
               ) : (
                 <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">

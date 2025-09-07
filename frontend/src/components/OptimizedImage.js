@@ -60,8 +60,8 @@ const OptimizedImage = ({
     if (onError) onError(event);
   };
 
-  // Generate WebP and AVIF versions if original is not already optimized
-  const getOptimizedSrc = (originalSrc) => {
+  // Generate optimized source with responsive breakpoints
+  const getOptimizedSrc = (originalSrc, targetWidth = null) => {
     if (!originalSrc) return '';
     
     // If already optimized format, return as is
@@ -77,7 +77,19 @@ const OptimizedImage = ({
     return originalSrc;
   };
 
-  const optimizedSrc = getOptimizedSrc(src);
+  // Generate srcSet for responsive images
+  const generateSrcSet = (baseSrc) => {
+    if (!baseSrc || !width) return null;
+    
+    const sizes = [320, 640, 768, 1024, 1280, 1920];
+    return sizes
+      .filter(size => size <= width * 2) // Don't generate sizes larger than 2x the display size
+      .map(size => `${getOptimizedSrc(baseSrc, size)} ${size}w`)
+      .join(', ');
+  };
+
+  const optimizedSrc = getOptimizedSrc(currentSrc);
+  const srcSet = generateSrcSet(src);
 
   if (hasError) {
     return (

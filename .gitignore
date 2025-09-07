@@ -96,18 +96,7 @@ backend/data/media/
 *.env.development
 *.env.test
 *.env.production.local
--e 
-# Environment files
-*.env
-*.env.*
--e 
-# Environment files
-*.env
-*.env.*
--e 
-# Environment files
-*.env
-*.env.*
+# All duplicate environment entries cleaned
 -e 
 # Environment files
 *.env

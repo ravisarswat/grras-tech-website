@@ -207,11 +207,8 @@ const Courses = () => {
                 </div>
                 
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-4 bg-gradient-to-r from-white via-blue-100 to-orange-200 bg-clip-text text-transparent leading-tight">
-                  GRRAS Certification
+                  Explore IT & Cloud Courses at GRRAS
                 </h1>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-orange-300 mb-6">
-                  Academy
-                </h2>
               </div>
               
               <p className="text-xl md:text-2xl text-blue-100 mb-12 max-w-4xl mx-auto leading-relaxed font-light">

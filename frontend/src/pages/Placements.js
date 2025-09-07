@@ -397,7 +397,7 @@ const Placements = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-4">
-                🏆 International Certifications = Higher Salaries
+                How GRRAS Placement Support Works
               </h2>
               <p className="text-xl text-gray-600 mb-8">
                 Our placed students have international certifications that made them industry-ready and increased their market value

@@ -458,6 +458,7 @@ const HeroSlider = () => {
           <Play className={`h-4 w-4 lg:h-5 lg:w-5 text-white ${isPlaying ? 'hidden' : 'block'}`} />
           <div className={`w-2 h-2 bg-white ${isPlaying ? 'block' : 'hidden'}`}></div>
         </button>
+        </div>
       </div>
     </section>
   );

@@ -475,6 +475,49 @@ const Home = () => {
         </div>
       </section>
 
+      {/* FAQs Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-xl text-gray-600">
+              Get answers to common questions about our IT training programs
+            </p>
+          </div>
+          
+          <div className="space-y-6">
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h3 className="font-semibold text-gray-900 mb-2">
+                What courses does GRRAS offer?
+              </h3>
+              <p className="text-gray-600">
+                We offer comprehensive IT training programs including DevOps, Cloud Computing (AWS, Azure), Red Hat Certifications, Data Science, BCA Degree, and various programming courses with hands-on practical training.
+              </p>
+            </div>
+            
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h3 className="font-semibold text-gray-900 mb-2">
+                Is GRRAS an official Red Hat Training Partner?
+              </h3>
+              <p className="text-gray-600">
+                Yes, GRRAS is an authorized Red Hat Training Partner providing official Red Hat certifications including RHCSA, RHCE, and OpenShift with access to official labs and expert instructors.
+              </p>
+            </div>
+            
+            <div className="bg-gray-50 rounded-xl p-6">
+              <h3 className="font-semibold text-gray-900 mb-2">
+                Does GRRAS provide placement assistance?
+              </h3>
+              <p className="text-gray-600">
+                Yes, we provide 100% placement assistance with our network of 100+ hiring partners. Our placement success rate is 95% with comprehensive interview preparation and job referrals.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Admissions CTA */}
       <section className="py-20 gradient-bg-secondary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

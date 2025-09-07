@@ -117,8 +117,8 @@ const About = () => {
   return (
     <>
       <SEO
-        title="About GRRAS Solutions - Premier IT Training Institute in Jaipur"
-        description={`Learn about GRRAS Solutions Training Institute, Jaipur's leading IT education provider with ${yearsOfExcellence} years of excellence, 5000+ trained students, and 95% placement rate.`}
+        title="About GRRAS Solutions – IT Training & Certification Experts"
+        description="Learn about GRRAS Solutions, an official Red Hat training partner and leading institute for IT, Cloud, and Data Science education in India."
         keywords="GRRAS Solutions, IT training institute Jaipur, computer education, about us, training center history"
       />
       

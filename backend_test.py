@@ -258,25 +258,26 @@ class BackendTester:
             return False
     
     async def test_contact_form_submission(self) -> bool:
-        """Test 6: Contact form submission"""
-        logger.info("🔍 Testing contact form submission...")
+        """Test 6: Contact form submission with FormData"""
+        logger.info("🔍 Testing contact form submission with FormData...")
         try:
-            contact_data = {
-                "name": "Rajesh Kumar",
-                "email": "rajesh.kumar@example.com",
-                "phone": "9876543210",
-                "course": "DevOps Training",
-                "message": "I am interested in DevOps training program. Please provide more details."
-            }
+            # Test data as specified in the review request
+            form_data = aiohttp.FormData()
+            form_data.add_field('name', 'Amit Sharma')
+            form_data.add_field('email', 'amit.sharma@example.com')
+            form_data.add_field('phone', '9876543210')
+            form_data.add_field('message', 'I am interested in DevOps and Data Science courses. Can you provide more information about course duration, fees, and placement assistance?')
+            form_data.add_field('course', 'General Inquiry')
             
-            async with self.session.post(f"{self.api_base}/contact", json=contact_data) as response:
+            async with self.session.post(f"{self.api_base}/contact", data=form_data) as response:
                 if response.status == 200:
                     data = await response.json()
                     logger.info(f"✅ Contact form submission successful: {data}")
                     self.test_results["contact_form"] = True
                     return True
                 else:
-                    self.errors.append(f"Contact form submission failed with status {response.status}")
+                    response_text = await response.text()
+                    self.errors.append(f"Contact form submission failed with status {response.status}: {response_text}")
                     return False
         except Exception as e:
             self.errors.append(f"Contact form submission failed: {str(e)}")

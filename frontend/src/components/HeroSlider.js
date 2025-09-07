@@ -141,7 +141,10 @@ const HeroSlider = () => {
       cta: "Secure Your Future",
       ctaLink: "/courses?category=degree",
       background: "bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600",
-      icon: React.createElement(GraduationCap, { className: "w-full h-full text-white" }),
+      icon: React.createElement(GraduationCap, { 
+        className: "w-full h-full text-white",
+        'aria-label': "BCA Degree Program with Internship at GRRAS Jaipur"
+      }),
       stats: ["Industry Curriculum", "100% Placement", "Modern Skills"]
     }
   ];

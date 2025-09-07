@@ -317,10 +317,10 @@ const Contact = () => {
 
                 {/* Office Hours */}
                 <div className="bg-white rounded-2xl p-8 shadow-lg animate-fade-in-up">
-                  <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                  <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
                     <Clock className="h-6 w-6 text-red-500" />
-                    Office Hours
-                  </h3>
+                    Contact Details
+                  </h2>
                   
                   <div className="space-y-3">
                     {officeHours.map((schedule, index) => (

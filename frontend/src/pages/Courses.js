@@ -173,12 +173,76 @@ const Courses = () => {
     );
   }
 
+  // Get category-specific SEO data
+  const getCategorySEO = () => {
+    const seoData = {
+      'red-hat-technologies': {
+        title: 'Red Hat Training & Certification | RHCSA & RHCE – GRRAS',
+        description: 'Official Red Hat partner for RHCSA, RHCE, and OpenShift certifications. Hands-on labs & expert trainers at GRRAS Solutions Jaipur.',
+        canonical: 'https://www.grras.tech/courses?tab=red-hat-technologies'
+      },
+      'aws-cloud-platform': {
+        title: 'AWS Training & Certification | Cloud Courses – GRRAS',
+        description: 'Learn AWS Cloud computing with Solutions Architect, SysOps & Developer Associate courses at GRRAS Jaipur.',
+        canonical: 'https://www.grras.tech/courses?tab=aws-cloud-platform'
+      },
+      'devops-engineering': {
+        title: 'DevOps Training & Certification in Jaipur – GRRAS',
+        description: 'Learn DevOps with Docker, Kubernetes, Jenkins & CI/CD pipelines. Hands-on DevOps training with projects & job support at GRRAS Jaipur.',
+        canonical: 'https://www.grras.tech/courses?tab=devops-engineering'
+      },
+      'microsoft-azure': {
+        title: 'Microsoft Azure Training & Certification | GRRAS Jaipur',
+        description: 'Become a certified Azure expert with GRRAS Azure Fundamentals & Administrator courses. Hands-on cloud labs included.',
+        canonical: 'https://www.grras.tech/courses?tab=microsoft-azure'
+      },
+      'google-cloud-platform': {
+        title: 'Google Cloud Training & Certification – GRRAS Jaipur',
+        description: 'Learn Google Cloud with official certification-oriented training at GRRAS Jaipur. Build skills for cloud computing careers.',
+        canonical: 'https://www.grras.tech/courses?tab=google-cloud-platform'
+      },
+      'data-science-ai': {
+        title: 'Data Science & AI Training in Jaipur | GRRAS',
+        description: 'Master Data Science, Python & Machine Learning with GRRAS AI training programs. Career-focused, project-based learning.',
+        canonical: 'https://www.grras.tech/courses?tab=data-science-ai'
+      },
+      'programming-development': {
+        title: 'Full Stack & Programming Courses | GRRAS Jaipur',
+        description: 'Learn programming with Java & Full Stack development courses at GRRAS Jaipur. Build industry-ready coding skills.',
+        canonical: 'https://www.grras.tech/courses?tab=programming-development'
+      },
+      'cyber-security': {
+        title: 'Cyber Security Training & Certification | GRRAS Jaipur',
+        description: 'Become a Cyber Security expert with Ethical Hacking & Fundamentals courses at GRRAS Jaipur. Hands-on labs & certification prep included.',
+        canonical: 'https://www.grras.tech/courses?tab=cyber-security'
+      },
+      'degree-program': {
+        title: 'BCA & MCA Degree Programs | GRRAS Jaipur',
+        description: 'Earn UGC-approved BCA & MCA degrees with internship & stipend at GRRAS Jaipur. Industry-focused IT degree programs.',
+        canonical: 'https://www.grras.tech/courses?tab=degree-program'
+      }
+    };
+
+    const currentCategorySEO = seoData[selectedCategory];
+    if (currentCategorySEO) {
+      return currentCategorySEO;
+    }
+    
+    return {
+      title: 'IT & Cloud Courses in Jaipur | GRRAS Solutions',
+      description: 'Explore top IT & Cloud training programs at GRRAS – DevOps, Red Hat, AWS, Data Science, Cyber Security, BCA & more. Hands-on learning with placements.',
+      canonical: 'https://www.grras.tech/courses'
+    };
+  };
+
+  const currentSEO = getCategorySEO();
+
   return (
     <>
       <EnhancedSEO 
-        title="IT & Cloud Courses in Jaipur | GRRAS Solutions"
-        description="Explore top IT & Cloud training programs at GRRAS – DevOps, Red Hat, AWS, Data Science, Cyber Security, BCA & more. Hands-on learning with placements."
-        canonical="https://www.grras.tech/courses"
+        title={currentSEO.title}
+        description={currentSEO.description}
+        canonical={currentSEO.canonical}
         keywords="IT courses, cloud training, DevOps course, Red Hat certification, AWS training, data science course, programming courses"
         type="website"
       />

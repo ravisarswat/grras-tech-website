@@ -1,0 +1,4 @@
+yarn run v1.22.22
+warning ../package.json: No license field
+$ serve -s build -l $PORT
+ INFO  Accepting connections at http://localhost:40477

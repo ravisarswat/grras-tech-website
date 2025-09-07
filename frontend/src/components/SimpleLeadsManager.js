@@ -370,84 +370,182 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
         </div>
       </div>
 
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 py-6">
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 pb-6">
         {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-            {error}
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-2xl text-red-700 shadow-sm">
+            <div className="flex items-center gap-2">
+              <AlertTriangle className="h-5 w-5" />
+              <span className="font-medium">Connection Error</span>
+            </div>
+            <p className="mt-2">{error}</p>
             <button 
               onClick={fetchLeads}
-              className="ml-3 text-red-600 underline hover:text-red-800"
+              className="mt-3 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
             >
-              Retry
+              Retry Connection
             </button>
           </div>
         )}
 
         {leads.length === 0 ? (
-          <div className="text-center py-12">
-            <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No leads found</h3>
-            <p className="text-gray-500">Leads will appear here when users submit the contact form.</p>
+          <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
+            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Users className="h-8 w-8 text-gray-400" />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">No leads yet</h3>
+            <p className="text-gray-500 mb-6">Leads will appear here when users submit the contact form.</p>
+            <button
+              onClick={fetchLeads}
+              className="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition-colors"
+            >
+              Check for New Leads
+            </button>
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Contact Info
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Course Interest
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Message
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Date
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {leads.map((lead, index) => (
-                    <tr key={lead.id || index} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            {/* Leads Grid */}
+            <div className="p-6">
+              <div className="grid gap-6">
+                {filteredLeads.map((lead, index) => (
+                  <div 
+                    key={lead.id || lead.email || index} 
+                    className="bg-gradient-to-r from-gray-50 to-white border border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]"
+                  >
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() => toggleSelectLead(lead.email || lead.id)}
+                          className="flex-shrink-0"
+                        >
+                          {selectedLeads.includes(lead.email || lead.id) ? (
+                            <CheckSquare className="h-5 w-5 text-blue-600" />
+                          ) : (
+                            <Square className="h-5 w-5 text-gray-400 hover:text-blue-600" />
+                          )}
+                        </button>
+                        <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                          {lead.name?.charAt(0)?.toUpperCase() || '?'}
+                        </div>
                         <div>
-                          <div className="text-sm font-medium text-gray-900">
-                            {lead.name}
-                          </div>
-                          <div className="text-sm text-gray-500 flex items-center gap-1">
-                            <Mail className="h-3 w-3" />
-                            {lead.email}
-                          </div>
-                          <div className="text-sm text-gray-500 flex items-center gap-1">
-                            <Phone className="h-3 w-3" />
-                            {lead.phone}
+                          <h3 className="font-bold text-gray-900 text-lg">{lead.name || 'Unknown'}</h3>
+                          <div className="flex items-center gap-4 text-sm text-gray-600 mt-1">
+                            <div className="flex items-center gap-1">
+                              <Mail className="h-4 w-4" />
+                              <span>{lead.email}</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Phone className="h-4 w-4" />
+                              <span>{lead.phone}</span>
+                            </div>
                           </div>
                         </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                          {lead.course}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="text-sm text-gray-900 max-w-xs truncate">
-                          {lead.message}
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <div className="text-right">
+                          <div className="flex items-center gap-1 text-sm text-gray-500 mb-1">
+                            <Calendar className="h-4 w-4" />
+                            <span>{formatDate(lead.created_at || lead.timestamp)}</span>
+                          </div>
+                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            {lead.course || 'General Inquiry'}
+                          </span>
                         </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          {formatDate(lead.timestamp)}
+                        
+                        <div className="flex items-center gap-1 ml-4">
+                          <button
+                            onClick={() => window.open(`mailto:${lead.email}`, '_blank')}
+                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                            title="Send Email"
+                          >
+                            <Mail className="h-4 w-4" />
+                          </button>
+                          <button
+                            onClick={() => window.open(`tel:${lead.phone}`, '_blank')}
+                            className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                            title="Call"
+                          >
+                            <Phone className="h-4 w-4" />
+                          </button>
+                          <button
+                            onClick={() => handleDelete([lead.email || lead.id])}
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            title="Delete Lead"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
                         </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                      </div>
+                    </div>
+
+                    <div className="bg-white rounded-xl p-4 border border-gray-100">
+                      <div className="flex items-start gap-2">
+                        <MessageSquare className="h-4 w-4 text-gray-400 mt-1 flex-shrink-0" />
+                        <div>
+                          <p className="text-gray-700 leading-relaxed">
+                            {lead.message || 'No message provided'}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {filteredLeads.length === 0 && leads.length > 0 && (
+                <div className="text-center py-8">
+                  <Search className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">No matching leads</h3>
+                  <p className="text-gray-500">Try adjusting your search or filters</p>
+                  <button
+                    onClick={() => {
+                      setSearchTerm('');
+                      setDateFilter('all');
+                      setCourseFilter('all');
+                    }}
+                    className="mt-4 text-blue-600 hover:text-blue-700 font-medium"
+                  >
+                    Clear All Filters
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Delete Confirmation Modal */}
+        {showDeleteModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-2xl p-6 max-w-md mx-4 shadow-2xl">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                  <AlertTriangle className="h-6 w-6 text-red-600" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900">Confirm Deletion</h3>
+                  <p className="text-gray-600">This action cannot be undone</p>
+                </div>
+              </div>
+              
+              <p className="text-gray-700 mb-6">
+                Are you sure you want to delete {Array.isArray(deleteTarget) ? `${deleteTarget.length} leads` : 'this lead'}?
+              </p>
+              
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowDeleteModal(false)}
+                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmDelete}
+                  className="flex-1 px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         )}

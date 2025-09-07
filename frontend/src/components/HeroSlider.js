@@ -14,7 +14,8 @@ import {
   TrendingUp,
   Target,
   CheckCircle,
-  GraduationCap
+  GraduationCap,
+  Settings
 } from 'lucide-react';
 
 const HeroSlider = () => {

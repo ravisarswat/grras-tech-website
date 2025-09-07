@@ -92,3 +92,7 @@ backend/data/media/
 *.env.development
 *.env.production
 -e
+-e 
+# Environment files
+*.env
+*.env.*

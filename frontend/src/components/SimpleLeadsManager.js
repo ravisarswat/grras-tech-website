@@ -155,7 +155,7 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
     if (selectedLeads.length === filteredLeads.length) {
       setSelectedLeads([]);
     } else {
-      setSelectedLeads(filteredLeads.map(lead => lead.email || lead.id));
+      setSelectedLeads(filteredLeads.map(lead => lead.id));
     }
   };
 

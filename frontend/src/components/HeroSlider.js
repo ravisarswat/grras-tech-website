@@ -109,7 +109,7 @@ const HeroSlider = () => {
       {/* Background with current slide gradient */}
       <div 
         className={`absolute inset-0 ${currentSlideData.background} transition-all duration-1000`}
-        style={{ contain: 'layout style paint' }}
+        style={{ transform: 'translateZ(0)', willChange: 'background' }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-20"></div>
       </div>

@@ -152,8 +152,13 @@ const Header = () => {
                 
                 <img 
                   src="https://customer-assets.emergentagent.com/job_2e9520f3-9067-4211-887e-0bb17ff4e323/artifacts/ym8un6i1_white%20logo.png" 
-                  alt="GRRAS Solutions Training Institute" 
+                  alt="GRRAS Solutions Training Institute - IT & Cloud Training in Jaipur" 
                   className="h-12 sm:h-16 lg:h-20 w-auto transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 relative z-10 drop-shadow-2xl filter rounded-lg sm:rounded-xl lg:rounded-2xl p-1 sm:p-1.5 lg:p-2 bg-gradient-to-r from-gray-900/90 to-black/90 backdrop-blur-sm" 
+                  loading="eager"
+                  decoding="async"
+                  fetchpriority="high"
+                  width="160"
+                  height="80"
                 />
               </div>
             </Link>

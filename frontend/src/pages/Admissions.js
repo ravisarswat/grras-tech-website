@@ -169,8 +169,8 @@ const Admissions = () => {
   return (
     <>
       <SEO
-        title="Admissions Process - Join GRRAS Solutions Training Institute"
-        description="Start your IT career with GRRAS Solutions. Learn about our admission process, eligibility criteria, fees, and course options. Apply now for BCA degree and professional IT courses."
+        title="Admissions at GRRAS Solutions | Apply for IT Training & BCA"
+        description="Start your IT journey with GRRAS Solutions. Apply for DevOps, Red Hat, BCA, Data Science & Cloud courses with placement & internship opportunities."
         keywords="GRRAS admissions, IT course admission, BCA admission Jaipur, DevOps training admission, admission process"
       />
       

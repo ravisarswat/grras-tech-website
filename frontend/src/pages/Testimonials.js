@@ -281,7 +281,7 @@ const Testimonials = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="animate-fade-in-up">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Your Success Story Starts Here
+                BCA Degree Transformations
               </h2>
               <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
                 Join thousands of successful professionals who transformed their careers with GRRAS. 

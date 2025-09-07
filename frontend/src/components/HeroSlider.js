@@ -93,8 +93,11 @@ const HeroSlider = () => {
       background: "bg-gradient-to-br from-orange-600 via-yellow-500 to-orange-400",
       icon: React.createElement('img', { 
         src: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg", 
-        alt: "AWS", 
-        className: "w-full h-full object-contain filter brightness-0 invert" 
+        alt: "AWS Cloud Training at GRRAS Jaipur", 
+        className: "w-full h-full object-contain filter brightness-0 invert",
+        loading: currentSlide === 1 ? "eager" : "lazy",
+        decoding: "async",
+        style: { contentVisibility: 'auto', containIntrinsicSize: '48px 48px' }
       }),
       stats: ["AWS Certified Instructors", "Real Projects", "Industry Placement"]
     },

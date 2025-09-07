@@ -504,8 +504,10 @@ const HeroSlider = () => {
         <button
           onClick={goToPrevious}
           className="w-10 h-10 lg:w-12 lg:h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition-all backdrop-blur-sm"
+          aria-label="Previous slide"
+          type="button"
         >
-          <ChevronLeft className="h-5 w-5 lg:h-6 lg:w-6 text-white" />
+          <ChevronLeft className="h-5 w-5 lg:h-6 lg:w-6 text-white" aria-hidden="true" />
         </button>
 
         {/* Dots Indicator */}

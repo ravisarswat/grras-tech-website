@@ -84,35 +84,36 @@ function AppContent() {
         <ErrorBoundary>
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            
-            {/* Course Routes - New Classic Certification Academy */}  
-            <Route path="/courses" element={<Courses />} />
-            <Route path="/courses/category/:categorySlug" element={<CategoryCoursePage />} />
-            <Route path="/courses/:slug" element={<CourseDetail />} />
-            
-            {/* Legacy course route for backward compatibility */}
-            <Route path="/course/:slug" element={<CourseDetail />} />
-            
-            {/* Legacy course routes for backward compatibility */}
-            <Route path="/enhanced-courses" element={<EnhancedCourses />} />
-            <Route path="/old-courses" element={<Courses />} />
-            
-            {/* Other Routes */}
-            <Route path="/admissions" element={<Admissions />} />
-            <Route path="/placements" element={<Placements />} />
-            <Route path="/testimonials" element={<Testimonials />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/privacy" element={<Privacy />} />
-            
-            {/* Admin Routes */}
-            <Route path="/admin/leads" element={<AdminLeads />} />
-            
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              
+              {/* Course Routes - New Classic Certification Academy */}  
+              <Route path="/courses" element={<Courses />} />
+              <Route path="/courses/category/:categorySlug" element={<CategoryCoursePage />} />
+              <Route path="/courses/:slug" element={<CourseDetail />} />
+              
+              {/* Legacy course route for backward compatibility */}
+              <Route path="/course/:slug" element={<CourseDetail />} />
+              
+              {/* Legacy course routes for backward compatibility */}
+              <Route path="/enhanced-courses" element={<EnhancedCourses />} />
+              <Route path="/old-courses" element={<Courses />} />
+              
+              {/* Other Routes */}
+              <Route path="/admissions" element={<Admissions />} />
+              <Route path="/placements" element={<Placements />} />
+              <Route path="/testimonials" element={<Testimonials />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/privacy" element={<Privacy />} />
+              
+              {/* Admin Routes */}
+              <Route path="/admin/leads" element={<AdminLeads />} />
+              
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </ErrorBoundary>
       </main>
       <Footer />

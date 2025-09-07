@@ -369,7 +369,12 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <Star className="h-4 w-4 text-yellow-500" />
+                <span className="font-semibold">{filteredLeads.length}</span> of <span className="font-semibold">{leads.length}</span> leads
+              </div>
+              
               <button
                 onClick={toggleSelectAll}
                 className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 font-medium"

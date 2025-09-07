@@ -108,11 +108,6 @@ const HeroSlider = () => {
 
   const currentSlideData = slides[currentSlide];
 
-  // Render safety check
-  if (!currentSlideData) {
-    return <div className="min-h-[500px] flex items-center justify-center">Loading...</div>;
-  }
-
   return (
     <section className="relative min-h-[500px] sm:min-h-[550px] md:min-h-[500px] lg:min-h-[480px] overflow-hidden flex items-center">
       {/* Background with current slide gradient */}

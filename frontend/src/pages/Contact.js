@@ -7,7 +7,13 @@ import {
   Send,
   MessageCircle,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  User,
+  MessageSquare,
+  Sparkles,
+  Heart,
+  Star,
+  Zap
 } from 'lucide-react';
 import { toast } from 'sonner';
 import SEO from '../components/SEO';

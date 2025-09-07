@@ -86,21 +86,7 @@ const HeroSlider = () => {
     return () => clearInterval(timer);
   }, [isPlaying, slides.length]);
 
-  const goToSlide = (index) => {
-    setCurrentSlide(index);
-  };
-
-  const goToPrevious = () => {
-    setCurrentSlide((prevSlide) => (prevSlide - 1 + slides.length) % slides.length);
-  };
-
-  const goToNext = () => {
-    setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-  };
-
-  const toggleAutoPlay = () => {
-    setIsPlaying(!isPlaying);
-  };
+  // Auto-play only - no manual controls needed
 
   const currentSlideData = slides[currentSlide];
 

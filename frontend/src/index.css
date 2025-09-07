@@ -34,7 +34,7 @@ html {
   backdrop-filter: blur(20px);
 }
 
-/* Performance optimized animations */
+/* Mobile-optimized performance utilities */
 @layer utilities {
   .will-change-transform {
     will-change: transform;
@@ -54,6 +54,31 @@ html {
   
   .contain-paint {
     contain: paint;
+  }
+  
+  /* Mobile-specific performance classes */
+  .mobile-optimized {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  
+  .gpu-accelerated {
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+  }
+  
+  .reduce-paint {
+    contain: layout style paint;
+  }
+  
+  /* Touch optimization */
+  .touch-optimized {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
 }
 

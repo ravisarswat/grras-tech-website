@@ -182,7 +182,7 @@ const OptimizedImage = ({
             />
           )}
           
-          {/* Original format fallback */}
+          {/* Mobile-optimized image with responsive support */}
           <img
             src={optimizedSrc}
             alt={alt}
@@ -193,16 +193,21 @@ const OptimizedImage = ({
             fetchPriority={priority ? 'high' : fetchPriority}
             onLoad={handleLoad}
             onError={handleError}
-            className={`w-full h-full object-cover transition-opacity duration-300 ${
+            className={`w-full h-full object-cover transition-opacity duration-200 ${
               isLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
+            } mobile-optimized`}
             style={{
               maxWidth: '100%',
               height: 'auto',
               contentVisibility: 'auto',
-              containIntrinsicSize: width && height ? `${width}px ${height}px` : 'auto'
+              containIntrinsicSize: width && height ? `${width}px ${height}px` : 'auto',
+              transform: 'translateZ(0)', // Force hardware acceleration on mobile
+              backfaceVisibility: 'hidden'
             }}
-            {...(srcSet && { srcSet, sizes: sizes || '100vw' })}
+            {...(srcSet && { 
+              srcSet, 
+              sizes: sizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
+            })}
           />
         </picture>
       )}

@@ -394,6 +394,111 @@ const Placements = () => {
           </div>
         </section>
 
+        {/* International Certifications Marketing Section */}
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-4">
+                🏆 International Certifications = Higher Salaries
+              </h2>
+              <p className="text-xl text-gray-600 mb-8">
+                Our placed students have international certifications that made them industry-ready and increased their market value
+              </p>
+            </div>
+
+            {/* Certification Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+              <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-6 text-center border-2 border-red-100 hover:border-red-300 transition-all duration-300">
+                <div className="text-3xl font-black text-red-600 mb-2">100%</div>
+                <div className="text-sm font-semibold text-gray-700">Students Certified</div>
+              </div>
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 text-center border-2 border-blue-100 hover:border-blue-300 transition-all duration-300">
+                <div className="text-3xl font-black text-blue-600 mb-2">₹5L+</div>
+                <div className="text-sm font-semibold text-gray-700">Salary Increase</div>
+              </div>
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 text-center border-2 border-green-100 hover:border-green-300 transition-all duration-300">
+                <div className="text-3xl font-black text-green-600 mb-2">25+</div>
+                <div className="text-sm font-semibold text-gray-700">Certifications</div>
+              </div>
+              <div className="bg-gradient-to-r from-purple-50 to-violet-50 rounded-2xl p-6 text-center border-2 border-purple-100 hover:border-purple-300 transition-all duration-300">
+                <div className="text-3xl font-black text-purple-600 mb-2">Global</div>
+                <div className="text-sm font-semibold text-gray-700">Recognition</div>
+              </div>
+            </div>
+
+            {/* Popular Certifications */}
+            <div className="bg-gradient-to-r from-gray-50 to-white rounded-3xl p-8 shadow-lg">
+              <h3 className="text-2xl font-black text-gray-900 mb-6 text-center">Most Demanded Certifications at GRRAS</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                  <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">RH</span>
+                  </div>
+                  <span className="font-semibold text-gray-800">Red Hat</span>
+                </div>
+                <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                  <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">AWS</span>
+                  </div>
+                  <span className="font-semibold text-gray-800">AWS Cloud</span>
+                </div>
+                <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                  <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">K8s</span>
+                  </div>
+                  <span className="font-semibold text-gray-800">Kubernetes</span>
+                </div>
+                <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                  <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">J</span>
+                  </div>
+                  <span className="font-semibold text-gray-800">Java Oracle</span>
+                </div>
+                <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                  <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">MS</span>
+                  </div>
+                  <span className="font-semibold text-gray-800">Microsoft Azure</span>
+                </div>
+                <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                  <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">GC</span>
+                  </div>
+                  <span className="font-semibold text-gray-800">Google Cloud</span>
+                </div>
+                <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                  <div className="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">D</span>
+                  </div>
+                  <span className="font-semibold text-gray-800">Docker</span>
+                </div>
+                <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                  <div className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">L</span>
+                  </div>
+                  <span className="font-semibold text-gray-800">Linux</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Call to Action */}
+            <div className="text-center mt-12">
+              <div className="bg-gradient-to-r from-red-600 to-orange-600 rounded-3xl p-8 text-white">
+                <h3 className="text-2xl font-black mb-4">Ready to Get Internationally Certified?</h3>
+                <p className="text-lg mb-6 opacity-90">Join our students who increased their salary by ₹5-10 LPA with international certifications</p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <button className="inline-flex items-center px-6 py-3 bg-white text-red-600 font-bold rounded-2xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
+                    View Certification Courses
+                  </button>
+                  <button className="inline-flex items-center px-6 py-3 border-2 border-white text-white font-bold rounded-2xl hover:bg-white hover:text-red-600 transition-all duration-300">
+                    Talk to Career Counselor
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* CTA Section */}
         <section className="py-20 bg-gradient-to-r from-red-600 to-orange-600">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

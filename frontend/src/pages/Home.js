@@ -255,9 +255,9 @@ const Home = () => {
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               India's Leading IT & Cloud Training Institute – GRRAS Solutions
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              {popularCoursesConfig.subtitle || 'Industry-relevant courses designed to make you job-ready'}
-            </p>
+            <h2 className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Popular IT & Cloud Courses
+            </h2>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">

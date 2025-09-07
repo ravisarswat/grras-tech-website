@@ -403,10 +403,12 @@ const HeroSlider = () => {
         </div>
       </div>
 
-      {/* Navigation Controls - Fixed Position to Prevent CLS */}
+      {/* Navigation Controls - Stable Positioning */}
       <div 
-        className="fixed bottom-6 sm:bottom-8 lg:bottom-10 left-1/2 flex items-center gap-3 z-10" 
+        className="absolute flex items-center gap-3 z-10" 
         style={{ 
+          bottom: '2rem',
+          left: '50%',
           transform: 'translateX(-50%)',
           willChange: 'transform',
           contain: 'layout style paint'

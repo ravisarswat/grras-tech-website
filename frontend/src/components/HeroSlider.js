@@ -105,7 +105,7 @@ const HeroSlider = () => {
   const currentSlideData = slides[currentSlide];
 
   return (
-    <section className="relative min-h-[500px] sm:min-h-[550px] md:min-h-[500px] lg:min-h-[480px] overflow-hidden flex items-center">
+    <section className="relative h-[500px] sm:h-[550px] md:h-[500px] lg:h-[480px] overflow-hidden flex items-center" style={{ contain: 'layout' }}>
       {/* Background with current slide gradient */}
       <div className={`absolute inset-0 ${currentSlideData.background} transition-all duration-1000`}>
         <div className="absolute inset-0 bg-black bg-opacity-20"></div>

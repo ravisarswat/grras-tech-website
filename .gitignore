@@ -92,4 +92,7 @@ runtime_data/
 backend/data/content_audit.json
 backend/data/versions/
 backend/data/backups/
-backend/data/media/
+backend/data/media/-e 
+# Environment files
+*.env
+*.env.*

@@ -448,6 +448,61 @@ const Contact = () => {
                       )}
                     </div>
 
+                    {/* Simple Math Captcha - Security Protection */}
+                    <div className="group">
+                      <label htmlFor="captcha" className="flex items-center text-sm font-bold text-gray-700 mb-3">
+                        <Shield className="h-4 w-4 mr-2 text-indigo-500" />
+                        Security Check: What is {captcha.num1} + {captcha.num2}? 🛡️
+                      </label>
+                      <div className="flex gap-3 items-center">
+                        <div className="relative flex-1">
+                          <input
+                            type="number"
+                            id="captcha"
+                            name="captcha"
+                            value={captcha.userAnswer}
+                            onChange={handleInputChange}
+                            className={`w-full px-4 py-4 bg-white/80 backdrop-blur-sm border-2 rounded-2xl shadow-sm transition-all duration-300 group-hover:shadow-md focus:shadow-lg focus:scale-[1.02] ${
+                              errors.captcha 
+                                ? 'border-red-300 focus:border-red-500 focus:ring-red-200' 
+                                : captcha.isValid 
+                                  ? 'border-green-400 focus:border-green-500 focus:ring-green-100'
+                                  : 'border-gray-200 focus:border-indigo-400 focus:ring-indigo-100'
+                            } focus:ring-4 focus:outline-none placeholder-gray-400`}
+                            placeholder="Enter the answer..."
+                            disabled={isSubmitting}
+                          />
+                          <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                            {captcha.isValid ? (
+                              <CheckCircle className="h-5 w-5 text-green-500" />
+                            ) : (
+                              <Shield className="h-5 w-5 text-indigo-400 opacity-50" />
+                            )}
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={generateNewCaptcha}
+                          className="px-4 py-4 bg-gray-100 hover:bg-gray-200 rounded-2xl transition-colors text-sm font-medium text-gray-600"
+                          title="Generate new question"
+                        >
+                          🔄
+                        </button>
+                      </div>
+                      {errors.captcha && (
+                        <div className="flex items-center mt-2 text-red-500 text-sm">
+                          <AlertCircle className="h-4 w-4 mr-1" />
+                          {errors.captcha}
+                        </div>
+                      )}
+                      {captcha.isValid && (
+                        <div className="flex items-center mt-2 text-green-600 text-sm">
+                          <CheckCircle className="h-4 w-4 mr-1" />
+                          Correct! You're human ✅
+                        </div>
+                      )}
+                    </div>
+
                     {/* Beautiful Submit Button */}
                     <div className="pt-4">
                       <button

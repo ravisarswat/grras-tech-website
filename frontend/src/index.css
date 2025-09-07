@@ -71,7 +71,7 @@ html {
   outline-offset: 2px;
 }
 
-/* Smooth animations */
+/* Performance optimized animations */
 @keyframes slide-in-from-top {
   from {
     opacity: 0;
@@ -83,8 +83,80 @@ html {
   }
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .animate-in.slide-in-from-top-2 {
-  animation: slide-in-from-top 0.2s ease-out;
+  animation: slide-in-from-top var(--transition-fast);
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up var(--transition-normal);
+}
+
+.animate-fade-in-right {
+  animation: fade-in-right var(--transition-normal);
+}
+
+/* Image optimization classes */
+.lazy-loading {
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.lazy-loaded {
+  opacity: 1;
+}
+
+.image-error {
+  opacity: 0.5;
+  filter: grayscale(1);
+}
+
+/* Responsive image containers */
+.optimized-image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.optimized-image-container.loading img {
+  opacity: 0;
+}
+
+.optimized-image-container.loaded img {
+  opacity: 1;
+}
+
+.optimized-image-container.error {
+  background-color: #f3f4f6;
 }
 
 body {

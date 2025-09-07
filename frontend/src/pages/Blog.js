@@ -503,6 +503,25 @@ const Blog = () => {
                   </div>
                 )}
 
+                {/* FAQs */}
+                <div className="bg-white rounded-lg p-6 shadow-sm">
+                  <h2 className="text-lg font-semibold text-gray-900 mb-4">Frequently Asked Questions</h2>
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">How often are blogs updated?</h4>
+                      <p className="text-sm text-gray-600">We publish new articles weekly covering the latest trends in IT, Cloud, DevOps, and career guidance.</p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">Can students contribute articles?</h4>
+                      <p className="text-sm text-gray-600">Yes, we welcome guest posts from our students and alumni sharing their experiences and insights.</p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">Are blogs beginner-friendly?</h4>
+                      <p className="text-sm text-gray-600">Our blogs cater to all levels - from beginners to advanced professionals, with clear explanations and practical examples.</p>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Newsletter Signup */}
                 <div className="bg-gradient-to-br from-red-600 to-orange-600 rounded-lg p-6 text-white">
                   <h3 className="text-lg font-semibold mb-2">Stay Updated</h3>

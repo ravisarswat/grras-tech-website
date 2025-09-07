@@ -542,14 +542,18 @@ const Home = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/admissions"
-                className="btn-primary bg-white text-green-600 hover:bg-gray-100"
+                className="btn-primary bg-white text-green-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-green-600"
+                aria-label="Start the admission process for IT training programs"
+                role="button"
               >
                 Start Admission Process
               </Link>
               
               <Link
                 to="/contact"
-                className="btn-outline border-white text-white hover:bg-white hover:text-green-600"
+                className="btn-outline border-white text-white hover:bg-white hover:text-green-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-green-600"
+                aria-label="Contact admission counselor for course guidance"
+                role="button"
               >
                 Talk to Counselor
               </Link>

@@ -118,15 +118,15 @@ const HeroSlider = () => {
           {/* Left Content */}
           <div className="text-center lg:text-left animate-fade-in-up flex flex-col justify-center items-center lg:items-start self-center w-full">
             
-            {/* Awards Banner */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-2 mb-4 lg:mb-6">
-              <div className="flex items-center gap-2 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full px-4 py-2 shadow-lg">
-                <span className="text-yellow-800 text-sm">🏆</span>
-                <span className="text-yellow-900 font-bold text-xs lg:text-sm">Award Winning Institute</span>
+            {/* Awards Banner - Responsive Design */}
+            <div className="flex flex-col sm:flex-row gap-2 mb-4 lg:mb-6 w-full max-w-lg">
+              <div className="flex items-center justify-center gap-1.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full px-2 sm:px-3 py-1.5 sm:py-2 shadow-lg flex-1 min-w-0">
+                <span className="text-yellow-800 text-xs sm:text-sm flex-shrink-0">🏆</span>
+                <span className="text-yellow-900 font-bold text-xs whitespace-nowrap overflow-hidden text-ellipsis">Award Winning Institute</span>
               </div>
-              <div className="flex items-center gap-2 bg-gradient-to-r from-red-400 to-red-500 rounded-full px-4 py-2 shadow-lg">
-                <span className="text-white text-sm">🎖️</span>
-                <span className="text-white font-bold text-xs lg:text-sm">Best Red Hat Partner Since 2007</span>
+              <div className="flex items-center justify-center gap-1.5 bg-gradient-to-r from-red-400 to-red-500 rounded-full px-2 sm:px-3 py-1.5 sm:py-2 shadow-lg flex-1 min-w-0">
+                <span className="text-white text-xs sm:text-sm flex-shrink-0">🎖️</span>
+                <span className="text-white font-bold text-xs whitespace-nowrap overflow-hidden text-ellipsis">Best Red Hat Partner Since 2007</span>
               </div>
             </div>
 

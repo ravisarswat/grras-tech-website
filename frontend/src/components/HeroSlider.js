@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight, 
-  ChevronLeft, 
-  ChevronRight,
-  Play,
   Star,
   Award,
   Shield,
-  Cloud,
-  Settings,
-  GraduationCap
+  BookOpen,
+  Users,
+  Globe,
+  TrendingUp,
+  Target,
+  CheckCircle
 } from 'lucide-react';
 
 const HeroSlider = () => {

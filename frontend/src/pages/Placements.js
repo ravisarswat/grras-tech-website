@@ -431,52 +431,70 @@ const Placements = () => {
               <h3 className="text-2xl font-black text-gray-900 mb-6 text-center">Most Demanded Certifications at GRRAS</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
-                  <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">RH</span>
+                  <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg" alt="Red Hat" className="w-6 h-6 filter brightness-0 invert" />
                   </div>
-                  <span className="font-semibold text-gray-800">Red Hat</span>
+                  <span className="font-semibold text-gray-800">RHCSA</span>
                 </div>
                 <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
-                  <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">AWS</span>
+                  <div className="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg" alt="Red Hat" className="w-6 h-6 filter brightness-0 invert" />
+                  </div>
+                  <span className="font-semibold text-gray-800">RHCE</span>
+                </div>
+                <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                  <div className="w-10 h-10 bg-red-700 rounded-lg flex items-center justify-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg" alt="Red Hat" className="w-6 h-6 filter brightness-0 invert" />
+                  </div>
+                  <span className="font-semibold text-gray-800">DO188</span>
+                </div>
+                <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                  <div className="w-10 h-10 bg-red-800 rounded-lg flex items-center justify-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg" alt="OpenShift" className="w-6 h-6 filter brightness-0 invert" />
+                  </div>
+                  <span className="font-semibold text-gray-800">OpenShift</span>
+                </div>
+                <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                  <div className="w-10 h-10 bg-red-900 rounded-lg flex items-center justify-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg" alt="Red Hat" className="w-6 h-6 filter brightness-0 invert" />
+                  </div>
+                  <span className="font-semibold text-gray-800">RHCA</span>
+                </div>
+                <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                  <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS" className="w-6 h-6 filter brightness-0 invert" />
                   </div>
                   <span className="font-semibold text-gray-800">AWS Cloud</span>
                 </div>
                 <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
-                  <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">K8s</span>
+                  <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Devops-toolchain.svg" alt="Kubernetes" className="w-6 h-6 filter brightness-0 invert" />
                   </div>
                   <span className="font-semibold text-gray-800">Kubernetes</span>
                 </div>
                 <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
-                  <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">J</span>
+                  <div className="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" alt="Java" className="w-6 h-6 object-contain" />
                   </div>
                   <span className="font-semibold text-gray-800">Java Oracle</span>
                 </div>
                 <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
-                  <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">MS</span>
+                  <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Microsoft_Azure.svg" alt="Microsoft Azure" className="w-6 h-6 filter brightness-0 invert" />
                   </div>
                   <span className="font-semibold text-gray-800">Microsoft Azure</span>
                 </div>
                 <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
-                  <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">GC</span>
+                  <div className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Google_Cloud_logo.svg" alt="Google Cloud" className="w-6 h-6 filter brightness-0 invert" />
                   </div>
                   <span className="font-semibold text-gray-800">Google Cloud</span>
                 </div>
                 <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
-                  <div className="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">D</span>
+                  <div className="w-10 h-10 bg-indigo-500 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">🐳</span>
                   </div>
                   <span className="font-semibold text-gray-800">Docker</span>
-                </div>
-                <div className="flex items-center space-x-3 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300">
-                  <div className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">L</span>
-                  </div>
-                  <span className="font-semibold text-gray-800">Linux</span>
                 </div>
               </div>
             </div>

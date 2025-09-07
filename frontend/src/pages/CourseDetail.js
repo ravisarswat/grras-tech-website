@@ -622,6 +622,9 @@ const CourseDetail = () => {
   const [loading, setLoading] = useState(false); // Start with false since data is pre-loaded
   const [showSyllabusModal, setShowSyllabusModal] = useState(false);
   const [error, setError] = useState(initialCourseData.error);
+  
+  // Get SEO data for current course
+  const courseSEO = slug ? getCourseSEO(slug) : null;
 
   useEffect(() => {
     // Only fetch if course data is missing or slug changed

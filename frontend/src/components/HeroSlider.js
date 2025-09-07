@@ -403,8 +403,15 @@ const HeroSlider = () => {
         </div>
       </div>
 
-      {/* Navigation Controls */}
-      <div className="absolute bottom-6 sm:bottom-8 lg:bottom-10 left-1/2 transform -translate-x-1/2 flex items-center gap-3 z-10">
+      {/* Navigation Controls - Fixed Position to Prevent CLS */}
+      <div 
+        className="fixed bottom-6 sm:bottom-8 lg:bottom-10 left-1/2 flex items-center gap-3 z-10" 
+        style={{ 
+          transform: 'translateX(-50%)',
+          willChange: 'transform',
+          contain: 'layout style paint'
+        }}
+      >
         {/* Previous Button */}
         <button
           onClick={goToPrevious}

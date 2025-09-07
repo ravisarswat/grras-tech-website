@@ -181,10 +181,12 @@ const HeroSlider = () => {
   return (
     <section 
       ref={sliderRef}
-      className="relative min-h-[500px] sm:min-h-[550px] md:min-h-[500px] lg:min-h-[480px] overflow-hidden flex items-center"
+      className="relative min-h-[400px] sm:min-h-[450px] md:min-h-[500px] lg:min-h-[480px] overflow-hidden flex items-center mobile-optimized"
       style={{ 
         contentVisibility: 'auto',
-        containIntrinsicSize: '100vw 500px'
+        containIntrinsicSize: '100vw 400px',
+        transform: 'translateZ(0)',
+        backfaceVisibility: 'hidden'
       }}
     >
       {/* Background with current slide gradient - Optimized for LCP */}

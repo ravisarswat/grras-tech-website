@@ -412,17 +412,16 @@ const HeroSlider = () => {
         </div>
       </div>
 
-      {/* Navigation Controls - Stable Positioning */}
-      <div 
-        className="absolute flex items-center gap-3 z-10" 
-        style={{ 
-          bottom: '2rem',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          willChange: 'transform',
-          contain: 'layout style paint'
-        }}
-      >
+      {/* Navigation Controls - CLS Prevention */}
+      <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-6 sm:pb-8 lg:pb-10 z-10">
+        <div 
+          className="flex items-center gap-3" 
+          style={{ 
+            willChange: 'transform',
+            backfaceVisibility: 'hidden',
+            transform: 'translateZ(0)'
+          }}
+        >
         {/* Previous Button */}
         <button
           onClick={goToPrevious}

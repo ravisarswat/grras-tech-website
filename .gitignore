@@ -87,19 +87,8 @@ backend/data/content_audit.json
 backend/data/versions/
 backend/data/backups/
 backend/data/media/
--e 
-# Environment files
-*.env
-*.env.*
--e 
-# Environment files
-*.env
-*.env.*
--e 
-# Environment files
-*.env
-*.env.*
--e 
-# Environment files
-*.env
-*.env.*
+# Environment files - removed *.env to include frontend/.env in repo
+*.env.local
+*.env.development
+*.env.production
+-e

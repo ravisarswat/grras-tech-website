@@ -173,14 +173,51 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
     setShowDeleteModal(true);
   };
 
-  const confirmDelete = () => {
-    // In a real app, this would call a delete API
-    const idsToDelete = Array.isArray(deleteTarget) ? deleteTarget : [deleteTarget];
-    const updatedLeads = leads.filter(lead => 
-      !idsToDelete.includes(lead.email || lead.id)
-    );
-    setLeads(updatedLeads);
-    setSelectedLeads([]);
+  const confirmDelete = async () => {
+    try {
+      const idsToDelete = Array.isArray(deleteTarget) ? deleteTarget : [deleteTarget];
+      
+      if (idsToDelete.length === 1) {
+        // Delete single lead
+        const response = await fetch(`${BACKEND_URL}/api/leads/${idsToDelete[0]}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
+          console.log('✅ Lead deleted successfully');
+        } else {
+          console.error('❌ Failed to delete lead');
+        }
+      } else {
+        // Bulk delete
+        const response = await fetch(`${BACKEND_URL}/api/leads/bulk`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ lead_ids: idsToDelete })
+        });
+        
+        if (response.ok) {
+          console.log('✅ Leads deleted successfully');
+        } else {
+          console.error('❌ Failed to delete leads');
+        }
+      }
+      
+      // Refresh leads list
+      await fetchLeads();
+      setSelectedLeads([]);
+      
+    } catch (error) {
+      console.error('Delete error:', error);
+    }
+    
     setShowDeleteModal(false);
     setDeleteTarget(null);
   };

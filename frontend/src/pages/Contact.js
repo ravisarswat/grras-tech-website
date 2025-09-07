@@ -108,6 +108,10 @@ const Contact = () => {
       newErrors.message = 'Message is required';
     }
     
+    if (!captcha.isValid) {
+      newErrors.captcha = 'Please solve the math problem correctly';
+    }
+    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };

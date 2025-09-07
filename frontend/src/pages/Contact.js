@@ -254,10 +254,10 @@ const Contact = () => {
           </div>
         </section>
 
-        {/* Main Content */}
-        <section className="py-8">
+        {/* Main Content - Reduced top padding to bring form higher */}
+        <section className="py-4">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12">
+            <div className="grid lg:grid-cols-2 gap-8">
               {/* Contact Form - Beautiful & Creative Design */}
               <div className="animate-fade-in-up">
                 <div className="relative bg-gradient-to-br from-white via-orange-50/30 to-red-50/40 rounded-3xl p-8 shadow-2xl border border-orange-100/50 overflow-hidden">

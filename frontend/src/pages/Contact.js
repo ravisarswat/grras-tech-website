@@ -595,120 +595,65 @@ const Contact = () => {
                 </div>
               </div>
 
-              {/* Additional Info */}
-              <div className="space-y-6">
-                {/* Office Hours */}
-                <div className="bg-white rounded-2xl p-8 shadow-lg animate-fade-in-up">
-                  <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                    <Clock className="h-6 w-6 text-red-500" />
-                    Office Hours
-                  </h3>
-                  
-                  <div className="space-y-3">
-                    {officeHours.map((schedule, index) => (
-                      <div key={index} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
-                        <span className="text-gray-700 font-medium">{schedule.day}</span>
-                        <span className="text-gray-600">{schedule.hours}</span>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <div className="mt-6 p-4 bg-green-50 rounded-lg">
-                    <p className="text-green-800 text-sm">
-                      <strong>Note:</strong> We're also available for online consultations outside office hours. 
-                      Contact us via WhatsApp for immediate assistance.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Google Maps - Optimized with lazy loading */}
-                <div className="bg-white rounded-2xl p-8 shadow-lg animate-fade-in-up">
-                  <h3 className="text-xl font-bold text-gray-900 mb-6">
-                    Find Us Here
-                  </h3>
-                  
-                  {googleMapUrl ? (
-                    <div className="rounded-lg overflow-hidden">
-                      {/* Placeholder for Map with lazy loading */}
-                      <div className="relative">
-                        <iframe
-                          src={googleMapUrl}
-                          width="100%"
-                          height="300"
-                          style={{ border: 0 }}
-                          allowFullScreen=""
-                          loading="lazy"
-                          referrerPolicy="no-referrer-when-downgrade"
-                          className="rounded-lg"
-                          title={`${instituteName} Location`}
-                        ></iframe>
-                        {/* Loading placeholder overlay */}
-                        <div className="absolute inset-0 bg-gray-100 rounded-lg flex items-center justify-center opacity-0 pointer-events-none">
-                          <div className="text-center">
-                            <MapPin className="h-8 w-8 text-gray-400 mx-auto mb-2 animate-pulse" />
-                            <p className="text-gray-500 text-sm">Loading map...</p>
-                          </div>
+            </div>
+            
+            {/* Google Maps Section - Full Width Below */}
+            <div className="mt-8">
+              <div className="bg-white rounded-2xl p-8 shadow-lg animate-fade-in-up">
+                <h3 className="text-xl font-bold text-gray-900 mb-6">
+                  Find Us Here
+                </h3>
+                
+                {googleMapUrl ? (
+                  <div className="rounded-lg overflow-hidden">
+                    {/* Placeholder for Map with lazy loading */}
+                    <div className="relative">
+                      <iframe
+                        src={googleMapUrl}
+                        width="100%"
+                        height="400"
+                        style={{ border: 0 }}
+                        allowFullScreen=""
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        className="rounded-lg"
+                        title={`${instituteName} Location`}
+                      ></iframe>
+                      {/* Loading placeholder overlay */}
+                      <div className="absolute inset-0 bg-gray-100 rounded-lg flex items-center justify-center opacity-0 pointer-events-none">
+                        <div className="text-center">
+                          <MapPin className="h-8 w-8 text-gray-400 mx-auto mb-2 animate-pulse" />
+                          <p className="text-gray-500 text-sm">Loading map...</p>
                         </div>
                       </div>
                     </div>
-                  ) : (
-                    <div className="bg-gray-100 rounded-lg h-64 flex items-center justify-center">
-                      <div className="text-center">
-                        <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                        <p className="text-gray-600 mb-2">Interactive Map</p>
-                        <p className="text-sm text-gray-500">
-                          Map will be displayed when configured in admin settings
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                  
-                  <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                    <div className="flex items-start space-x-3">
-                      <MapPin className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="text-sm text-gray-600 font-medium">Address:</p>
-                        <address className="text-sm text-gray-800 not-italic">
-                          {address.split(',').map((line, index) => (
-                            <span key={index}>
-                              {line.trim()}
-                              {index < address.split(',').length - 1 && <br />}
-                            </span>
-                          ))}
-                        </address>
-                        {googleMapUrl && (
-                          <a
-                            href={googleMapUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center text-red-600 hover:text-red-700 font-medium text-sm mt-2 transition-colors"
-                            aria-label={`Open ${instituteName} location in Google Maps`}
-                          >
-                            Open in Google Maps
-                          </a>
-                        )}
-                      </div>
+                  </div>
+                ) : (
+                  <div className="bg-gray-100 rounded-lg h-96 flex items-center justify-center">
+                    <div className="text-center">
+                      <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-2" />
+                      <p className="text-gray-600 mb-2">Interactive Map</p>
+                      <p className="text-sm text-gray-500">
+                        Map will be displayed when configured in admin settings
+                      </p>
                     </div>
                   </div>
-                </div>
-
-                {/* FAQs */}
-                <div className="bg-white rounded-2xl p-8 shadow-lg animate-fade-in-up">
-                  <h3 className="text-xl font-bold text-gray-900 mb-6">
-                    Frequently Asked Questions
-                  </h3>
-                  
-                  <div className="space-y-4">
-                    {faqs.map((faq, index) => (
-                      <div key={index} className="border-b border-gray-100 pb-4 last:border-b-0 last:pb-0">
-                        <h4 className="font-medium text-gray-900 mb-2">
-                          {faq.question}
-                        </h4>
-                        <p className="text-gray-600 text-sm">
-                          {faq.answer}
-                        </p>
-                      </div>
-                    ))}
+                )}
+                
+                <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-start space-x-3">
+                    <MapPin className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="text-sm text-gray-600 font-medium">Address:</p>
+                      <address className="text-sm text-gray-800 not-italic">
+                        {address.split(',').map((line, index) => (
+                          <span key={index}>
+                            {line.trim()}
+                            {index < address.split(',').length - 1 && <br />}
+                          </span>
+                        ))}
+                      </address>
+                    </div>
                   </div>
                 </div>
               </div>

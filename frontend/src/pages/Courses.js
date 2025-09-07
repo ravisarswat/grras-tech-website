@@ -271,7 +271,20 @@ const Courses = () => {
                 </div>
                 
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-4 bg-gradient-to-r from-white via-blue-100 to-orange-200 bg-clip-text text-transparent leading-tight">
-                  Explore IT & Cloud Courses at GRRAS
+                  {(() => {
+                    const categoryH1s = {
+                      'red-hat-technologies': 'Red Hat Certification Training at GRRAS',
+                      'aws-cloud-platform': 'AWS Cloud Certification Training',
+                      'devops-engineering': 'DevOps Training in Jaipur – GRRAS Solutions',
+                      'microsoft-azure': 'Microsoft Azure Training Programs',
+                      'google-cloud-platform': 'Google Cloud Platform Training',
+                      'data-science-ai': 'Data Science & AI Training at GRRAS',
+                      'programming-development': 'Programming & Development Courses',
+                      'cyber-security': 'Cyber Security Training at GRRAS',
+                      'degree-program': 'BCA & MCA Degree Programs'
+                    };
+                    return categoryH1s[selectedCategory] || 'Explore IT & Cloud Courses at GRRAS';
+                  })()}
                 </h1>
               </div>
               

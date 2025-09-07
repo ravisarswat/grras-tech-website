@@ -643,6 +643,95 @@ const Courses = () => {
             </div>
           )}
           
+          {/* Category-Specific H2 Sections */}
+          {selectedCategory && selectedCategory !== 'all' && (
+            <section className="py-16 bg-white">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                {(() => {
+                  const categoryContent = {
+                    'red-hat-technologies': {
+                      sections: [
+                        { title: 'RHCSA Training', content: 'Master Red Hat System Administration with hands-on labs and real-world scenarios.' },
+                        { title: 'RHCE Training', content: 'Advanced Red Hat Certified Engineer training for automation and configuration management.' },
+                        { title: 'OpenShift Certification', content: 'Container orchestration and OpenShift platform management certification.' }
+                      ]
+                    },
+                    'aws-cloud-platform': {
+                      sections: [
+                        { title: 'AWS Solutions Architect', content: 'Design and deploy scalable, highly available systems on AWS.' },
+                        { title: 'AWS SysOps Administrator', content: 'Operate and manage AWS systems with monitoring and automation.' },
+                        { title: 'AWS Developer Associate', content: 'Develop and maintain applications on the AWS platform.' }
+                      ]
+                    },
+                    'devops-engineering': {
+                      sections: [
+                        { title: 'Why DevOps?', content: 'DevOps bridges development and operations for faster, more reliable software delivery.' },
+                        { title: 'DevOps Course Curriculum', content: 'Comprehensive training in Docker, Kubernetes, Jenkins, and CI/CD pipelines.' },
+                        { title: 'Hands-on Projects', content: 'Real-world projects and practical assignments to build your portfolio.' },
+                        { title: 'Career Opportunities', content: 'Explore lucrative career paths in DevOps engineering and cloud automation.' }
+                      ]
+                    },
+                    'microsoft-azure': {
+                      sections: [
+                        { title: 'Azure Fundamentals (AZ-900)', content: 'Start your Azure journey with fundamentals and core cloud concepts.' },
+                        { title: 'Azure Administrator (AZ-104)', content: 'Advanced Azure administration and resource management skills.' }
+                      ]
+                    },
+                    'google-cloud-platform': {
+                      sections: [
+                        { title: 'GCP Fundamentals', content: 'Learn Google Cloud Platform basics and core services.' },
+                        { title: 'Advanced Google Cloud Modules', content: 'Deep dive into advanced GCP services and architecture patterns.' }
+                      ]
+                    },
+                    'data-science-ai': {
+                      sections: [
+                        { title: 'Python for Data Science', content: 'Master Python programming for data manipulation and analysis.' },
+                        { title: 'Machine Learning & AI', content: 'Build intelligent systems with ML algorithms and AI frameworks.' },
+                        { title: 'Real-World Data Projects', content: 'Work on industry datasets and build a professional portfolio.' }
+                      ]
+                    },
+                    'programming-development': {
+                      sections: [
+                        { title: 'Full Stack Development', content: 'End-to-end web development with modern frameworks and technologies.' },
+                        { title: 'Java Programming', content: 'Master Java programming and enterprise application development.' }
+                      ]
+                    },
+                    'cyber-security': {
+                      sections: [
+                        { title: 'Ethical Hacking & Penetration Testing', content: 'Learn ethical hacking techniques and penetration testing methodologies.' },
+                        { title: 'Cyber Security Fundamentals', content: 'Build strong foundation in cybersecurity principles and practices.' }
+                      ]
+                    },
+                    'degree-program': {
+                      sections: [
+                        { title: 'BCA Degree – 3 Years', content: 'Comprehensive Bachelor of Computer Applications with industry integration.' },
+                        { title: 'MCA Degree – 2 Years', content: 'Advanced Master of Computer Applications with specialization options.' }
+                      ]
+                    }
+                  };
+
+                  const currentContent = categoryContent[selectedCategory];
+                  if (!currentContent) return null;
+
+                  return (
+                    <div className="space-y-12">
+                      {currentContent.sections.map((section, index) => (
+                        <div key={index} className="text-center">
+                          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                            {section.title}
+                          </h2>
+                          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                            {section.content}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })()}
+              </div>
+            </section>
+          )}
+
           {/* Our Most Popular Certifications Section */}
           <section className="py-16 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

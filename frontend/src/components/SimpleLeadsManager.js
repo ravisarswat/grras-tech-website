@@ -452,10 +452,10 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex items-center gap-3">
                         <button
-                          onClick={() => toggleSelectLead(lead.email || lead.id)}
+                          onClick={() => toggleSelectLead(lead.id)}
                           className="flex-shrink-0"
                         >
-                          {selectedLeads.includes(lead.email || lead.id) ? (
+                          {selectedLeads.includes(lead.id) ? (
                             <CheckSquare className="h-5 w-5 text-blue-600" />
                           ) : (
                             <Square className="h-5 w-5 text-gray-400 hover:text-blue-600" />

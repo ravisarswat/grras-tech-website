@@ -152,9 +152,27 @@
   </url>
   <url>
     <loc>https://www.grras.tech/courses/cybersecurity-fundamentals</loc>
-    <lastmod>2025-09-05</lastmod>
+    <lastmod>2025-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.grras.tech/courses/bachelor-computer-applications-bca</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.grras.tech/courses/master-computer-applications-mca</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.grras.tech/testimonials</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.grras.tech/blog/devops-career-opportunities-2025</loc>

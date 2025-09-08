@@ -50,7 +50,7 @@ const Contact = () => {
   const phones = institute.phones || ['9001991227'];
   const emails = institute.emails || ['info@grrassolutions.com'];
   const whatsappUrl = institute.social?.whatsapp || 'https://wa.me/919001991227';
-  const googleMapUrl = institute.googleMapUrl || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d113831.95870011782!2d75.59321269726563!3d26.92732880000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db5d0e5555555%3A0xc45671d79cdb76ba!2sGrras%20Solution%20Pvt%20Ltd%20-%20Advanced%20IT%20Training%20%26%20Certification%20Center!5e0!3m2!1sen!2sin!4v1756381969994!5m2!1sen!2sin';
+  const googleMapUrl = institute.googleMapUrl || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.0746234715867!2d75.77104631455024!3d26.889726382669867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db5d098b5aac1%3A0x1b88dfb2d131aa8a!2sGRRAS%20Solutions%20Pvt%20Ltd%20Advanced%20IT%20Training%20%26%20Certification%20Center!5e0!3m2!1sen!2sin!4v1725801630000!5m2!1sen!2sin';
   const social = institute.social || {};
 
   const handleInputChange = (e) => {

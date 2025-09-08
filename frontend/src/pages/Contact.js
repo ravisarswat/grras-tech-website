@@ -50,7 +50,7 @@ const Contact = () => {
   const phones = institute.phones || ['9001991227'];
   const emails = institute.emails || ['info@grrassolutions.com'];
   const whatsappUrl = institute.social?.whatsapp || 'https://wa.me/919001991227';
-  const googleMapUrl = institute.googleMapUrl || 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14232.274849162767!2d75.7712319!3d26.8897374!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db5d09c5a5a5a%3A0x1234567890abcdef!2sGRRAS%20Solutions%20Pvt%20Ltd!5e0!3m2!1sen!2sin!4v1725801630000!5m2!1sen!2sin&q=GRRAS+Solutions+Jaipur';
+  const googleMapUrl = institute.googleMapUrl || 'https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dOWTgHz-5yV3k4&q=GRRAS+Solutions+Jaipur+Rajasthan&zoom=15';
   const social = institute.social || {};
 
   const handleInputChange = (e) => {

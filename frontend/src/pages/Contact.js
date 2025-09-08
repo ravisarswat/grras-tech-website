@@ -50,7 +50,7 @@ const Contact = () => {
   const phones = institute.phones || ['9001991227'];
   const emails = institute.emails || ['info@grrassolutions.com'];
   const whatsappUrl = institute.social?.whatsapp || 'https://wa.me/919001991227';
-  const googleMapUrl = institute.googleMapUrl || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.065607648654!2d75.77123187531783!3d26.889937276691363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjbCsDUzJzIzLjgiTiA3NcKwNDYnMTYuNCJF!5e0!3m2!1sen!2sin!4v1725801630000!5m2!1sen!2sin&q=GRRAS+Solutions,+Jaipur';
+  const googleMapUrl = institute.googleMapUrl || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.065607648654!2d75.77123187531783!3d26.889937276691363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db5d0e08a8a8a%3A0x9ca8f2f2d131bb9b!2sGRRAS%20Solutions%20Training%20Institute!5e0!3m2!1sen!2sin!4v1625140800000!5m2!1sen!2sin';
   const social = institute.social || {};
 
   const handleInputChange = (e) => {

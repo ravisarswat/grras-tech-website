@@ -49,6 +49,48 @@ export const courses = [
     "certificationIncluded": true,
     "overview": "Advanced Kubernetes administration training with hands-on cluster management experience."
   },
+  
+  {
+  "slug": "kubernetes-security-specialist-cks",
+  "title": "Kubernetes Security Specialist (CKS)",
+  "oneLiner": "Specialize in securing Kubernetes clusters and containerized workloads",
+  "description": "Certified Kubernetes Security Specialist (CKS) training focusing on cluster hardening, runtime security, network policies, and supply chain security.",
+  "duration": "4-6 Weeks",
+  "fees": "₹38,000 (Including Exam Voucher)",
+  "price": "₹38,000",
+  "tools": ["Kubernetes", "Docker", "kubectl", "etcd", "Container Runtime", "Helm", "Security Policies"],
+  "visible": true,
+  "featured": true,
+  "order": 3,
+  "category": "kubernetes",
+  "categories": ["kubernetes"],
+  "level": "Advanced",
+  "mode": "Classroom, Online, Hybrid",
+  "highlights": [
+    "Cluster Hardening & Network Policies",
+    "Runtime Security & Audit Logging",
+    "Image Security & Supply Chain Protection",
+    "Monitoring & Incident Response",
+    "Compliance Best Practices"
+  ],
+  "learningOutcomes": [
+    "Harden Kubernetes clusters for production security",
+    "Implement advanced network policies and RBAC",
+    "Secure container runtime and CI/CD supply chain",
+    "Respond to security incidents in Kubernetes"
+  ],
+  "careerRoles": [
+    "Kubernetes Security Specialist",
+    "Cloud Security Engineer",
+    "DevSecOps Engineer",
+    "Platform Security Engineer"
+  ],
+  "eligibility": "CKA certification or equivalent Kubernetes admin knowledge required",
+  "intake": "Monthly Batches",
+  "certificationIncluded": true,
+  "overview": "Advanced Kubernetes security training covering hardening, runtime protection, and compliance with real-world lab scenarios."
+},
+  
   {
     "slug": "docker-containerization",
     "title": "Docker & Containerization",

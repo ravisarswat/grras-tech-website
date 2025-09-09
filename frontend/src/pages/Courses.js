@@ -712,10 +712,10 @@ const Courses = () => {
                     },
                     'kubernetes': {
                       sections: [
-                        { title: 'Why Kubernetes?', content: 'Containers ko scale, self-heal aur automate karne ke liye Kubernetes industry standard hai. Cloud aur on-prem, dono par chalti hai.' },
-                        { title: 'Kubernetes Course Modules', content: 'Pods, Deployments, Services, Ingress, ConfigMaps/Secrets, StatefulSets, Helm, observability aur troubleshooting.' },
-                        { title: 'Hands-on Labs & Projects', content: 'Real clusters par labs: blue-green/canary deploys, autoscaling, backups, monitoring (Prometheus/Grafana).' },
-                        { title: 'Certification Prep (CKA/CKAD/CKS)', content: 'Exam-style labs, time-saving kubectl shortcuts aur curated practice tasks se certification ready.' }
+                        { title: 'Why Kubernetes?', content: 'Kubernetes is the industry standard for orchestrating containers—automating deployments, scaling, self-healing, and rollbacks across cloud and on-prem environments.' },
+                        { title: 'Kubernetes Course Modules', content: 'Pods, ReplicaSets & Deployments, Services & Ingress, ConfigMaps/Secrets, Stateful workloads, Helm, RBAC, networking, storage, and observability.' },
+                        { title: 'Hands-on Labs & Projects', content: 'Work on real multi-node clusters: blue-green/canary releases, HPA/cluster autoscaling, backups/restore, and monitoring with Prometheus/Grafana.' },
+                        { title: 'Certification Prep (CKA/CKAD/CKS)', content: 'Exam-style labs, kubectl shortcuts, and curated practice tasks so you are fully prepared for CKA/CKAD/CKS.' }
                       ]
                     },
                     
@@ -871,18 +871,19 @@ const Courses = () => {
                   ],
                   'kubernetes': [
                     {
-                      question: 'Kubernetes ke liye kaun si certification best hai?',
-                      answer: 'Admin/operations role ke liye CKA, developer role ke liye CKAD, security focus ke liye CKS best hoti hai.'
+                      question: 'Which Kubernetes certification should I choose?',
+                      answer: 'Pick CKA for administration/operations, CKAD for application developers, and CKS if you focus on Kubernetes security.'
                     },
                     {
-                      question: 'Kya Docker aana zaroori hai?',
-                      answer: 'Basic container concepts (images, registries) help karte hain. Course me container basics ka quick refresher included hai.'
+                      question: 'Do I need Docker knowledge beforehand?',
+                      answer: 'Basic container concepts help, but the course includes a short refresher on images, registries, and container runtimes.'
                     },
                     {
-                      question: 'Kya labs real cluster par hote hain?',
-                      answer: 'Haan, hands-on labs real multi-node clusters par hote hain, jisme networking, storage aur troubleshooting cover hota hai.'
-                     }
+                      question: 'Are the labs on real clusters?',
+                      answer: 'Yes. You will use real multi-node clusters with hands-on tasks covering networking, storage, troubleshooting, and production-style scenarios.'
+                    }
                   ],
+
                   
                   'microsoft-azure': [
                     {

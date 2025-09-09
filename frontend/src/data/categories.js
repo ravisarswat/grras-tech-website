@@ -48,6 +48,22 @@ export const categories = {
     "createdAt": "2025-09-02T15:02:35.473038",
     "createdBy": "dynamic-category-creator"
   },
+    "kubernetes": {
+    "name": "Kubernetes",
+    "title": "Kubernetes",
+    "slug": "kubernetes",
+    "description": "Master Kubernetes with industry-recognized CKA & CKS certifications",
+    "logo_url": "https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg",
+    "icon": "layers",
+    "color": "#326CE5",
+    "order": 4,
+    "visible": true,
+    "courses": [],
+    "featured": true,
+    "createdAt": "2025-09-09T00:00:00.000000",
+    "createdBy": "manual-category-creator"
+  },  
   "microsoft-azure": {
     "name": "Microsoft Azure",
     "title": "Microsoft Azure",

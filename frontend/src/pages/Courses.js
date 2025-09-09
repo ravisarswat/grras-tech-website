@@ -70,7 +70,21 @@ const Courses = () => {
   const [categories, setCategories] = useState(initialData.categories);
   const [filteredCourses, setFilteredCourses] = useState(initialData.filteredCourses);
   const [loading, setLoading] = useState(false); // Start with false since data is pre-loaded
-  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  // ✅ First-paint fix: initialize from URL ?tab=...
+  const [selectedCategory, setSelectedCategory] = useState(() => {
+    try {
+      const params = new URLSearchParams(location.search);
+      const tab = params.get('tab');
+      if (tab && initialData.categories?.length) {
+        const found = initialData.categories.find(
+          (cat) => cat.slug === tab || cat.id === tab
+        );
+        if (found) return found.id;
+      }
+    } catch {}
+    return 'all';
+  });
 
   useEffect(() => {
     // Only re-initialize if data is empty (edge case)
@@ -87,7 +101,7 @@ const Courses = () => {
     });
   }, []);
 
-  // Handle URL parameters for category selection
+  // Handle URL parameters for category selection (updates on route change)
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const tabParam = urlParams.get('tab');
@@ -103,7 +117,6 @@ const Courses = () => {
         setTimeout(() => {
           const categoryTabsSection = document.getElementById('course-categories-section');
           if (categoryTabsSection) {
-            // Calculate perfect scroll position - tabs should be visible at top
             const rect = categoryTabsSection.getBoundingClientRect();
             const scrollTop = window.pageYOffset + rect.top - 100; // 100px offset from top
             
@@ -190,6 +203,12 @@ const Courses = () => {
         title: 'DevOps Training & Certification in Jaipur – GRRAS',
         description: 'Learn DevOps with Docker, Kubernetes, Jenkins & CI/CD pipelines. Hands-on DevOps training with projects & job support at GRRAS Jaipur.',
         canonical: 'https://www.grras.tech/courses?tab=devops-engineering'
+      },
+      // ✅ Added Kubernetes SEO
+      'kubernetes': {
+        title: 'Kubernetes Courses (CKA & CKS) in Jaipur | GRRAS',
+        description: 'Master Kubernetes with hands-on CKA & CKS training at GRRAS Jaipur — cluster admin, security, network policies, and real labs.',
+        canonical: 'https://www.grras.tech/courses?tab=kubernetes'
       },
       'microsoft-azure': {
         title: 'Microsoft Azure Training & Certification | GRRAS Jaipur',
@@ -298,7 +317,7 @@ const Courses = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
                 <button 
                   onClick={() => {
-                    // Scroll to most popular category (Red Hat with highest course count)
+                    // Scroll to most popular category (highest course count)
                     const popularCategory = categories.reduce((prev, current) => 
                       prev.count > current.count ? prev : current
                     );
@@ -314,7 +333,12 @@ const Courses = () => {
                   }}
                   className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-600 to-red-600 text-white font-bold rounded-2xl hover:from-orange-700 hover:to-red-700 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl"
                 >
-                  <span>🔥 Most Popular ({categories.find(c => c.count === Math.max(...categories.filter(cat => cat.id !== 'all').map(cat => cat.count)))?.name || 'Courses'})</span>
+                  {/* ✅ Dynamic label */}
+                  <span>
+                    {selectedCategory === 'all'
+                      ? '🔥 Most Popular Courses'
+                      : `⭐ Top ${categories.find(c => c.id === selectedCategory)?.name || 'Courses'}`}
+                  </span>
                   <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />
                 </button>
                 

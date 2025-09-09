@@ -6,9 +6,7 @@ import {
   BookOpen,
   Users,
   Star,
-  ArrowRight,
-  Award,
-  TrendingUp
+  ArrowRight
 } from 'lucide-react';
 
 // Static Data
@@ -21,21 +19,42 @@ const MobileCourseCategories = () => {
   const courseCategories = categories;
   const coursesData = courses;
 
-  // Get featured categories with course counts
+  // Fallback map (used ONLY if category.logo / logo_url not present)
+  const fallbackLogoBySlug = {
+    'red-hat-technologies': 'https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg',
+    'aws-cloud-platform': 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg',
+    'devops-engineering': 'https://upload.wikimedia.org/wikipedia/commons/0/05/Devops-toolchain.svg',
+    'kubernetes': 'https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg',
+    'microsoft-azure': 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Microsoft_Azure.svg',
+    'google-cloud-platform': 'https://upload.wikimedia.org/wikipedia/commons/5/51/Google_Cloud_logo.svg',
+    'data-science-ai': 'https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Brain/Color/brain_color.svg',
+    'programming-development': 'https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Laptop/Color/laptop_color.svg',
+    'cyber-security': 'https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Shield/Color/shield_color.svg',
+    'degree-program': 'https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Graduation%20cap/Color/graduation_cap_color.svg'
+  };
+
+  // Prefer categories.js logos; fallback to hardcoded if missing
+  const getCategoryLogo = (catObj) => {
+    return catObj.logo || catObj.logo_url || fallbackLogoBySlug[catObj.slug] || null;
+  };
+
+  // Helper: course belongs to slug?
+  const courseHasCategory = (course, slug) => {
+    if (Array.isArray(course.categories) && course.categories.includes(slug)) return true;
+    if (course.category && course.category === slug) return true;
+    return false;
+  };
+
+  // Get featured categories with counts and top courses
   const featuredCategories = Object.entries(courseCategories)
     .filter(([_, category]) => category.featured)
     .map(([slug, category]) => {
-      const categoryCoursesCount = coursesData.filter(course => 
-        course.category === slug && course.visible !== false
-      ).length;
-      
+      const inCat = coursesData.filter(course => course.visible !== false && courseHasCategory(course, slug));
       return {
         slug,
         ...category,
-        courseCount: categoryCoursesCount,
-        courses: coursesData.filter(course => 
-          course.category === slug && course.visible !== false
-        ).slice(0, 3) // Show only first 3 courses
+        courseCount: inCat.length,
+        courses: inCat.slice(0, 3)
       };
     })
     .filter(category => category.courseCount > 0)
@@ -43,36 +62,9 @@ const MobileCourseCategories = () => {
 
   const toggleCategory = (categorySlug) => {
     const newExpanded = new Set(expandedCategories);
-    if (newExpanded.has(categorySlug)) {
-      newExpanded.delete(categorySlug);
-    } else {
-      newExpanded.add(categorySlug);
-    }
+    if (newExpanded.has(categorySlug)) newExpanded.delete(categorySlug);
+    else newExpanded.add(categorySlug);
     setExpandedCategories(newExpanded);
-  };
-
-  const getCategoryIcon = (category) => {
-    // Based on category name, return appropriate icon/image
-    if (category.slug === 'red-hat-technologies') {
-      return 'https://upload.wikimedia.org/wikipedia/commons/d/d8/Red_Hat_logo.svg';
-    } else if (category.slug === 'aws-cloud-platform') {
-      return 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg';
-    } else if (category.slug === 'devops-engineering') {
-      return 'https://upload.wikimedia.org/wikipedia/commons/0/05/Devops-toolchain.svg';
-    } else if (category.slug === 'microsoft-azure') {
-      return 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Microsoft_Azure.svg';
-    } else if (category.slug === 'google-cloud-platform') {
-      return 'https://upload.wikimedia.org/wikipedia/commons/5/51/Google_Cloud_logo.svg';
-    } else if (category.slug === 'data-science-ai') {
-      return 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/1200px-Scikit_learn_logo_small.svg.png';
-    } else if (category.slug === 'programming-development') {
-      return 'https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png';
-    } else if (category.slug === 'cyber-security') {
-      return 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Cyber-security-lock.svg';
-    } else if (category.slug === 'degree-program') {
-      return 'https://upload.wikimedia.org/wikipedia/commons/5/57/Graduation_hat.svg';
-    }
-    return null;
   };
 
   return (
@@ -96,8 +88,8 @@ const MobileCourseCategories = () => {
         <div className="space-y-3">
           {featuredCategories.map((category) => {
             const isExpanded = expandedCategories.has(category.slug);
-            const categoryIcon = getCategoryIcon(category);
-            
+            const logoSrc = getCategoryLogo(category);
+
             return (
               <div 
                 key={category.slug}
@@ -109,19 +101,21 @@ const MobileCourseCategories = () => {
                   className="w-full p-4 flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
                 >
                   <div className="flex items-center space-x-3">
-                    {/* Category Icon */}
-                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center border border-orange-100">
-                      {categoryIcon ? (
-                        <img 
-                          src={categoryIcon} 
-                          alt={category.name}
-                          className="w-8 h-8 object-contain"
+                    {/* Category Logo (bigger for mobile) */}
+                    <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center border border-orange-100">
+                      {logoSrc ? (
+                        <img
+                          src={logoSrc}
+                          alt={`${category.name} logo`}
+                          className="max-h-12 w-auto object-contain"
+                          loading="lazy"
+                          onError={(e) => { e.currentTarget.style.display = 'none'; }}
                         />
                       ) : (
-                        <BookOpen className="h-6 w-6 text-orange-600" />
+                        <BookOpen className="h-7 w-7 text-orange-600" />
                       )}
                     </div>
-                    
+
                     {/* Category Info */}
                     <div className="text-left flex-1">
                       <h3 className="font-bold text-gray-900 text-sm">
@@ -140,7 +134,7 @@ const MobileCourseCategories = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Expand/Collapse Icon */}
                   <div className="ml-2">
                     {isExpanded ? (
@@ -159,45 +153,46 @@ const MobileCourseCategories = () => {
                       <p className="text-sm text-gray-600 leading-relaxed">
                         {category.description}
                       </p>
-                      
+
                       {/* Featured Courses */}
-                      <div className="space-y-2">
-                        <h4 className="font-semibold text-gray-900 text-sm flex items-center">
-                          <Star className="h-4 w-4 text-yellow-500 mr-1" />
-                          Featured Courses:
-                        </h4>
-                        
-                        {category.courses.map((course, index) => (
-                          <Link
-                            key={course.slug}
-                            to={`/courses/${course.slug}`}
-                            className="block p-3 bg-white rounded-lg border border-gray-200 hover:border-orange-200 hover:shadow-sm transition-all duration-200 group"
-                          >
-                            <div className="flex items-center justify-between">
-                              <div className="flex-1">
-                                <h5 className="font-medium text-gray-900 text-sm group-hover:text-orange-600 transition-colors">
-                                  {course.title}
-                                </h5>
-                                <div className="flex items-center space-x-3 mt-1">
-                                  <span className="text-xs text-gray-500">
-                                    {course.duration || '4-6 Weeks'}
-                                  </span>
-                                  <span className="text-xs text-gray-500">
-                                    {course.level || 'Professional'}
-                                  </span>
-                                  {course.fees && (
-                                    <span className="text-xs font-medium text-orange-600">
-                                      {course.fees}
+                      {category.courses.length > 0 && (
+                        <div className="space-y-2">
+                          <h4 className="font-semibold text-gray-900 text-sm">
+                            Featured Courses:
+                          </h4>
+
+                          {category.courses.map((course) => (
+                            <Link
+                              key={course.slug}
+                              to={`/courses/${course.slug}`}
+                              className="block p-3 bg-white rounded-lg border border-gray-200 hover:border-orange-200 hover:shadow-sm transition-all duration-200 group"
+                            >
+                              <div className="flex items-center justify-between">
+                                <div className="flex-1">
+                                  <h5 className="font-medium text-gray-900 text-sm group-hover:text-orange-600 transition-colors">
+                                    {course.title}
+                                  </h5>
+                                  <div className="flex items-center space-x-3 mt-1">
+                                    <span className="text-xs text-gray-500">
+                                      {course.duration || '4-6 Weeks'}
                                     </span>
-                                  )}
+                                    <span className="text-xs text-gray-500">
+                                      {course.level || 'Professional'}
+                                    </span>
+                                    {course.fees && (
+                                      <span className="text-xs font-medium text-orange-600">
+                                        {course.fees}
+                                      </span>
+                                    )}
+                                  </div>
                                 </div>
+                                <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-orange-500 transition-colors" />
                               </div>
-                              <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-orange-500 transition-colors" />
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                      
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+
                       {/* View All Button */}
                       <Link
                         to={`/courses?tab=${category.slug}`}

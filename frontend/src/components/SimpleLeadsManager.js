@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Download, RefreshCw, LogOut, Search } from "lucide-react";
+import { Download, RefreshCw, LogOut, Search, Bug } from "lucide-react";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -11,121 +11,149 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
   const [q, setQ] = useState("");
   const [sortKey, setSortKey] = useState("createdAt");
   const [sortDir, setSortDir] = useState("desc");
+  const [debugOpen, setDebugOpen] = useState(false);
+  const [attemptLog, setAttemptLog] = useState([]);
 
+  // ---- Endpoints to try (common patterns) ----
   const endpoints = useMemo(
     () => [
-      `${BACKEND_URL}/api/admin/leads`,
-      `${BACKEND_URL}/api/leads`,
-    ],
+      "/api/admin/leads",
+      "/api/leads",
+      "/api/admin/leads/all",
+      "/api/leads/all",
+      "/leads",
+      "/leads/all",
+    ].map((p) => `${BACKEND_URL}${p}`),
     []
   );
 
-  const authHeaders = useMemo(
-    () => ({
-      "Content-Type": "application/json",
-      Authorization: token ? `Bearer ${token}` : "",
-      "x-admin-token": token || "",
-    }),
-    [token]
-  );
-
-  const normalize = (item) => ({
-    id: item.id || item._id || item.uuid || Math.random().toString(36).slice(2),
-    name: item.name || item.fullName || "",
-    email: item.email || "",
-    phone: item.phone || item.mobile || "",
-    course: item.course || item.interest || item.category || "",
-    source: item.source || item.utm_source || "",
-    notes: item.message || item.notes || "",
-    createdAt: item.createdAt || item.created_at || item.timestamp || item.date || new Date().toISOString(),
+  const normalize = (it) => ({
+    id: it.id || it._id || it.uuid || crypto.randomUUID?.() || Math.random().toString(36).slice(2),
+    name: it.name || it.fullName || "",
+    email: it.email || "",
+    phone: it.phone || it.mobile || "",
+    course: it.course || it.interest || it.category || "",
+    source: it.source || it.utm_source || "",
+    notes: it.message || it.notes || "",
+    createdAt: it.createdAt || it.created_at || it.timestamp || it.date || new Date().toISOString(),
   });
 
+  const tryOnce = async (label, url, init) => {
+    const withBypass = url + (url.includes("?") ? "&" : "?") + "nocache=" + Date.now(); // SW/cache bypass
+    try {
+      const res = await fetch(withBypass, {
+        cache: "no-store",
+        credentials: "omit",
+        ...init,
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          ...(init?.headers || {}),
+        },
+      });
+
+      const text = await res.text();
+      let json;
+      try { json = text ? JSON.parse(text) : {}; } catch { json = { raw: text }; }
+
+      const entry = { label, url, method: init?.method || "GET", status: res.status, ok: res.ok, body: json };
+      setAttemptLog((prev) => [...prev, entry]);
+      console.log("[Leads] Attempt:", entry);
+
+      if (!res.ok) return { ok: false, body: json, status: res.status };
+      const list = Array.isArray(json?.leads) ? json.leads : Array.isArray(json) ? json : [];
+      return { ok: true, data: list.map(normalize) };
+    } catch (e) {
+      const entry = { label, url, method: init?.method || "GET", error: e?.message || String(e) };
+      setAttemptLog((prev) => [...prev, entry]);
+      console.warn("[Leads] Fetch error:", entry);
+      return { ok: false, error: e };
+    }
+  };
+
   const load = async (isRefresh = false) => {
+    if (!BACKEND_URL) {
+      setError("REACT_APP_BACKEND_URL is not set in environment.");
+      return;
+    }
+
+    setAttemptLog([]);
     setError("");
     isRefresh ? setRefreshing(true) : setLoading(true);
 
+    // All fallbacks (headers + query + POST body)
+    const headerAuth = {
+      Authorization: token ? `Bearer ${token}` : "",
+      "x-admin-token": token || "",
+    };
+
     for (const url of endpoints) {
-      try {
-        const res = await fetch(url, { headers: authHeaders, method: "GET" });
+      // 1) GET with headers
+      let r = await tryOnce("GET + headers", url, { method: "GET", headers: headerAuth });
+      if (r.ok) { setLeads(r.data); setLoading(false); setRefreshing(false); return; }
+      if (r.status === 401 || r.status === 403) break; // invalid token
 
-        if (res.status === 401) {
-          // token invalid/expired
-          localStorage.removeItem("simple_admin_token");
-          setError("Session expired. Please log in again.");
-          onLogout?.();
-          break;
-        }
+      // 2) GET with token in query
+      const qUrl = url + (url.includes("?") ? "&" : "?") + "token=" + encodeURIComponent(token || "");
+      r = await tryOnce("GET + ?token", qUrl, { method: "GET" });
+      if (r.ok) { setLeads(r.data); setLoading(false); setRefreshing(false); return; }
 
-        if (!res.ok) {
-          // Try next endpoint
-          continue;
-        }
+      // 3) POST with headers only
+      r = await tryOnce("POST + headers", url, { method: "POST", headers: headerAuth });
+      if (r.ok) { setLeads(r.data); setLoading(false); setRefreshing(false); return; }
 
-        const data = await res.json();
-        const list = Array.isArray(data?.leads) ? data.leads : Array.isArray(data) ? data : [];
-        setLeads(list.map(normalize));
-        isRefresh ? setRefreshing(false) : setLoading(false);
-        return;
-      } catch (e) {
-        // try next endpoint
-      }
+      // 4) POST JSON {token}
+      r = await tryOnce("POST {token}", url, { method: "POST", body: JSON.stringify({ token }) });
+      if (r.ok) { setLeads(r.data); setLoading(false); setRefreshing(false); return; }
     }
 
-    setError(`Unable to fetch leads from backend: ${BACKEND_URL}`);
+    // If we reached here, everything failed
+    if (attemptLog.some((a) => a.status === 401 || a.status === 403)) {
+      localStorage.removeItem("simple_admin_token");
+      onLogout?.();
+      setError("Session expired / unauthorized. Please log in again.");
+    } else {
+      setError(`Unable to fetch leads from backend: ${BACKEND_URL}`);
+    }
     isRefresh ? setRefreshing(false) : setLoading(false);
   };
 
   useEffect(() => {
-    if (!token) return;
-    load();
-  }, [token]); // <- no eslint disable comment here
+    if (token) load();
+  }, [token]);
 
   const filtered = useMemo(() => {
     const s = q.trim().toLowerCase();
     const base = !s
       ? leads
       : leads.filter((l) =>
-          [l.name, l.email, l.phone, l.course, l.source, l.notes]
-            .join(" ")
-            .toLowerCase()
-            .includes(s)
+          [l.name, l.email, l.phone, l.course, l.source, l.notes].join(" ").toLowerCase().includes(s)
         );
 
-    const sorted = [...base].sort((a, b) => {
-      const dir = sortDir === "asc" ? 1 : -1;
+    const dir = sortDir === "asc" ? 1 : -1;
+    return [...base].sort((a, b) => {
       if (sortKey === "createdAt") {
         return (new Date(a.createdAt) - new Date(b.createdAt)) * dir;
-      }
+        }
       const av = String(a[sortKey] || "").toLowerCase();
       const bv = String(b[sortKey] || "").toLowerCase();
       return av.localeCompare(bv) * dir;
     });
-
-    return sorted;
   }, [leads, q, sortKey, sortDir]);
 
   const exportCSV = () => {
     if (!filtered.length) return;
     const headers = ["Name", "Email", "Phone", "Course", "Source", "Notes", "Created At"];
     const rows = filtered.map((l) => [
-      l.name,
-      l.email,
-      l.phone,
-      l.course,
-      l.source,
+      l.name, l.email, l.phone, l.course, l.source,
       (l.notes || "").replace(/\n/g, " "),
       new Date(l.createdAt).toLocaleString(),
     ]);
-    const csv =
-      [headers, ...rows]
-        .map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))
-        .join("\n");
+    const csv = [headers, ...rows].map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
-    a.href = url;
-    a.download = `leads_${new Date().toISOString().slice(0, 10)}.csv`;
-    a.click();
+    a.href = url; a.download = `leads_${new Date().toISOString().slice(0, 10)}.csv`; a.click();
     URL.revokeObjectURL(url);
   };
 
@@ -152,10 +180,15 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
               Export CSV
             </button>
             <button
-              onClick={() => {
-                localStorage.removeItem("simple_admin_token");
-                onLogout?.();
-              }}
+              onClick={() => setDebugOpen((v) => !v)}
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200"
+              title="Toggle debug details"
+            >
+              <Bug className="h-4 w-4" />
+              Debug
+            </button>
+            <button
+              onClick={() => { localStorage.removeItem("simple_admin_token"); onLogout?.(); }}
               className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-800 text-white hover:bg-black"
               title="Logout"
             >
@@ -202,6 +235,12 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
         {error && (
           <div className="mb-4 p-3 rounded-lg border border-red-200 bg-red-50 text-red-700 text-sm">
             {error}
+          </div>
+        )}
+
+        {debugOpen && (
+          <div className="mb-4 p-3 rounded-lg border border-gray-300 bg-white text-xs overflow-auto max-h-64">
+            <pre className="whitespace-pre-wrap">{JSON.stringify(attemptLog, null, 2)}</pre>
           </div>
         )}
 

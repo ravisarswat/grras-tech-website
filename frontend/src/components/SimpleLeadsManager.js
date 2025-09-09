@@ -17,8 +17,9 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
   // ---- Endpoints to try (common patterns) ----
   const endpoints = useMemo(
     () => [
+      "/api/simple-leads",          // ✅ Primary endpoint that works  
       "/api/admin/leads",
-      "/api/leads",
+      "/api/leads", 
       "/api/admin/leads/all",
       "/api/leads/all",
       "/leads",

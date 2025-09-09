@@ -288,6 +288,37 @@ const getCourseSEO = (slug) => {
         lab: 'Kubernetes Cluster Hands-on Lab'
       }
     },
+    
+    'kubernetes-security-specialist-cks': {
+  title: 'Kubernetes Security Specialist (CKS) Training in Jaipur | GRRAS',
+  description: 'Prepare for Kubernetes Security Specialist (CKS) with hands-on cluster hardening, network policies, runtime & supply chain security.',
+  h1: 'Kubernetes Security Specialist (CKS) Training',
+  h2Sections: [
+    { title: 'Why CKS Certification?', content: 'CKS validates practical skills for securing Kubernetes clusters, workloads and CI/CD supply chains.' },
+    { title: 'Security-Focused Modules', content: 'Cluster hardening, image & supply chain security, runtime protection, network policies, logging & monitoring.' },
+    { title: 'Hands-on Security Labs', content: 'Realistic attack/defense labs with policies, admission controllers and incident response drills.' },
+    { title: 'Career Benefits', content: 'Grow into roles like Kubernetes Security Specialist, DevSecOps Engineer and Platform Security Engineer.' }
+  ],
+  faqs: [
+    {
+      question: 'What does the CKS exam cover?',
+      answer: 'CKS covers cluster hardening, system hardening, network policies, runtime security, supply chain security, logging/monitoring and incident response.'
+    },
+    {
+      question: 'Do I need CKA before CKS?',
+      answer: 'Yes. CNCF requires an active CKA certification (or equivalent admin skills) for CKS eligibility.'
+    },
+    {
+      question: 'Is the training lab-intensive?',
+      answer: 'Absolutely. You will implement network policies, admission controls, image scanning and runtime protections in hands-on labs.'
+    }
+  ],
+  imageAlts: {
+    logo: 'Kubernetes Security Specialist CKS Training Jaipur',
+    lab: 'Kubernetes Security Hands-on Lab'
+  }
+},
+    
     'docker-containerization': {
       title: 'Docker & Containerization Training in Jaipur | GRRAS',
       description: 'Learn Docker & containerization at GRRAS Jaipur. Hands-on labs to build, run & manage containers for DevOps & Cloud careers.',

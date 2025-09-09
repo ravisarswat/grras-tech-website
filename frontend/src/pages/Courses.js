@@ -205,9 +205,10 @@ const Courses = () => {
         canonical: 'https://www.grras.tech/courses?tab=devops-engineering'
       },
       // ✅ Added Kubernetes SEO
+
       'kubernetes': {
-        title: 'Kubernetes Courses (CKA & CKS) in Jaipur | GRRAS',
-        description: 'Master Kubernetes with hands-on CKA & CKS training at GRRAS Jaipur — cluster admin, security, network policies, and real labs.',
+        title: 'Kubernetes Training & Certification | CKA/CKAD – GRRAS',
+        description: 'Hands-on Kubernetes training with real clusters, Helm, CI/CD & exam prep for CKA/CKAD/CKS at GRRAS Jaipur.',
         canonical: 'https://www.grras.tech/courses?tab=kubernetes'
       },
       'microsoft-azure': {
@@ -709,6 +710,15 @@ const Courses = () => {
                         { title: 'Career Opportunities', content: 'Explore lucrative career paths in DevOps engineering and cloud automation.' }
                       ]
                     },
+                    'kubernetes': {
+                      sections: [
+                        { title: 'Why Kubernetes?', content: 'Containers ko scale, self-heal aur automate karne ke liye Kubernetes industry standard hai. Cloud aur on-prem, dono par chalti hai.' },
+                        { title: 'Kubernetes Course Modules', content: 'Pods, Deployments, Services, Ingress, ConfigMaps/Secrets, StatefulSets, Helm, observability aur troubleshooting.' },
+                        { title: 'Hands-on Labs & Projects', content: 'Real clusters par labs: blue-green/canary deploys, autoscaling, backups, monitoring (Prometheus/Grafana).' },
+                        { title: 'Certification Prep (CKA/CKAD/CKS)', content: 'Exam-style labs, time-saving kubectl shortcuts aur curated practice tasks se certification ready.' }
+                      ]
+                    },
+                    
                     'microsoft-azure': {
                       sections: [
                         { title: 'Azure Fundamentals (AZ-900)', content: 'Start your Azure journey with fundamentals and core cloud concepts.' },
@@ -859,6 +869,21 @@ const Courses = () => {
                       answer: 'Yes, we provide dedicated placement assistance with our network of companies specifically looking for DevOps professionals.'
                     }
                   ],
+                  'kubernetes': [
+                    {
+                      question: 'Kubernetes ke liye kaun si certification best hai?',
+                      answer: 'Admin/operations role ke liye CKA, developer role ke liye CKAD, security focus ke liye CKS best hoti hai.'
+                    },
+                    {
+                      question: 'Kya Docker aana zaroori hai?',
+                      answer: 'Basic container concepts (images, registries) help karte hain. Course me container basics ka quick refresher included hai.'
+                    },
+                    {
+                      question: 'Kya labs real cluster par hote hain?',
+                      answer: 'Haan, hands-on labs real multi-node clusters par hote hain, jisme networking, storage aur troubleshooting cover hota hai.'
+                     }
+                  ],
+                  
                   'microsoft-azure': [
                     {
                       question: 'Which Azure certification is best for beginners?',

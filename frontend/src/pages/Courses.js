@@ -275,7 +275,7 @@ const Courses = () => {
                     const categoryH1s = {
                       'red-hat-technologies': 'Red Hat Certification Training at GRRAS',
                       'aws-cloud-platform': 'AWS Cloud Certification Training',
-                      'devops-engineering': 'DevOps Training in Jaipur – GRRAS Solutions'
+                      'devops-engineering': 'DevOps Training in Jaipur – GRRAS Solutions',
                       'kubernetes': 'Kubernetes Certification Training',
                       'microsoft-azure': 'Microsoft Azure Training Programs',
                       'google-cloud-platform': 'Google Cloud Platform Training',

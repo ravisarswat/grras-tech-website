@@ -288,12 +288,12 @@ The comprehensive sync verification fix testing has been fully successful:
 
 **Assessment**: The sync verification fix has been completely implemented and tested. The admin panel will no longer experience "sync verification failed" errors due to course count mismatches. Both visible and hidden courses are handled correctly, and all course counts remain consistent across the system.
 
-## Latest Test Summary - Admin Leads Management Frontend Testing
-- **Test Date**: 2025-01-09T17:41:32
+## Latest Test Summary - Enhanced Admin Leads Management with Delete Functionality Testing
+- **Test Date**: 2025-01-10T05:30:00
 - **Frontend URL**: https://kube-course-hub.preview.emergentagent.com/admin/leads
-- **Backend URL**: https://grras-tech-website-production.up.railway.app
-- **Overall Success Rate**: 100% (All admin leads management functionality working perfectly)
-- **Critical Issues**: 0 (Complete admin panel functionality verified working)
+- **Backend URL**: https://kube-course-hub.preview.emergentagent.com
+- **Overall Success Rate**: 90% (Most delete functionality working, minor bulk delete issue)
+- **Critical Issues**: 1 (Bulk delete count display issue)
 
 ### 🎯 ADMIN LEADS MANAGEMENT FRONTEND TESTING COMPLETED SUCCESSFULLY
 

@@ -5,6 +5,7 @@ from fastapi.responses import RedirectResponse, Response
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from motor.motor_asyncio import AsyncIOMotorClient
 from content_manager import ContentManager
+from email_service import email_service
 import uvicorn
 import os
 import logging

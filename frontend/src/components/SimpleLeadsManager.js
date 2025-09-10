@@ -264,6 +264,15 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
               Export CSV
             </button>
             <button
+              onClick={bulkDeleteLeads}
+              disabled={selectedLeads.length === 0 || deleting}
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-50"
+              title={`Delete ${selectedLeads.length} selected leads`}
+            >
+              <Trash className="h-4 w-4" />
+              Delete Selected ({selectedLeads.length})
+            </button>
+            <button
               onClick={() => setDebugOpen((v) => !v)}
               className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200"
               title="Toggle debug details"

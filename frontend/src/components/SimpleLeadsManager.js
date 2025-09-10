@@ -125,6 +125,87 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
     if (token) load();
   }, [token]);
 
+  // Delete functions
+  const deleteSingleLead = async (leadId) => {
+    if (!confirm("Are you sure you want to delete this lead?")) return;
+    
+    setDeleting(true);
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/leads/${leadId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        // Remove from local state
+        setLeads(leads.filter(lead => lead.id !== leadId));
+        alert("Lead deleted successfully!");
+      } else {
+        const errorData = await response.json();
+        alert(`Failed to delete lead: ${errorData.detail || 'Unknown error'}`);
+      }
+    } catch (error) {
+      alert(`Error deleting lead: ${error.message}`);
+    }
+    setDeleting(false);
+  };
+
+  const bulkDeleteLeads = async () => {
+    if (selectedLeads.length === 0) {
+      alert("Please select leads to delete");
+      return;
+    }
+    
+    if (!confirm(`Are you sure you want to delete ${selectedLeads.length} selected leads?`)) return;
+    
+    setDeleting(true);
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/leads/bulk`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          lead_ids: selectedLeads
+        })
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        // Remove deleted leads from local state
+        setLeads(leads.filter(lead => !selectedLeads.includes(lead.id)));
+        setSelectedLeads([]);
+        alert(`Successfully deleted ${result.deleted_count} leads!`);
+      } else {
+        const errorData = await response.json();
+        alert(`Failed to delete leads: ${errorData.detail || 'Unknown error'}`);
+      }
+    } catch (error) {
+      alert(`Error deleting leads: ${error.message}`);
+    }
+    setDeleting(false);
+  };
+
+  const toggleSelectLead = (leadId) => {
+    setSelectedLeads(prev => 
+      prev.includes(leadId) 
+        ? prev.filter(id => id !== leadId)
+        : [...prev, leadId]
+    );
+  };
+
+  const selectAllLeads = () => {
+    if (selectedLeads.length === filtered.length) {
+      setSelectedLeads([]);
+    } else {
+      setSelectedLeads(filtered.map(lead => lead.id));
+    }
+  };
+
   const filtered = useMemo(() => {
     const s = q.trim().toLowerCase();
     const base = !s

@@ -918,11 +918,40 @@ async def submit_contact(
             "course": course,
             "type": "contact_form",
             "timestamp": datetime.utcnow(),
-            "source": "website"
+            "source": "website",
+            "notes": message  # Use message as notes for email notification
         }
         
         collection = db.leads
         result = await collection.insert_one(lead_data)
+        
+        # Send email notification to admin
+        try:
+            # Format timestamp for email
+            formatted_timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+            
+            # Prepare email data
+            email_data = {
+                "name": name,
+                "email": email,
+                "phone": phone,
+                "course": course or "General Inquiry",
+                "source": "Website Contact Form",
+                "notes": message,
+                "timestamp": formatted_timestamp
+            }
+            
+            # Send notification email
+            email_sent = email_service.send_new_lead_notification(email_data)
+            
+            if email_sent:
+                logging.info(f"📧 Email notification sent for new lead: {name}")
+            else:
+                logging.warning(f"📧 Failed to send email notification for lead: {name}")
+                
+        except Exception as email_error:
+            logging.error(f"Email notification error: {email_error}")
+            # Don't fail the lead submission if email fails
         
         logging.info(f"✅ Contact form submitted: {name} ({email}) - MongoDB ID: {result.inserted_id}")
         return {"message": "Contact form submitted successfully", "lead_id": lead_data["id"]}

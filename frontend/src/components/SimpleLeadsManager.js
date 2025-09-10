@@ -13,6 +13,8 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
   const [sortDir, setSortDir] = useState("desc");
   const [debugOpen, setDebugOpen] = useState(false);
   const [attemptLog, setAttemptLog] = useState([]);
+  const [selectedLeads, setSelectedLeads] = useState([]);
+  const [deleting, setDeleting] = useState(false);
 
   // ---- Endpoints to try (common patterns) ----
   const endpoints = useMemo(

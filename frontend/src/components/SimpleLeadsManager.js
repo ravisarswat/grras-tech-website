@@ -343,7 +343,15 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
           <div className="p-10 text-center text-gray-600">No leads found.</div>
         ) : (
           <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-            <div className="grid grid-cols-7 gap-3 px-4 py-3 text-xs font-semibold text-gray-500 bg-gray-50">
+            <div className="grid grid-cols-9 gap-3 px-4 py-3 text-xs font-semibold text-gray-500 bg-gray-50">
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={selectedLeads.length === filtered.length && filtered.length > 0}
+                  onChange={selectAllLeads}
+                  className="w-4 h-4 text-orange-600 border-gray-300 rounded focus:ring-orange-500"
+                />
+              </div>
               <div>Name</div>
               <div>Email</div>
               <div>Phone</div>
@@ -351,10 +359,19 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
               <div>Source</div>
               <div>Notes</div>
               <div>Created</div>
+              <div>Actions</div>
             </div>
             <div className="divide-y">
               {filtered.map((l) => (
-                <div key={l.id} className="grid grid-cols-7 gap-3 px-4 py-3 text-sm">
+                <div key={l.id} className="grid grid-cols-9 gap-3 px-4 py-3 text-sm">
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={selectedLeads.includes(l.id)}
+                      onChange={() => toggleSelectLead(l.id)}
+                      className="w-4 h-4 text-orange-600 border-gray-300 rounded focus:ring-orange-500"
+                    />
+                  </div>
                   <div className="font-medium text-gray-900 break-words">{l.name || "—"}</div>
                   <div className="text-gray-700 break-words">{l.email || "—"}</div>
                   <div className="text-gray-700 break-words">{l.phone || "—"}</div>
@@ -362,6 +379,16 @@ const SimpleLeadsManager = ({ token, onLogout }) => {
                   <div className="text-gray-700 break-words">{l.source || "—"}</div>
                   <div className="text-gray-600 break-words line-clamp-2">{l.notes || "—"}</div>
                   <div className="text-gray-600">{new Date(l.createdAt).toLocaleString()}</div>
+                  <div>
+                    <button
+                      onClick={() => deleteSingleLead(l.id)}
+                      disabled={deleting}
+                      className="p-1 text-red-600 hover:text-red-800 disabled:opacity-50"
+                      title="Delete this lead"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>

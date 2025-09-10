@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Download, RefreshCw, LogOut, Search, Bug } from "lucide-react";
+import { Download, RefreshCw, LogOut, Search, Bug, Trash2, Trash } from "lucide-react";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 

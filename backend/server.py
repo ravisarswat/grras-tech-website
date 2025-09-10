@@ -1371,6 +1371,91 @@ async def get_all_blog_posts_admin(admin_verified: bool = Depends(verify_admin_t
 # Include API router
 app.include_router(api_router)
 
+# ✅ SITEMAP Endpoint
+from xml.sax.saxutils import escape as xml_escape
+
+def _iso(dt: str | None) -> str:
+    try:
+        return (datetime.fromisoformat(dt.replace("Z","")) if dt else datetime.utcnow()).strftime("%Y-%m-%dT%H:%M:%SZ")
+    except Exception:
+        return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+
+@app.get("/sitemap.xml")
+async def sitemap_xml():
+    base_url = os.environ.get("BASE_URL", "https://www.grras.tech").rstrip("/")
+
+    # Static pages (manual add if needed)
+    static_pages = [
+        {"url": "/", "priority": "1.0", "changefreq": "weekly"},
+        {"url": "/courses", "priority": "0.9", "changefreq": "weekly"},
+        {"url": "/blog", "priority": "0.8", "changefreq": "weekly"},
+        # Example:
+        # {"url": "/gallery", "priority": "0.6", "changefreq": "monthly"},
+    ]
+
+    content = await content_manager.get_content()
+
+    # Courses
+    courses = (content or {}).get("courses", []) or []
+    course_urls = []
+    for c in courses:
+        if c.get("visible", True) and c.get("slug"):
+            course_urls.append({
+                "loc": f"{base_url}/course/{c['slug']}",
+                "lastmod": _iso(c.get("updatedAt") or c.get("updated_at") or c.get("modifiedAt")),
+                "changefreq": "weekly",
+                "priority": "0.8",
+            })
+
+    # Blogs
+    blog_section = (content or {}).get("blog", {})
+    posts = blog_section.get("posts", []) if isinstance(blog_section, dict) else []
+    blog_urls = []
+    for p in posts:
+        is_published = p.get("published", True) or p.get("status") == "published"
+        if is_published and p.get("slug"):
+            blog_urls.append({
+                "loc": f"{base_url}/blog/{p['slug']}",
+                "lastmod": _iso(p.get("updatedAt") or p.get("updated_at") or p.get("createdAt") or p.get("created_at")),
+                "changefreq": "monthly",
+                "priority": "0.7",
+            })
+
+    # Build XML
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ]
+
+    now_iso = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+    for sp in static_pages:
+        loc = f"{base_url}{sp['url']}"
+        lines += [
+            "  <url>",
+            f"    <loc>{xml_escape(loc)}</loc>",
+            f"    <lastmod>{now_iso}</lastmod>",
+            f"    <changefreq>{sp['changefreq']}</changefreq>",
+            f"    <priority>{sp['priority']}</priority>",
+            "  </url>",
+        ]
+
+    for u in course_urls + blog_urls:
+        lines += [
+            "  <url>",
+            f"    <loc>{xml_escape(u['loc'])}</loc>",
+            f"    <lastmod>{u['lastmod']}</lastmod>",
+            f"    <changefreq>{u['changefreq']}</changefreq>",
+            f"    <priority>{u['priority']}</priority>",
+            "  </url>",
+        ]
+
+    lines.append("</urlset>")
+    xml = "\n".join(lines)
+    return Response(content=xml, media_type="application/xml")
+    
+# ---------- SITEMAP: end ----------
+
+
 # Mount static files from frontend build directory
 static_build_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend", "build")
 if os.path.exists(static_build_path):
